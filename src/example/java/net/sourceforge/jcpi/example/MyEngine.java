@@ -17,24 +17,24 @@
  */
 package net.sourceforge.jcpi.example;
 
-import net.sourceforge.jcpi.AbstractCommunication;
-import net.sourceforge.jcpi.AbstractEngine;
-import net.sourceforge.jcpi.commands.EngineAnalyzeCommand;
-import net.sourceforge.jcpi.commands.EngineDebugCommand;
-import net.sourceforge.jcpi.commands.EngineInitializeRequestCommand;
-import net.sourceforge.jcpi.commands.EngineNewGameCommand;
-import net.sourceforge.jcpi.commands.EnginePonderHitCommand;
-import net.sourceforge.jcpi.commands.EngineReadyRequestCommand;
-import net.sourceforge.jcpi.commands.EngineSetOptionCommand;
-import net.sourceforge.jcpi.commands.EngineStartCalculatingCommand;
-import net.sourceforge.jcpi.commands.EngineStopCalculatingCommand;
-import net.sourceforge.jcpi.commands.GuiBestMoveCommand;
-import net.sourceforge.jcpi.commands.GuiInformationCommand;
-import net.sourceforge.jcpi.commands.GuiInitializeAnswerCommand;
-import net.sourceforge.jcpi.commands.GuiReadyAnswerCommand;
-import net.sourceforge.jcpi.data.GenericMove;
-import net.sourceforge.jcpi.data.GenericPosition;
-import net.sourceforge.jcpi.standardio.StandardIoCommunication;
+import jcpi.AbstractCommunication;
+import jcpi.AbstractEngine;
+import jcpi.commands.EngineAnalyzeCommand;
+import jcpi.commands.EngineDebugCommand;
+import jcpi.commands.EngineInitializeRequestCommand;
+import jcpi.commands.EngineNewGameCommand;
+import jcpi.commands.EnginePonderHitCommand;
+import jcpi.commands.EngineReadyRequestCommand;
+import jcpi.commands.EngineSetOptionCommand;
+import jcpi.commands.EngineStartCalculatingCommand;
+import jcpi.commands.EngineStopCalculatingCommand;
+import jcpi.commands.GuiBestMoveCommand;
+import jcpi.commands.GuiInformationCommand;
+import jcpi.commands.GuiInitializeAnswerCommand;
+import jcpi.commands.GuiReadyAnswerCommand;
+import jcpi.data.GenericMove;
+import jcpi.data.GenericPosition;
+import jcpi.standardio.StandardIoCommunication;
 
 /**
  * This class represents your main engine. It is primarily used to communicate
