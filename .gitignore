@@ -1,2 +1,6 @@
-/target
-/reports
+/.gradle
+/build
+/.classpath
+/.project
+/.settings
+/bin
