@@ -49,6 +49,10 @@ task zip(type: Zip) {
 	}
 }
 
+artifacts {
+	archives zip
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.0-milestone-8a'
 }
