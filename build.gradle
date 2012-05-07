@@ -47,6 +47,9 @@ task zip(type: Zip) {
 		from 'NOTICE'
 		from jar
 	}
+	into ("$baseDir/example") {
+		from 'src/example'
+	}
 }
 
 artifacts {
