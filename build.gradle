@@ -38,6 +38,17 @@ jar {
     }
 }
 
+task zip(type: Zip) {
+	def baseDir = "${project.name}-${project.version}"
+	
+	into ("$baseDir") {
+		from 'README.md'
+		from 'LICENSE'
+		from 'NOTICE'
+		from jar
+	}
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.0-milestone-8a'
 }
