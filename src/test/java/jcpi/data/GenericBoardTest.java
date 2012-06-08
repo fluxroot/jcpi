@@ -47,6 +47,9 @@ public class GenericBoardTest {
 
 			GenericBoard board5 = new GenericBoard("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3");
 			assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", board5.toString());
+
+			GenericBoard board6 = new GenericBoard(328);
+			assertEquals("nbrqbkrn/pppppppp/8/8/8/8/PPPPPPPP/NBRQBKRN w GCgc - 0 1", board6.toString());
 		} catch (IllegalNotationException e) {
 			e.printStackTrace();
 			fail();

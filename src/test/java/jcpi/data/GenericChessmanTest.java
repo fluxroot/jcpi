@@ -38,10 +38,16 @@ public class GenericChessmanTest {
 	}
 
 	@Test
-	public void testGetPromotionChessman() {
+	public void testValueOfPromotion() {
 		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
 		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
 		assertNull(GenericChessman.valueOfPromotion('p'));
+	}
+
+	@Test
+	public void testIsValidPromotion() {
+		assertTrue(GenericChessman.QUEEN.isValidPromotion());
+		assertFalse(GenericChessman.PAWN.isValidPromotion());
 	}
 
 	@Test
@@ -52,6 +58,11 @@ public class GenericChessmanTest {
 			fail();
 		} catch (UnsupportedOperationException e) {
 		}
+	}
+
+	@Test
+	public void testToChar() {
+		assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
 	}
 
 }

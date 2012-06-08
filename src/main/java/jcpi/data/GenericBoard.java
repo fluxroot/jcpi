@@ -228,6 +228,14 @@ public class GenericBoard {
 		
 		// Clear full move number
 		this.fullMoveNumber = 1;
+		
+		// Clear king file
+		for (GenericColor color : GenericColor.values()) {
+			this.kingFile.put(color, null);
+		}
+		
+		// Clear FRC flag
+		this.isFrc = false;
 	}
 
 	public GenericPiece getPiece(GenericPosition position) {
