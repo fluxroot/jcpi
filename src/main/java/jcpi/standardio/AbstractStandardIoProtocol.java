@@ -21,7 +21,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Queue;
 
-import jcpi.ICommunication;
+import jcpi.IGui;
 import jcpi.commands.IEngineCommand;
 
 
@@ -30,7 +30,7 @@ import jcpi.commands.IEngineCommand;
  *
  * @author Phokham Nonava
  */
-public abstract class AbstractStandardIoProtocol implements ICommunication {
+public abstract class AbstractStandardIoProtocol implements IGui {
 
 	/**
 	 * The standard output.

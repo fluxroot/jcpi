@@ -17,7 +17,7 @@
  */
 package jcpi.commands;
 
-import jcpi.ICommunication;
+import jcpi.IGui;
 
 /**
  * GuiReadyAnswerCommand
@@ -34,7 +34,7 @@ public class GuiReadyAnswerCommand implements IGuiCommand {
 		this.token = token;
 	}
 	
-	public void accept(ICommunication v) {
+	public void accept(IGui v) {
 		v.visit(this);
 	}
 

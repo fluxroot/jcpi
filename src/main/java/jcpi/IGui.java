@@ -27,7 +27,7 @@ import jcpi.commands.GuiReadyAnswerCommand;
  *
  * @author Phokham Nonava
  */
-public interface ICommunication {
+public interface IGui {
 
 	public abstract void visit(GuiInitializeAnswerCommand command);
 	public abstract void visit(GuiReadyAnswerCommand command);

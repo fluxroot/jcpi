@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import jcpi.ICommunication;
+import jcpi.IGui;
 import jcpi.data.Option;
 
 
@@ -44,7 +44,7 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
 		this.author = author;
 	}
 
-	public void accept(ICommunication v) {
+	public void accept(IGui v) {
 		v.visit(this);
 	}
 	

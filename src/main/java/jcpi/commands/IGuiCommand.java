@@ -17,7 +17,7 @@
  */
 package jcpi.commands;
 
-import jcpi.ICommunication;
+import jcpi.IGui;
 
 /**
  * IGuiCommand
@@ -26,6 +26,6 @@ import jcpi.ICommunication;
  */
 public interface IGuiCommand {
 
-	public abstract void accept(ICommunication v);
+	public abstract void accept(IGui v);
 
 }

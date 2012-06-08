@@ -17,7 +17,7 @@
  */
 package jcpi.commands;
 
-import jcpi.ICommunication;
+import jcpi.IGui;
 import jcpi.data.GenericMove;
 
 /**
@@ -40,7 +40,7 @@ public class GuiBestMoveCommand implements IGuiCommand {
 		}
 	}
 	
-	public void accept(ICommunication v) {
+	public void accept(IGui v) {
 		v.visit(this);
 	}
 
