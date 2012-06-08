@@ -36,6 +36,7 @@ import jcpi.commands.EngineStopCalculatingCommand;
 import jcpi.commands.GuiBestMoveCommand;
 import jcpi.commands.GuiInformationCommand;
 import jcpi.commands.GuiInitializeAnswerCommand;
+import jcpi.commands.GuiQuitCommand;
 import jcpi.commands.GuiReadyAnswerCommand;
 import jcpi.commands.IEngineCommand;
 import jcpi.data.GenericBoard;
@@ -533,6 +534,10 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 		}
 		
 		this.writer.println(infoCommand);
+	}
+
+	public void visit(GuiQuitCommand command) {
+		throw new IllegalStateException();
 	}
 
 }

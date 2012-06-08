@@ -1,5 +1,5 @@
 /**
- * IGui.java
+ * GuiQuitCommand.java
  * 
  * Copyright 2007 Java Chess Protocol Interface Project
  * 
@@ -15,25 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jcpi;
+package jcpi.commands;
 
-import jcpi.commands.GuiBestMoveCommand;
-import jcpi.commands.GuiInformationCommand;
-import jcpi.commands.GuiInitializeAnswerCommand;
-import jcpi.commands.GuiQuitCommand;
-import jcpi.commands.GuiReadyAnswerCommand;
+import jcpi.IGui;
 
 /**
- * This is the gui command interface.
- *
+ * GuiQuitCommand
+ * 
  * @author Phokham Nonava
  */
-public interface IGui {
+public class GuiQuitCommand implements IGuiCommand {
 
-	public abstract void visit(GuiInitializeAnswerCommand command);
-	public abstract void visit(GuiReadyAnswerCommand command);
-	public abstract void visit(GuiBestMoveCommand command);
-	public abstract void visit(GuiInformationCommand command);
-	public abstract void visit(GuiQuitCommand command);
+	public GuiQuitCommand() {
+	}
+
+	public void accept(IGui v) {
+		v.visit(this);
+	}
 
 }
