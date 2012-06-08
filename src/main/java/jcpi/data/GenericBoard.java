@@ -442,6 +442,7 @@ public class GenericBoard {
 		assert notation != null;
 		// Precondition: board is clear!
 
+		// Clean notation and split into terms
 		notation = notation.trim();
 		
 		List<String> tokens = new ArrayList<String>(Arrays.asList(notation.split(" ")));

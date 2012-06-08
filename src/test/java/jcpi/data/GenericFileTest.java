@@ -57,12 +57,12 @@ public class GenericFileTest {
 	
 	@Test
 	public void testToChar() {
-		assertEquals(GenericFile.Fa.toChar(), 'a');
+		assertEquals('a', GenericFile.Fa.toChar());
 	}
 
 	@Test
 	public void testToString() {
-		assertEquals(GenericFile.Fa.toString(), "a");
+		assertEquals("a", GenericFile.Fa.toString());
 	}
 
 }

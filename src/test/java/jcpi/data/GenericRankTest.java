@@ -56,12 +56,12 @@ public class GenericRankTest {
 
 	@Test
 	public void testToChar() {
-		assertEquals(GenericRank.R1.toChar(), '1');
+		assertEquals('1', GenericRank.R1.toChar());
 	}
 
 	@Test
 	public void testToString() {
-		assertEquals(GenericRank.R1.toString(), "1");
+		assertEquals("1", GenericRank.R1.toString());
 	}
 
 }

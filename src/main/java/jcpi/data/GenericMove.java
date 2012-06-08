@@ -45,7 +45,7 @@ public class GenericMove {
 	public GenericMove(String notation) throws IllegalNotationException {
 		if (notation == null) throw new IllegalArgumentException();
 		
-		// Clean whitespace at the beginning and at the to
+		// Clean whitespace at the beginning and at the end
 		notation = notation.trim();
 		
 		// Clean spaces in the notation
