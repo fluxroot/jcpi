@@ -5,6 +5,7 @@
 # Eclipse
 /.settings/
 /bin/
+/.classpath
 
 # Libraries
 /lib/
