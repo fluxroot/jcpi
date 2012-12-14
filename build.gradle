@@ -12,7 +12,7 @@ repositories {
 }
 
 configurations {
-	eclipse {
+	eclipselibs {
 		extendsFrom compile
 	}
 }
@@ -28,7 +28,7 @@ jar {
 }
 
 task libs(type: Sync) {
-	from configurations.eclipse
+	from configurations.eclipselibs
 	into "$projectDir/lib"
 }
 
