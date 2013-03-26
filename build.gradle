@@ -1,55 +1,69 @@
-apply plugin: 'java'
-
-description = 'Java Chess Protocol Interface'
-
-group = 'jcpi'
-
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
-repositories {
-	mavenCentral()
-}
-
-configurations {
-	eclipselibs {
-		extendsFrom compile
-	}
-}
-
-dependencies {
-	testCompile 'junit:junit:4.+'
-}
-
-jar {
-    manifest {
-        attributes 'Implementation-Title': group, 'Implementation-Version': version
-    }
-}
-
-task libs(type: Sync) {
-	from configurations.eclipselibs
-	into "$projectDir/lib"
-}
-
-task dist(type: Zip) {
-	def baseDir = "${project.name}-${project.version}"
+allprojects {
+	apply plugin: 'base'
 	
-	into ("$baseDir") {
-		from 'README.md'
-		from 'LICENSE'
-		from 'NOTICE'
-		from jar
-	}
-	into ("$baseDir/example") {
-		from 'src/example'
+	group = 'jcpi'
+	
+	repositories {
+		mavenCentral()
 	}
 }
 
-artifacts {
-	archives dist
+subprojects {
+	configurations {
+		eclipselibs {
+			extendsFrom compile
+		}
+	}
+
+	task libs(type: Sync) {
+		from configurations.eclipselibs
+		into "$projectDir/lib"
+	}
 }
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '1.2'
+configure(rootProject) {
+	apply plugin: 'java'
+	
+	description = 'Java Chess Protocol Interface'
+	
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+	
+	dependencies {
+		testCompile 'junit:junit:4.+'
+	}
+	
+	jar {
+		manifest {
+			attributes 'Implementation-Title': project.group, 'Implementation-Version': project.version
+		}
+	}
+	
+	task dist(type: Zip) {
+		def baseDir = "${project.name}-${project.version}"
+		
+		into ("$baseDir") {
+			from 'README.md'
+			from 'LICENSE'
+			from 'NOTICE'
+			from jar
+		}
+		into ("$baseDir/example") {
+			from 'src/example'
+		}
+	}
+
+	artifacts {
+		archives dist
+	}
+	
+	task wrapper(type: Wrapper) {
+		gradleVersion = '1.4'
+	}
+}
+
+def downloadFile(srcUrl, destUrl) {
+	def dest = new BufferedOutputStream(new FileOutputStream(destUrl))
+	dest << new URL(srcUrl).openStream()
+	dest.close()
 }

@@ -1,15 +1,15 @@
 # Gradle
-/.gradle/
-/build/
-
-# Eclipse
-/.settings/
-/bin/
-/.classpath
+.gradle/
+build/
 
 # Libraries
-/lib/
+lib/
 /vendor/
 
 # Testing
-/run/
+run/
+
+# Eclipse
+.settings/
+bin/
+.classpath
