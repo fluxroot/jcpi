@@ -6,9 +6,7 @@ allprojects {
 	repositories {
 		mavenCentral()
 	}
-}
 
-subprojects {
 	configurations {
 		eclipselibs {
 			extendsFrom compile
