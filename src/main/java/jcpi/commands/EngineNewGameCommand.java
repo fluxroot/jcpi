@@ -24,11 +24,11 @@ import jcpi.IEngine;
  */
 public class EngineNewGameCommand implements IEngineCommand {
 
-	public EngineNewGameCommand() {
-	}
+    public EngineNewGameCommand() {
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

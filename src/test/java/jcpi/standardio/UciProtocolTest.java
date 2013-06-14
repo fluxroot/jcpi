@@ -38,74 +38,74 @@ import org.junit.Test;
  */
 public class UciProtocolTest {
 
-	private Queue<IEngineCommand> queue = new LinkedList<IEngineCommand>();
+    private Queue<IEngineCommand> queue = new LinkedList<IEngineCommand>();
 
-	private List<String> getTokens(String command) {
-		List<String> tokens = new ArrayList<String>(Arrays.asList(command.split(" ")));
-		for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
-			String token = iter.next();
+    private List<String> getTokens(String command) {
+        List<String> tokens = new ArrayList<String>(Arrays.asList(command.split(" ")));
+        for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
+            String token = iter.next();
 
-			if (token.length() == 0) {
-				iter.remove();
-			}
-		}
+            if (token.length() == 0) {
+                iter.remove();
+            }
+        }
 
-		return tokens;
-	}
+        return tokens;
+    }
 
-	@Test
-	public void testGetCommand() {
-		UciProtocol protocol = new UciProtocol(System.out, this.queue);
+    @Test
+    public void testGetCommand() {
+        UciProtocol protocol = new UciProtocol(System.out, this.queue);
 
-		String command = "position startpos";
-		protocol.parse(getTokens(command));
-		assertEquals(false, this.queue.isEmpty());
-		this.queue.clear();
+        String command = "position startpos";
+        protocol.parse(getTokens(command));
+        assertEquals(false, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "a b c d position startpos";
-		protocol.parse(getTokens(command));
-		assertEquals(false, this.queue.isEmpty());
-		this.queue.clear();
+        command = "a b c d position startpos";
+        protocol.parse(getTokens(command));
+        assertEquals(false, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "a b c d position startpos moves a2a3";
-		protocol.parse(getTokens(command));
-		assertEquals(false, this.queue.isEmpty());
-		this.queue.clear();
+        command = "a b c d position startpos moves a2a3";
+        protocol.parse(getTokens(command));
+        assertEquals(false, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "a b c d position startpos x y z";
-		protocol.parse(getTokens(command));
-		assertEquals(true, this.queue.isEmpty());
-		this.queue.clear();
+        command = "a b c d position startpos x y z";
+        protocol.parse(getTokens(command));
+        assertEquals(true, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "setoption";
-		protocol.parse(getTokens(command));
-		assertEquals(true, this.queue.isEmpty());
-		this.queue.clear();
+        command = "setoption";
+        protocol.parse(getTokens(command));
+        assertEquals(true, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "setoption name";
-		protocol.parse(getTokens(command));
-		assertEquals(true, this.queue.isEmpty());
-		this.queue.clear();
+        command = "setoption name";
+        protocol.parse(getTokens(command));
+        assertEquals(true, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "setoption name Clear Hash";
-		protocol.parse(getTokens(command));
-		assertEquals(false, this.queue.isEmpty());
-		assertEquals(1, this.queue.size());
-		assertEquals("Clear Hash", ((EngineSetOptionCommand) this.queue.peek()).name);
-		this.queue.clear();
+        command = "setoption name Clear Hash";
+        protocol.parse(getTokens(command));
+        assertEquals(false, this.queue.isEmpty());
+        assertEquals(1, this.queue.size());
+        assertEquals("Clear Hash", ((EngineSetOptionCommand) this.queue.peek()).name);
+        this.queue.clear();
 
-		command = "setoption name Clear Hash value";
-		protocol.parse(getTokens(command));
-		assertEquals(true, this.queue.isEmpty());
-		this.queue.clear();
+        command = "setoption name Clear Hash value";
+        protocol.parse(getTokens(command));
+        assertEquals(true, this.queue.isEmpty());
+        this.queue.clear();
 
-		command = "setoption name Clear Hash value 5";
-		protocol.parse(getTokens(command));
-		assertEquals(false, this.queue.isEmpty());
-		assertEquals(1, this.queue.size());
-		assertEquals("Clear Hash", ((EngineSetOptionCommand) this.queue.peek()).name);
-		assertEquals("5", ((EngineSetOptionCommand) this.queue.peek()).value);
-		this.queue.clear();
-	}
+        command = "setoption name Clear Hash value 5";
+        protocol.parse(getTokens(command));
+        assertEquals(false, this.queue.isEmpty());
+        assertEquals(1, this.queue.size());
+        assertEquals("Clear Hash", ((EngineSetOptionCommand) this.queue.peek()).name);
+        assertEquals("5", ((EngineSetOptionCommand) this.queue.peek()).value);
+        this.queue.clear();
+    }
 
 }

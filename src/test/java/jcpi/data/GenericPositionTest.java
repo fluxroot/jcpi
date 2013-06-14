@@ -30,11 +30,11 @@ import org.junit.Test;
  */
 public class GenericPositionTest {
 
-	@Test
-	public void testPosition() {
-		GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
-		GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
-		assertEquals(position1, position2);
-	}
+    @Test
+    public void testPosition() {
+        GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        assertEquals(position1, position2);
+    }
 
 }

@@ -27,13 +27,13 @@ import org.junit.Test;
  */
 public class EngineReadyRequestCommandTest {
 
-	@Test
-	public final void testEngineReadyRequestCommand() {
-		EngineReadyRequestCommand command = new EngineReadyRequestCommand();
-		assertEquals("", command.token);
+    @Test
+    public final void testEngineReadyRequestCommand() {
+        EngineReadyRequestCommand command = new EngineReadyRequestCommand();
+        assertEquals("", command.token);
 
-		command = new EngineReadyRequestCommand("mytoken");
-		assertEquals("mytoken", command.token);
-	}
+        command = new EngineReadyRequestCommand("mytoken");
+        assertEquals("mytoken", command.token);
+    }
 
 }

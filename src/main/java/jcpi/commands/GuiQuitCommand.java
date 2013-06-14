@@ -24,11 +24,11 @@ import jcpi.IGui;
  */
 public class GuiQuitCommand implements IGuiCommand {
 
-	public GuiQuitCommand() {
-	}
+    public GuiQuitCommand() {
+    }
 
-	public void accept(IGui v) {
-		v.visit(this);
-	}
+    public void accept(IGui v) {
+        v.visit(this);
+    }
 
 }

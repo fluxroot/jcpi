@@ -24,11 +24,11 @@ import jcpi.IEngine;
  */
 public class EngineInitializeRequestCommand implements IEngineCommand {
 
-	public EngineInitializeRequestCommand() {
-	}
+    public EngineInitializeRequestCommand() {
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

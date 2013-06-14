@@ -24,6 +24,6 @@ import jcpi.IEngine;
  */
 public interface IEngineCommand {
 
-	public abstract void accept(IEngine v);
+    public abstract void accept(IEngine v);
 
 }

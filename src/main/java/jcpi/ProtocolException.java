@@ -22,13 +22,13 @@ package jcpi;
  */
 public class ProtocolException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ProtocolException() {
-	}
+    public ProtocolException() {
+    }
 
-	public ProtocolException(String message) {
-		super(message);
-	}
+    public ProtocolException(String message) {
+        super(message);
+    }
 
 }

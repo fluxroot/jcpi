@@ -22,47 +22,47 @@ package jcpi.data;
  */
 public enum GenericCastling {
 
-	KINGSIDE("O-O", 'K'),
-	QUEENSIDE("O-O-O", 'Q');
+    KINGSIDE("O-O", 'K'),
+    QUEENSIDE("O-O-O", 'Q');
 
-	private final String longToken;
-	private final char token;
+    private final String longToken;
+    private final char token;
 
-	private GenericCastling(String longToken, char token) {
-		this.longToken = longToken;
-		this.token = token;
-	}
+    private GenericCastling(String longToken, char token) {
+        this.longToken = longToken;
+        this.token = token;
+    }
 
-	public static GenericCastling valueOf(char input) {
-		for (GenericCastling castling: values()) {
-			if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
-				return castling;
-			}
-		}
+    public static GenericCastling valueOf(char input) {
+        for (GenericCastling castling: values()) {
+            if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
+                return castling;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public static GenericCastling valueOfLongToken(String input) {
-		if (input == null) throw new IllegalArgumentException();
+    public static GenericCastling valueOfLongToken(String input) {
+        if (input == null) throw new IllegalArgumentException();
 
-		for (GenericCastling castling: values()) {
-			if (castling.longToken.equalsIgnoreCase(input)) {
-				return castling;
-			}
-		}
+        for (GenericCastling castling: values()) {
+            if (castling.longToken.equalsIgnoreCase(input)) {
+                return castling;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public String toLongToken() {
-		return this.longToken;
-	}
+    public String toLongToken() {
+        return this.longToken;
+    }
 
-	public char toChar(GenericColor color) {
-		if (color == null) throw new IllegalArgumentException();
+    public char toChar(GenericColor color) {
+        if (color == null) throw new IllegalArgumentException();
 
-		return color.transform(this.token);
-	}
+        return color.transform(this.token);
+    }
 
 }

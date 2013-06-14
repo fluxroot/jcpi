@@ -25,21 +25,21 @@ import jcpi.data.GenericMove;
  */
 public class GuiBestMoveCommand implements IGuiCommand {
 
-	public final GenericMove bestMove;
-	public final GenericMove ponderMove;
+    public final GenericMove bestMove;
+    public final GenericMove ponderMove;
 
-	public GuiBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
-		this.bestMove = bestMove;
-		if (bestMove == null) {
-			// Force null on ponder move
-			this.ponderMove = null;
-		} else {
-			this.ponderMove = ponderMove;
-		}
-	}
+    public GuiBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
+        this.bestMove = bestMove;
+        if (bestMove == null) {
+            // Force null on ponder move
+            this.ponderMove = null;
+        } else {
+            this.ponderMove = ponderMove;
+        }
+    }
 
-	public void accept(IGui v) {
-		v.visit(this);
-	}
+    public void accept(IGui v) {
+        v.visit(this);
+    }
 
 }

@@ -22,67 +22,67 @@ package jcpi.data;
  */
 public enum GenericFile {
 
-	Fa('a'),
-	Fb('b'),
-	Fc('c'),
-	Fd('d'),
-	Fe('e'),
-	Ff('f'),
-	Fg('g'),
-	Fh('h');
+    Fa('a'),
+    Fb('b'),
+    Fc('c'),
+    Fd('d'),
+    Fe('e'),
+    Ff('f'),
+    Fg('g'),
+    Fh('h');
 
-	private final char token;
+    private final char token;
 
-	private GenericFile(char token) {
-		this.token = token;
-	}
+    private GenericFile(char token) {
+        this.token = token;
+    }
 
-	public static GenericFile valueOf(char input) {
-		for (GenericFile file : values()) {
-			if (Character.toLowerCase(input) == Character.toLowerCase(file.token)) {
-				return file;
-			}
-		}
+    public static GenericFile valueOf(char input) {
+        for (GenericFile file : values()) {
+            if (Character.toLowerCase(input) == Character.toLowerCase(file.token)) {
+                return file;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public GenericFile prev() {
-		return prev(1);
-	}
+    public GenericFile prev() {
+        return prev(1);
+    }
 
-	public GenericFile prev(int i) {
-		if (i < 0) throw new IllegalArgumentException();
+    public GenericFile prev(int i) {
+        if (i < 0) throw new IllegalArgumentException();
 
-		int position = this.ordinal() - i;
-		if (position >= 0) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
+        int position = this.ordinal() - i;
+        if (position >= 0) {
+            return values()[position];
+        } else {
+            return null;
+        }
+    }
 
-	public GenericFile next() {
-		return next(1);
-	}
+    public GenericFile next() {
+        return next(1);
+    }
 
-	public GenericFile next(int i) {
-		if (i < 0) throw new IllegalArgumentException();
+    public GenericFile next(int i) {
+        if (i < 0) throw new IllegalArgumentException();
 
-		int position = this.ordinal() + i;
-		if (position < values().length) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
+        int position = this.ordinal() + i;
+        if (position < values().length) {
+            return values()[position];
+        } else {
+            return null;
+        }
+    }
 
-	public char toChar() {
-		return this.token;
-	}
+    public char toChar() {
+        return this.token;
+    }
 
-	public String toString() {
-		return Character.toString(this.token);
-	}
+    public String toString() {
+        return Character.toString(this.token);
+    }
 
 }

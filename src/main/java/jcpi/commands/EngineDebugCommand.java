@@ -24,21 +24,21 @@ import jcpi.IEngine;
  */
 public class EngineDebugCommand implements IEngineCommand {
 
-	public final boolean debug;
-	public final boolean toggle;
+    public final boolean debug;
+    public final boolean toggle;
 
-	public EngineDebugCommand(boolean toggle, boolean debug) {
-		this.toggle = toggle;
-		if (toggle) {
-			// Force debug to false
-			this.debug = false;
-		} else {
-			this.debug = debug;
-		}
-	}
+    public EngineDebugCommand(boolean toggle, boolean debug) {
+        this.toggle = toggle;
+        if (toggle) {
+            // Force debug to false
+            this.debug = false;
+        } else {
+            this.debug = debug;
+        }
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

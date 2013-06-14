@@ -25,27 +25,27 @@ import jcpi.commands.IGuiCommand;
  */
 public abstract class AbstractCommunication {
 
-	/**
-	 * Send an IGuiCommand. Make this method public so everyone can send
-	 * commands. We translate the IGuiCommand to the appropriate communication
-	 * channel command.
-	 *
-	 * @param command the IGuiCommand.
-	 */
-	public abstract void send(IGuiCommand command);
+    /**
+     * Send an IGuiCommand. Make this method public so everyone can send
+     * commands. We translate the IGuiCommand to the appropriate communication
+     * channel command.
+     *
+     * @param command the IGuiCommand.
+     */
+    public abstract void send(IGuiCommand command);
 
-	/**
-	 * Receives an IEngineCommand. Make this method protected so only our
-	 * framework can call it.
-	 *
-	 * @return an IEngineCommand.
-	 */
-	protected abstract IEngineCommand receive();
+    /**
+     * Receives an IEngineCommand. Make this method protected so only our
+     * framework can call it.
+     *
+     * @return an IEngineCommand.
+     */
+    protected abstract IEngineCommand receive();
 
-	/**
-	 * Creates a new AbstractCommunication.
-	 */
-	public AbstractCommunication() {
-	}
+    /**
+     * Creates a new AbstractCommunication.
+     */
+    public AbstractCommunication() {
+    }
 
 }

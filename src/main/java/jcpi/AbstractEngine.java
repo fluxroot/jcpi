@@ -26,52 +26,52 @@ import jcpi.commands.IEngineCommand;
  */
 public abstract class AbstractEngine implements IEngine {
 
-	/**
-	 * Stops and exits the engine.
-	 */
-	protected abstract void quit();
+    /**
+     * Stops and exits the engine.
+     */
+    protected abstract void quit();
 
-	/**
-	 * The communication channel.
-	 */
-	protected final AbstractCommunication communication;
+    /**
+     * The communication channel.
+     */
+    protected final AbstractCommunication communication;
 
-	/**
-	 * Whether the engine is running.
-	 */
-	private boolean running = true;
+    /**
+     * Whether the engine is running.
+     */
+    private boolean running = true;
 
-	/**
-	 * Creates a new AbstractEngine.
-	 *
-	 * @param communication the AbstractCommunication.
-	 */
-	public AbstractEngine(AbstractCommunication communication) {
-		if (communication == null) throw new IllegalArgumentException();
+    /**
+     * Creates a new AbstractEngine.
+     *
+     * @param communication the AbstractCommunication.
+     */
+    public AbstractEngine(AbstractCommunication communication) {
+        if (communication == null) throw new IllegalArgumentException();
 
-		this.communication = communication;
-	}
+        this.communication = communication;
+    }
 
-	/**
-	 * Runs the engine.
-	 */
-	public final void run() {
-		while (this.running) {
-			IEngineCommand command = this.communication.receive();
-			assert command != null;
+    /**
+     * Runs the engine.
+     */
+    public final void run() {
+        while (this.running) {
+            IEngineCommand command = this.communication.receive();
+            assert command != null;
 
-			command.accept(this);
-		}
-	}
+            command.accept(this);
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
-	 */
-	public final void visit(EngineQuitCommand command) {
-		if (command == null) throw new IllegalArgumentException();
+    /* (non-Javadoc)
+     * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
+     */
+    public final void visit(EngineQuitCommand command) {
+        if (command == null) throw new IllegalArgumentException();
 
-		quit();
-		this.running = false;
-	}
+        quit();
+        this.running = false;
+    }
 
 }

@@ -24,6 +24,6 @@ import jcpi.IGui;
  */
 public interface IGuiCommand {
 
-	public abstract void accept(IGui v);
+    public abstract void accept(IGui v);
 
 }

@@ -24,16 +24,16 @@ import jcpi.IGui;
  */
 public class GuiReadyAnswerCommand implements IGuiCommand {
 
-	public final String token;
+    public final String token;
 
-	public GuiReadyAnswerCommand(String token) {
-		if (token == null) throw new IllegalArgumentException();
+    public GuiReadyAnswerCommand(String token) {
+        if (token == null) throw new IllegalArgumentException();
 
-		this.token = token;
-	}
+        this.token = token;
+    }
 
-	public void accept(IGui v) {
-		v.visit(this);
-	}
+    public void accept(IGui v) {
+        v.visit(this);
+    }
 
 }

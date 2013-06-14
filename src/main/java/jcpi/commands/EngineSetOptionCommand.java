@@ -24,18 +24,18 @@ import jcpi.IEngine;
  */
 public class EngineSetOptionCommand implements IEngineCommand {
 
-	public final String name;
-	public final String value;
+    public final String name;
+    public final String value;
 
-	public EngineSetOptionCommand(String name, String value) {
-		if (name == null) throw new IllegalArgumentException();
+    public EngineSetOptionCommand(String name, String value) {
+        if (name == null) throw new IllegalArgumentException();
 
-		this.name = name;
-		this.value = value;
-	}
+        this.name = name;
+        this.value = value;
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

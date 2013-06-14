@@ -33,17 +33,17 @@ import jcpi.commands.EngineStopCalculatingCommand;
  */
 public interface IEngine {
 
-	public abstract void visit(EngineInitializeRequestCommand command);
-	public abstract void visit(EngineSetOptionCommand command);
-	public abstract void visit(EngineQuitCommand command);
+    public abstract void visit(EngineInitializeRequestCommand command);
+    public abstract void visit(EngineSetOptionCommand command);
+    public abstract void visit(EngineQuitCommand command);
 
-	public abstract void visit(EngineDebugCommand command);
-	public abstract void visit(EngineReadyRequestCommand command);
+    public abstract void visit(EngineDebugCommand command);
+    public abstract void visit(EngineReadyRequestCommand command);
 
-	public abstract void visit(EngineNewGameCommand command);
-	public abstract void visit(EngineAnalyzeCommand command);
-	public abstract void visit(EngineStartCalculatingCommand command);
-	public abstract void visit(EngineStopCalculatingCommand command);
-	public abstract void visit(EnginePonderHitCommand command);
+    public abstract void visit(EngineNewGameCommand command);
+    public abstract void visit(EngineAnalyzeCommand command);
+    public abstract void visit(EngineStartCalculatingCommand command);
+    public abstract void visit(EngineStopCalculatingCommand command);
+    public abstract void visit(EnginePonderHitCommand command);
 
 }

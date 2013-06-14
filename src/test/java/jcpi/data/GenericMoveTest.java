@@ -30,61 +30,61 @@ import org.junit.Test;
  */
 public class GenericMoveTest {
 
-	@Test
-	public void testParse() {
-		try {
-			GenericMove move = new GenericMove("a1 e3");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertNull(move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
+    @Test
+    public void testParse() {
+        try {
+            GenericMove move = new GenericMove("a1 e3");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertNull(move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
 
-		try {
-			GenericMove move = new GenericMove("a1 x e3");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertNull(move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
+        try {
+            GenericMove move = new GenericMove("a1 x e3");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertNull(move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
 
-		try {
-			GenericMove move = new GenericMove("a1 : e3");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertNull(move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
+        try {
+            GenericMove move = new GenericMove("a1 : e3");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertNull(move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
 
-		try {
-			GenericMove move = new GenericMove("a1 x e3 = q");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertEquals(GenericChessman.QUEEN, move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
+        try {
+            GenericMove move = new GenericMove("a1 x e3 = q");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertEquals(GenericChessman.QUEEN, move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
 
-		try {
-			GenericMove move = new GenericMove("a1 x e3 = q #");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertEquals(GenericChessman.QUEEN, move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
+        try {
+            GenericMove move = new GenericMove("a1 x e3 = q #");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertEquals(GenericChessman.QUEEN, move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
 
-		try {
-			GenericMove move = new GenericMove("a1 - e3 = q");
-			assertEquals(GenericPosition.a1, move.from);
-			assertEquals(GenericPosition.e3, move.to);
-			assertEquals(GenericChessman.QUEEN, move.promotion);
-		} catch (IllegalNotationException e) {
-			fail();
-		}
-	}
+        try {
+            GenericMove move = new GenericMove("a1 - e3 = q");
+            assertEquals(GenericPosition.a1, move.from);
+            assertEquals(GenericPosition.e3, move.to);
+            assertEquals(GenericChessman.QUEEN, move.promotion);
+        } catch (IllegalNotationException e) {
+            fail();
+        }
+    }
 
 }

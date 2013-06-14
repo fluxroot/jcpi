@@ -25,7 +25,7 @@ import jcpi.commands.IGuiCommand;
  */
 public interface IGuiProtocol {
 
-	public abstract void send(IEngineCommand command) throws ProtocolException;
-	public abstract IGuiCommand receiveGuiCommand() throws ProtocolException;
+    public abstract void send(IEngineCommand command) throws ProtocolException;
+    public abstract IGuiCommand receiveGuiCommand() throws ProtocolException;
 
 }

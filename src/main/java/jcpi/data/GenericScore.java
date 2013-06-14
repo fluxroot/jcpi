@@ -22,8 +22,8 @@ package jcpi.data;
  */
 public enum GenericScore {
 
-	EXACT,
-	ALPHA,
-	BETA;
+    EXACT,
+    ALPHA,
+    BETA;
 
 }
