@@ -17,18 +17,13 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineStopCalculatingCommand
- *
- * @author Phokham Nonava
- */
 public class EngineStopCalculatingCommand implements IEngineCommand {
 
-	public EngineStopCalculatingCommand() {
-	}
+    public EngineStopCalculatingCommand() {
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

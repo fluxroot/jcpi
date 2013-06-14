@@ -15,63 +15,65 @@
 */
 package jcpi;
 
+import java.util.Objects;
+
 import jcpi.commands.EngineQuitCommand;
 import jcpi.commands.IEngineCommand;
 
 /**
  * This is the main engine class. Inherit your engine from this class and
  * implement all abstract methods.
- * 
+ *
  * @author Phokham Nonava
  */
 public abstract class AbstractEngine implements IEngine {
 
-	/**
-	 * Stops and exits the engine.
-	 */
-	protected abstract void quit();
-	
-	/**
-	 * The communication channel.
-	 */
-	protected final AbstractCommunication communication;
-	
-	/**
-	 * Whether the engine is running.
-	 */
-	private boolean running = true;
+    /**
+     * Stops and exits the engine.
+     */
+    protected abstract void quit();
 
-	/**
-	 * Creates a new AbstractEngine.
-	 * 
-	 * @param communication the AbstractCommunication.
-	 */
-	public AbstractEngine(AbstractCommunication communication) {
-		if (communication == null) throw new IllegalArgumentException();
+    /**
+     * The communication channel.
+     */
+    protected final AbstractCommunication communication;
 
-		this.communication = communication;
-	}
-	
-	/**
-	 * Runs the engine.
-	 */
-	public final void run() {
-		while (this.running) {
-			IEngineCommand command = this.communication.receive();
-			assert command != null;
+    /**
+     * Whether the engine is running.
+     */
+    private boolean running = true;
 
-			command.accept(this);
-		}
-	}
+    /**
+     * Creates a new AbstractEngine.
+     *
+     * @param communication the AbstractCommunication.
+     */
+    public AbstractEngine(AbstractCommunication communication) {
+        Objects.requireNonNull(communication);
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
-	 */
-	public final void visit(EngineQuitCommand command) {
-		if (command == null) throw new IllegalArgumentException();
+        this.communication = communication;
+    }
 
-		quit();
-		this.running = false;
-	}
+    /**
+     * Runs the engine.
+     */
+    public final void run() {
+        while (this.running) {
+            IEngineCommand command = this.communication.receive();
+            assert command != null;
+
+            command.accept(this);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
+     */
+    public final void visit(EngineQuitCommand command) {
+        Objects.requireNonNull(command);
+
+        quit();
+        this.running = false;
+    }
 
 }

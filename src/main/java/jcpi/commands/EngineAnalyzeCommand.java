@@ -17,36 +17,31 @@ package jcpi.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jcpi.IEngine;
 import jcpi.data.GenericBoard;
 import jcpi.data.GenericMove;
 
-
-/**
- * EngineAnalyzeCommand
- * 
- * @author Phokham Nonava
- */
 public class EngineAnalyzeCommand implements IEngineCommand {
 
-	public final GenericBoard board;
-	public final List<GenericMove> moveList;
-	
-	public EngineAnalyzeCommand(GenericBoard board) {
-		this(board, new ArrayList<GenericMove>());
-	}
-	
-	public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
-		if (board == null) throw new IllegalArgumentException();
-		if (moveList == null) throw new IllegalArgumentException();
-		
-		this.board = board;
-		this.moveList = moveList;
-	}
-	
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public final GenericBoard board;
+    public final List<GenericMove> moveList;
+
+    public EngineAnalyzeCommand(GenericBoard board) {
+        this(board, new ArrayList<GenericMove>());
+    }
+
+    public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
+        Objects.requireNonNull(board);
+        Objects.requireNonNull(moveList);
+
+        this.board = board;
+        this.moveList = moveList;
+    }
+
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

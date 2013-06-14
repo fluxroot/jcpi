@@ -17,18 +17,13 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineQuitCommand
- *
- * @author Phokham Nonava
- */
 public class EngineQuitCommand implements IEngineCommand {
 
-	public EngineQuitCommand() {
-	}
-	
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public EngineQuitCommand() {
+    }
+
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

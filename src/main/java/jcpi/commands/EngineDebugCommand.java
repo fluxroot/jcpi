@@ -17,28 +17,23 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineDebugCommand
- *
- * @author Phokham Nonava
- */
 public class EngineDebugCommand implements IEngineCommand {
 
-	public final boolean debug;
-	public final boolean toggle;
-	
-	public EngineDebugCommand(boolean toggle, boolean debug) {
-		this.toggle = toggle;
-		if (toggle) {
-			// Force debug to false
-			this.debug = false;
-		} else {
-			this.debug = debug;
-		}
-	}
-	
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public final boolean debug;
+    public final boolean toggle;
+
+    public EngineDebugCommand(boolean toggle, boolean debug) {
+        this.toggle = toggle;
+        if (toggle) {
+            // Force debug to false
+            this.debug = false;
+        } else {
+            this.debug = debug;
+        }
+    }
+
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

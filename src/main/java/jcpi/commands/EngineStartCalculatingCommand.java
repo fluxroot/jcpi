@@ -18,133 +18,128 @@ package jcpi.commands;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jcpi.IEngine;
 import jcpi.data.GenericColor;
 import jcpi.data.GenericMove;
 
-
-/**
- * EngineStartCalculatingCommand
- *
- * @author Phokham Nonava
- */
 public class EngineStartCalculatingCommand implements IEngineCommand {
 
-	private List<GenericMove> searchMoveList = null;
-	private boolean ponder = false;
-	private Map<GenericColor, Long> clock = new EnumMap<GenericColor, Long>(GenericColor.class);
-	private Map<GenericColor, Long> clockIncrement = new EnumMap<GenericColor, Long>(GenericColor.class);
-	private Integer movestogo = null;
-	private Integer depth = null;
-	private Long nodes = null;
-	private Integer mate = null;
-	private Long movetime = null;
-	private boolean infinite = false;
-	
-	public EngineStartCalculatingCommand() {
-	}
+    private List<GenericMove> searchMoveList = null;
+    private boolean ponder = false;
+    private Map<GenericColor, Long> clock = new EnumMap<GenericColor, Long>(GenericColor.class);
+    private Map<GenericColor, Long> clockIncrement = new EnumMap<GenericColor, Long>(GenericColor.class);
+    private Integer movestogo = null;
+    private Integer depth = null;
+    private Long nodes = null;
+    private Integer mate = null;
+    private Long movetime = null;
+    private boolean infinite = false;
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public EngineStartCalculatingCommand() {
+    }
 
-	public List<GenericMove> getSearchMoveList() {
-		return this.searchMoveList;
-	}
-	
-	public void setSearchMoveList(List<GenericMove> searchMoveList) {
-		if (searchMoveList == null) throw new IllegalArgumentException();
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
-		this.searchMoveList = searchMoveList;
-	}
+    public List<GenericMove> getSearchMoveList() {
+        return this.searchMoveList;
+    }
 
-	public boolean getPonder() {
-		return this.ponder;
-	}
-	
-	public void setPonder() {
-		this.ponder = true;
-	}
+    public void setSearchMoveList(List<GenericMove> searchMoveList) {
+        Objects.requireNonNull(searchMoveList);
 
-	public Long getClock(GenericColor side) {
-		return this.clock.get(side);
-	}
-	
-	public void setClock(GenericColor side, Long time) {
-		if (side == null) throw new IllegalArgumentException();
-		if (time == null) throw new IllegalArgumentException();
+        this.searchMoveList = searchMoveList;
+    }
 
-		this.clock.put(side, time);
-	}
+    public boolean getPonder() {
+        return this.ponder;
+    }
 
-	public Long getClockIncrement(GenericColor side) {
-		return this.clockIncrement.get(side);
-	}
-	
-	public void setClockIncrement(GenericColor side, Long time) {
-		if (side == null) throw new IllegalArgumentException();
-		if (time == null) throw new IllegalArgumentException();
-		
-		this.clockIncrement.put(side, time);
-	}
+    public void setPonder() {
+        this.ponder = true;
+    }
 
-	public Integer getMovesToGo() {
-		return this.movestogo;
-	}
-	
-	public void setMovesToGo(Integer movesToGo) {
-		if (movesToGo == null) throw new IllegalArgumentException();
+    public Long getClock(GenericColor side) {
+        return this.clock.get(side);
+    }
 
-		this.movestogo = movesToGo;
-	}
+    public void setClock(GenericColor side, Long time) {
+        Objects.requireNonNull(side);
+        Objects.requireNonNull(time);
 
-	public Integer getDepth() {
-		return this.depth;
-	}
-	
-	public void setDepth(Integer depth) {
-		if (depth == null) throw new IllegalArgumentException();
+        this.clock.put(side, time);
+    }
 
-		this.depth = depth;
-	}
+    public Long getClockIncrement(GenericColor side) {
+        return this.clockIncrement.get(side);
+    }
 
-	public Long getNodes() {
-		return this.nodes;
-	}
-	
-	public void setNodes(Long nodes) {
-		if (nodes == null) throw new IllegalArgumentException();
+    public void setClockIncrement(GenericColor side, Long time) {
+        Objects.requireNonNull(side);
+        Objects.requireNonNull(time);
 
-		this.nodes = nodes;
-	}
+        this.clockIncrement.put(side, time);
+    }
 
-	public Integer getMate() {
-		return this.mate;
-	}
-	
-	public void setMate(Integer mate) {
-		if (mate == null) throw new IllegalArgumentException();
-		
-		this.mate = mate;
-	}
+    public Integer getMovesToGo() {
+        return this.movestogo;
+    }
 
-	public Long getMoveTime() {
-		return this.movetime;
-	}
-	
-	public void setMoveTime(Long moveTime) {
-		if (moveTime == null) throw new IllegalArgumentException();
+    public void setMovesToGo(Integer movesToGo) {
+        Objects.requireNonNull(movesToGo);
 
-		this.movetime = moveTime;
-	}
-	
-	public boolean getInfinite() {
-		return this.infinite;
-	}
-	
-	public void setInfinite() {
-		this.infinite = true;
-	}
+        this.movestogo = movesToGo;
+    }
+
+    public Integer getDepth() {
+        return this.depth;
+    }
+
+    public void setDepth(Integer depth) {
+        Objects.requireNonNull(depth);
+
+        this.depth = depth;
+    }
+
+    public Long getNodes() {
+        return this.nodes;
+    }
+
+    public void setNodes(Long nodes) {
+        Objects.requireNonNull(nodes);
+
+        this.nodes = nodes;
+    }
+
+    public Integer getMate() {
+        return this.mate;
+    }
+
+    public void setMate(Integer mate) {
+        Objects.requireNonNull(mate);
+
+        this.mate = mate;
+    }
+
+    public Long getMoveTime() {
+        return this.movetime;
+    }
+
+    public void setMoveTime(Long moveTime) {
+        Objects.requireNonNull(moveTime);
+
+        this.movetime = moveTime;
+    }
+
+    public boolean getInfinite() {
+        return this.infinite;
+    }
+
+    public void setInfinite() {
+        this.infinite = true;
+    }
 
 }

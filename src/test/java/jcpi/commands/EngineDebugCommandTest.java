@@ -20,18 +20,13 @@ import jcpi.commands.EngineDebugCommand;
 
 import org.junit.Test;
 
-/**
- * EngineDebugCommandTest
- *
- * @author Phokham Nonava
- */
 public class EngineDebugCommandTest {
 
-	@Test
-	public final void testEngineDebugCommand() {
-		EngineDebugCommand command = new EngineDebugCommand(false, true);
-		
-		assertEquals(true, command.debug);
-	}
+    @Test
+    public final void testEngineDebugCommand() {
+        EngineDebugCommand command = new EngineDebugCommand(false, true);
+
+        assertEquals(true, command.debug);
+    }
 
 }

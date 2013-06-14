@@ -21,46 +21,41 @@ import jcpi.data.GenericChessman;
 
 import org.junit.Test;
 
-/**
- * GenericChessmanTest
- *
- * @author Phokham Nonava
- */
 public class GenericChessmanTest {
 
-	@Test
-	public void testValueOf() {
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
-		assertNull(GenericChessman.valueOf('x'));
-	}
+    @Test
+    public void testValueOf() {
+        assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
+        assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
+        assertNull(GenericChessman.valueOf('x'));
+    }
 
-	@Test
-	public void testValueOfPromotion() {
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
-		assertNull(GenericChessman.valueOfPromotion('p'));
-	}
+    @Test
+    public void testValueOfPromotion() {
+        assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
+        assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
+        assertNull(GenericChessman.valueOfPromotion('p'));
+    }
 
-	@Test
-	public void testIsValidPromotion() {
-		assertTrue(GenericChessman.QUEEN.isValidPromotion());
-		assertFalse(GenericChessman.PAWN.isValidPromotion());
-	}
+    @Test
+    public void testIsValidPromotion() {
+        assertTrue(GenericChessman.QUEEN.isValidPromotion());
+        assertFalse(GenericChessman.PAWN.isValidPromotion());
+    }
 
-	@Test
-	public void testToCharAlgebraic() {
-		assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
-		try {
-			GenericChessman.PAWN.toCharAlgebraic();
-			fail();
-		} catch (UnsupportedOperationException e) {
-		}
-	}
+    @Test
+    public void testToCharAlgebraic() {
+        assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
+        try {
+            GenericChessman.PAWN.toCharAlgebraic();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
 
-	@Test
-	public void testToChar() {
-		assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
-	}
+    @Test
+    public void testToChar() {
+        assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
+    }
 
 }

@@ -16,45 +16,41 @@
 package jcpi.data;
 
 import java.util.List;
+import java.util.Objects;
 
-/**
- * Option
- *
- * @author Phokham Nonava
- */
 public class Option {
 
-	public final String name;
-	public final String type;
-	public final String defaultValue;
-	public final String minValue;
-	public final String maxValue;
-	public final List<String> varValues;
-	
-	private String value = null;
-	
-	public Option(String name, String type, String defaultValue, String minValue, String maxValue, List<String> varValues) {
-		if (name == null) throw new IllegalArgumentException();
-		if (type == null) throw new IllegalArgumentException();
-		
-		this.name = name;
-		this.type = type;
-		this.defaultValue = defaultValue;
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-		this.varValues = varValues;
-		
-		this.value = defaultValue;
-	}
+    public final String name;
+    public final String type;
+    public final String defaultValue;
+    public final String minValue;
+    public final String maxValue;
+    public final List<String> varValues;
 
-	public String getValue() {
-		return this.value;
-	}
-	
-	public void setValue(String value) {
-		if (value == null) throw new IllegalArgumentException();
-		
-		this.value = value;
-	}
+    private String value = null;
+
+    public Option(String name, String type, String defaultValue, String minValue, String maxValue, List<String> varValues) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(type);
+
+        this.name = name;
+        this.type = type;
+        this.defaultValue = defaultValue;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.varValues = varValues;
+
+        this.value = defaultValue;
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
+    public void setValue(String value) {
+        Objects.requireNonNull(value);
+
+        this.value = value;
+    }
 
 }

@@ -17,10 +17,31 @@ allprojects {
 		from configurations.eclipselibs
 		into "$projectDir/lib"
 	}
+
+	tasks.withType(Pmd) {
+		pmd {
+			ignoreFailures = true
+		}
+	}
+
+	tasks.withType(FindBugs) {
+		findbugs {
+			ignoreFailures = true
+		}
+	}
+
+	tasks.withType(Checkstyle) {
+		checkstyle {
+			ignoreFailures = true
+		}
+	}
 }
 
 configure(rootProject) {
 	apply plugin: 'java'
+	apply plugin: 'pmd'
+	apply plugin: 'findbugs'
+	apply plugin: 'checkstyle'
 	
 	description = 'Java Chess Protocol Interface'
 	

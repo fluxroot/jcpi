@@ -15,20 +15,15 @@
 */
 package jcpi.data;
 
-/**
- * IllegalNotationException
- *
- * @author Phokham Nonava
- */
 public class IllegalNotationException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public IllegalNotationException() {
-	}
+    public IllegalNotationException() {
+    }
 
-	public IllegalNotationException(String message) {
-		super(message);
-	}
+    public IllegalNotationException(String message) {
+        super(message);
+    }
 
 }
