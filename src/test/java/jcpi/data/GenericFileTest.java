@@ -21,46 +21,41 @@ import jcpi.data.GenericFile;
 
 import org.junit.Test;
 
-/**
- * GenericFileTest
- *
- * @author Phokham Nonava
- */
 public class GenericFileTest {
 
-	@Test
-	public void testValueOf() {
-		assertEquals(GenericFile.Fa, GenericFile.valueOf('a'));
-		assertEquals(GenericFile.Fa, GenericFile.valueOf('A'));
-		assertNull(GenericFile.valueOf('i'));
-	}
+    @Test
+    public void testValueOf() {
+        assertEquals(GenericFile.Fa, GenericFile.valueOf('a'));
+        assertEquals(GenericFile.Fa, GenericFile.valueOf('A'));
+        assertNull(GenericFile.valueOf('i'));
+    }
 
-	@Test
-	public void testPrev() {
-		assertEquals(GenericFile.Fg, GenericFile.Fh.prev());
-		assertNull(GenericFile.Fa.prev());
-		
-		assertEquals(GenericFile.Fa, GenericFile.Fh.prev(7));
-		assertNull(GenericFile.Fg.prev(7));
-	}
-	
-	@Test
-	public void testNext() {
-		assertEquals(GenericFile.Fb, GenericFile.Fa.next());
-		assertNull(GenericFile.Fh.next());
-		
-		assertEquals(GenericFile.Fh, GenericFile.Fa.next(7));
-		assertNull(GenericFile.Fb.next(7));
-	}
-	
-	@Test
-	public void testToChar() {
-		assertEquals('a', GenericFile.Fa.toChar());
-	}
+    @Test
+    public void testPrev() {
+        assertEquals(GenericFile.Fg, GenericFile.Fh.prev());
+        assertNull(GenericFile.Fa.prev());
 
-	@Test
-	public void testToString() {
-		assertEquals("a", GenericFile.Fa.toString());
-	}
+        assertEquals(GenericFile.Fa, GenericFile.Fh.prev(7));
+        assertNull(GenericFile.Fg.prev(7));
+    }
+
+    @Test
+    public void testNext() {
+        assertEquals(GenericFile.Fb, GenericFile.Fa.next());
+        assertNull(GenericFile.Fh.next());
+
+        assertEquals(GenericFile.Fh, GenericFile.Fa.next(7));
+        assertNull(GenericFile.Fb.next(7));
+    }
+
+    @Test
+    public void testToChar() {
+        assertEquals('a', GenericFile.Fa.toChar());
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("a", GenericFile.Fa.toString());
+    }
 
 }

@@ -17,18 +17,13 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EnginePonderHitCommand
- *
- * @author Phokham Nonava
- */
 public class EnginePonderHitCommand implements IEngineCommand {
 
-	public EnginePonderHitCommand() {
-	}
+    public EnginePonderHitCommand() {
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

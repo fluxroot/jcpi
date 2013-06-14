@@ -15,27 +15,24 @@
 */
 package jcpi.commands;
 
+import java.util.Objects;
+
 import jcpi.IEngine;
 
-/**
- * EngineSetOptionCommand
- *
- * @author Phokham Nonava
- */
 public class EngineSetOptionCommand implements IEngineCommand {
 
-	public final String name;
-	public final String value;
-	
-	public EngineSetOptionCommand(String name, String value) {
-		if (name == null) throw new IllegalArgumentException();
-		
-		this.name = name;
-		this.value = value;
-	}
+    public final String name;
+    public final String value;
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public EngineSetOptionCommand(String name, String value) {
+        Objects.requireNonNull(name);
+
+        this.name = name;
+        this.value = value;
+    }
+
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

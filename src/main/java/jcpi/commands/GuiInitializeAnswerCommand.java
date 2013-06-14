@@ -18,42 +18,37 @@ package jcpi.commands;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import jcpi.IGui;
 import jcpi.data.Option;
 
-
-/**
- * GuiInitializeAnswerCommand
- *
- * @author Phokham Nonava
- */
 public class GuiInitializeAnswerCommand implements IGuiCommand {
 
-	public final String name;
-	public final String author;
-	private final List<Option> optionList = new ArrayList<Option>();
+    public final String name;
+    public final String author;
+    private final List<Option> optionList = new ArrayList<Option>();
 
-	public GuiInitializeAnswerCommand(String name, String author) {
-		if (name == null) throw new IllegalArgumentException();
-		if (author == null) throw new IllegalArgumentException();
-		
-		this.name = name;
-		this.author = author;
-	}
+    public GuiInitializeAnswerCommand(String name, String author) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(author);
 
-	public void accept(IGui v) {
-		v.visit(this);
-	}
-	
-	public Iterator<Option> optionIterator() {
-		return this.optionList.iterator();
-	}
-	
-	public void addOption(Option option) {
-		if (option == null) throw new IllegalArgumentException();
-		
-		this.optionList.add(option);
-	}
+        this.name = name;
+        this.author = author;
+    }
+
+    public void accept(IGui v) {
+        v.visit(this);
+    }
+
+    public Iterator<Option> optionIterator() {
+        return this.optionList.iterator();
+    }
+
+    public void addOption(Option option) {
+        Objects.requireNonNull(option);
+
+        this.optionList.add(option);
+    }
 
 }

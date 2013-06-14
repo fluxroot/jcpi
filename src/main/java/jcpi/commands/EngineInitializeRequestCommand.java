@@ -17,18 +17,13 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineInitializeRequestCommand
- *
- * @author Phokham Nonava
- */
 public class EngineInitializeRequestCommand implements IEngineCommand {
 
-	public EngineInitializeRequestCommand() {
-	}
+    public EngineInitializeRequestCommand() {
+    }
 
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

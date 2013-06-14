@@ -16,170 +16,165 @@
 package jcpi.commands;
 
 import java.util.List;
+import java.util.Objects;
 
 import jcpi.IGui;
 import jcpi.data.GenericMove;
 import jcpi.data.GenericScore;
 
-
-/**
- * GuiInformationCommand
- *
- * @author Phokham Nonava
- */
 public class GuiInformationCommand implements IGuiCommand {
 
-	private Integer depth = null;
-	private Integer maxDepth = null;
-	private Long time = null;
-	private Long nodes = null;
-	private List<GenericMove> moveList = null;
-	private Integer pvNumber = null;
-	private Integer centipawns = null;
-	private Integer mate = null;
-	private GenericScore value = null;
-	private GenericMove currentMove = null;
-	private Integer currentMoveNumber = null;
-	private Integer hash = null;
-	private Long nps = null;
-	private String string = null;
-	private List<GenericMove> refutationList = null;
-	
-	public GuiInformationCommand() {
-	}
-	
-	public void accept(IGui v) {
-		v.visit(this);
-	}
+    private Integer depth = null;
+    private Integer maxDepth = null;
+    private Long time = null;
+    private Long nodes = null;
+    private List<GenericMove> moveList = null;
+    private Integer pvNumber = null;
+    private Integer centipawns = null;
+    private Integer mate = null;
+    private GenericScore value = null;
+    private GenericMove currentMove = null;
+    private Integer currentMoveNumber = null;
+    private Integer hash = null;
+    private Long nps = null;
+    private String string = null;
+    private List<GenericMove> refutationList = null;
 
-	public Integer getDepth() {
-		return this.depth;
-	}
-	
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
-	
-	public Integer getMaxDepth() {
-		return this.maxDepth;
-	}
-	
-	public void setMaxDepth(int maxDepth) {
-		this.maxDepth = maxDepth;
-	}
-	
-	public Long getTime() {
-		return this.time;
-	}
-	
-	public void setTime(long time) {
-		this.time = time;
-	}
-	
-	public Long getNodes() {
-		return this.nodes ;
-	}
-	
-	public void setNodes(long nodes) {
-		this.nodes = nodes;
-	}
-	
-	public List<GenericMove> getMoveList() {
-		return this.moveList;
-	}
-	
-	public void setMoveList(List<GenericMove> moveList) {
-		if (moveList == null) throw new IllegalArgumentException();
+    public GuiInformationCommand() {
+    }
 
-		this.moveList = moveList;
-	}
-	
-	public Integer getPvNumber() {
-		return this.pvNumber;
-	}
-	
-	public void setPvNumber(int pvNumber) {
-		this.pvNumber = pvNumber;
-	}
+    public void accept(IGui v) {
+        v.visit(this);
+    }
 
-	public Integer getCentipawns() {
-		return this.centipawns;
-	}
-	
-	public void setCentipawns(int centipawns) {
-		this.centipawns = centipawns;
-	}
-	
-	public Integer getMate() {
-		return this.mate;
-	}
-	
-	public void setMate(int mate) {
-		this.mate = mate;
-	}
-	
-	public GenericScore getValue() {
-		return this.value;
-	}
-	
-	public void setValue(GenericScore value) {
-		if (value == null) throw new IllegalArgumentException();
+    public Integer getDepth() {
+        return this.depth;
+    }
 
-		this.value = value;
-	}
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
 
-	public GenericMove getCurrentMove() {
-		return this.currentMove;
-	}
-	
-	public void setCurrentMove(GenericMove currentMove) {
-		if (currentMove == null) throw new IllegalArgumentException();
+    public Integer getMaxDepth() {
+        return this.maxDepth;
+    }
 
-		this.currentMove = currentMove;
-	}
-	
-	public Integer getCurrentMoveNumber() {
-		return this.currentMoveNumber;
-	}
-	
-	public void setCurrentMoveNumber(int currentMoveNumber) {
-		this.currentMoveNumber = currentMoveNumber;
-	}
-	
-	public Integer getHash() {
-		return this.hash;
-	}
-	
-	public void setHash(int hash) {
-		this.hash = hash;
-	}
-	
-	public Long getNps() {
-		return this.nps;
-	}
-	
-	public void setNps(long nps) {
-		this.nps = nps;
-	}
-	
-	public String getString() {
-		return this.string ;
-	}
-	
-	public void setString(String string) {
-		if (string == null) throw new IllegalArgumentException();
+    public void setMaxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+    }
 
-		this.string = string;
-	}
-	
-	public List<GenericMove> getRefutationList() {
-		return this.refutationList;
-	}
-	
-	public void setRefutationList(List<GenericMove> refutationList) {
-		if (refutationList == null) throw new IllegalArgumentException();
+    public Long getTime() {
+        return this.time;
+    }
 
-		this.refutationList = refutationList;
-	}
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public Long getNodes() {
+        return this.nodes;
+    }
+
+    public void setNodes(long nodes) {
+        this.nodes = nodes;
+    }
+
+    public List<GenericMove> getMoveList() {
+        return this.moveList;
+    }
+
+    public void setMoveList(List<GenericMove> moveList) {
+        Objects.requireNonNull(moveList);
+
+        this.moveList = moveList;
+    }
+
+    public Integer getPvNumber() {
+        return this.pvNumber;
+    }
+
+    public void setPvNumber(int pvNumber) {
+        this.pvNumber = pvNumber;
+    }
+
+    public Integer getCentipawns() {
+        return this.centipawns;
+    }
+
+    public void setCentipawns(int centipawns) {
+        this.centipawns = centipawns;
+    }
+
+    public Integer getMate() {
+        return this.mate;
+    }
+
+    public void setMate(int mate) {
+        this.mate = mate;
+    }
+
+    public GenericScore getValue() {
+        return this.value;
+    }
+
+    public void setValue(GenericScore value) {
+        Objects.requireNonNull(value);
+
+        this.value = value;
+    }
+
+    public GenericMove getCurrentMove() {
+        return this.currentMove;
+    }
+
+    public void setCurrentMove(GenericMove currentMove) {
+        Objects.requireNonNull(currentMove);
+
+        this.currentMove = currentMove;
+    }
+
+    public Integer getCurrentMoveNumber() {
+        return this.currentMoveNumber;
+    }
+
+    public void setCurrentMoveNumber(int currentMoveNumber) {
+        this.currentMoveNumber = currentMoveNumber;
+    }
+
+    public Integer getHash() {
+        return this.hash;
+    }
+
+    public void setHash(int hash) {
+        this.hash = hash;
+    }
+
+    public Long getNps() {
+        return this.nps;
+    }
+
+    public void setNps(long nps) {
+        this.nps = nps;
+    }
+
+    public String getString() {
+        return this.string;
+    }
+
+    public void setString(String string) {
+        Objects.requireNonNull(string);
+
+        this.string = string;
+    }
+
+    public List<GenericMove> getRefutationList() {
+        return this.refutationList;
+    }
+
+    public void setRefutationList(List<GenericMove> refutationList) {
+        Objects.requireNonNull(refutationList);
+
+        this.refutationList = refutationList;
+    }
 
 }

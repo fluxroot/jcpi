@@ -15,25 +15,22 @@
 */
 package jcpi.commands;
 
+import java.util.Objects;
+
 import jcpi.IGui;
 
-/**
- * GuiReadyAnswerCommand
- *
- * @author Phokham Nonava
- */
 public class GuiReadyAnswerCommand implements IGuiCommand {
 
-	public final String token;
+    public final String token;
 
-	public GuiReadyAnswerCommand(String token) {
-		if (token == null) throw new IllegalArgumentException();
-		
-		this.token = token;
-	}
-	
-	public void accept(IGui v) {
-		v.visit(this);
-	}
+    public GuiReadyAnswerCommand(String token) {
+        Objects.requireNonNull(token);
+
+        this.token = token;
+    }
+
+    public void accept(IGui v) {
+        v.visit(this);
+    }
 
 }

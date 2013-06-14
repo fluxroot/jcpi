@@ -17,18 +17,13 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineNewGameCommand
- *
- * @author Phokham Nonava
- */
 public class EngineNewGameCommand implements IEngineCommand {
 
-	public EngineNewGameCommand() {
-	}
-	
-	public void accept(IEngine v) {
-		v.visit(this);
-	}
+    public EngineNewGameCommand() {
+    }
+
+    public void accept(IEngine v) {
+        v.visit(this);
+    }
 
 }

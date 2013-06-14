@@ -18,14 +18,9 @@ package jcpi;
 import jcpi.commands.IEngineCommand;
 import jcpi.commands.IGuiCommand;
 
-/**
- * IGuiProtocol
- * 
- * @author Phokham Nonava
- */
 public interface IGuiProtocol {
 
-	public abstract void send(IEngineCommand command) throws ProtocolException;
-	public abstract IGuiCommand receiveGuiCommand() throws ProtocolException;
+    void send(IEngineCommand command) throws ProtocolException;
+    IGuiCommand receiveGuiCommand() throws ProtocolException;
 
 }

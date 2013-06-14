@@ -15,54 +15,51 @@
 */
 package jcpi.data;
 
-/**
- * GenericCastling
- *
- * @author Phokham Nonava
- */
+import java.util.Objects;
+
 public enum GenericCastling {
 
-	KINGSIDE("O-O", 'K'),
-	QUEENSIDE("O-O-O", 'Q');
-	
-	private final String longToken;
-	private final char token;
+    KINGSIDE("O-O", 'K'),
+    QUEENSIDE("O-O-O", 'Q');
 
-	private GenericCastling(String longToken, char token) {
-		this.longToken = longToken;
-		this.token = token;
-	}
-	
-	public static GenericCastling valueOf(char input) {
-		for (GenericCastling castling: values()) {
-			if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
-				return castling;
-			}
-		}
-		
-		return null;
-	}
+    private final String longToken;
+    private final char token;
 
-	public static GenericCastling valueOfLongToken(String input) {
-		if (input == null) throw new IllegalArgumentException();
+    private GenericCastling(String longToken, char token) {
+        this.longToken = longToken;
+        this.token = token;
+    }
 
-		for (GenericCastling castling: values()) {
-			if (castling.longToken.equalsIgnoreCase(input)) {
-				return castling;
-			}
-		}
-		
-		return null;
-	}
+    public static GenericCastling valueOf(char input) {
+        for (GenericCastling castling: values()) {
+            if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
+                return castling;
+            }
+        }
 
-	public String toLongToken() {
-		return this.longToken;
-	}
+        return null;
+    }
 
-	public char toChar(GenericColor color) {
-		if (color == null) throw new IllegalArgumentException();
+    public static GenericCastling valueOfLongToken(String input) {
+        Objects.requireNonNull(input);
 
-		return color.transform(this.token);
-	}
+        for (GenericCastling castling: values()) {
+            if (castling.longToken.equalsIgnoreCase(input)) {
+                return castling;
+            }
+        }
+
+        return null;
+    }
+
+    public String toLongToken() {
+        return this.longToken;
+    }
+
+    public char toChar(GenericColor color) {
+        Objects.requireNonNull(color);
+
+        return color.transform(this.token);
+    }
 
 }

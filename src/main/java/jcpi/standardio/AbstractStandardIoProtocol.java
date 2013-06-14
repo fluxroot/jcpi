@@ -17,48 +17,43 @@ package jcpi.standardio;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import jcpi.IGui;
 import jcpi.commands.IEngineCommand;
 
-
-/**
- * AbstractStandardIoProtocol
- *
- * @author Phokham Nonava
- */
 public abstract class AbstractStandardIoProtocol implements IGui {
 
-	/**
-	 * The standard output.
-	 */
-	protected final PrintStream writer;
+    /**
+     * The standard output.
+     */
+    protected final PrintStream writer;
 
-	/**
-	 * The engine command queue.
-	 */
-	protected final Queue<IEngineCommand> queue;
+    /**
+     * The engine command queue.
+     */
+    protected final Queue<IEngineCommand> queue;
 
-	/**
-	 * Creates a new AbstractStandardIoProtocol.
-	 * 
-	 * @param writer the standard output.
-	 * @param queue the engine command queue.
-	 */
-	public AbstractStandardIoProtocol(PrintStream writer, Queue<IEngineCommand> queue) {
-		if (writer == null) throw new IllegalArgumentException();
-		if (queue == null) throw new IllegalArgumentException();
+    /**
+     * Creates a new AbstractStandardIoProtocol.
+     *
+     * @param writer the standard output.
+     * @param queue the engine command queue.
+     */
+    public AbstractStandardIoProtocol(PrintStream writer, Queue<IEngineCommand> queue) {
+        Objects.requireNonNull(writer);
+        Objects.requireNonNull(queue);
 
-		this.writer = writer;
-		this.queue = queue;
-	}
+        this.writer = writer;
+        this.queue = queue;
+    }
 
-	/**
-	 * Parse the list of tokens.
-	 * 
-	 * @param tokenList the list of tokens.
-	 */
-	protected abstract void parse(List<String> tokenList);
+    /**
+     * Parse the list of tokens.
+     *
+     * @param tokenList the list of tokens.
+     */
+    protected abstract void parse(List<String> tokenList);
 
 }

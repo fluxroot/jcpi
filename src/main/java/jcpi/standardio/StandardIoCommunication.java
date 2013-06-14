@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import jcpi.AbstractCommunication;
@@ -30,124 +31,118 @@ import jcpi.commands.EngineQuitCommand;
 import jcpi.commands.IEngineCommand;
 import jcpi.commands.IGuiCommand;
 
-
-/**
- * StandardIoCommunication
- *
- * @author Phokham Nonava
- */
 public final class StandardIoCommunication extends AbstractCommunication {
 
-	/**
-	 * The standard input.
-	 */
-	private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	
-	/**
-	 * The standard output.
-	 */
-	private final PrintStream writer = System.out;
+    /**
+     * The standard input.
+     */
+    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-	/**
-	 * The engine command queue.
-	 */
-	private final Queue<IEngineCommand> engineCommandQueue = new LinkedList<IEngineCommand>();
-	
-	/**
-	 * The protocol.
-	 */
-	private AbstractStandardIoProtocol protocol = null;
-	
-	/**
-	 * Creates a new StandardIoCommunication.
-	 */
-	public StandardIoCommunication() {
-	}
-	
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IGuiCommand)
-	 */
-	public void send(IGuiCommand command) {
-		if (command == null) throw new IllegalArgumentException();
+    /**
+     * The standard output.
+     */
+    private final PrintStream writer = System.out;
 
-		if (this.protocol != null) {
-			command.accept(this.protocol);
-		} else {
-			// Ignore command, we don't have a protocol yet
-		}
-	}
+    /**
+     * The engine command queue.
+     */
+    private final Queue<IEngineCommand> engineCommandQueue = new LinkedList<IEngineCommand>();
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jcpi.AbstractCommunication#receive()
-	 */
-	protected IEngineCommand receive() {
-		// Get the next command from the queue
-		IEngineCommand engineCommand = this.engineCommandQueue.poll();
-		while (engineCommand == null) {
-			try {
-				// Read from the standard input
-				String tokenString = this.reader.readLine();
-				if (tokenString != null) {
-					tokenString = tokenString.trim();
+    /**
+     * The protocol.
+     */
+    private AbstractStandardIoProtocol protocol = null;
 
-					// Check whether we have a protocol switch
-					AbstractStandardIoProtocol protocol = getProtocol(tokenString);
-					if (protocol != null) {
-						// Switch to the new protocol
-						this.protocol = protocol;
-					} else {
-						// We have a command here. Clean the command.
-						List<String> tokenList = Arrays.asList(tokenString.split(" "));
-						for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
-							String token = iter.next();
+    /**
+     * Creates a new StandardIoCommunication.
+     */
+    public StandardIoCommunication() {
+    }
 
-							// Remove empty tokens
-							if (token.length() == 0) {
-								iter.remove();
-							}
-						}
+    /* (non-Javadoc)
+     * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IGuiCommand)
+     */
+    public void send(IGuiCommand command) {
+        Objects.requireNonNull(command);
 
-						// Try to parse the command.
-						// this.protocol.parse() modifies this.engineCommandQueue.
-						if (this.protocol != null) {
-							this.protocol.parse(tokenList);
-						} else {
-							// Ignore command, we don't have a protocol yet
-						}
-					}
+        if (this.protocol != null) {
+            command.accept(this.protocol);
+        } else {
+            // Ignore command, we don't have a protocol yet
+        }
+    }
 
-					// Get the next command from the queue
-					engineCommand = this.engineCommandQueue.poll();
-				} else {
-					// Something's wrong with the communication channel
-					engineCommand = new EngineQuitCommand();
-				}
-			} catch (IOException e) {
-				// Something's wrong with the communication channel
-				engineCommand = new EngineQuitCommand();
-			}
-		}
-		
-		assert engineCommand != null;
-		return engineCommand;
-	}
+    /* (non-Javadoc)
+     * @see net.sourceforge.jcpi.AbstractCommunication#receive()
+     */
+    protected IEngineCommand receive() {
+        // Get the next command from the queue
+        IEngineCommand engineCommand = this.engineCommandQueue.poll();
+        while (engineCommand == null) {
+            try {
+                // Read from the standard input
+                String tokenString = this.reader.readLine();
+                if (tokenString != null) {
+                    tokenString = tokenString.trim();
 
-	/**
-	 * Checks the token string on whether we have a protocol switch.
-	 * 
-	 * @param token the token.
-	 * @return the new protocol or null if there's no protocol switch.
-	 */
-	private AbstractStandardIoProtocol getProtocol(String token) {
-		assert token != null;
+                    // Check whether we have a protocol switch
+                    AbstractStandardIoProtocol protocol = getProtocol(tokenString);
+                    if (protocol != null) {
+                        // Switch to the new protocol
+                        this.protocol = protocol;
+                    } else {
+                        // We have a command here. Clean the command.
+                        List<String> tokenList = Arrays.asList(tokenString.split(" "));
+                        for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
+                            String token = iter.next();
 
-		AbstractStandardIoProtocol protocol = null;
-		
-		if (token.equalsIgnoreCase("uci")) {
-			protocol = new UciProtocol(this.writer, this.engineCommandQueue);
-		}
-		
-		return protocol;
-	}
+                            // Remove empty tokens
+                            if (token.length() == 0) {
+                                iter.remove();
+                            }
+                        }
+
+                        // Try to parse the command.
+                        // this.protocol.parse() modifies this.engineCommandQueue.
+                        if (this.protocol != null) {
+                            this.protocol.parse(tokenList);
+                        } else {
+                            // Ignore command, we don't have a protocol yet
+                        }
+                    }
+
+                    // Get the next command from the queue
+                    engineCommand = this.engineCommandQueue.poll();
+                } else {
+                    // Something's wrong with the communication channel
+                    engineCommand = new EngineQuitCommand();
+                }
+            } catch (IOException e) {
+                // Something's wrong with the communication channel
+                engineCommand = new EngineQuitCommand();
+            }
+        }
+
+        assert engineCommand != null;
+        return engineCommand;
+    }
+
+    /**
+     * Checks the token string on whether we have a protocol switch.
+     *
+     * @param token the token.
+     * @return the new protocol or null if there's no protocol switch.
+     */
+    private AbstractStandardIoProtocol getProtocol(String token) {
+        assert token != null;
+
+        AbstractStandardIoProtocol protocol = null;
+
+        if (token.equalsIgnoreCase("uci")) {
+            protocol = new UciProtocol(this.writer, this.engineCommandQueue);
+        }
+
+        return protocol;
+    }
 
 }
