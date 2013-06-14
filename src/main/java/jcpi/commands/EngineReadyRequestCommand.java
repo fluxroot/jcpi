@@ -15,13 +15,10 @@
 */
 package jcpi.commands;
 
+import java.util.Objects;
+
 import jcpi.IEngine;
 
-/**
- * EngineReadyRequestCommand
- *
- * @author Phokham Nonava
- */
 public class EngineReadyRequestCommand implements IEngineCommand {
 
     public final String token;
@@ -31,7 +28,7 @@ public class EngineReadyRequestCommand implements IEngineCommand {
     }
 
     public EngineReadyRequestCommand(String token) {
-        if (token == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(token);
 
         this.token = token;
     }

@@ -21,11 +21,6 @@ import jcpi.data.GenericFile;
 
 import org.junit.Test;
 
-/**
- * GenericFileTest
- *
- * @author Phokham Nonava
- */
 public class GenericFileTest {
 
     @Test

@@ -21,11 +21,6 @@ import org.junit.Test;
 
 import jcpi.data.GenericChessman;
 
-/**
- * GenericPieceTest
- *
- * @author Phokham Nonava
- */
 public class GenericPieceTest {
 
     @Test

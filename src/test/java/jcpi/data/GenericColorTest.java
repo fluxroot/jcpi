@@ -19,11 +19,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/**
- * GenericColorTest
- *
- * @author Phokham Nonava
- */
 public class GenericColorTest {
 
     @Test

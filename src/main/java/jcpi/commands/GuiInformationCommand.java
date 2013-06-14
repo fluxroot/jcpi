@@ -16,17 +16,12 @@
 package jcpi.commands;
 
 import java.util.List;
+import java.util.Objects;
 
 import jcpi.IGui;
 import jcpi.data.GenericMove;
 import jcpi.data.GenericScore;
 
-
-/**
- * GuiInformationCommand
- *
- * @author Phokham Nonava
- */
 public class GuiInformationCommand implements IGuiCommand {
 
     private Integer depth = null;
@@ -77,7 +72,7 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public Long getNodes() {
-        return this.nodes ;
+        return this.nodes;
     }
 
     public void setNodes(long nodes) {
@@ -89,7 +84,7 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public void setMoveList(List<GenericMove> moveList) {
-        if (moveList == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(moveList);
 
         this.moveList = moveList;
     }
@@ -123,7 +118,7 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public void setValue(GenericScore value) {
-        if (value == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(value);
 
         this.value = value;
     }
@@ -133,7 +128,7 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public void setCurrentMove(GenericMove currentMove) {
-        if (currentMove == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(currentMove);
 
         this.currentMove = currentMove;
     }
@@ -163,11 +158,11 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public String getString() {
-        return this.string ;
+        return this.string;
     }
 
     public void setString(String string) {
-        if (string == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(string);
 
         this.string = string;
     }
@@ -177,7 +172,7 @@ public class GuiInformationCommand implements IGuiCommand {
     }
 
     public void setRefutationList(List<GenericMove> refutationList) {
-        if (refutationList == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(refutationList);
 
         this.refutationList = refutationList;
     }

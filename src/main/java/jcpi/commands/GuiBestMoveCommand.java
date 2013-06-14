@@ -18,11 +18,6 @@ package jcpi.commands;
 import jcpi.IGui;
 import jcpi.data.GenericMove;
 
-/**
- * GuiBestMoveCommand
- *
- * @author Phokham Nonava
- */
 public class GuiBestMoveCommand implements IGuiCommand {
 
     public final GenericMove bestMove;

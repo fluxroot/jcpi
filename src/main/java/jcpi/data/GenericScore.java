@@ -15,11 +15,6 @@
 */
 package jcpi.data;
 
-/**
- * GenericScore
- *
- * @author Phokham Nonava
- */
 public enum GenericScore {
 
     EXACT,

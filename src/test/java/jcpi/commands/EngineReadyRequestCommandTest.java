@@ -20,11 +20,6 @@ import jcpi.commands.EngineReadyRequestCommand;
 
 import org.junit.Test;
 
-/**
- * EngineReadyRequestCommandTest
- *
- * @author Phokham Nonava
- */
 public class EngineReadyRequestCommandTest {
 
     @Test

@@ -23,11 +23,6 @@ import jcpi.data.IllegalNotationException;
 
 import org.junit.Test;
 
-/**
- * GenericMoveTest
- *
- * @author Phokham Nonava
- */
 public class GenericMoveTest {
 
     @Test

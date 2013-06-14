@@ -17,11 +17,6 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EnginePonderHitCommand
- *
- * @author Phokham Nonava
- */
 public class EnginePonderHitCommand implements IEngineCommand {
 
     public EnginePonderHitCommand() {

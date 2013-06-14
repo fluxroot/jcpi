@@ -15,11 +15,6 @@
 */
 package jcpi.data;
 
-/**
- * GenericFile
- *
- * @author Phokham Nonava
- */
 public enum GenericFile {
 
     Fa('a'),

@@ -17,11 +17,6 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * EngineDebugCommand
- *
- * @author Phokham Nonava
- */
 public class EngineDebugCommand implements IEngineCommand {
 
     public final boolean debug;

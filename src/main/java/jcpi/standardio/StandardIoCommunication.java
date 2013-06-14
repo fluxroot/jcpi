@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import jcpi.AbstractCommunication;
@@ -30,12 +31,6 @@ import jcpi.commands.EngineQuitCommand;
 import jcpi.commands.IEngineCommand;
 import jcpi.commands.IGuiCommand;
 
-
-/**
- * StandardIoCommunication
- *
- * @author Phokham Nonava
- */
 public final class StandardIoCommunication extends AbstractCommunication {
 
     /**
@@ -68,7 +63,7 @@ public final class StandardIoCommunication extends AbstractCommunication {
      * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IGuiCommand)
      */
     public void send(IGuiCommand command) {
-        if (command == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(command);
 
         if (this.protocol != null) {
             command.accept(this.protocol);

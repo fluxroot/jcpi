@@ -21,11 +21,6 @@ import jcpi.data.IllegalNotationException;
 
 import org.junit.Test;
 
-/**
- * GenericBoardTest
- *
- * @author Phokham Nonava
- */
 public class GenericBoardTest {
 
     @Test

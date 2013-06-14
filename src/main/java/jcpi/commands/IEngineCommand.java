@@ -17,13 +17,8 @@ package jcpi.commands;
 
 import jcpi.IEngine;
 
-/**
- * IEngineCommand
- *
- * @author Phokham Nonava
- */
 public interface IEngineCommand {
 
-    public abstract void accept(IEngine v);
+    void accept(IEngine v);
 
 }

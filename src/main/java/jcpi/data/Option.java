@@ -16,12 +16,8 @@
 package jcpi.data;
 
 import java.util.List;
+import java.util.Objects;
 
-/**
- * Option
- *
- * @author Phokham Nonava
- */
 public class Option {
 
     public final String name;
@@ -34,8 +30,8 @@ public class Option {
     private String value = null;
 
     public Option(String name, String type, String defaultValue, String minValue, String maxValue, List<String> varValues) {
-        if (name == null) throw new IllegalArgumentException();
-        if (type == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(type);
 
         this.name = name;
         this.type = type;
@@ -52,7 +48,7 @@ public class Option {
     }
 
     public void setValue(String value) {
-        if (value == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(value);
 
         this.value = value;
     }

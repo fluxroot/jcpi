@@ -15,11 +15,6 @@
 */
 package jcpi;
 
-/**
- * ProtocolException
- *
- * @author Phokham Nonava
- */
 public class ProtocolException extends Exception {
 
     private static final long serialVersionUID = 1L;

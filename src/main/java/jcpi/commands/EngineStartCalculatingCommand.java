@@ -18,17 +18,12 @@ package jcpi.commands;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jcpi.IEngine;
 import jcpi.data.GenericColor;
 import jcpi.data.GenericMove;
 
-
-/**
- * EngineStartCalculatingCommand
- *
- * @author Phokham Nonava
- */
 public class EngineStartCalculatingCommand implements IEngineCommand {
 
     private List<GenericMove> searchMoveList = null;
@@ -54,7 +49,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setSearchMoveList(List<GenericMove> searchMoveList) {
-        if (searchMoveList == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(searchMoveList);
 
         this.searchMoveList = searchMoveList;
     }
@@ -72,8 +67,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setClock(GenericColor side, Long time) {
-        if (side == null) throw new IllegalArgumentException();
-        if (time == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(side);
+        Objects.requireNonNull(time);
 
         this.clock.put(side, time);
     }
@@ -83,8 +78,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setClockIncrement(GenericColor side, Long time) {
-        if (side == null) throw new IllegalArgumentException();
-        if (time == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(side);
+        Objects.requireNonNull(time);
 
         this.clockIncrement.put(side, time);
     }
@@ -94,7 +89,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMovesToGo(Integer movesToGo) {
-        if (movesToGo == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(movesToGo);
 
         this.movestogo = movesToGo;
     }
@@ -104,7 +99,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setDepth(Integer depth) {
-        if (depth == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(depth);
 
         this.depth = depth;
     }
@@ -114,7 +109,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setNodes(Long nodes) {
-        if (nodes == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(nodes);
 
         this.nodes = nodes;
     }
@@ -124,7 +119,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMate(Integer mate) {
-        if (mate == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(mate);
 
         this.mate = mate;
     }
@@ -134,7 +129,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMoveTime(Long moveTime) {
-        if (moveTime == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(moveTime);
 
         this.movetime = moveTime;
     }

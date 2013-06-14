@@ -28,10 +28,10 @@ import jcpi.commands.GuiReadyAnswerCommand;
  */
 public interface IGui {
 
-    public abstract void visit(GuiInitializeAnswerCommand command);
-    public abstract void visit(GuiReadyAnswerCommand command);
-    public abstract void visit(GuiBestMoveCommand command);
-    public abstract void visit(GuiInformationCommand command);
-    public abstract void visit(GuiQuitCommand command);
+    void visit(GuiInitializeAnswerCommand command);
+    void visit(GuiReadyAnswerCommand command);
+    void visit(GuiBestMoveCommand command);
+    void visit(GuiInformationCommand command);
+    void visit(GuiQuitCommand command);
 
 }

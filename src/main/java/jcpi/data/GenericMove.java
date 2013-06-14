@@ -15,11 +15,8 @@
 */
 package jcpi.data;
 
-/**
- * GenericMove
- *
- * @author Phokham Nonava
- */
+import java.util.Objects;
+
 public class GenericMove {
 
     public final GenericPosition from;
@@ -31,8 +28,8 @@ public class GenericMove {
     }
 
     public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
-        if (from == null) throw new IllegalArgumentException();
-        if (to == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
         if (promotion != null && !promotion.isValidPromotion()) throw new IllegalArgumentException();
 
         this.from = from;
@@ -41,7 +38,7 @@ public class GenericMove {
     }
 
     public GenericMove(String notation) throws IllegalNotationException {
-        if (notation == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(notation);
 
         // Clean whitespace at the beginning and at the end
         notation = notation.trim();

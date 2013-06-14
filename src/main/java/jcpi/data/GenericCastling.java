@@ -15,11 +15,8 @@
 */
 package jcpi.data;
 
-/**
- * GenericCastling
- *
- * @author Phokham Nonava
- */
+import java.util.Objects;
+
 public enum GenericCastling {
 
     KINGSIDE("O-O", 'K'),
@@ -44,7 +41,7 @@ public enum GenericCastling {
     }
 
     public static GenericCastling valueOfLongToken(String input) {
-        if (input == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(input);
 
         for (GenericCastling castling: values()) {
             if (castling.longToken.equalsIgnoreCase(input)) {
@@ -60,7 +57,7 @@ public enum GenericCastling {
     }
 
     public char toChar(GenericColor color) {
-        if (color == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
 
         return color.transform(this.token);
     }

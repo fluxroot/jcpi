@@ -15,11 +15,6 @@
 */
 package jcpi.data;
 
-/**
- * GenericRank
- *
- * @author Phokham Nonava
- */
 public enum GenericRank {
 
     R1('1'),

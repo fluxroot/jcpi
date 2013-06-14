@@ -15,11 +15,6 @@
 */
 package jcpi.data;
 
-/**
- * IllegalNotationException
- *
- * @author Phokham Nonava
- */
 public class IllegalNotationException extends Exception {
 
     private static final long serialVersionUID = 1L;

@@ -20,11 +20,6 @@ import jcpi.commands.EngineDebugCommand;
 
 import org.junit.Test;
 
-/**
- * EngineDebugCommandTest
- *
- * @author Phokham Nonava
- */
 public class EngineDebugCommandTest {
 
     @Test

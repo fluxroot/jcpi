@@ -15,11 +15,8 @@
 */
 package jcpi.data;
 
-/**
- * GenericChessman
- *
- * @author Phokham Nonava
- */
+import java.util.Objects;
+
 public enum GenericChessman {
 
     PAWN('P'),
@@ -76,7 +73,7 @@ public enum GenericChessman {
     }
 
     public char toChar(GenericColor color) {
-        if (color == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
 
         return color.transform(this.token);
     }

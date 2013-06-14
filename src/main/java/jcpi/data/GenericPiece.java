@@ -17,12 +17,8 @@ package jcpi.data;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
-/**
- * GenericPiece
- *
- * @author Phokham Nonava
- */
 public enum GenericPiece {
 
     WHITEPAWN(GenericColor.WHITE, GenericChessman.PAWN),
@@ -58,8 +54,8 @@ public enum GenericPiece {
     }
 
     public static GenericPiece valueOf(GenericColor color, GenericChessman chessman) {
-        if (color == null) throw new IllegalArgumentException();
-        if (chessman == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
+        Objects.requireNonNull(chessman);
 
         return allPieces.get(color).get(chessman);
     }

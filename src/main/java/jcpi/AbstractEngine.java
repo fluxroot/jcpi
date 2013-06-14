@@ -15,6 +15,8 @@
 */
 package jcpi;
 
+import java.util.Objects;
+
 import jcpi.commands.EngineQuitCommand;
 import jcpi.commands.IEngineCommand;
 
@@ -47,7 +49,7 @@ public abstract class AbstractEngine implements IEngine {
      * @param communication the AbstractCommunication.
      */
     public AbstractEngine(AbstractCommunication communication) {
-        if (communication == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(communication);
 
         this.communication = communication;
     }
@@ -68,7 +70,7 @@ public abstract class AbstractEngine implements IEngine {
      * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
      */
     public final void visit(EngineQuitCommand command) {
-        if (command == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(command);
 
         quit();
         this.running = false;

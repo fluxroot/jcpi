@@ -18,16 +18,11 @@ package jcpi.commands;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import jcpi.IGui;
 import jcpi.data.Option;
 
-
-/**
- * GuiInitializeAnswerCommand
- *
- * @author Phokham Nonava
- */
 public class GuiInitializeAnswerCommand implements IGuiCommand {
 
     public final String name;
@@ -35,8 +30,8 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
     private final List<Option> optionList = new ArrayList<Option>();
 
     public GuiInitializeAnswerCommand(String name, String author) {
-        if (name == null) throw new IllegalArgumentException();
-        if (author == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(author);
 
         this.name = name;
         this.author = author;
@@ -51,7 +46,7 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
     }
 
     public void addOption(Option option) {
-        if (option == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(option);
 
         this.optionList.add(option);
     }

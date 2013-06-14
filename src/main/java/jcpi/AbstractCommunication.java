@@ -18,11 +18,6 @@ package jcpi;
 import jcpi.commands.IEngineCommand;
 import jcpi.commands.IGuiCommand;
 
-/**
- * AbstractCommunication
- *
- * @author Phokham Nonava
- */
 public abstract class AbstractCommunication {
 
     /**

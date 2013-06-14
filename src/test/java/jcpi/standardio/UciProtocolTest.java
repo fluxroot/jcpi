@@ -31,11 +31,6 @@ import jcpi.standardio.UciProtocol;
 
 import org.junit.Test;
 
-/**
- * UciProtocolTest
- *
- * @author Phokham Nonava
- */
 public class UciProtocolTest {
 
     private Queue<IEngineCommand> queue = new LinkedList<IEngineCommand>();

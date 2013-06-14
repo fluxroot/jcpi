@@ -17,17 +17,12 @@ package jcpi.standardio;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import jcpi.IGui;
 import jcpi.commands.IEngineCommand;
 
-
-/**
- * AbstractStandardIoProtocol
- *
- * @author Phokham Nonava
- */
 public abstract class AbstractStandardIoProtocol implements IGui {
 
     /**
@@ -47,8 +42,8 @@ public abstract class AbstractStandardIoProtocol implements IGui {
      * @param queue the engine command queue.
      */
     public AbstractStandardIoProtocol(PrintStream writer, Queue<IEngineCommand> queue) {
-        if (writer == null) throw new IllegalArgumentException();
-        if (queue == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(writer);
+        Objects.requireNonNull(queue);
 
         this.writer = writer;
         this.queue = queue;

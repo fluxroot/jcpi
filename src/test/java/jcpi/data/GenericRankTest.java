@@ -21,11 +21,6 @@ import jcpi.data.GenericRank;
 
 import org.junit.Test;
 
-/**
- * GenericRankTest
- *
- * @author Phokham Nonava
- */
 public class GenericRankTest {
 
     @Test

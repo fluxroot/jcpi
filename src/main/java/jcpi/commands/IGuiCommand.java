@@ -17,13 +17,8 @@ package jcpi.commands;
 
 import jcpi.IGui;
 
-/**
- * IGuiCommand
- *
- * @author Phokham Nonava
- */
 public interface IGuiCommand {
 
-    public abstract void accept(IGui v);
+    void accept(IGui v);
 
 }

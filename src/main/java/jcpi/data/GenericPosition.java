@@ -17,12 +17,8 @@ package jcpi.data;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
-/**
- * GenericPosition
- *
- * @author Phokham Nonava
- */
 public enum GenericPosition {
 
     a1(GenericFile.Fa, GenericRank.R1),
@@ -110,8 +106,8 @@ public enum GenericPosition {
     }
 
     public static GenericPosition valueOf(GenericFile file, GenericRank rank) {
-        if (file == null) throw new IllegalArgumentException();
-        if (rank == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(file);
+        Objects.requireNonNull(rank);
 
         return allPositions.get(file).get(rank);
     }

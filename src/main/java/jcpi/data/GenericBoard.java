@@ -22,12 +22,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-/**
- * GenericBoard
- *
- * @author Phokham Nonava
- */
 public class GenericBoard {
 
     public static final int STANDARDSETUP = 518;
@@ -197,7 +193,7 @@ public class GenericBoard {
 
     public GenericBoard(String notation) throws IllegalNotationException {
         this();
-        if (notation == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(notation);
 
         parse(notation);
     }
@@ -237,14 +233,14 @@ public class GenericBoard {
     }
 
     public GenericPiece getPiece(GenericPosition position) {
-        if (position == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(position);
 
         return this.board.get(position);
     }
 
     public void setPiece(GenericPiece piece, GenericPosition position) {
-        if (piece == null) throw new IllegalArgumentException();
-        if (position == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(piece);
+        Objects.requireNonNull(position);
 
         if (piece.chessman == GenericChessman.KING) {
             this.kingFile.put(piece.color, position.file);
@@ -253,15 +249,15 @@ public class GenericBoard {
     }
 
     public GenericFile getCastling(GenericColor color, GenericCastling castling) {
-        if (color == null) throw new IllegalArgumentException();
-        if (castling == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
+        Objects.requireNonNull(castling);
 
         return this.castling.get(color).get(castling);
     }
 
     public void setCastling(GenericColor color, GenericCastling castling, GenericFile file) {
-        if (color == null) throw new IllegalArgumentException();
-        if (castling == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
+        Objects.requireNonNull(castling);
 
         if (file != GenericFile.Fa && file != GenericFile.Fh) {
             this.isFrc = true;
@@ -274,7 +270,7 @@ public class GenericBoard {
     }
 
     public void setEnPassant(GenericPosition position) {
-        if (position == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(position);
 
         this.enPassant = position;
     }
@@ -284,7 +280,7 @@ public class GenericBoard {
     }
 
     public void setActiveColor(GenericColor color) {
-        if (color == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(color);
 
         this.activeColor = color;
     }

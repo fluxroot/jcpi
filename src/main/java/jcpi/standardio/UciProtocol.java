@@ -19,6 +19,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 import jcpi.commands.EngineAnalyzeCommand;
@@ -43,12 +44,6 @@ import jcpi.data.GenericMove;
 import jcpi.data.IllegalNotationException;
 import jcpi.data.Option;
 
-
-/**
- * UciProtocol
- *
- * @author Phokham Nonava
- */
 public final class UciProtocol extends AbstractStandardIoProtocol {
 
     /**
@@ -67,7 +62,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
      * @see net.sourceforge.jcpi.standardio.AbstractStandardIoProtocol#parse(java.util.List)
      */
     protected void parse(List<String> tokenList) {
-        if (tokenList == null) throw new IllegalArgumentException();
+        Objects.requireNonNull(tokenList);
 
         for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
             String token = iter.next();

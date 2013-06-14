@@ -19,11 +19,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/**
- * GenericCastlingTest
- *
- * @author Phokham Nonava
- */
 public class GenericCastlingTest {
 
     @Test

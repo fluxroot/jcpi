@@ -15,11 +15,6 @@
 */
 package jcpi.data;
 
-/**
- * GenericColor
- *
- * @author Phokham Nonava
- */
 public enum GenericColor {
 
     WHITE('w'),
