@@ -37,7 +37,7 @@ public enum GenericColor {
 				return color;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -48,13 +48,13 @@ public enum GenericColor {
 			return WHITE;
 		}
 	}
-	
+
 	public char transform(char input) {
 		if (this == WHITE) {
 			return Character.toUpperCase(input);
 		} else {
 			assert this == BLACK;
-			
+
 			return Character.toLowerCase(input);
 		}
 	}
@@ -68,7 +68,7 @@ public enum GenericColor {
 			return WHITE;
 		}
 	}
-	
+
 	public char toChar() {
 		return this.token;
 	}

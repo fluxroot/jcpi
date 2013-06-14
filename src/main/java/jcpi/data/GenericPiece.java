@@ -74,7 +74,7 @@ public enum GenericPiece {
 		if (chessman == null) {
 			return null;
 		}
-		
+
 		return valueOf(color, chessman);
 	}
 

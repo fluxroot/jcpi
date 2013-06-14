@@ -29,10 +29,10 @@ public class EngineReadyRequestCommand implements IEngineCommand {
 	public EngineReadyRequestCommand() {
 		this.token = "";
 	}
-	
+
 	public EngineReadyRequestCommand(String token) {
 		if (token == null) throw new IllegalArgumentException();
-		
+
 		this.token = token;
 	}
 

@@ -43,14 +43,14 @@ public enum GenericFile {
 				return file;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public GenericFile prev() {
 		return prev(1);
 	}
-	
+
 	public GenericFile prev(int i) {
 		if (i < 0) throw new IllegalArgumentException();
 
@@ -61,7 +61,7 @@ public enum GenericFile {
 			return null;
 		}
 	}
-	
+
 	public GenericFile next() {
 		return next(1);
 	}
@@ -76,11 +76,11 @@ public enum GenericFile {
 			return null;
 		}
 	}
-	
+
 	public char toChar() {
 		return this.token;
 	}
-	
+
 	public String toString() {
 		return Character.toString(this.token);
 	}

@@ -44,15 +44,15 @@ public class UciProtocolTest {
 		List<String> tokens = new ArrayList<String>(Arrays.asList(command.split(" ")));
 		for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
 			String token = iter.next();
-			
+
 			if (token.length() == 0) {
 				iter.remove();
 			}
 		}
-		
+
 		return tokens;
 	}
-	
+
 	@Test
 	public void testGetCommand() {
 		UciProtocol protocol = new UciProtocol(System.out, this.queue);

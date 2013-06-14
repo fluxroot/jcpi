@@ -17,7 +17,7 @@ package jcpi;
 
 /**
  * ProtocolException
- * 
+ *
  * @author Phokham Nonava
  */
 public class ProtocolException extends Exception {

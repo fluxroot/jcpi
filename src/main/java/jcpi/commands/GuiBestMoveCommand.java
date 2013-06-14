@@ -27,7 +27,7 @@ public class GuiBestMoveCommand implements IGuiCommand {
 
 	public final GenericMove bestMove;
 	public final GenericMove ponderMove;
-	
+
 	public GuiBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
 		this.bestMove = bestMove;
 		if (bestMove == null) {
@@ -37,7 +37,7 @@ public class GuiBestMoveCommand implements IGuiCommand {
 			this.ponderMove = ponderMove;
 		}
 	}
-	
+
 	public void accept(IGui v) {
 		v.visit(this);
 	}

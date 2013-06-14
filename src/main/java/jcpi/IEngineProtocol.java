@@ -20,7 +20,7 @@ import jcpi.commands.IGuiCommand;
 
 /**
  * IEngineProtocol
- * 
+ *
  * @author Phokham Nonava
  */
 public interface IEngineProtocol {

@@ -37,10 +37,10 @@ import jcpi.standardio.StandardIoCommunication;
 /**
  * This class represents your main engine. It is primarily used to communicate
  * with the framework.
- * 
+ *
  * Inherit from AbstractEngine and implement all methods. It doesn't have to be
  * final. We use final here to improve performance.
- * 
+ *
  * @author Phokham Nonava
  */
 public final class MyEngine extends AbstractEngine {
@@ -48,7 +48,7 @@ public final class MyEngine extends AbstractEngine {
 	public MyEngine(AbstractCommunication communication) {
 		// We need to call the constructor of our base class.
 		super(communication);
-		
+
 		// Do some initialization stuff here...
 	}
 
@@ -58,7 +58,7 @@ public final class MyEngine extends AbstractEngine {
 		// Choose and create a communication channel. For now there exists only
 		// an object for the standard io communication.
 		AbstractCommunication communication = new StandardIoCommunication();
-		
+
 		// Create your engine.
 		AbstractEngine engine = new MyEngine(communication);
 
@@ -69,16 +69,16 @@ public final class MyEngine extends AbstractEngine {
 	protected void quit() {
 		// Maybe do something like
 		new EngineStopCalculatingCommand().accept(this);
-		
+
 		// Cleanup stuff if you like
 	}
 
 	public void visit(EngineInitializeRequestCommand command) {
 		// Maybe it's a good idea to stop computing first...
 		new EngineStopCalculatingCommand().accept(this);
-		
+
 		// Do your initialization stuff here...
-		
+
 		// Send an initialization answer back.
 		this.communication.send(new GuiInitializeAnswerCommand("MyEngine 1.0", "Nobody"));
 	}
@@ -118,7 +118,7 @@ public final class MyEngine extends AbstractEngine {
 	public void visit(EngineNewGameCommand command) {
 		// It might be good to stop computing first...
 		new EngineStopCalculatingCommand().accept(this);
-		
+
 		// Maybe you want to clear some tables here...
 
 		// Don't start computing though!

@@ -53,7 +53,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 
 	/**
 	 * Creates a new UciProtocol.
-	 * 
+	 *
 	 * @param writer the standard output.
 	 * @param queue the engine command queue.
 	 */
@@ -62,16 +62,16 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 
 		this.queue.add(new EngineInitializeRequestCommand());
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see net.sourceforge.jcpi.standardio.AbstractStandardIoProtocol#parse(java.util.List)
 	 */
 	protected void parse(List<String> tokenList) {
 		if (tokenList == null) throw new IllegalArgumentException();
-		
+
 		for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("debug")) {
 				parseDebugCommand(iter);
 				break;
@@ -115,7 +115,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("on")) {
 				this.queue.add(new EngineDebugCommand(false, true));
 			} else if (token.equalsIgnoreCase("off")) {
@@ -133,10 +133,10 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 
 		String name = null;
 		String value = null;
-		
+
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("name") && iter.hasNext()) {
 				boolean hasValue = false;
 
@@ -151,7 +151,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 						name += " " + token;
 					}
 				}
-				
+
 				if (hasValue) {
 					if (iter.hasNext()) {
 						value = iter.next();
@@ -181,10 +181,10 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 		if (iter.hasNext()) {
 			String token = iter.next();
 			GenericBoard board = null;
-			
+
 			if (token.equalsIgnoreCase("startpos")) {
 				board = new GenericBoard(GenericBoard.STANDARDSETUP);
-				
+
 				if (iter.hasNext()) {
 					token = iter.next();
 					if (!token.equalsIgnoreCase("moves")) {
@@ -195,7 +195,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 				}
 			} else if (token.equalsIgnoreCase("fen")) {
 				String fen = "";
-				
+
 				while (iter.hasNext()) {
 					token = iter.next();
 					if (token.equalsIgnoreCase("moves")) {
@@ -211,10 +211,10 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 					error("Error in position command: illegal fen notation " + fen);
 				}
 			}
-			
+
 			if (board != null) {
 				List<GenericMove> moveList = new ArrayList<GenericMove>();
-				
+
 				try {
 					while (iter.hasNext()) {
 						token = iter.next();
@@ -232,19 +232,19 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 			error("Error in position command: no parameters specified");
 		}
 	}
-	
+
 	private void parseGoCommand(Iterator<String> iter) {
 		assert iter != null;
 
 		EngineStartCalculatingCommand engineCommand = new EngineStartCalculatingCommand();
-		
+
 		while (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("searchmoves")) {
 				if (iter.hasNext()) {
 					List<GenericMove> searchMoveList = new ArrayList<GenericMove>();
-					
+
 					try {
 						while (iter.hasNext()) {
 							token = iter.next();
@@ -252,7 +252,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 							GenericMove move = new GenericMove(token);
 							searchMoveList.add(move);
 						}
-						
+
 						engineCommand.setSearchMoveList(searchMoveList);
 					} catch (IllegalNotationException e) {
 						error("Error in position command: illegal move notation " + token);
@@ -403,7 +403,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 				engineCommand.setInfinite();
 			}
 		}
-		
+
 		if (engineCommand != null) {
 			this.queue.add(engineCommand);
 		}
@@ -465,13 +465,13 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 
 	public void visit(GuiInformationCommand command) {
 		String infoCommand = "info";
-		
+
 		if (command.getPvNumber() != null) {
 			infoCommand += " multipv " + command.getPvNumber().toString();
 		}
 		if (command.getDepth() != null) {
 			infoCommand += " depth " + command.getDepth().toString();
-			
+
 			if (command.getMaxDepth() != null) {
 				infoCommand += " seldepth " + command.getMaxDepth().toString();
 			}
@@ -530,7 +530,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
 		if (command.getString() != null) {
 			infoCommand += " string " + command.getString();
 		}
-		
+
 		this.writer.println(infoCommand);
 	}
 

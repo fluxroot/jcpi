@@ -26,7 +26,7 @@ public class EngineNewGameCommand implements IEngineCommand {
 
 	public EngineNewGameCommand() {
 	}
-	
+
 	public void accept(IEngine v) {
 		v.visit(this);
 	}

@@ -42,23 +42,23 @@ public class GenericMove {
 
 	public GenericMove(String notation) throws IllegalNotationException {
 		if (notation == null) throw new IllegalArgumentException();
-		
+
 		// Clean whitespace at the beginning and at the end
 		notation = notation.trim();
-		
+
 		// Clean spaces in the notation
 		notation = notation.replaceAll(" ", "");
-		
+
 		// Clean capturing notation
 		notation = notation.replaceAll("x", "");
 		notation = notation.replaceAll(":", "");
-		
+
 		// Clean pawn promotion notation
 		notation = notation.replaceAll("=", "");
-		
+
 		// Clean check notation
 		notation = notation.replaceAll("\\+", "");
-		
+
 		// Clean checkmate notation
 		notation = notation.replaceAll("#", "");
 
@@ -71,7 +71,7 @@ public class GenericMove {
 			if (this.promotion == null) {
 				throw new IllegalNotationException();
 			}
-			
+
 			notation = notation.substring(0, 4);
 		} else {
 			this.promotion = null;
@@ -82,24 +82,24 @@ public class GenericMove {
 			if (file == null) {
 				throw new IllegalNotationException();
 			}
-			
+
 			GenericRank rank = GenericRank.valueOf(notation.charAt(1));
 			if (rank == null) {
 				throw new IllegalNotationException();
 			}
-			
+
 			this.from = GenericPosition.valueOf(file, rank);
-			
+
 			file = GenericFile.valueOf(notation.charAt(2));
 			if (file == null) {
 				throw new IllegalNotationException();
 			}
-			
+
 			rank = GenericRank.valueOf(notation.charAt(3));
 			if (rank == null) {
 				throw new IllegalNotationException();
 			}
-			
+
 			this.to = GenericPosition.valueOf(file, rank);
 		} else {
 			throw new IllegalNotationException();

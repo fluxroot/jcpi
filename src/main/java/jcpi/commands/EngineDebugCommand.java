@@ -26,7 +26,7 @@ public class EngineDebugCommand implements IEngineCommand {
 
 	public final boolean debug;
 	public final boolean toggle;
-	
+
 	public EngineDebugCommand(boolean toggle, boolean debug) {
 		this.toggle = toggle;
 		if (toggle) {
@@ -36,7 +36,7 @@ public class EngineDebugCommand implements IEngineCommand {
 			this.debug = debug;
 		}
 	}
-	
+
 	public void accept(IEngine v) {
 		v.visit(this);
 	}

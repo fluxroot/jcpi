@@ -24,7 +24,7 @@ public enum GenericCastling {
 
 	KINGSIDE("O-O", 'K'),
 	QUEENSIDE("O-O-O", 'Q');
-	
+
 	private final String longToken;
 	private final char token;
 
@@ -32,14 +32,14 @@ public enum GenericCastling {
 		this.longToken = longToken;
 		this.token = token;
 	}
-	
+
 	public static GenericCastling valueOf(char input) {
 		for (GenericCastling castling: values()) {
 			if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
 				return castling;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -51,7 +51,7 @@ public enum GenericCastling {
 				return castling;
 			}
 		}
-		
+
 		return null;
 	}
 

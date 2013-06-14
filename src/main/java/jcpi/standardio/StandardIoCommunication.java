@@ -42,7 +42,7 @@ public final class StandardIoCommunication extends AbstractCommunication {
 	 * The standard input.
 	 */
 	private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	
+
 	/**
 	 * The standard output.
 	 */
@@ -52,18 +52,18 @@ public final class StandardIoCommunication extends AbstractCommunication {
 	 * The engine command queue.
 	 */
 	private final Queue<IEngineCommand> engineCommandQueue = new LinkedList<IEngineCommand>();
-	
+
 	/**
 	 * The protocol.
 	 */
 	private AbstractStandardIoProtocol protocol = null;
-	
+
 	/**
 	 * Creates a new StandardIoCommunication.
 	 */
 	public StandardIoCommunication() {
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IGuiCommand)
 	 */
@@ -127,14 +127,14 @@ public final class StandardIoCommunication extends AbstractCommunication {
 				engineCommand = new EngineQuitCommand();
 			}
 		}
-		
+
 		assert engineCommand != null;
 		return engineCommand;
 	}
 
 	/**
 	 * Checks the token string on whether we have a protocol switch.
-	 * 
+	 *
 	 * @param token the token.
 	 * @return the new protocol or null if there's no protocol switch.
 	 */
@@ -142,11 +142,11 @@ public final class StandardIoCommunication extends AbstractCommunication {
 		assert token != null;
 
 		AbstractStandardIoProtocol protocol = null;
-		
+
 		if (token.equalsIgnoreCase("uci")) {
 			protocol = new UciProtocol(this.writer, this.engineCommandQueue);
 		}
-		
+
 		return protocol;
 	}
 

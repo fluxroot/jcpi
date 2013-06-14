@@ -26,7 +26,7 @@ public class EngineQuitCommand implements IEngineCommand {
 
 	public EngineQuitCommand() {
 	}
-	
+
 	public void accept(IEngine v) {
 		v.visit(this);
 	}

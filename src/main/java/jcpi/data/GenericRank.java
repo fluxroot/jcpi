@@ -43,14 +43,14 @@ public enum GenericRank {
 				return rank;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public GenericRank prev() {
 		return prev(1);
 	}
-	
+
 	public GenericRank prev(int i) {
 		if (i < 0) throw new IllegalArgumentException();
 
@@ -61,7 +61,7 @@ public enum GenericRank {
 			return null;
 		}
 	}
-	
+
 	public GenericRank next() {
 		return next(1);
 	}
@@ -76,11 +76,11 @@ public enum GenericRank {
 			return null;
 		}
 	}
-	
+
 	public char toChar() {
 		return this.token;
 	}
-	
+
 	public String toString() {
 		return Character.toString(this.token);
 	}

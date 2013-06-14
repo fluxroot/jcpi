@@ -43,7 +43,7 @@ public enum GenericChessman {
 				return chessman;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -53,7 +53,7 @@ public enum GenericChessman {
 				return chessman;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -63,7 +63,7 @@ public enum GenericChessman {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -71,10 +71,10 @@ public enum GenericChessman {
 		if (this == PAWN) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		return this.token;
 	}
-	
+
 	public char toChar(GenericColor color) {
 		if (color == null) throw new IllegalArgumentException();
 

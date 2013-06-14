@@ -39,20 +39,20 @@ public class GenericFileTest {
 	public void testPrev() {
 		assertEquals(GenericFile.Fg, GenericFile.Fh.prev());
 		assertNull(GenericFile.Fa.prev());
-		
+
 		assertEquals(GenericFile.Fa, GenericFile.Fh.prev(7));
 		assertNull(GenericFile.Fg.prev(7));
 	}
-	
+
 	@Test
 	public void testNext() {
 		assertEquals(GenericFile.Fb, GenericFile.Fa.next());
 		assertNull(GenericFile.Fh.next());
-		
+
 		assertEquals(GenericFile.Fh, GenericFile.Fa.next(7));
 		assertNull(GenericFile.Fb.next(7));
 	}
-	
+
 	@Test
 	public void testToChar() {
 		assertEquals('a', GenericFile.Fa.toChar());

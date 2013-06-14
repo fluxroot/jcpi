@@ -46,7 +46,7 @@ public class GenericBoard {
 			this.castling.put(color, new EnumMap<GenericCastling, GenericFile>(GenericCastling.class));
 		}
 	}
-	
+
 	public GenericBoard(int setup) {
 		this();
 		if (setup < 0 || setup > 959) throw new IllegalArgumentException();
@@ -54,16 +54,16 @@ public class GenericBoard {
 		if (setup != STANDARDSETUP) {
 			this.isFrc = true;
 		}
-		
+
 		// Setup pawns
 		for (GenericFile file : GenericFile.values()) {
 			this.board.put(GenericPosition.valueOf(file, GenericRank.R2), GenericPiece.WHITEPAWN);
 			this.board.put(GenericPosition.valueOf(file, GenericRank.R7), GenericPiece.BLACKPAWN);
 		}
-		
+
 		int x = setup;
 		GenericFile file = null;
-		
+
 		// Setup light-square bishop
 		int remainder = x % 4;
 		switch (remainder) {
@@ -86,7 +86,7 @@ public class GenericBoard {
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEBISHOP);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKBISHOP);
 		x = x / 4;
-		
+
 		// Setup dark-square bishop
 		remainder = x % 4;
 		switch (remainder) {
@@ -109,7 +109,7 @@ public class GenericBoard {
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEBISHOP);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKBISHOP);
 		x = x / 4;
-		
+
 		// Setup queen
 		file = null;
 		remainder = x % 6;
@@ -127,7 +127,7 @@ public class GenericBoard {
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEQUEEN);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKQUEEN);
 		x = x / 6;
-		
+
 		// Setup kern ("KRN")
 		assert x >= 0 && x <= 9;
 		GenericChessman[] kern = null;
@@ -174,7 +174,7 @@ public class GenericBoard {
 					GenericChessman chessman = iter.next();
 					this.board.put(GenericPosition.valueOf(kernFile, GenericRank.R1), GenericPiece.valueOf(GenericColor.WHITE, chessman));
 					this.board.put(GenericPosition.valueOf(kernFile, GenericRank.R8), GenericPiece.valueOf(GenericColor.BLACK, chessman));
-					
+
 					if (chessman == GenericChessman.ROOK) {
 						if (this.kingFile.get(GenericColor.WHITE) == null) {
 							this.castling.get(GenericColor.WHITE).put(GenericCastling.QUEENSIDE, kernFile);
@@ -207,45 +207,45 @@ public class GenericBoard {
 		for (GenericPosition position : GenericPosition.values()) {
 			this.board.put(position, null);
 		}
-		
+
 		// Clear castling
 		for (GenericColor color : GenericColor.values()) {
 			for (GenericCastling castling : GenericCastling.values()) {
 				this.castling.get(color).put(castling, null);
 			}
 		}
-		
+
 		// Clear en passant
 		this.enPassant = null;
-		
+
 		// Clear active color
 		this.activeColor = GenericColor.WHITE;
-		
+
 		// Clear half move clock
 		this.halfMoveClock = 0;
-		
+
 		// Clear full move number
 		this.fullMoveNumber = 1;
-		
+
 		// Clear king file
 		for (GenericColor color : GenericColor.values()) {
 			this.kingFile.put(color, null);
 		}
-		
+
 		// Clear FRC flag
 		this.isFrc = false;
 	}
 
 	public GenericPiece getPiece(GenericPosition position) {
 		if (position == null) throw new IllegalArgumentException();
-		
+
 		return this.board.get(position);
 	}
 
 	public void setPiece(GenericPiece piece, GenericPosition position) {
 		if (piece == null) throw new IllegalArgumentException();
 		if (position == null) throw new IllegalArgumentException();
-		
+
 		if (piece.chessman == GenericChessman.KING) {
 			this.kingFile.put(piece.color, position.file);
 		}
@@ -258,34 +258,34 @@ public class GenericBoard {
 
 		return this.castling.get(color).get(castling);
 	}
-	
+
 	public void setCastling(GenericColor color, GenericCastling castling, GenericFile file) {
 		if (color == null) throw new IllegalArgumentException();
 		if (castling == null) throw new IllegalArgumentException();
-		
+
 		if (file != GenericFile.Fa && file != GenericFile.Fh) {
 			this.isFrc = true;
 		}
 		this.castling.get(color).put(castling, file);
 	}
-	
+
 	public GenericPosition getEnPassant() {
 		return this.enPassant;
 	}
-	
+
 	public void setEnPassant(GenericPosition position) {
 		if (position == null) throw new IllegalArgumentException();
 
 		this.enPassant = position;
 	}
-	
+
 	public GenericColor getActiveColor() {
 		return this.activeColor;
 	}
 
 	public void setActiveColor(GenericColor color) {
 		if (color == null) throw new IllegalArgumentException();
-		
+
 		this.activeColor = color;
 	}
 
@@ -295,23 +295,23 @@ public class GenericBoard {
 
 	public void setHalfMoveClock(int halfMoveClock) {
 		if (halfMoveClock < 0) throw new IllegalArgumentException();
-		
+
 		this.halfMoveClock = halfMoveClock;
 	}
-	
+
 	public int getFullMoveNumber() {
 		return this.fullMoveNumber;
 	}
 
 	public void setFullMoveNumber(int fullMoveNumber) {
 		if (fullMoveNumber < 1) throw new IllegalArgumentException();
-		
+
 		this.fullMoveNumber = fullMoveNumber;
 	}
 
 	public String toString() {
 		String fen = "";
-		
+
 		// Chessman
 		for (int i = GenericRank.values().length - 1; i >= 0; i--) {
 			GenericRank rank = GenericRank.values()[i];
@@ -334,7 +334,7 @@ public class GenericBoard {
 			if (emptySquares > 0) {
 				fen += emptySquares;
 			}
-			
+
 			if (i > 0) {
 				fen += '/';
 			}
@@ -344,7 +344,7 @@ public class GenericBoard {
 
 		// Color
 		fen += this.activeColor.toChar();
-		
+
 		fen += ' ';
 
 		// Castling
@@ -365,7 +365,7 @@ public class GenericBoard {
 		if (!castlingAvailable) {
 			fen += '-';
 		}
-		
+
 		fen += ' ';
 
 		// En passant
@@ -384,7 +384,7 @@ public class GenericBoard {
 
 		// Full move number
 		fen += this.fullMoveNumber;
-		
+
 		return fen;
 	}
 
@@ -396,14 +396,14 @@ public class GenericBoard {
 			return true;
 		}
 		GenericBoard rhs = (GenericBoard) obj;
-		
+
 		// Test pieces
 		for (GenericPosition position : GenericPosition.values()) {
 			if (this.board.get(position) != rhs.board.get(position)) {
 				return false;
 			}
 		}
-		
+
 		// Test castling
 		for (GenericColor color : GenericColor.values()) {
 			for (GenericCastling castling : GenericCastling.values()) {
@@ -420,27 +420,27 @@ public class GenericBoard {
 				}
 			}
 		}
-		
+
 		// Test en passant
 		if (this.enPassant != rhs.enPassant) {
 			return false;
 		}
-		
+
 		// Test active color
 		if (this.activeColor != rhs.activeColor) {
 			return false;
 		}
-		
+
 		// Test half move clock
 		if (this.halfMoveClock != rhs.halfMoveClock) {
 			return false;
 		}
-		
+
 		// Test full move number
 		if (this.fullMoveNumber != rhs.fullMoveNumber) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -450,11 +450,11 @@ public class GenericBoard {
 
 		// Clean notation and split into terms
 		notation = notation.trim();
-		
+
 		List<String> tokens = new ArrayList<String>(Arrays.asList(notation.split(" ")));
 		for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
 			String token = iter.next();
-			
+
 			if (token.length() == 0) {
 				iter.remove();
 			}
@@ -466,7 +466,7 @@ public class GenericBoard {
 	private void parse(List<String> tokens) throws IllegalNotationException {
 		assert tokens != null;
 		if (tokens.size() < 4 || tokens.size() > 6) throw new IllegalNotationException();
-		
+
 		Iterator<String> iter = tokens.iterator();
 
 		// Parse data
@@ -529,7 +529,7 @@ public class GenericBoard {
 			if (token.length() == 1) {
 				char input = token.charAt(0);
 				GenericColor color = GenericColor.valueOf(input);
-				
+
 				if (color != null) {
 					this.activeColor = color;
 				} else {
@@ -545,7 +545,7 @@ public class GenericBoard {
 		// Parse castling
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("-")) {
 				// No castling available
 			} else {
@@ -590,11 +590,11 @@ public class GenericBoard {
 		} else {
 			throw new IllegalNotationException();
 		}
-		
+
 		// Parse en passant
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			if (token.equalsIgnoreCase("-")) {
 				// No en passant available
 			} else {
@@ -619,11 +619,11 @@ public class GenericBoard {
 		} else {
 			throw new IllegalNotationException();
 		}
-		
+
 		// Parse half move clock
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			try {
 				int halfMoveClock = new Integer(token);
 
@@ -636,14 +636,14 @@ public class GenericBoard {
 				throw new IllegalNotationException();
 			}
 		}
-		
+
 		// Parse full move number
 		if (iter.hasNext()) {
 			String token = iter.next();
-			
+
 			try {
 				int fullMoveNumber = new Integer(token);
-				
+
 				if (fullMoveNumber >= 1) {
 					this.fullMoveNumber = fullMoveNumber;
 				} else {

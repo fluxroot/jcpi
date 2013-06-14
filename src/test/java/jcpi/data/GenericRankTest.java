@@ -38,16 +38,16 @@ public class GenericRankTest {
 	public void testPrev() {
 		assertEquals(GenericRank.R7, GenericRank.R8.prev());
 		assertNull(GenericRank.R1.prev());
-		
+
 		assertEquals(GenericRank.R1, GenericRank.R8.prev(7));
 		assertNull(GenericRank.R7.prev(7));
 	}
-	
+
 	@Test
 	public void testNext() {
 		assertEquals(GenericRank.R2, GenericRank.R1.next());
 		assertNull(GenericRank.R8.next());
-		
+
 		assertEquals(GenericRank.R8, GenericRank.R1.next(7));
 		assertNull(GenericRank.R2.next(7));
 	}

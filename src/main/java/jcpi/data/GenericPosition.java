@@ -103,7 +103,7 @@ public enum GenericPosition {
 
 	public final GenericFile file;
 	public final GenericRank rank;
-	
+
 	private GenericPosition(GenericFile file, GenericRank rank) {
 		this.file = file;
 		this.rank = rank;

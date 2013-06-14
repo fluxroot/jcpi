@@ -28,10 +28,10 @@ public class GuiReadyAnswerCommand implements IGuiCommand {
 
 	public GuiReadyAnswerCommand(String token) {
 		if (token == null) throw new IllegalArgumentException();
-		
+
 		this.token = token;
 	}
-	
+
 	public void accept(IGui v) {
 		v.visit(this);
 	}

@@ -21,7 +21,7 @@ import jcpi.commands.IEngineCommand;
 /**
  * This is the main engine class. Inherit your engine from this class and
  * implement all abstract methods.
- * 
+ *
  * @author Phokham Nonava
  */
 public abstract class AbstractEngine implements IEngine {
@@ -30,12 +30,12 @@ public abstract class AbstractEngine implements IEngine {
 	 * Stops and exits the engine.
 	 */
 	protected abstract void quit();
-	
+
 	/**
 	 * The communication channel.
 	 */
 	protected final AbstractCommunication communication;
-	
+
 	/**
 	 * Whether the engine is running.
 	 */
@@ -43,7 +43,7 @@ public abstract class AbstractEngine implements IEngine {
 
 	/**
 	 * Creates a new AbstractEngine.
-	 * 
+	 *
 	 * @param communication the AbstractCommunication.
 	 */
 	public AbstractEngine(AbstractCommunication communication) {
@@ -51,7 +51,7 @@ public abstract class AbstractEngine implements IEngine {
 
 		this.communication = communication;
 	}
-	
+
 	/**
 	 * Runs the engine.
 	 */

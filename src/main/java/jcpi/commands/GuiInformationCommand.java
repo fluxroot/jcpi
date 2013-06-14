@@ -44,10 +44,10 @@ public class GuiInformationCommand implements IGuiCommand {
 	private Long nps = null;
 	private String string = null;
 	private List<GenericMove> refutationList = null;
-	
+
 	public GuiInformationCommand() {
 	}
-	
+
 	public void accept(IGui v) {
 		v.visit(this);
 	}
@@ -55,49 +55,49 @@ public class GuiInformationCommand implements IGuiCommand {
 	public Integer getDepth() {
 		return this.depth;
 	}
-	
+
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	
+
 	public Integer getMaxDepth() {
 		return this.maxDepth;
 	}
-	
+
 	public void setMaxDepth(int maxDepth) {
 		this.maxDepth = maxDepth;
 	}
-	
+
 	public Long getTime() {
 		return this.time;
 	}
-	
+
 	public void setTime(long time) {
 		this.time = time;
 	}
-	
+
 	public Long getNodes() {
 		return this.nodes ;
 	}
-	
+
 	public void setNodes(long nodes) {
 		this.nodes = nodes;
 	}
-	
+
 	public List<GenericMove> getMoveList() {
 		return this.moveList;
 	}
-	
+
 	public void setMoveList(List<GenericMove> moveList) {
 		if (moveList == null) throw new IllegalArgumentException();
 
 		this.moveList = moveList;
 	}
-	
+
 	public Integer getPvNumber() {
 		return this.pvNumber;
 	}
-	
+
 	public void setPvNumber(int pvNumber) {
 		this.pvNumber = pvNumber;
 	}
@@ -105,23 +105,23 @@ public class GuiInformationCommand implements IGuiCommand {
 	public Integer getCentipawns() {
 		return this.centipawns;
 	}
-	
+
 	public void setCentipawns(int centipawns) {
 		this.centipawns = centipawns;
 	}
-	
+
 	public Integer getMate() {
 		return this.mate;
 	}
-	
+
 	public void setMate(int mate) {
 		this.mate = mate;
 	}
-	
+
 	public GenericScore getValue() {
 		return this.value;
 	}
-	
+
 	public void setValue(GenericScore value) {
 		if (value == null) throw new IllegalArgumentException();
 
@@ -131,51 +131,51 @@ public class GuiInformationCommand implements IGuiCommand {
 	public GenericMove getCurrentMove() {
 		return this.currentMove;
 	}
-	
+
 	public void setCurrentMove(GenericMove currentMove) {
 		if (currentMove == null) throw new IllegalArgumentException();
 
 		this.currentMove = currentMove;
 	}
-	
+
 	public Integer getCurrentMoveNumber() {
 		return this.currentMoveNumber;
 	}
-	
+
 	public void setCurrentMoveNumber(int currentMoveNumber) {
 		this.currentMoveNumber = currentMoveNumber;
 	}
-	
+
 	public Integer getHash() {
 		return this.hash;
 	}
-	
+
 	public void setHash(int hash) {
 		this.hash = hash;
 	}
-	
+
 	public Long getNps() {
 		return this.nps;
 	}
-	
+
 	public void setNps(long nps) {
 		this.nps = nps;
 	}
-	
+
 	public String getString() {
 		return this.string ;
 	}
-	
+
 	public void setString(String string) {
 		if (string == null) throw new IllegalArgumentException();
 
 		this.string = string;
 	}
-	
+
 	public List<GenericMove> getRefutationList() {
 		return this.refutationList;
 	}
-	
+
 	public void setRefutationList(List<GenericMove> refutationList) {
 		if (refutationList == null) throw new IllegalArgumentException();
 

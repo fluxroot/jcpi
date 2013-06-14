@@ -37,7 +37,7 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
 	public GuiInitializeAnswerCommand(String name, String author) {
 		if (name == null) throw new IllegalArgumentException();
 		if (author == null) throw new IllegalArgumentException();
-		
+
 		this.name = name;
 		this.author = author;
 	}
@@ -45,14 +45,14 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
 	public void accept(IGui v) {
 		v.visit(this);
 	}
-	
+
 	public Iterator<Option> optionIterator() {
 		return this.optionList.iterator();
 	}
-	
+
 	public void addOption(Option option) {
 		if (option == null) throw new IllegalArgumentException();
-		
+
 		this.optionList.add(option);
 	}
 

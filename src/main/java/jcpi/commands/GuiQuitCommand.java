@@ -19,7 +19,7 @@ import jcpi.IGui;
 
 /**
  * GuiQuitCommand
- * 
+ *
  * @author Phokham Nonava
  */
 public class GuiQuitCommand implements IGuiCommand {

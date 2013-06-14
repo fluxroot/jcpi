@@ -42,7 +42,7 @@ public abstract class AbstractStandardIoProtocol implements IGui {
 
 	/**
 	 * Creates a new AbstractStandardIoProtocol.
-	 * 
+	 *
 	 * @param writer the standard output.
 	 * @param queue the engine command queue.
 	 */
@@ -56,7 +56,7 @@ public abstract class AbstractStandardIoProtocol implements IGui {
 
 	/**
 	 * Parse the list of tokens.
-	 * 
+	 *
 	 * @param tokenList the list of tokens.
 	 */
 	protected abstract void parse(List<String> tokenList);

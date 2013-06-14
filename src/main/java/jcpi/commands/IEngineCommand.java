@@ -19,7 +19,7 @@ import jcpi.IEngine;
 
 /**
  * IEngineCommand
- * 
+ *
  * @author Phokham Nonava
  */
 public interface IEngineCommand {
