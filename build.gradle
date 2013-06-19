@@ -1,96 +1,120 @@
-allprojects {
-	apply plugin: 'base'
-	
-	group = 'jcpi'
-	
-	repositories {
-		mavenCentral()
-	}
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'checkstyle'
 
-	configurations {
-		eclipselibs {
-			extendsFrom compile
-		}
-	}
+description = 'Java Chess Protocol Interface'
 
-	task libs(type: Sync) {
-		from configurations.eclipselibs
-		into "$projectDir/lib"
-	}
+group = 'jcpi'
 
-	tasks.withType(Pmd) {
-		pmd {
-			ignoreFailures = true
-		}
-	}
+if (!hasProperty('buildNumber')) {
+    ext.buildNumber = 'dev'
+}
+version += '+' + buildNumber
 
-	tasks.withType(FindBugs) {
-		findbugs {
-			ignoreFailures = true
-		}
-	}
-
-	tasks.withType(Checkstyle) {
-		checkstyle {
-			ignoreFailures = true
-		}
-	}
+if (!hasProperty('s3AccessKey')) {
+    ext.s3AccessKey = 'n/a'
 }
 
-configure(rootProject) {
-	apply plugin: 'java'
-	apply plugin: 'pmd'
-	apply plugin: 'findbugs'
-	apply plugin: 'checkstyle'
-	
-	description = 'Java Chess Protocol Interface'
-	
-	sourceCompatibility = 1.7
-	targetCompatibility = 1.7
-	
-	dependencies {
-		compile 'org.slf4j:slf4j-api:1.7.+'
-		compile 'org.slf4j:slf4j-log4j12:1.7.+'
-		compile 'log4j:log4j:1.2.+'
-		
-		testCompile 'junit:junit:4.+'
-	}
-	
-	jar {
-		from {
-			configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
-		}
-		from sourceSets.main.allJava
-		manifest {
-			attributes 'Implementation-Title': project.group, 'Implementation-Version': project.version
-		}
-	}
-	
-	task dist(type: Zip) {
-		def baseDir = "${project.name}-${project.version}"
-		
-		into ("$baseDir") {
-			from 'README.md'
-			from 'LICENSE'
-			from 'NOTICE'
-			from jar
-		}
-		into ("$baseDir/example") {
-			from 'src/example'
-		}
-	}
-
-	artifacts {
-		archives dist
-	}
-	
-	task wrapper(type: Wrapper) {
-		gradleVersion = '1.5'
-	}
+if (!hasProperty('s3SecretAccessKey')) {
+    ext.s3SecretAccessKey = 'n/a'
 }
 
-def downloadFile(srcUrl, destUrl) {
-	def dest = new BufferedOutputStream(new FileOutputStream(destUrl))
-	dest << new URL(srcUrl).openStream()
-	dest.close()
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    eclipselibs {
+        extendsFrom compile
+    }
+}
+
+task libs(type: Sync) {
+    from configurations.eclipselibs
+    into "$projectDir/lib"
+}
+
+tasks.withType(Pmd) {
+    pmd {
+        ignoreFailures = true
+    }
+}
+
+tasks.withType(FindBugs) {
+    findbugs {
+        ignoreFailures = true
+    }
+}
+
+tasks.withType(Checkstyle) {
+    checkstyle {
+        ignoreFailures = true
+    }
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.+'
+    compile 'org.slf4j:slf4j-log4j12:1.7.+'
+    compile 'log4j:log4j:1.2.+'
+
+    testCompile 'junit:junit:4.+'
+}
+
+jar {
+    from {
+        configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
+    }
+    from sourceSets.main.allJava
+    manifest {
+        attributes 'Implementation-Title': project.group, 'Implementation-Version': project.version
+    }
+}
+
+task dist(type: Zip) {
+    def baseDir = "${project.name}-${project.version}"
+
+    into ("$baseDir") {
+        from 'README.md'
+        from 'LICENSE'
+        from 'NOTICE'
+        from jar
+    }
+    into ("$baseDir/example") {
+        from 'src/example'
+    }
+}
+
+artifacts {
+    archives dist
+}
+
+uploadArchives {
+    configurations {
+        deployerJars
+    }
+
+    dependencies {
+        deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
+    }
+
+    repositories {
+        mavenDeployer {
+            configuration = configurations.deployerJars
+            repository(url: 's3://maven.fluxchess.com/release') {
+                authentication(userName: s3AccessKey, passphrase: s3SecretAccessKey)
+            }
+            snapshotRepository(url: 's3://maven.fluxchess.com/snapshot') {
+                authentication(userName: s3AccessKey, passphrase: s3SecretAccessKey)
+            }
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
 }
