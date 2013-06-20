@@ -108,9 +108,6 @@ uploadArchives {
             repository(url: 's3://maven.fluxchess.com/release') {
                 authentication(userName: s3AccessKey, passphrase: s3PasswordAccessKey)
             }
-            snapshotRepository(url: 's3://maven.fluxchess.com/snapshot') {
-                authentication(userName: s3AccessKey, passphrase: s3PasswordAccessKey)
-            }
         }
     }
 }
