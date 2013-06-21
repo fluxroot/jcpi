@@ -94,21 +94,29 @@ artifacts {
 }
 
 uploadArchives {
-    configurations {
-        deployerJars
-    }
-
-    dependencies {
-        deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
-    }
-
-    repositories {
-        mavenDeployer {
-            configuration = configurations.deployerJars
-            repository(url: 's3://maven.fluxchess.com/release') {
-                authentication(userName: s3AccessKey, passphrase: s3PasswordAccessKey)
+    if (project.hasProperty('branchName')) {
+        if (branchName == 'master') {
+            configurations {
+                deployerJars
             }
+        
+            dependencies {
+                deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
+            }
+        
+            repositories {
+                mavenDeployer {
+                    configuration = configurations.deployerJars
+                    repository(url: 's3://maven.fluxchess.com/release') {
+                        authentication(userName: s3AccessKey, passphrase: s3PasswordAccessKey)
+                    }
+                }
+            }
+        } else {
+            println "Skipping upload. Not on master branch (${branchName})."
         }
+    } else {
+        println "Skipping upload. No branch name defined."
     }
 }
 
