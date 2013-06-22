@@ -89,10 +89,6 @@ task dist(type: Zip) {
     }
 }
 
-artifacts {
-    archives dist
-}
-
 uploadArchives {
     if (project.hasProperty('branchName')) {
         if (branchName == 'master') {
