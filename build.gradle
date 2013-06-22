@@ -11,7 +11,7 @@ group = 'jcpi'
 if (!hasProperty('buildNumber')) {
     ext.buildNumber = 'dev'
 }
-version += '+' + buildNumber
+version += '.' + buildNumber
 
 if (!hasProperty('s3AccessKey')) {
     ext.s3AccessKey = 'n/a'
