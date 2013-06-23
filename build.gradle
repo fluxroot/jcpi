@@ -6,7 +6,7 @@ apply plugin: 'checkstyle'
 
 description = 'Java Chess Protocol Interface'
 
-group = 'com.fluxchess.jcpi'
+group = 'com.fluxchess'
 
 if (!hasProperty('buildNumber')) {
     ext.buildNumber = 'dev'
