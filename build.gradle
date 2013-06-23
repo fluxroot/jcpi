@@ -11,7 +11,10 @@ group = 'jcpi'
 if (!hasProperty('buildNumber')) {
     ext.buildNumber = 'dev'
 }
-version += '.' + buildNumber
+if (version.contains('-')) {
+    version += '.' + buildNumber
+}
+println "Building version ${version}"
 
 if (!hasProperty('s3AccessKey')) {
     ext.s3AccessKey = 'n/a'
