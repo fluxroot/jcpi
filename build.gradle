@@ -11,7 +11,10 @@ group = 'jcpi'
 if (!hasProperty('buildNumber')) {
     ext.buildNumber = 'dev'
 }
-version += '.' + buildNumber
+if (version.contains('-')) {
+    version += '.' + buildNumber
+}
+println "Building version ${version}"
 
 if (!hasProperty('s3AccessKey')) {
     ext.s3AccessKey = 'n/a'
@@ -54,16 +57,12 @@ tasks.withType(Checkstyle) {
     }
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.+'
-    compile 'org.slf4j:slf4j-log4j12:1.7.+'
-    compile 'log4j:log4j:1.2.+'
-
     testCompile 'junit:junit:4.+'
 }
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 jar {
     from {
