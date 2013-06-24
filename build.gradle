@@ -12,8 +12,20 @@ if (!hasProperty('buildNumber')) {
     ext.buildNumber = 'dev'
 }
 if (version.contains('-')) {
-    version += '.' + buildNumber
+    if (hasProperty('branchName') && branchName == 'master') {
+        version += '.' + buildNumber
+    } else {
+        version += '.0'
+    }
 }
+
+if (!hasProperty('revisionNumber')) {
+    ext.revisionNumber = 'rev'
+}
+if (version.contains('-') && !(hasProperty('branchName') && branchName == 'master')) {
+    version += '+' + revisionNumber
+}
+
 println "Building version ${version}"
 
 if (!hasProperty('s3AccessKeyId')) {
