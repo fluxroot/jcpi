@@ -78,10 +78,6 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 jar {
-    from {
-        configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
-    }
-    from sourceSets.main.allJava
     manifest {
         attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
     }
