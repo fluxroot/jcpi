@@ -15,8 +15,11 @@
  */
 package com.fluxchess.jcpi.commands;
 
-public interface IProtocolCommand {
+public interface IProtocol {
 
-    void accept(IProtocol v);
+    void send(ProtocolInitializeAnswerCommand command);
+    void send(ProtocolReadyAnswerCommand command);
+    void send(ProtocolBestMoveCommand command);
+    void send(ProtocolInformationCommand command);
 
 }

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.commands;
+package com.fluxchess.jcpi.models;
 
-public interface IProtocolCommand {
+public enum GenericScore {
 
-    void accept(IProtocol v);
+    EXACT,
+    ALPHA,
+    BETA;
 
 }

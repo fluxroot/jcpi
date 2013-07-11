@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.commands;
+package com.fluxchess.jcpi.protocols;
 
-public interface IProtocolCommand {
+import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.IProtocol;
 
-    void accept(IProtocol v);
+public interface IProtocolHandler extends IProtocol {
+
+    IEngineCommand receive();
 
 }

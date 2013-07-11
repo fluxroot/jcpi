@@ -13,10 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.commands;
+package com.fluxchess.jcpi.models;
 
-public interface IProtocolCommand {
+import static org.junit.Assert.*;
 
-    void accept(IProtocol v);
+
+import org.junit.Test;
+
+public class GenericPositionTest {
+
+    @Test
+    public void testPosition() {
+        GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        assertEquals(position1, position2);
+    }
 
 }
