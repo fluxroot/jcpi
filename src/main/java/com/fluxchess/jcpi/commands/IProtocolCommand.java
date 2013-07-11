@@ -15,26 +15,10 @@
 */
 package com.fluxchess.jcpi.commands;
 
-import com.fluxchess.jcpi.IGui;
-import com.fluxchess.jcpi.data.GenericMove;
+import com.fluxchess.jcpi.IProtocol;
 
-public class GuiBestMoveCommand implements IGuiCommand {
+public interface IProtocolCommand {
 
-    public final GenericMove bestMove;
-    public final GenericMove ponderMove;
-
-    public GuiBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
-        this.bestMove = bestMove;
-        if (bestMove == null) {
-            // Force null on ponder move
-            this.ponderMove = null;
-        } else {
-            this.ponderMove = ponderMove;
-        }
-    }
-
-    public void accept(IGui v) {
-        v.visit(this);
-    }
+    void accept(IProtocol v);
 
 }

@@ -20,17 +20,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import com.fluxchess.jcpi.IGui;
+import com.fluxchess.jcpi.IProtocol;
 import com.fluxchess.jcpi.data.Option;
 
 
-public class GuiInitializeAnswerCommand implements IGuiCommand {
+public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
     public final String name;
     public final String author;
     private final List<Option> optionList = new ArrayList<Option>();
 
-    public GuiInitializeAnswerCommand(String name, String author) {
+    public ProtocolInitializeAnswerCommand(String name, String author) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(author);
 
@@ -38,7 +38,7 @@ public class GuiInitializeAnswerCommand implements IGuiCommand {
         this.author = author;
     }
 
-    public void accept(IGui v) {
+    public void accept(IProtocol v) {
         v.visit(this);
     }
 

@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 
-import com.fluxchess.jcpi.IGui;
+import com.fluxchess.jcpi.IProtocol;
 import com.fluxchess.jcpi.commands.IEngineCommand;
 
 
-public abstract class AbstractStandardIoProtocol implements IGui {
+public abstract class AbstractStandardIoProtocol implements IProtocol {
 
     /**
      * The standard output.

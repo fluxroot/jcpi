@@ -18,12 +18,12 @@ package com.fluxchess.jcpi.commands;
 import java.util.List;
 import java.util.Objects;
 
-import com.fluxchess.jcpi.IGui;
+import com.fluxchess.jcpi.IProtocol;
 import com.fluxchess.jcpi.data.GenericMove;
 import com.fluxchess.jcpi.data.GenericScore;
 
 
-public class GuiInformationCommand implements IGuiCommand {
+public class ProtocolInformationCommand implements IProtocolCommand {
 
     private Integer depth = null;
     private Integer maxDepth = null;
@@ -41,10 +41,10 @@ public class GuiInformationCommand implements IGuiCommand {
     private String string = null;
     private List<GenericMove> refutationList = null;
 
-    public GuiInformationCommand() {
+    public ProtocolInformationCommand() {
     }
 
-    public void accept(IGui v) {
+    public void accept(IProtocol v) {
         v.visit(this);
     }
 

@@ -16,18 +16,18 @@
 package com.fluxchess.jcpi;
 
 import com.fluxchess.jcpi.commands.IEngineCommand;
-import com.fluxchess.jcpi.commands.IGuiCommand;
+import com.fluxchess.jcpi.commands.IProtocolCommand;
 
 public abstract class AbstractCommunication {
 
     /**
-     * Send an IGuiCommand. Make this method public so everyone can send
-     * commands. We translate the IGuiCommand to the appropriate communication
+     * Send an IProtocolCommand. Make this method public so everyone can send
+     * commands. We translate the IProtocolCommand to the appropriate communication
      * channel command.
      *
-     * @param command the IGuiCommand.
+     * @param command the IProtocolCommand.
      */
-    public abstract void send(IGuiCommand command);
+    public abstract void send(IProtocolCommand command);
 
     /**
      * Receives an IEngineCommand. Make this method protected so only our

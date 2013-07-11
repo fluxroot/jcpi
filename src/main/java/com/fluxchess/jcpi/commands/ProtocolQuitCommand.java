@@ -15,10 +15,15 @@
 */
 package com.fluxchess.jcpi.commands;
 
-import com.fluxchess.jcpi.IGui;
+import com.fluxchess.jcpi.IProtocol;
 
-public interface IGuiCommand {
+public class ProtocolQuitCommand implements IProtocolCommand {
 
-    void accept(IGui v);
+    public ProtocolQuitCommand() {
+    }
+
+    public void accept(IProtocol v) {
+        v.visit(this);
+    }
 
 }

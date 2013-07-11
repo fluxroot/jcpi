@@ -29,7 +29,7 @@ import java.util.Queue;
 import com.fluxchess.jcpi.AbstractCommunication;
 import com.fluxchess.jcpi.commands.EngineQuitCommand;
 import com.fluxchess.jcpi.commands.IEngineCommand;
-import com.fluxchess.jcpi.commands.IGuiCommand;
+import com.fluxchess.jcpi.commands.IProtocolCommand;
 
 
 public final class StandardIoCommunication extends AbstractCommunication {
@@ -61,9 +61,9 @@ public final class StandardIoCommunication extends AbstractCommunication {
     }
 
     /* (non-Javadoc)
-     * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IGuiCommand)
+     * @see net.sourceforge.jcpi.AbstractCommunication#send(net.sourceforge.jcpi.commands.IProtocolCommand)
      */
-    public void send(IGuiCommand command) {
+    public void send(IProtocolCommand command) {
         Objects.requireNonNull(command);
 
         if (this.protocol != null) {

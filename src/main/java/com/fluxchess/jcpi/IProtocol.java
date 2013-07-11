@@ -15,23 +15,20 @@
 */
 package com.fluxchess.jcpi;
 
-import com.fluxchess.jcpi.commands.GuiBestMoveCommand;
-import com.fluxchess.jcpi.commands.GuiInformationCommand;
-import com.fluxchess.jcpi.commands.GuiInitializeAnswerCommand;
-import com.fluxchess.jcpi.commands.GuiQuitCommand;
-import com.fluxchess.jcpi.commands.GuiReadyAnswerCommand;
+import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.ProtocolQuitCommand;
 
 /**
- * This is the gui command interface.
+ * This is the protocol command interface.
  *
  * @author Phokham Nonava
  */
-public interface IGui {
+public interface IProtocol {
 
-    void visit(GuiInitializeAnswerCommand command);
-    void visit(GuiReadyAnswerCommand command);
-    void visit(GuiBestMoveCommand command);
-    void visit(GuiInformationCommand command);
-    void visit(GuiQuitCommand command);
+    void visit(ProtocolInitializeAnswerCommand command);
+    void visit(ProtocolReadyAnswerCommand command);
+    void visit(ProtocolBestMoveCommand command);
+    void visit(ProtocolInformationCommand command);
+    void visit(ProtocolQuitCommand command);
 
 }

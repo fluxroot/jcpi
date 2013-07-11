@@ -17,20 +17,20 @@ package com.fluxchess.jcpi.commands;
 
 import java.util.Objects;
 
-import com.fluxchess.jcpi.IGui;
+import com.fluxchess.jcpi.IProtocol;
 
 
-public class GuiReadyAnswerCommand implements IGuiCommand {
+public class ProtocolReadyAnswerCommand implements IProtocolCommand {
 
     public final String token;
 
-    public GuiReadyAnswerCommand(String token) {
+    public ProtocolReadyAnswerCommand(String token) {
         Objects.requireNonNull(token);
 
         this.token = token;
     }
 
-    public void accept(IGui v) {
+    public void accept(IProtocol v) {
         v.visit(this);
     }
 

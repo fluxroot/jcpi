@@ -16,11 +16,11 @@
 package com.fluxchess.jcpi;
 
 import com.fluxchess.jcpi.commands.IEngineCommand;
-import com.fluxchess.jcpi.commands.IGuiCommand;
+import com.fluxchess.jcpi.commands.IProtocolCommand;
 
 public interface IEngineProtocol {
 
-    void send(IGuiCommand command) throws ProtocolException;
+    void send(IProtocolCommand command) throws ProtocolException;
     IEngineCommand receiveEngineCommand() throws ProtocolException;
 
 }

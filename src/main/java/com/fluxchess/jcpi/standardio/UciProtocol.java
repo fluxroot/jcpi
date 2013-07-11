@@ -22,22 +22,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 
-import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
-import com.fluxchess.jcpi.commands.EngineDebugCommand;
-import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
-import com.fluxchess.jcpi.commands.EngineNewGameCommand;
-import com.fluxchess.jcpi.commands.EnginePonderHitCommand;
-import com.fluxchess.jcpi.commands.EngineQuitCommand;
-import com.fluxchess.jcpi.commands.EngineReadyRequestCommand;
-import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
-import com.fluxchess.jcpi.commands.EngineStartCalculatingCommand;
-import com.fluxchess.jcpi.commands.EngineStopCalculatingCommand;
-import com.fluxchess.jcpi.commands.GuiBestMoveCommand;
-import com.fluxchess.jcpi.commands.GuiInformationCommand;
-import com.fluxchess.jcpi.commands.GuiInitializeAnswerCommand;
-import com.fluxchess.jcpi.commands.GuiQuitCommand;
-import com.fluxchess.jcpi.commands.GuiReadyAnswerCommand;
-import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.ProtocolBestMoveCommand;
 import com.fluxchess.jcpi.data.GenericBoard;
 import com.fluxchess.jcpi.data.GenericColor;
 import com.fluxchess.jcpi.data.GenericMove;
@@ -405,7 +391,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
         }
     }
 
-    public void visit(GuiInitializeAnswerCommand command) {
+    public void visit(ProtocolInitializeAnswerCommand command) {
         this.writer.println("id name " + command.name);
         this.writer.println("id author " + command.author);
 
@@ -439,11 +425,11 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
         this.writer.println("uciok");
     }
 
-    public void visit(GuiReadyAnswerCommand command) {
+    public void visit(ProtocolReadyAnswerCommand command) {
         this.writer.println("readyok");
     }
 
-    public void visit(GuiBestMoveCommand command) {
+    public void visit(ProtocolBestMoveCommand command) {
         String bestMoveCommand = "bestmove ";
 
         if (command.bestMove != null) {
@@ -459,7 +445,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
         this.writer.println(bestMoveCommand);
     }
 
-    public void visit(GuiInformationCommand command) {
+    public void visit(ProtocolInformationCommand command) {
         String infoCommand = "info";
 
         if (command.getPvNumber() != null) {
@@ -530,7 +516,7 @@ public final class UciProtocol extends AbstractStandardIoProtocol {
         this.writer.println(infoCommand);
     }
 
-    public void visit(GuiQuitCommand command) {
+    public void visit(ProtocolQuitCommand command) {
         throw new IllegalStateException();
     }
 

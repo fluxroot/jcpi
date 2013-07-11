@@ -17,19 +17,8 @@ package com.fluxchess.jcpi.example;
 
 import com.fluxchess.jcpi.AbstractCommunication;
 import com.fluxchess.jcpi.AbstractEngine;
-import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
-import com.fluxchess.jcpi.commands.EngineDebugCommand;
-import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
-import com.fluxchess.jcpi.commands.EngineNewGameCommand;
-import com.fluxchess.jcpi.commands.EnginePonderHitCommand;
-import com.fluxchess.jcpi.commands.EngineReadyRequestCommand;
-import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
-import com.fluxchess.jcpi.commands.EngineStartCalculatingCommand;
-import com.fluxchess.jcpi.commands.EngineStopCalculatingCommand;
-import com.fluxchess.jcpi.commands.GuiBestMoveCommand;
-import com.fluxchess.jcpi.commands.GuiInformationCommand;
-import com.fluxchess.jcpi.commands.GuiInitializeAnswerCommand;
-import com.fluxchess.jcpi.commands.GuiReadyAnswerCommand;
+import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.ProtocolInformationCommand;
 import com.fluxchess.jcpi.data.GenericMove;
 import com.fluxchess.jcpi.data.GenericPosition;
 import com.fluxchess.jcpi.standardio.StandardIoCommunication;
@@ -80,7 +69,7 @@ public final class MyEngine extends AbstractEngine {
         // Do your initialization stuff here...
 
         // Send an initialization answer back.
-        this.communication.send(new GuiInitializeAnswerCommand("MyEngine 1.0", "Nobody"));
+        this.communication.send(new ProtocolInitializeAnswerCommand("MyEngine 1.0", "Nobody"));
     }
 
     public void visit(EngineSetOptionCommand command) {
@@ -101,7 +90,7 @@ public final class MyEngine extends AbstractEngine {
         }
 
         // It might be nice to send an information string back, if the protocol supports it.
-        GuiInformationCommand infoCommand = new GuiInformationCommand();
+        ProtocolInformationCommand infoCommand = new ProtocolInformationCommand();
         if (state) {
             infoCommand.setString("Turning on debugging mode");
         } else {
@@ -112,7 +101,7 @@ public final class MyEngine extends AbstractEngine {
 
     public void visit(EngineReadyRequestCommand command) {
         // Send the token back
-        this.communication.send(new GuiReadyAnswerCommand(command.token));
+        this.communication.send(new ProtocolReadyAnswerCommand(command.token));
     }
 
     public void visit(EngineNewGameCommand command) {
@@ -135,7 +124,7 @@ public final class MyEngine extends AbstractEngine {
 
     public void visit(EngineStopCalculatingCommand command) {
         // Do something like...
-        this.communication.send(new GuiBestMoveCommand(new GenericMove(GenericPosition.a1, GenericPosition.a2), null));
+        this.communication.send(new ProtocolBestMoveCommand(new GenericMove(GenericPosition.a1, GenericPosition.a2), null));
     }
 
     public void visit(EnginePonderHitCommand command) {
