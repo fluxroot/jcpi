@@ -15,13 +15,13 @@
  */
 package com.fluxchess.jcpi.commands;
 
+import com.fluxchess.jcpi.models.GenericColor;
+import com.fluxchess.jcpi.models.GenericMove;
+
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import com.fluxchess.jcpi.models.GenericColor;
-import com.fluxchess.jcpi.models.GenericMove;
 
 public class EngineStartCalculatingCommand implements IEngineCommand {
 

@@ -15,12 +15,12 @@
  */
 package com.fluxchess.jcpi.commands;
 
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.models.GenericMove;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.fluxchess.jcpi.models.GenericBoard;
-import com.fluxchess.jcpi.models.GenericMove;
 
 public class EngineAnalyzeCommand implements IEngineCommand {
 

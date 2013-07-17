@@ -15,11 +15,11 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.fluxchess.jcpi.models.GenericMove;
 import com.fluxchess.jcpi.models.GenericScore;
+
+import java.util.List;
+import java.util.Objects;
 
 public class ProtocolInformationCommand implements IProtocolCommand {
 
