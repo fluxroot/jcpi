@@ -15,24 +15,25 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.Objects;
+import com.fluxchess.jcpi.models.GenericMove;
 
-public class EngineReadyRequestCommand implements IEngineCommand {
+public class ProtocolBestMoveCommand implements IProtocolCommand {
 
-    public final String token;
+    public final GenericMove bestMove;
+    public final GenericMove ponderMove;
 
-    public EngineReadyRequestCommand() {
-        this.token = "";
+    public ProtocolBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
+        this.bestMove = bestMove;
+        if (bestMove == null) {
+            // Force null on ponder move
+            this.ponderMove = null;
+        } else {
+            this.ponderMove = ponderMove;
+        }
     }
 
-    public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
-
-        this.token = token;
-    }
-
-    public void accept(IEngine v) {
-        v.receive(this);
+    public void accept(IProtocol v) {
+        v.send(this);
     }
 
 }

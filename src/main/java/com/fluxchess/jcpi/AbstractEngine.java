@@ -1,80 +1,92 @@
 /*
-** Copyright 2007-2012 Phokham Nonava
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-**
-**     http://www.apache.org/licenses/LICENSE-2.0
-**
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-*/
+ * Copyright 2007-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fluxchess.jcpi;
 
-import java.util.Objects;
-
 import com.fluxchess.jcpi.commands.EngineQuitCommand;
+import com.fluxchess.jcpi.commands.IEngine;
 import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.IProtocol;
+import com.fluxchess.jcpi.protocols.IProtocolHandler;
+import com.fluxchess.jcpi.protocols.UciProtocol;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.util.Objects;
 
 /**
  * This is the main engine class. Inherit your engine from this class and
  * implement all abstract methods.
- *
- * @author Phokham Nonava
  */
 public abstract class AbstractEngine implements IEngine {
 
-    /**
-     * Stops and exits the engine.
-     */
-    protected abstract void quit();
-
-    /**
-     * The communication channel.
-     */
-    protected final AbstractCommunication communication;
-
-    /**
-     * Whether the engine is running.
-     */
     private boolean running = true;
+    private IProtocolHandler handler;
 
-    /**
-     * Creates a new AbstractEngine.
-     *
-     * @param communication the AbstractCommunication.
-     */
-    public AbstractEngine(AbstractCommunication communication) {
-        Objects.requireNonNull(communication);
-
-        this.communication = communication;
+    protected AbstractEngine() {
     }
 
-    /**
-     * Runs the engine.
-     */
     public final void run() {
-        while (this.running) {
-            IEngineCommand command = this.communication.receive();
+        // Set the standard input and output stream
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        PrintStream output = System.out;
+
+        // Wait for the protocol keyword
+        while (handler == null) {
+            try {
+                String tokenString = input.readLine();
+                if (tokenString != null) {
+                    tokenString = tokenString.trim();
+
+                    if (UciProtocol.isProtocolKeyword(tokenString)) {
+                        handler = new UciProtocol(input, output);
+                    }
+                } else {
+                    // Something's wrong with the communication channel
+                    new EngineQuitCommand().accept(this);
+                    break;
+                }
+            } catch (IOException e) {
+                // Something's wrong with the communication channel
+                new EngineQuitCommand().accept(this);
+                break;
+            }
+        }
+
+        // Run the engine
+        while (running) {
+            IEngineCommand command = handler.receive();
             assert command != null;
 
             command.accept(this);
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sourceforge.jcpi.IEngine#visit(net.sourceforge.jcpi.commands.EngineQuitCommand)
-     */
-    public final void visit(EngineQuitCommand command) {
+    protected abstract void quit();
+
+    protected final IProtocol getProtocol() {
+        return handler;
+    }
+
+    public final void receive(EngineQuitCommand command) {
         Objects.requireNonNull(command);
 
         quit();
-        this.running = false;
+        running = false;
     }
 
 }

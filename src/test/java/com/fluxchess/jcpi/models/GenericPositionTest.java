@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.commands;
+package com.fluxchess.jcpi.models;
 
-import java.util.Objects;
+import static org.junit.Assert.*;
 
-public class EngineReadyRequestCommand implements IEngineCommand {
 
-    public final String token;
+import org.junit.Test;
 
-    public EngineReadyRequestCommand() {
-        this.token = "";
-    }
+public class GenericPositionTest {
 
-    public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
-
-        this.token = token;
-    }
-
-    public void accept(IEngine v) {
-        v.receive(this);
+    @Test
+    public void testPosition() {
+        GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+        assertEquals(position1, position2);
     }
 
 }

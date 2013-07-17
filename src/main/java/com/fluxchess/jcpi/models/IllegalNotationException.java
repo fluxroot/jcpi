@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.commands;
+package com.fluxchess.jcpi.models;
 
-import java.util.Objects;
+public class IllegalNotationException extends Exception {
 
-public class EngineReadyRequestCommand implements IEngineCommand {
+    private static final long serialVersionUID = 1L;
 
-    public final String token;
-
-    public EngineReadyRequestCommand() {
-        this.token = "";
+    public IllegalNotationException() {
     }
 
-    public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
-
-        this.token = token;
-    }
-
-    public void accept(IEngine v) {
-        v.receive(this);
+    public IllegalNotationException(String message) {
+        super(message);
     }
 
 }
