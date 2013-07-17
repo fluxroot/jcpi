@@ -15,22 +15,39 @@
  */
 package com.fluxchess.jcpi.commands;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
-public class EngineSetOptionCommand implements IEngineCommand {
+import com.fluxchess.jcpi.models.Option;
+
+public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
     public final String name;
-    public final String value;
+    public final String author;
+    private final List<Option> optionList = new ArrayList<Option>();
 
-    public EngineSetOptionCommand(String name, String value) {
+    public ProtocolInitializeAnswerCommand(String name, String author) {
         Objects.requireNonNull(name);
+        Objects.requireNonNull(author);
 
         this.name = name;
-        this.value = value;
+        this.author = author;
     }
 
-    public void accept(IEngine v) {
-        v.receive(this);
+    public void accept(IProtocol v) {
+        v.send(this);
+    }
+
+    public Iterator<Option> optionIterator() {
+        return this.optionList.iterator();
+    }
+
+    public void addOption(Option option) {
+        Objects.requireNonNull(option);
+
+        this.optionList.add(option);
     }
 
 }

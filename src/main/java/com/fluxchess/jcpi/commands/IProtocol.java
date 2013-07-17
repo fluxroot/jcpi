@@ -15,24 +15,11 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.Objects;
+public interface IProtocol {
 
-public class EngineReadyRequestCommand implements IEngineCommand {
-
-    public final String token;
-
-    public EngineReadyRequestCommand() {
-        this.token = "";
-    }
-
-    public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
-
-        this.token = token;
-    }
-
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+    void send(ProtocolInitializeAnswerCommand command);
+    void send(ProtocolReadyAnswerCommand command);
+    void send(ProtocolBestMoveCommand command);
+    void send(ProtocolInformationCommand command);
 
 }
