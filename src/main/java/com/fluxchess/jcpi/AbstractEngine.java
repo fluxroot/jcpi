@@ -22,10 +22,7 @@ import com.fluxchess.jcpi.commands.IProtocol;
 import com.fluxchess.jcpi.protocols.IProtocolHandler;
 import com.fluxchess.jcpi.protocols.UciProtocol;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -45,9 +42,9 @@ public abstract class AbstractEngine implements IEngine {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         PrintStream output = System.out;
 
-        // Wait for the protocol keyword
-        while (handler == null) {
-            try {
+        try {
+            // Wait for the protocol keyword
+            while (handler == null) {
                 String tokenString = input.readLine();
                 if (tokenString != null) {
                     tokenString = tokenString.trim();
@@ -57,22 +54,20 @@ public abstract class AbstractEngine implements IEngine {
                     }
                 } else {
                     // Something's wrong with the communication channel
-                    new EngineQuitCommand().accept(this);
-                    break;
+                    throw new EOFException();
                 }
-            } catch (IOException e) {
-                // Something's wrong with the communication channel
-                new EngineQuitCommand().accept(this);
-                break;
             }
-        }
 
-        // Run the engine
-        while (running) {
-            IEngineCommand command = handler.receive();
-            assert command != null;
+            // Run the engine
+            while (running) {
+                IEngineCommand command = handler.receive();
+                assert command != null;
 
-            command.accept(this);
+                command.accept(this);
+            }
+        } catch (IOException e) {
+            // Something's wrong with the communication channel
+            new EngineQuitCommand().accept(this);
         }
     }
 

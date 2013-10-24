@@ -19,6 +19,7 @@ import com.fluxchess.jcpi.commands.*;
 import com.fluxchess.jcpi.models.*;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
@@ -48,39 +49,34 @@ public final class UciProtocol implements IProtocolHandler {
         queue.add(new EngineInitializeRequestCommand());
     }
 
-    public IEngineCommand receive() {
+    public IEngineCommand receive() throws IOException {
         // Get the next command from the queue
         IEngineCommand engineCommand = queue.poll();
         while (engineCommand == null) {
-            try {
-                // Read from the standard input
-                String tokenString = input.readLine();
-                if (tokenString != null) {
-                    tokenString = tokenString.trim();
+            // Read from the standard input
+            String tokenString = input.readLine();
+            if (tokenString != null) {
+                tokenString = tokenString.trim();
 
-                    // We have a command here. Clean the command.
-                    List<String> tokenList = Arrays.asList(tokenString.split(" "));
-                    for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
-                        String token = iter.next();
+                // We have a command here. Clean the command.
+                List<String> tokenList = Arrays.asList(tokenString.split(" "));
+                for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
+                    String token = iter.next();
 
-                        // Remove empty tokens
-                        if (token.length() == 0) {
-                            iter.remove();
-                        }
+                    // Remove empty tokens
+                    if (token.length() == 0) {
+                        iter.remove();
                     }
-
-                    // Try to parse the command.
-                    parse(tokenList);
-
-                    // Get the next command from the queue
-                    engineCommand = queue.poll();
-                } else {
-                    // Something's wrong with the communication channel
-                    engineCommand = new EngineQuitCommand();
                 }
-            } catch (IOException e) {
+
+                // Try to parse the command.
+                parse(tokenList);
+
+                // Get the next command from the queue
+                engineCommand = queue.poll();
+            } else {
                 // Something's wrong with the communication channel
-                engineCommand = new EngineQuitCommand();
+                throw new EOFException();
             }
         }
 

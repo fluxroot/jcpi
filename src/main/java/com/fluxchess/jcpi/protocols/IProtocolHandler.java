@@ -18,8 +18,10 @@ package com.fluxchess.jcpi.protocols;
 import com.fluxchess.jcpi.commands.IEngineCommand;
 import com.fluxchess.jcpi.commands.IProtocol;
 
+import java.io.IOException;
+
 public interface IProtocolHandler extends IProtocol {
 
-    IEngineCommand receive();
+    IEngineCommand receive() throws IOException;
 
 }
