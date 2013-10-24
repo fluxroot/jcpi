@@ -15,86 +15,185 @@
  */
 package com.fluxchess.jcpi.protocols;
 
+import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
+import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
 import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
+import com.fluxchess.jcpi.commands.IEngineCommand;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class UciProtocolTest {
 
-    private List<String> getTokens(String command) {
-        List<String> tokens = new ArrayList<String>(Arrays.asList(command.split(" ")));
-        for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
-            String token = iter.next();
+    @Test
+    public void testPosition1() throws IOException {
+        String[] commands = {"position startpos"};
+        UciProtocol protocol = createUciProtocol(commands);
 
-            if (token.length() == 0) {
-                iter.remove();
-            }
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        command = protocol.receive();
+        assertEquals(EngineAnalyzeCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
         }
-
-        return tokens;
     }
 
     @Test
-    public void testGetCommand() {
-        UciProtocol protocol = new UciProtocol(new BufferedReader(new InputStreamReader(System.in)), System.out);
+    public void testPosition2() throws IOException {
+        String[] commands = {"a b c d position startpos"};
+        UciProtocol protocol = createUciProtocol(commands);
 
-        String command = "position startpos";
-        protocol.parse(getTokens(command));
-        assertEquals(false, protocol.queue.isEmpty());
-        protocol.queue.clear();
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
 
-        command = "a b c d position startpos";
-        protocol.parse(getTokens(command));
-        assertEquals(false, protocol.queue.isEmpty());
-        protocol.queue.clear();
+        command = protocol.receive();
+        assertEquals(EngineAnalyzeCommand.class, command.getClass());
 
-        command = "a b c d position startpos moves a2a3";
-        protocol.parse(getTokens(command));
-        assertEquals(false, protocol.queue.isEmpty());
-        protocol.queue.clear();
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
 
-        command = "a b c d position startpos x y z";
-        protocol.parse(getTokens(command));
-        assertEquals(true, protocol.queue.isEmpty());
-        protocol.queue.clear();
+    @Test
+    public void testPosition3() throws IOException {
+        String[] commands = {"a b c d position startpos moves a2a3"};
+        UciProtocol protocol = createUciProtocol(commands);
 
-        command = "setoption";
-        protocol.parse(getTokens(command));
-        assertEquals(true, protocol.queue.isEmpty());
-        protocol.queue.clear();
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
 
-        command = "setoption name";
-        protocol.parse(getTokens(command));
-        assertEquals(true, protocol.queue.isEmpty());
-        protocol.queue.clear();
+        command = protocol.receive();
+        assertEquals(EngineAnalyzeCommand.class, command.getClass());
 
-        command = "setoption name Clear Hash";
-        protocol.parse(getTokens(command));
-        assertEquals(false, protocol.queue.isEmpty());
-        assertEquals(1, protocol.queue.size());
-        assertEquals("Clear Hash", ((EngineSetOptionCommand) protocol.queue.peek()).name);
-        protocol.queue.clear();
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
 
-        command = "setoption name Clear Hash value";
-        protocol.parse(getTokens(command));
-        assertEquals(true, protocol.queue.isEmpty());
-        protocol.queue.clear();
+    @Test
+    public void testPosition4() throws IOException {
+        String[] commands = {"a b c d position startpos x y z"};
+        UciProtocol protocol = createUciProtocol(commands);
 
-        command = "setoption name Clear Hash value 5";
-        protocol.parse(getTokens(command));
-        assertEquals(false, protocol.queue.isEmpty());
-        assertEquals(1, protocol.queue.size());
-        assertEquals("Clear Hash", ((EngineSetOptionCommand) protocol.queue.peek()).name);
-        assertEquals("5", ((EngineSetOptionCommand) protocol.queue.peek()).value);
-        protocol.queue.clear();
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void testSetOption1() throws IOException {
+        String[] commands = {"setoption"};
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void testSetOption2() throws IOException {
+        String[] commands = {"setoption name"};
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void testSetOption3() throws IOException {
+        String[] commands = {"setoption name Clear Hash"};
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        command = protocol.receive();
+        assertEquals(EngineSetOptionCommand.class, command.getClass());
+        assertEquals(((EngineSetOptionCommand)command).name, "Clear Hash");
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void testSetOption4() throws IOException {
+        String[] commands = {"setoption name Clear Hash value"};
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void testSetOption5() throws IOException {
+        String[] commands = {"setoption name Clear Hash value 5"};
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        command = protocol.receive();
+        assertEquals(EngineSetOptionCommand.class, command.getClass());
+        assertEquals(((EngineSetOptionCommand)command).name, "Clear Hash");
+        assertEquals(((EngineSetOptionCommand)command).value, "5");
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    private UciProtocol createUciProtocol(String[] commands) {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        try (PrintStream stream = new PrintStream(buffer)) {
+            for (String command : commands) {
+                stream.println(command);
+            }
+        }
+
+        return new UciProtocol(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray()))), new PrintStream(new ByteArrayOutputStream()));
     }
 
 }

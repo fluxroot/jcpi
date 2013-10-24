@@ -45,11 +45,11 @@ public abstract class AbstractEngine implements IEngine {
         try {
             // Wait for the protocol keyword
             while (handler == null) {
-                String tokenString = input.readLine();
-                if (tokenString != null) {
-                    tokenString = tokenString.trim();
+                String line = input.readLine();
+                if (line != null) {
+                    line = line.trim();
 
-                    if (UciProtocol.isProtocolKeyword(tokenString)) {
+                    if (UciProtocol.isProtocolKeyword(line)) {
                         handler = new UciProtocol(input, output);
                     }
                 } else {

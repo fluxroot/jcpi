@@ -23,15 +23,19 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class UciProtocol implements IProtocolHandler {
 
     private final BufferedReader input;
     private final PrintStream output;
 
-    final Queue<IEngineCommand> queue = new LinkedList<>();
+    private final Queue<IEngineCommand> queue = new LinkedList<>();
 
     public static boolean isProtocolKeyword(String token) {
+        Objects.requireNonNull(token);
+
         if (token.equalsIgnoreCase("uci")) {
             return true;
         } else {
@@ -54,23 +58,54 @@ public final class UciProtocol implements IProtocolHandler {
         IEngineCommand engineCommand = queue.poll();
         while (engineCommand == null) {
             // Read from the standard input
-            String tokenString = input.readLine();
-            if (tokenString != null) {
-                tokenString = tokenString.trim();
+            String line = input.readLine();
+            if (line != null) {
+                try {
+                    // Try to parse the command.
+                    String[] tokens = line.trim().split("\\s", 2);
+                    while (tokens.length > 0) {
+                        if (tokens[0].equalsIgnoreCase("debug")) {
+                            parseDebugCommand(tokens);
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("isready")) {
+                            queue.add(new EngineReadyRequestCommand());
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("setoption")) {
+                            parseSetOptionCommand(tokens);
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("register")) {
+                            // Do nothing
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("ucinewgame")) {
+                            queue.add(new EngineNewGameCommand());
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("position")) {
+                            parsePositionCommand(tokens);
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("go")) {
+                            parseGoCommand(tokens);
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("stop")) {
+                            queue.add(new EngineStopCalculatingCommand());
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("ponderhit")) {
+                            queue.add(new EnginePonderHitCommand());
+                            break;
+                        } else if (tokens[0].equalsIgnoreCase("quit")) {
+                            queue.add(new EngineQuitCommand());
+                            break;
+                        }
 
-                // We have a command here. Clean the command.
-                List<String> tokenList = Arrays.asList(tokenString.split(" "));
-                for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
-                    String token = iter.next();
-
-                    // Remove empty tokens
-                    if (token.length() == 0) {
-                        iter.remove();
+                        if (tokens.length > 1) {
+                            assert tokens.length == 2;
+                            tokens = tokens[1].trim().split("\\s", 2);
+                        } else {
+                            break;
+                        }
                     }
+                } catch (ParseException e) {
+                    // Currently ignore errors in token stream
                 }
-
-                // Try to parse the command.
-                parse(tokenList);
 
                 // Get the next command from the queue
                 engineCommand = queue.poll();
@@ -80,123 +115,80 @@ public final class UciProtocol implements IProtocolHandler {
             }
         }
 
-        assert engineCommand != null;
         return engineCommand;
     }
 
-    void parse(List<String> tokenList) {
-        Objects.requireNonNull(tokenList);
+    private void parseDebugCommand(String[] tokens) throws ParseException {
+        assert tokens != null;
 
-        for (Iterator<String> iter = tokenList.iterator(); iter.hasNext();) {
-            String token = iter.next();
-
-            if (token.equalsIgnoreCase("debug")) {
-                parseDebugCommand(iter);
-                break;
-            } else if (token.equalsIgnoreCase("isready")) {
-                queue.add(new EngineReadyRequestCommand());
-                break;
-            } else if (token.equalsIgnoreCase("setoption")) {
-                parseSetOptionCommand(iter);
-                break;
-            } else if (token.equalsIgnoreCase("register")) {
-                // Do nothing
-                break;
-            } else if (token.equalsIgnoreCase("ucinewgame")) {
-                queue.add(new EngineNewGameCommand());
-                break;
-            } else if (token.equalsIgnoreCase("position")) {
-                parsePositionCommand(iter);
-                break;
-            } else if (token.equalsIgnoreCase("go")) {
-                parseGoCommand(iter);
-                break;
-            } else if (token.equalsIgnoreCase("stop")) {
-                queue.add(new EngineStopCalculatingCommand());
-                break;
-            } else if (token.equalsIgnoreCase("ponderhit")) {
-                queue.add(new EnginePonderHitCommand());
-                break;
-            } else if (token.equalsIgnoreCase("quit")) {
-                queue.add(new EngineQuitCommand());
-                break;
-            }
-        }
-    }
-
-    private void error(String message) {
-        // Currently ignore errors in token stream
-    }
-
-    private void parseDebugCommand(Iterator<String> iter) {
-        assert iter != null;
-
-        if (iter.hasNext()) {
-            String token = iter.next();
+        if (tokens.length > 1) {
+            String token = tokens[1].trim();
 
             if (token.equalsIgnoreCase("on")) {
                 queue.add(new EngineDebugCommand(false, true));
             } else if (token.equalsIgnoreCase("off")) {
                 queue.add(new EngineDebugCommand(false, false));
             } else {
-                error("Error in debug command: unknown parameter " + token);
+                throw new ParseException("Error in debug command: unknown parameter " + token);
             }
         } else {
             queue.add(new EngineDebugCommand(true, false));
         }
     }
 
-    private void parseSetOptionCommand(Iterator<String> iter) {
-        assert iter != null;
+    private void parseSetOptionCommand(String[] tokens) throws ParseException {
+        assert tokens != null;
 
-        String name = null;
-        String value = null;
+        if (tokens.length > 1) {
+            String token = tokens[1].trim();
 
-        if (iter.hasNext()) {
-            String token = iter.next();
+            String name = null;
+            String value = null;
 
-            if (token.equalsIgnoreCase("name") && iter.hasNext()) {
-                boolean hasValue = false;
+            String nameToken = null;
 
-                name = iter.next();
-                while (iter.hasNext()) {
-                    token = iter.next();
-                    if (token.equalsIgnoreCase("value")) {
-                        hasValue = true;
-                        break;
-                    } else {
-                        // Token is part of the name
-                        name += " " + token;
-                    }
+            // Get the value
+            Matcher matcher = Pattern.compile("\\svalue($|\\s)").matcher(token.toLowerCase());
+            if (matcher.find()) {
+                value = token.substring(matcher.end()).trim();
+                if (value.isEmpty()) {
+                    throw new ParseException("Error in setoption command: missing parameter after value");
                 }
 
-                if (hasValue) {
-                    if (iter.hasNext()) {
-                        value = iter.next();
-                        while (iter.hasNext()) {
-                            token = iter.next();
-                            value += " " + token;
-                        }
+                nameToken = token.substring(0, matcher.start());
+            } else {
+                nameToken = token;
+            }
 
-                        queue.add(new EngineSetOptionCommand(name, value));
-                    } else {
-                        error("Error in setoption command: missing option value");
-                    }
-                } else {
-                    queue.add(new EngineSetOptionCommand(name, null));
+            // Get the name
+            matcher = Pattern.compile("(^|\\s)name\\s").matcher(nameToken.toLowerCase());
+            if (matcher.find()) {
+                name = nameToken.substring(matcher.end()).trim();
+                if (name.isEmpty()) {
+                    throw new ParseException("Error in setoption command: missing parameter after name");
                 }
             } else {
-                error("Error in setoption command: missing option name");
+                throw new ParseException("Error in setoption command: missing option name");
+            }
+
+            if (value != null) {
+                queue.add(new EngineSetOptionCommand(name, value));
+            } else {
+                queue.add(new EngineSetOptionCommand(name, null));
             }
         } else {
-            error("Error in setoption command: no parameters specified");
+            throw new ParseException("Error in setoption command: no parameters specified");
         }
     }
 
-    private void parsePositionCommand(Iterator<String> iter) {
-        assert iter != null;
+    private void parsePositionCommand(String[] tokens) throws ParseException {
+        assert tokens != null;
 
-        if (iter.hasNext()) {
+        if (tokens.length > 1) {
+            List<String> list = getTokens(tokens[1]);
+            assert !list.isEmpty();
+
+            Iterator<String> iter = list.iterator();
             String token = iter.next();
             GenericBoard board = null;
 
@@ -207,8 +199,9 @@ public final class UciProtocol implements IProtocolHandler {
                     token = iter.next();
                     if (!token.equalsIgnoreCase("moves")) {
                         // Somethings really wrong here...
-                        board = null;
-                        error("Error in position command: unknown keyword " + token + " after startpos");
+                        throw new ParseException("Error in position command: unknown keyword " + token + " after startpos");
+                    } else if (!iter.hasNext()) {
+                        throw new ParseException("Error in position command: missing moves");
                     }
                 }
             } else if (token.equalsIgnoreCase("fen")) {
@@ -217,6 +210,10 @@ public final class UciProtocol implements IProtocolHandler {
                 while (iter.hasNext()) {
                     token = iter.next();
                     if (token.equalsIgnoreCase("moves")) {
+                        if (!iter.hasNext()) {
+                            throw new ParseException("Error in position command: missing moves");
+                        }
+
                         break;
                     }
 
@@ -226,205 +223,171 @@ public final class UciProtocol implements IProtocolHandler {
                 try {
                     board = new GenericBoard(fen);
                 } catch (IllegalNotationException e) {
-                    error("Error in position command: illegal fen notation " + fen);
+                    throw new ParseException("Error in position command: illegal fen notation " + fen);
                 }
             }
 
-            if (board != null) {
-                List<GenericMove> moveList = new ArrayList<GenericMove>();
+            assert board != null;
 
-                try {
-                    while (iter.hasNext()) {
-                        token = iter.next();
+            List<GenericMove> moveList = new ArrayList<>();
 
-                        GenericMove move = new GenericMove(token);
-                        moveList.add(move);
-                    }
+            try {
+                while (iter.hasNext()) {
+                    token = iter.next();
 
-                    queue.add(new EngineAnalyzeCommand(board, moveList));
-                } catch (IllegalNotationException e) {
-                    error("Error in position command: illegal move notation " + token);
+                    GenericMove move = new GenericMove(token);
+                    moveList.add(move);
                 }
+
+                queue.add(new EngineAnalyzeCommand(board, moveList));
+            } catch (IllegalNotationException e) {
+                throw new ParseException("Error in position command: illegal move notation " + token);
             }
         } else {
-            error("Error in position command: no parameters specified");
+            throw new ParseException("Error in position command: no parameters specified");
         }
     }
 
-    private void parseGoCommand(Iterator<String> iter) {
-        assert iter != null;
+    private void parseGoCommand(String[] tokens) throws ParseException {
+        assert tokens != null;
 
         EngineStartCalculatingCommand engineCommand = new EngineStartCalculatingCommand();
 
-        while (iter.hasNext()) {
-            String token = iter.next();
+        if (tokens.length > 1) {
+            List<String> list = getTokens(tokens[1]);
+            assert !list.isEmpty();
 
-            if (token.equalsIgnoreCase("searchmoves")) {
-                if (iter.hasNext()) {
-                    List<GenericMove> searchMoveList = new ArrayList<GenericMove>();
+            Iterator<String> iter = list.iterator();
+            while (iter.hasNext()) {
+                String token = iter.next();
 
-                    try {
-                        while (iter.hasNext()) {
-                            token = iter.next();
+                if (token.equalsIgnoreCase("searchmoves")) {
+                    if (iter.hasNext()) {
+                        List<GenericMove> searchMoveList = new ArrayList<GenericMove>();
 
-                            GenericMove move = new GenericMove(token);
-                            searchMoveList.add(move);
+                        try {
+                            while (iter.hasNext()) {
+                                token = iter.next();
+
+                                GenericMove move = new GenericMove(token);
+                                searchMoveList.add(move);
+                            }
+
+                            engineCommand.setSearchMoveList(searchMoveList);
+                        } catch (IllegalNotationException e) {
+                            throw new ParseException("Error in position command: illegal move notation " + token);
                         }
-
-                        engineCommand.setSearchMoveList(searchMoveList);
-                    } catch (IllegalNotationException e) {
-                        error("Error in position command: illegal move notation " + token);
+                    } else {
+                        throw new ParseException("Error in go command: missing searchmoves value");
                     }
-                } else {
-                    error("Error in go command: missing searchmoves value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("ponder")) {
-                engineCommand.setPonder();
-            } else if (token.equalsIgnoreCase("wtime")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setClock(GenericColor.WHITE, new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("ponder")) {
+                    engineCommand.setPonder();
+                } else if (token.equalsIgnoreCase("wtime")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setClock(GenericColor.WHITE, new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing wtime value");
                     }
-                } else {
-                    error("Error in go command: missing wtime value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("btime")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setClock(GenericColor.BLACK, new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("btime")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setClock(GenericColor.BLACK, new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing btime value");
                     }
-                } else {
-                    error("Error in go command: missing btime value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("winc")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setClockIncrement(GenericColor.WHITE, new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("winc")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setClockIncrement(GenericColor.WHITE, new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing winc value");
                     }
-                } else {
-                    error("Error in go command: missing winc value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("binc")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setClockIncrement(GenericColor.BLACK, new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("binc")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setClockIncrement(GenericColor.BLACK, new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing binc value");
                     }
-                } else {
-                    error("Error in go command: missing binc value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("movestogo")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setMovesToGo(new Integer(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("movestogo")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setMovesToGo(new Integer(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing movestogo value");
                     }
-                } else {
-                    error("Error in go command: missing movestogo value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("depth")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setDepth(new Integer(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("depth")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setDepth(new Integer(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing depth value");
                     }
-                } else {
-                    error("Error in go command: missing depth value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("nodes")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setNodes(new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("nodes")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setNodes(new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing nodes value");
                     }
-                } else {
-                    error("Error in go command: missing nodes value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("mate")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setMate(new Integer(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("mate")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setMate(new Integer(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing mate value");
                     }
-                } else {
-                    error("Error in go command: missing mate value");
-                    engineCommand = null;
-                    break;
-                }
-            } else if (token.equalsIgnoreCase("movetime")) {
-                if (iter.hasNext()) {
-                    token = iter.next();
-                    try {
-                        engineCommand.setMoveTime(new Long(token));
-                    } catch (NumberFormatException e) {
-                        error("Error in go command: incorrect number format " + token);
-                        engineCommand = null;
-                        break;
+                } else if (token.equalsIgnoreCase("movetime")) {
+                    if (iter.hasNext()) {
+                        token = iter.next();
+                        try {
+                            engineCommand.setMoveTime(new Long(token));
+                        } catch (NumberFormatException e) {
+                            throw new ParseException("Error in go command: incorrect number format " + token);
+                        }
+                    } else {
+                        throw new ParseException("Error in go command: missing movetime value");
                     }
-                } else {
-                    error("Error in go command: missing movetime value");
-                    engineCommand = null;
-                    break;
+                } else if (token.equalsIgnoreCase("infinite")) {
+                    engineCommand.setInfinite();
                 }
-            } else if (token.equalsIgnoreCase("infinite")) {
-                engineCommand.setInfinite();
             }
         }
 
-        if (engineCommand != null) {
-            queue.add(engineCommand);
-        }
+        queue.add(engineCommand);
     }
 
     public void send(ProtocolInitializeAnswerCommand command) {
@@ -550,6 +513,19 @@ public final class UciProtocol implements IProtocolHandler {
         }
 
         output.println(infoCommand);
+    }
+
+    private List<String> getTokens(String s) {
+        List<String> tokens = Arrays.asList(s.trim().split("\\s"));
+
+        for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
+            // Remove empty tokens
+            if (iter.next().length() == 0) {
+                iter.remove();
+            }
+        }
+
+        return tokens;
     }
 
 }
