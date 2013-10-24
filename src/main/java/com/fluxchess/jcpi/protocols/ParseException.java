@@ -15,13 +15,15 @@
  */
 package com.fluxchess.jcpi.protocols;
 
-import com.fluxchess.jcpi.commands.IEngineCommand;
-import com.fluxchess.jcpi.commands.IProtocol;
+public class ParseException extends Exception {
 
-import java.io.IOException;
+    private static final long serialVersionUID = 1L;
 
-public interface IProtocolHandler extends IProtocol {
+    public ParseException() {
+    }
 
-    IEngineCommand receive() throws IOException;
+    public ParseException(String message) {
+        super(message);
+    }
 
 }

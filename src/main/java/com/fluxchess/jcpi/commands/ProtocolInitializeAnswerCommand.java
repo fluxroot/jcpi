@@ -15,12 +15,12 @@
  */
 package com.fluxchess.jcpi.commands;
 
+import com.fluxchess.jcpi.models.Option;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import com.fluxchess.jcpi.models.Option;
 
 public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 

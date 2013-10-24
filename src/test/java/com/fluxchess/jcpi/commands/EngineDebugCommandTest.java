@@ -15,11 +15,9 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import com.fluxchess.jcpi.commands.EngineDebugCommand;
+import static org.junit.Assert.assertEquals;
 
 public class EngineDebugCommandTest {
 

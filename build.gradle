@@ -41,17 +41,6 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    eclipselibs {
-        extendsFrom compile
-    }
-}
-
-task libs(type: Sync) {
-    from configurations.eclipselibs
-    into "$projectDir/lib"
-}
-
 tasks.withType(Pmd) {
     pmd {
         ignoreFailures = true
@@ -141,5 +130,5 @@ uploadArchives {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
+    gradleVersion = '1.8'
 }
