@@ -113,4 +113,31 @@ public class GenericMove {
         return result;
     }
 
+    public boolean equals(Object obj) {
+        if (obj instanceof GenericMove == false) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        GenericMove rhs = (GenericMove) obj;
+
+        // Test from
+        if (this.from != rhs.from) {
+            return false;
+        }
+
+        // Test to
+        if (this.to != rhs.to) {
+            return false;
+        }
+
+        // Test promotion
+        if (this.promotion != rhs.promotion) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
