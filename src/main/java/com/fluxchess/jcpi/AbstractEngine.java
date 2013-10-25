@@ -29,19 +29,29 @@ import java.util.Objects;
  * This is the main engine class. Inherit your engine from this class and
  * implement all abstract methods.
  */
-public abstract class AbstractEngine implements IEngine {
+public abstract class AbstractEngine implements IEngine, Runnable {
 
     private boolean running = true;
     private IProtocolHandler handler;
 
+    private final BufferedReader input;
+    private final PrintStream output;
+
     protected AbstractEngine() {
+        // Set the standard input and output stream
+        input = new BufferedReader(new InputStreamReader(System.in));
+        output = System.out;
+    }
+
+    protected AbstractEngine(BufferedReader input, PrintStream output) {
+        Objects.requireNonNull(input);
+        Objects.requireNonNull(output);
+
+        this.input = input;
+        this.output = output;
     }
 
     public final void run() {
-        // Set the standard input and output stream
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        PrintStream output = System.out;
-
         try {
             // Wait for the protocol keyword
             while (handler == null) {
