@@ -34,7 +34,7 @@ public enum GenericPiece {
     BLACKQUEEN(GenericColor.BLACK, GenericChessman.QUEEN),
     BLACKKING(GenericColor.BLACK, GenericChessman.KING);
 
-    private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<GenericColor, Map<GenericChessman, GenericPiece>>(GenericColor.class);
+    private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<>(GenericColor.class);
 
     static {
         for (GenericColor color : GenericColor.values()) {

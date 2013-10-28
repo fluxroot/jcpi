@@ -21,13 +21,13 @@ public class GenericBoard {
 
     public static final int STANDARDSETUP = 518;
 
-    private Map<GenericPosition, GenericPiece> board = new HashMap<GenericPosition, GenericPiece>();
-    private Map<GenericColor, Map<GenericCastling, GenericFile>> castling = new EnumMap<GenericColor, Map<GenericCastling, GenericFile>>(GenericColor.class);
+    private final Map<GenericPosition, GenericPiece> board = new HashMap<>();
+    private final Map<GenericColor, Map<GenericCastling, GenericFile>> castling = new EnumMap<>(GenericColor.class);
     private GenericPosition enPassant = null;
     private GenericColor activeColor = GenericColor.WHITE;
     private int halfMoveClock = 0;
     private int fullMoveNumber = 1;
-    private Map<GenericColor, GenericFile> kingFile = new EnumMap<GenericColor, GenericFile>(GenericColor.class);
+    private final Map<GenericColor, GenericFile> kingFile = new EnumMap<>(GenericColor.class);
     private boolean isFrc = false;
 
     public GenericBoard() {
@@ -378,7 +378,7 @@ public class GenericBoard {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof GenericBoard == false) {
+        if (!(obj instanceof GenericBoard)) {
             return false;
         }
         if (this == obj) {
@@ -440,7 +440,7 @@ public class GenericBoard {
         // Clean notation and split into terms
         notation = notation.trim();
 
-        List<String> tokens = new ArrayList<String>(Arrays.asList(notation.split(" ")));
+        List<String> tokens = new ArrayList<>(Arrays.asList(notation.split(" ")));
         for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
             String token = iter.next();
 

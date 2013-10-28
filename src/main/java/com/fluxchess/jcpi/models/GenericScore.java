@@ -19,6 +19,6 @@ public enum GenericScore {
 
     EXACT,
     ALPHA,
-    BETA;
+    BETA
 
 }

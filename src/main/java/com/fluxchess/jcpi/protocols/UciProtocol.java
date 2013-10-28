@@ -36,11 +36,7 @@ public final class UciProtocol implements IProtocolHandler {
     public static boolean isProtocolKeyword(String token) {
         Objects.requireNonNull(token);
 
-        if (token.equalsIgnoreCase("uci")) {
-            return true;
-        } else {
-            return false;
-        }
+        return token.equalsIgnoreCase("uci");
     }
 
     public UciProtocol(BufferedReader input, PrintStream output) {
@@ -263,7 +259,7 @@ public final class UciProtocol implements IProtocolHandler {
 
                 if (token.equalsIgnoreCase("searchmoves")) {
                     if (iter.hasNext()) {
-                        List<GenericMove> searchMoveList = new ArrayList<GenericMove>();
+                        List<GenericMove> searchMoveList = new ArrayList<>();
 
                         try {
                             while (iter.hasNext()) {
