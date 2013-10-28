@@ -73,6 +73,11 @@ jar {
     }
 }
 
+task testsJar(type: Jar, dependsOn: testClasses) {
+    classifier = 'tests'
+    from sourceSets.test.output
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
@@ -98,6 +103,7 @@ task dist(type: Zip) {
 }
 
 artifacts {
+    archives testsJar
     archives sourcesJar
     archives javadocJar
 }
