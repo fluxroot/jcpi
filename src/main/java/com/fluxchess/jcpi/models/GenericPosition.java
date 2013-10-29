@@ -86,7 +86,7 @@ public enum GenericPosition {
     g8(GenericFile.Fg, GenericRank.R8),
     h8(GenericFile.Fh, GenericRank.R8);
 
-    private static final Map<GenericFile, Map<GenericRank, GenericPosition>> allPositions = new EnumMap<GenericFile, Map<GenericRank, GenericPosition>>(GenericFile.class);
+    private static final Map<GenericFile, Map<GenericRank, GenericPosition>> allPositions = new EnumMap<>(GenericFile.class);
 
     static {
         for (GenericFile file : GenericFile.values()) {

@@ -114,7 +114,7 @@ public class GenericMove {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof GenericMove == false) {
+        if (!(obj instanceof GenericMove)) {
             return false;
         }
         if (this == obj) {

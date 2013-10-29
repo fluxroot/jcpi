@@ -34,6 +34,23 @@ public class UciProtocolTest {
     }
 
     @Test
+    public void testBasic() throws IOException {
+        String[] commands = {
+            ""
+        };
+        UciProtocol protocol = createUciProtocol(commands);
+
+        IEngineCommand command = protocol.receive();
+        assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+
+        try {
+            command = protocol.receive();
+            fail();
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
     public void testDebug() throws IOException {
         String[] commands = {
             "debug",

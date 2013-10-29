@@ -26,7 +26,7 @@ public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
     public final String name;
     public final String author;
-    private final List<Option> optionList = new ArrayList<Option>();
+    private final List<Option> optionList = new ArrayList<>();
 
     public ProtocolInitializeAnswerCommand(String name, String author) {
         Objects.requireNonNull(name);

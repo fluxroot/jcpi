@@ -27,8 +27,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
 
     private List<GenericMove> searchMoveList = null;
     private boolean ponder = false;
-    private Map<GenericColor, Long> clock = new EnumMap<GenericColor, Long>(GenericColor.class);
-    private Map<GenericColor, Long> clockIncrement = new EnumMap<GenericColor, Long>(GenericColor.class);
+    private final Map<GenericColor, Long> clock = new EnumMap<>(GenericColor.class);
+    private final Map<GenericColor, Long> clockIncrement = new EnumMap<>(GenericColor.class);
     private Integer movestogo = null;
     private Integer depth = null;
     private Long nodes = null;
