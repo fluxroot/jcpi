@@ -439,15 +439,27 @@ public class UciProtocolTest {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         UciProtocol protocol = new UciProtocol(new BufferedReader(new InputStreamReader(new ByteArrayInputStream("".getBytes()))), new PrintStream(buffer));
 
+        // 1. Test
         ProtocolBestMoveCommand command = new ProtocolBestMoveCommand(
             new GenericMove(GenericPosition.a2, GenericPosition.a3),
             new GenericMove(GenericPosition.d3, GenericPosition.e5)
         );
         protocol.send(command);
 
+        // 2. Test
+        command = new ProtocolBestMoveCommand(null, null);
+        protocol.send(command);
+
         BufferedReader input = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray())));
+
+        // 1. Test
         String line = input.readLine();
         assertEquals("bestmove a2a3 ponder d3e5", line);
+
+        // 2. Test
+        line = input.readLine();
+        assertEquals("bestmove nomove", line);
+
         assertNull(input.readLine());
     }
 

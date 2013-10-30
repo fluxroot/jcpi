@@ -27,10 +27,6 @@ public class EngineAnalyzeCommand implements IEngineCommand {
     public final GenericBoard board;
     public final List<GenericMove> moveList;
 
-    public EngineAnalyzeCommand(GenericBoard board) {
-        this(board, new ArrayList<GenericMove>());
-    }
-
     public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
         Objects.requireNonNull(board);
         Objects.requireNonNull(moveList);
