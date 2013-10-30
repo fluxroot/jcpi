@@ -62,9 +62,7 @@ public enum GenericPiece {
 
     public static GenericPiece valueOf(char input) {
         GenericColor color = GenericColor.colorOf(input);
-        if (color == null) {
-            return null;
-        }
+        assert color != null;
 
         GenericChessman chessman = GenericChessman.valueOf(input);
         if (chessman == null) {
