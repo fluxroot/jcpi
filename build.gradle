@@ -96,6 +96,9 @@ task dist(type: Zip) {
         from 'LICENSE'
         from 'NOTICE'
         from jar
+        from testsJar
+        from sourcesJar
+        from javadocJar
     }
 }
 
