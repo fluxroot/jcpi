@@ -22,38 +22,38 @@ import static org.junit.Assert.assertNull;
 
 public class GenericRankTest {
 
-    @Test
-    public void testValueOf() {
-        assertEquals(GenericRank.R1, GenericRank.valueOf('1'));
-        assertNull(GenericRank.valueOf('9'));
-    }
+  @Test
+  public void testValueOf() {
+    assertEquals(GenericRank.R1, GenericRank.valueOf('1'));
+    assertNull(GenericRank.valueOf('9'));
+  }
 
-    @Test
-    public void testPrev() {
-        assertEquals(GenericRank.R7, GenericRank.R8.prev());
-        assertNull(GenericRank.R1.prev());
+  @Test
+  public void testPrev() {
+    assertEquals(GenericRank.R7, GenericRank.R8.prev());
+    assertNull(GenericRank.R1.prev());
 
-        assertEquals(GenericRank.R1, GenericRank.R8.prev(7));
-        assertNull(GenericRank.R7.prev(7));
-    }
+    assertEquals(GenericRank.R1, GenericRank.R8.prev(7));
+    assertNull(GenericRank.R7.prev(7));
+  }
 
-    @Test
-    public void testNext() {
-        assertEquals(GenericRank.R2, GenericRank.R1.next());
-        assertNull(GenericRank.R8.next());
+  @Test
+  public void testNext() {
+    assertEquals(GenericRank.R2, GenericRank.R1.next());
+    assertNull(GenericRank.R8.next());
 
-        assertEquals(GenericRank.R8, GenericRank.R1.next(7));
-        assertNull(GenericRank.R2.next(7));
-    }
+    assertEquals(GenericRank.R8, GenericRank.R1.next(7));
+    assertNull(GenericRank.R2.next(7));
+  }
 
-    @Test
-    public void testToChar() {
-        assertEquals('1', GenericRank.R1.toChar());
-    }
+  @Test
+  public void testToChar() {
+    assertEquals('1', GenericRank.R1.toChar());
+  }
 
-    @Test
-    public void testToString() {
-        assertEquals("1", GenericRank.R1.toString());
-    }
+  @Test
+  public void testToString() {
+    assertEquals("1", GenericRank.R1.toString());
+  }
 
 }

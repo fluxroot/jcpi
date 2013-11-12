@@ -17,6 +17,6 @@ package com.fluxchess.jcpi.commands;
 
 public interface IEngineCommand {
 
-    void accept(IEngine v);
+  void accept(IEngine v);
 
 }

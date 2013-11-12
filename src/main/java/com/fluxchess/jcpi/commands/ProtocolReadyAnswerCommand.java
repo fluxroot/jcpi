@@ -19,16 +19,16 @@ import java.util.Objects;
 
 public class ProtocolReadyAnswerCommand implements IProtocolCommand {
 
-    public final String token;
+  public final String token;
 
-    public ProtocolReadyAnswerCommand(String token) {
-        Objects.requireNonNull(token);
+  public ProtocolReadyAnswerCommand(String token) {
+    Objects.requireNonNull(token);
 
-        this.token = token;
-    }
+    this.token = token;
+  }
 
-    public void accept(IProtocol v) {
-        v.send(this);
-    }
+  public void accept(IProtocol v) {
+    v.send(this);
+  }
 
 }

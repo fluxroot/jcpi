@@ -17,11 +17,11 @@ package com.fluxchess.jcpi.commands;
 
 public class EngineStopCalculatingCommand implements IEngineCommand {
 
-    public EngineStopCalculatingCommand() {
-    }
+  public EngineStopCalculatingCommand() {
+  }
 
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+  public void accept(IEngine v) {
+    v.receive(this);
+  }
 
 }

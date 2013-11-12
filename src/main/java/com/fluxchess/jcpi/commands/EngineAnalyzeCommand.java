@@ -18,25 +18,24 @@ package com.fluxchess.jcpi.commands;
 import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericMove;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class EngineAnalyzeCommand implements IEngineCommand {
 
-    public final GenericBoard board;
-    public final List<GenericMove> moveList;
+  public final GenericBoard board;
+  public final List<GenericMove> moveList;
 
-    public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
-        Objects.requireNonNull(board);
-        Objects.requireNonNull(moveList);
+  public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
+    Objects.requireNonNull(board);
+    Objects.requireNonNull(moveList);
 
-        this.board = board;
-        this.moveList = moveList;
-    }
+    this.board = board;
+    this.moveList = moveList;
+  }
 
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+  public void accept(IEngine v) {
+    v.receive(this);
+  }
 
 }

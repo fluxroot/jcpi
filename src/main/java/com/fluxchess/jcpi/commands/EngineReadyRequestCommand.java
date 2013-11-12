@@ -19,20 +19,20 @@ import java.util.Objects;
 
 public class EngineReadyRequestCommand implements IEngineCommand {
 
-    public final String token;
+  public final String token;
 
-    public EngineReadyRequestCommand() {
-        this.token = "";
-    }
+  public EngineReadyRequestCommand() {
+    this.token = "";
+  }
 
-    public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
+  public EngineReadyRequestCommand(String token) {
+    Objects.requireNonNull(token);
 
-        this.token = token;
-    }
+    this.token = token;
+  }
 
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+  public void accept(IEngine v) {
+    v.receive(this);
+  }
 
 }

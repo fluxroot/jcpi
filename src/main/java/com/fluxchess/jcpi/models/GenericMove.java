@@ -19,125 +19,125 @@ import java.util.Objects;
 
 public class GenericMove {
 
-    public final GenericPosition from;
-    public final GenericPosition to;
-    public final GenericChessman promotion;
+  public final GenericPosition from;
+  public final GenericPosition to;
+  public final GenericChessman promotion;
 
-    public GenericMove(GenericPosition from, GenericPosition to) {
-        this(from, to, null);
+  public GenericMove(GenericPosition from, GenericPosition to) {
+    this(from, to, null);
+  }
+
+  public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
+    Objects.requireNonNull(from);
+    Objects.requireNonNull(to);
+    if (promotion != null && !promotion.isValidPromotion()) throw new IllegalArgumentException();
+
+    this.from = from;
+    this.to = to;
+    this.promotion = promotion;
+  }
+
+  public GenericMove(String notation) throws IllegalNotationException {
+    Objects.requireNonNull(notation);
+
+    // Clean whitespace at the beginning and at the end
+    notation = notation.trim();
+
+    // Clean spaces in the notation
+    notation = notation.replaceAll(" ", "");
+
+    // Clean capturing notation
+    notation = notation.replaceAll("x", "");
+    notation = notation.replaceAll(":", "");
+
+    // Clean pawn promotion notation
+    notation = notation.replaceAll("=", "");
+
+    // Clean check notation
+    notation = notation.replaceAll("\\+", "");
+
+    // Clean checkmate notation
+    notation = notation.replaceAll("#", "");
+
+    // Clean hyphen in long algebraic notation
+    notation = notation.replaceAll("-", "");
+
+    // Parse promotion
+    if (notation.length() == 5) {
+      this.promotion = GenericChessman.valueOfPromotion(notation.charAt(4));
+      if (this.promotion == null) {
+        throw new IllegalNotationException();
+      }
+
+      notation = notation.substring(0, 4);
+    } else {
+      this.promotion = null;
     }
 
-    public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
-        Objects.requireNonNull(from);
-        Objects.requireNonNull(to);
-        if (promotion != null && !promotion.isValidPromotion()) throw new IllegalArgumentException();
+    if (notation.length() == 4) {
+      GenericFile file = GenericFile.valueOf(notation.charAt(0));
+      if (file == null) {
+        throw new IllegalNotationException();
+      }
 
-        this.from = from;
-        this.to = to;
-        this.promotion = promotion;
+      GenericRank rank = GenericRank.valueOf(notation.charAt(1));
+      if (rank == null) {
+        throw new IllegalNotationException();
+      }
+
+      this.from = GenericPosition.valueOf(file, rank);
+
+      file = GenericFile.valueOf(notation.charAt(2));
+      if (file == null) {
+        throw new IllegalNotationException();
+      }
+
+      rank = GenericRank.valueOf(notation.charAt(3));
+      if (rank == null) {
+        throw new IllegalNotationException();
+      }
+
+      this.to = GenericPosition.valueOf(file, rank);
+    } else {
+      throw new IllegalNotationException();
+    }
+  }
+
+  public String toString() {
+    String result = this.from.toString() + this.to.toString();
+
+    if (this.promotion != null) {
+      result += Character.toLowerCase(this.promotion.toCharAlgebraic());
     }
 
-    public GenericMove(String notation) throws IllegalNotationException {
-        Objects.requireNonNull(notation);
+    return result;
+  }
 
-        // Clean whitespace at the beginning and at the end
-        notation = notation.trim();
+  public boolean equals(Object obj) {
+    if (!(obj instanceof GenericMove)) {
+      return false;
+    }
+    if (this == obj) {
+      return true;
+    }
+    GenericMove rhs = (GenericMove) obj;
 
-        // Clean spaces in the notation
-        notation = notation.replaceAll(" ", "");
-
-        // Clean capturing notation
-        notation = notation.replaceAll("x", "");
-        notation = notation.replaceAll(":", "");
-
-        // Clean pawn promotion notation
-        notation = notation.replaceAll("=", "");
-
-        // Clean check notation
-        notation = notation.replaceAll("\\+", "");
-
-        // Clean checkmate notation
-        notation = notation.replaceAll("#", "");
-
-        // Clean hyphen in long algebraic notation
-        notation = notation.replaceAll("-", "");
-
-        // Parse promotion
-        if (notation.length() == 5) {
-            this.promotion = GenericChessman.valueOfPromotion(notation.charAt(4));
-            if (this.promotion == null) {
-                throw new IllegalNotationException();
-            }
-
-            notation = notation.substring(0, 4);
-        } else {
-            this.promotion = null;
-        }
-
-        if (notation.length() == 4) {
-            GenericFile file = GenericFile.valueOf(notation.charAt(0));
-            if (file == null) {
-                throw new IllegalNotationException();
-            }
-
-            GenericRank rank = GenericRank.valueOf(notation.charAt(1));
-            if (rank == null) {
-                throw new IllegalNotationException();
-            }
-
-            this.from = GenericPosition.valueOf(file, rank);
-
-            file = GenericFile.valueOf(notation.charAt(2));
-            if (file == null) {
-                throw new IllegalNotationException();
-            }
-
-            rank = GenericRank.valueOf(notation.charAt(3));
-            if (rank == null) {
-                throw new IllegalNotationException();
-            }
-
-            this.to = GenericPosition.valueOf(file, rank);
-        } else {
-            throw new IllegalNotationException();
-        }
+    // Test from
+    if (this.from != rhs.from) {
+      return false;
     }
 
-    public String toString() {
-        String result = this.from.toString() + this.to.toString();
-
-        if (this.promotion != null) {
-            result += Character.toLowerCase(this.promotion.toCharAlgebraic());
-        }
-
-        return result;
+    // Test to
+    if (this.to != rhs.to) {
+      return false;
     }
 
-    public boolean equals(Object obj) {
-        if (!(obj instanceof GenericMove)) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        GenericMove rhs = (GenericMove) obj;
-
-        // Test from
-        if (this.from != rhs.from) {
-            return false;
-        }
-
-        // Test to
-        if (this.to != rhs.to) {
-            return false;
-        }
-
-        // Test promotion
-        if (this.promotion != rhs.promotion) {
-            return false;
-        }
-
-        return true;
+    // Test promotion
+    if (this.promotion != rhs.promotion) {
+      return false;
     }
+
+    return true;
+  }
 
 }

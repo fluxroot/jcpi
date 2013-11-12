@@ -24,30 +24,30 @@ import java.util.Objects;
 
 public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
-    public final String name;
-    public final String author;
-    private final List<Option> optionList = new ArrayList<>();
+  public final String name;
+  public final String author;
+  private final List<Option> optionList = new ArrayList<>();
 
-    public ProtocolInitializeAnswerCommand(String name, String author) {
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(author);
+  public ProtocolInitializeAnswerCommand(String name, String author) {
+    Objects.requireNonNull(name);
+    Objects.requireNonNull(author);
 
-        this.name = name;
-        this.author = author;
-    }
+    this.name = name;
+    this.author = author;
+  }
 
-    public void accept(IProtocol v) {
-        v.send(this);
-    }
+  public void accept(IProtocol v) {
+    v.send(this);
+  }
 
-    public Iterator<Option> optionIterator() {
-        return this.optionList.iterator();
-    }
+  public Iterator<Option> optionIterator() {
+    return this.optionList.iterator();
+  }
 
-    public void addOption(Option option) {
-        Objects.requireNonNull(option);
+  public void addOption(Option option) {
+    Objects.requireNonNull(option);
 
-        this.optionList.add(option);
-    }
+    this.optionList.add(option);
+  }
 
 }

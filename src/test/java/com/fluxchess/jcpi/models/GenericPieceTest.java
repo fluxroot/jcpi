@@ -22,16 +22,16 @@ import static org.junit.Assert.assertNull;
 
 public class GenericPieceTest {
 
-    @Test
-    public void testValueOf() {
-        assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
-        assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
-        assertNull(GenericPiece.valueOf('x'));
-    }
+  @Test
+  public void testValueOf() {
+    assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
+    assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
+    assertNull(GenericPiece.valueOf('x'));
+  }
 
-    @Test
-    public void testToChar() {
-        assertEquals('q', GenericPiece.BLACKQUEEN.toChar());
-    }
+  @Test
+  public void testToChar() {
+    assertEquals('q', GenericPiece.BLACKQUEEN.toChar());
+  }
 
 }
