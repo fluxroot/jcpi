@@ -17,11 +17,11 @@ package com.fluxchess.jcpi.commands;
 
 public class EngineQuitCommand implements IEngineCommand {
 
-    public EngineQuitCommand() {
-    }
+  public EngineQuitCommand() {
+  }
 
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+  public void accept(IEngine v) {
+    v.receive(this);
+  }
 
 }

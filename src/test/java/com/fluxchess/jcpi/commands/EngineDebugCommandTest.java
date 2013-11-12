@@ -21,11 +21,11 @@ import static org.junit.Assert.assertEquals;
 
 public class EngineDebugCommandTest {
 
-    @Test
-    public final void testEngineDebugCommand() {
-        EngineDebugCommand command = new EngineDebugCommand(false, true);
+  @Test
+  public final void testEngineDebugCommand() {
+    EngineDebugCommand command = new EngineDebugCommand(false, true);
 
-        assertEquals(true, command.debug);
-    }
+    assertEquals(true, command.debug);
+  }
 
 }

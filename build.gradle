@@ -10,131 +10,131 @@ group = 'com.fluxchess'
 version = '1.1.0-alpha.1'
 
 if (!hasProperty('buildNumber')) {
-    ext.buildNumber = 'dev'
+  ext.buildNumber = 'dev'
 }
 if (version.contains('-')) {
-    if (hasProperty('branchName') && branchName == 'master') {
-        version += '.' + buildNumber
-    } else {
-        version += '.0'
-    }
+  if (hasProperty('branchName') && branchName == 'master') {
+    version += '.' + buildNumber
+  } else {
+    version += '.0'
+  }
 }
 
 if (!hasProperty('revisionNumber')) {
-    ext.revisionNumber = 'rev'
+  ext.revisionNumber = 'rev'
 }
 if (version.contains('-') && !(hasProperty('branchName') && branchName == 'master')) {
-    version += '+' + revisionNumber
+  version += '+' + revisionNumber
 }
 
 println "Building version ${version}"
 
 if (!hasProperty('s3AccessKeyId')) {
-    ext.s3AccessKeyId = 'n/a'
+  ext.s3AccessKeyId = 'n/a'
 }
 
 if (!hasProperty('s3SecretAccessKey')) {
-    ext.s3SecretAccessKey = 'n/a'
+  ext.s3SecretAccessKey = 'n/a'
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 tasks.withType(Pmd) {
-    pmd {
-        ignoreFailures = true
-    }
+  pmd {
+    ignoreFailures = true
+  }
 }
 
 tasks.withType(FindBugs) {
-    findbugs {
-        ignoreFailures = true
-    }
+  findbugs {
+    ignoreFailures = true
+  }
 }
 
 tasks.withType(Checkstyle) {
-    checkstyle {
-        ignoreFailures = true
-        showViolations = false
-    }
+  checkstyle {
+    ignoreFailures = true
+    showViolations = false
+  }
 }
 
 dependencies {
-    testCompile 'junit:junit:4.+'
+  testCompile 'junit:junit:4.+'
 }
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 jar {
-    manifest {
-        attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
-    }
+  manifest {
+    attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
+  }
 }
 
 task testsJar(type: Jar, dependsOn: testClasses) {
-    classifier = 'tests'
-    from sourceSets.test.output
+  classifier = 'tests'
+  from sourceSets.test.output
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+  classifier = 'sources'
+  from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+  classifier = 'javadoc'
+  from javadoc.destinationDir
 }
 
 task dist(type: Zip) {
-    def baseDir = "${project.name}-${project.version}"
+  def baseDir = "${project.name}-${project.version}"
 
-    into ("$baseDir") {
-        from 'README.md'
-        from 'LICENSE'
-        from 'NOTICE'
-        from jar
-        from testsJar
-        from sourcesJar
-        from javadocJar
-    }
+  into("$baseDir") {
+    from 'README.md'
+    from 'LICENSE'
+    from 'NOTICE'
+    from jar
+    from testsJar
+    from sourcesJar
+    from javadocJar
+  }
 }
 
 artifacts {
-    archives testsJar
-    archives sourcesJar
-    archives javadocJar
+  archives testsJar
+  archives sourcesJar
+  archives javadocJar
 }
 
 uploadArchives {
-    if (project.hasProperty('branchName')) {
-        if (branchName == 'master') {
-            configurations {
-                deployerJars
-            }
-        
-            dependencies {
-                deployerJars 'org.springframework.build:aws-maven:4.+'
-            }
-        
-            repositories {
-                mavenDeployer {
-                    configuration = configurations.deployerJars
-                    repository(url: 's3://maven.fluxchess.com/release') {
-                        authentication(userName: s3AccessKeyId, passphrase: s3SecretAccessKey)
-                    }
-                }
-            }
-        } else {
-            println "Skipping upload. Not on master branch (${branchName})."
+  if (project.hasProperty('branchName')) {
+    if (branchName == 'master') {
+      configurations {
+        deployerJars
+      }
+
+      dependencies {
+        deployerJars 'org.springframework.build:aws-maven:4.+'
+      }
+
+      repositories {
+        mavenDeployer {
+          configuration = configurations.deployerJars
+          repository(url: 's3://maven.fluxchess.com/release') {
+            authentication(userName: s3AccessKeyId, passphrase: s3SecretAccessKey)
+          }
         }
+      }
     } else {
-        println "Skipping upload. No branch name defined."
+      println "Skipping upload. Not on master branch (${branchName})."
     }
+  } else {
+    println "Skipping upload. No branch name defined."
+  }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
+  gradleVersion = '1.8'
 }

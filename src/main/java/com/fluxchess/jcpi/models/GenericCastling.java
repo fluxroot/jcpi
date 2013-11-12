@@ -19,47 +19,47 @@ import java.util.Objects;
 
 public enum GenericCastling {
 
-    KINGSIDE("O-O", 'K'),
-    QUEENSIDE("O-O-O", 'Q');
+  KINGSIDE("O-O", 'K'),
+  QUEENSIDE("O-O-O", 'Q');
 
-    private final String longToken;
-    private final char token;
+  private final String longToken;
+  private final char token;
 
-    private GenericCastling(String longToken, char token) {
-        this.longToken = longToken;
-        this.token = token;
+  private GenericCastling(String longToken, char token) {
+    this.longToken = longToken;
+    this.token = token;
+  }
+
+  public static GenericCastling valueOf(char input) {
+    for (GenericCastling castling : values()) {
+      if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
+        return castling;
+      }
     }
 
-    public static GenericCastling valueOf(char input) {
-        for (GenericCastling castling: values()) {
-            if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
-                return castling;
-            }
-        }
+    return null;
+  }
 
-        return null;
+  public static GenericCastling valueOfLongToken(String input) {
+    Objects.requireNonNull(input);
+
+    for (GenericCastling castling : values()) {
+      if (castling.longToken.equalsIgnoreCase(input)) {
+        return castling;
+      }
     }
 
-    public static GenericCastling valueOfLongToken(String input) {
-        Objects.requireNonNull(input);
+    return null;
+  }
 
-        for (GenericCastling castling: values()) {
-            if (castling.longToken.equalsIgnoreCase(input)) {
-                return castling;
-            }
-        }
+  public String toLongToken() {
+    return this.longToken;
+  }
 
-        return null;
-    }
+  public char toChar(GenericColor color) {
+    Objects.requireNonNull(color);
 
-    public String toLongToken() {
-        return this.longToken;
-    }
-
-    public char toChar(GenericColor color) {
-        Objects.requireNonNull(color);
-
-        return color.transform(this.token);
-    }
+    return color.transform(this.token);
+  }
 
 }

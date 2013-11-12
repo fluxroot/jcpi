@@ -19,18 +19,18 @@ import java.util.Objects;
 
 public class EngineSetOptionCommand implements IEngineCommand {
 
-    public final String name;
-    public final String value;
+  public final String name;
+  public final String value;
 
-    public EngineSetOptionCommand(String name, String value) {
-        Objects.requireNonNull(name);
+  public EngineSetOptionCommand(String name, String value) {
+    Objects.requireNonNull(name);
 
-        this.name = name;
-        this.value = value;
-    }
+    this.name = name;
+    this.value = value;
+  }
 
-    public void accept(IEngine v) {
-        v.receive(this);
-    }
+  public void accept(IEngine v) {
+    v.receive(this);
+  }
 
 }

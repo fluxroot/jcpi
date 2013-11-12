@@ -31,67 +31,67 @@ import java.util.Objects;
  */
 public abstract class AbstractEngine implements IEngine, Runnable {
 
-    private boolean running = true;
-    private IProtocolHandler handler;
+  private boolean running = true;
+  private IProtocolHandler handler;
 
-    private final BufferedReader input;
-    private final PrintStream output;
+  private final BufferedReader input;
+  private final PrintStream output;
 
-    protected AbstractEngine() {
-        // Set the standard input and output stream
-        input = new BufferedReader(new InputStreamReader(System.in));
-        output = System.out;
-    }
+  protected AbstractEngine() {
+    // Set the standard input and output stream
+    input = new BufferedReader(new InputStreamReader(System.in));
+    output = System.out;
+  }
 
-    protected AbstractEngine(BufferedReader input, PrintStream output) {
-        Objects.requireNonNull(input);
-        Objects.requireNonNull(output);
+  protected AbstractEngine(BufferedReader input, PrintStream output) {
+    Objects.requireNonNull(input);
+    Objects.requireNonNull(output);
 
-        this.input = input;
-        this.output = output;
-    }
+    this.input = input;
+    this.output = output;
+  }
 
-    public final void run() {
-        try {
-            // Wait for the protocol keyword
-            while (handler == null) {
-                String line = input.readLine();
-                if (line != null) {
-                    line = line.trim();
+  public final void run() {
+    try {
+      // Wait for the protocol keyword
+      while (handler == null) {
+        String line = input.readLine();
+        if (line != null) {
+          line = line.trim();
 
-                    if (UciProtocol.isProtocolKeyword(line)) {
-                        handler = new UciProtocol(input, output);
-                    }
-                } else {
-                    // Something's wrong with the communication channel
-                    throw new EOFException();
-                }
-            }
-
-            // Run the engine
-            while (running) {
-                IEngineCommand command = handler.receive();
-                assert command != null;
-
-                command.accept(this);
-            }
-        } catch (IOException e) {
-            // Something's wrong with the communication channel
-            new EngineQuitCommand().accept(this);
+          if (UciProtocol.isProtocolKeyword(line)) {
+            handler = new UciProtocol(input, output);
+          }
+        } else {
+          // Something's wrong with the communication channel
+          throw new EOFException();
         }
+      }
+
+      // Run the engine
+      while (running) {
+        IEngineCommand command = handler.receive();
+        assert command != null;
+
+        command.accept(this);
+      }
+    } catch (IOException e) {
+      // Something's wrong with the communication channel
+      new EngineQuitCommand().accept(this);
     }
+  }
 
-    protected abstract void quit();
+  protected abstract void quit();
 
-    protected final IProtocol getProtocol() {
-        return handler;
-    }
+  protected final IProtocol getProtocol() {
+    return handler;
+  }
 
-    public final void receive(EngineQuitCommand command) {
-        Objects.requireNonNull(command);
+  public final void receive(EngineQuitCommand command) {
+    Objects.requireNonNull(command);
 
-        quit();
-        running = false;
-    }
+    quit();
+    running = false;
+  }
 
 }

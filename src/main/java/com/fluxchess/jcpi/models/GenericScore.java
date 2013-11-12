@@ -17,8 +17,8 @@ package com.fluxchess.jcpi.models;
 
 public enum GenericScore {
 
-    EXACT,
-    ALPHA,
-    BETA
+  EXACT,
+  ALPHA,
+  BETA
 
 }

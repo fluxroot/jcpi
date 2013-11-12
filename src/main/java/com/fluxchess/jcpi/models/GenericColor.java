@@ -17,55 +17,55 @@ package com.fluxchess.jcpi.models;
 
 public enum GenericColor {
 
-    WHITE('w'),
-    BLACK('b');
+  WHITE('w'),
+  BLACK('b');
 
-    private final char token;
+  private final char token;
 
-    private GenericColor(char token) {
-        this.token = token;
+  private GenericColor(char token) {
+    this.token = token;
+  }
+
+  public static GenericColor valueOf(char input) {
+    for (GenericColor color : values()) {
+      if (Character.toLowerCase(input) == Character.toLowerCase(color.token)) {
+        return color;
+      }
     }
 
-    public static GenericColor valueOf(char input) {
-        for (GenericColor color: values()) {
-            if (Character.toLowerCase(input) == Character.toLowerCase(color.token)) {
-                return color;
-            }
-        }
+    return null;
+  }
 
-        return null;
+  public static GenericColor colorOf(char input) {
+    if (Character.isLowerCase(input)) {
+      return BLACK;
+    } else {
+      return WHITE;
     }
+  }
 
-    public static GenericColor colorOf(char input) {
-        if (Character.isLowerCase(input)) {
-            return BLACK;
-        } else {
-            return WHITE;
-        }
+  public char transform(char input) {
+    if (this == WHITE) {
+      return Character.toUpperCase(input);
+    } else {
+      assert this == BLACK;
+
+      return Character.toLowerCase(input);
     }
+  }
 
-    public char transform(char input) {
-        if (this == WHITE) {
-            return Character.toUpperCase(input);
-        } else {
-            assert this == BLACK;
+  public GenericColor opposite() {
+    if (this == WHITE) {
+      return BLACK;
+    } else {
+      assert this == BLACK;
 
-            return Character.toLowerCase(input);
-        }
+      return WHITE;
     }
+  }
 
-    public GenericColor opposite() {
-        if (this == WHITE) {
-            return BLACK;
-        } else {
-            assert this == BLACK;
-
-            return WHITE;
-        }
-    }
-
-    public char toChar() {
-        return this.token;
-    }
+  public char toChar() {
+    return this.token;
+  }
 
 }

@@ -21,15 +21,15 @@ import static org.junit.Assert.assertTrue;
 
 public class GenericScoreTest {
 
-    @Test
-    public void testValues() {
-        GenericScore prev = null;
-        for (GenericScore value : GenericScore.values()) {
-            if (prev == null) {
-                prev = value;
-            } else {
-                assertTrue(prev.ordinal() < value.ordinal());
-            }
-        }
+  @Test
+  public void testValues() {
+    GenericScore prev = null;
+    for (GenericScore value : GenericScore.values()) {
+      if (prev == null) {
+        prev = value;
+      } else {
+        assertTrue(prev.ordinal() < value.ordinal());
+      }
     }
+  }
 }
