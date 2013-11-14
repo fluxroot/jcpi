@@ -20,9 +20,12 @@ import com.fluxchess.jcpi.commands.IEngine;
 import com.fluxchess.jcpi.commands.IEngineCommand;
 import com.fluxchess.jcpi.commands.IProtocol;
 import com.fluxchess.jcpi.protocols.IProtocolHandler;
-import com.fluxchess.jcpi.protocols.UciProtocol;
+import com.fluxchess.jcpi.protocols.IOProtocolHandler;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.Objects;
 
 /**
@@ -32,42 +35,25 @@ import java.util.Objects;
 public abstract class AbstractEngine implements IEngine, Runnable {
 
   private boolean running = true;
-  private IProtocolHandler handler;
-
-  private final BufferedReader input;
-  private final PrintStream output;
+  private final IProtocolHandler handler;
 
   protected AbstractEngine() {
     // Set the standard input and output stream
-    input = new BufferedReader(new InputStreamReader(System.in));
-    output = System.out;
+    this(new BufferedReader(new InputStreamReader(System.in)), System.out);
   }
 
   protected AbstractEngine(BufferedReader input, PrintStream output) {
-    Objects.requireNonNull(input);
-    Objects.requireNonNull(output);
+    this(new IOProtocolHandler(input, output));
+  }
 
-    this.input = input;
-    this.output = output;
+  protected AbstractEngine(IProtocolHandler handler) {
+    Objects.requireNonNull(handler);
+
+    this.handler = handler;
   }
 
   public final void run() {
     try {
-      // Wait for the protocol keyword
-      while (handler == null) {
-        String line = input.readLine();
-        if (line != null) {
-          line = line.trim();
-
-          if (UciProtocol.isProtocolKeyword(line)) {
-            handler = new UciProtocol(input, output);
-          }
-        } else {
-          // Something's wrong with the communication channel
-          throw new EOFException();
-        }
-      }
-
       // Run the engine
       while (running) {
         IEngineCommand command = handler.receive();

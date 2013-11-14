@@ -16,7 +16,7 @@
 package com.fluxchess.jcpi;
 
 import com.fluxchess.jcpi.commands.*;
-import com.fluxchess.jcpi.protocols.UciProtocol;
+import com.fluxchess.jcpi.protocols.IOProtocolHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,7 +108,7 @@ public class AbstractEngineTest {
 
     assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
     assertNotNull(engine.getProtocol());
-    assertEquals(UciProtocol.class, engine.getProtocol().getClass());
+    assertEquals(IOProtocolHandler.class, engine.getProtocol().getClass());
 
     testOutput.println("quit");
 
