@@ -7,23 +7,29 @@ apply plugin: 'checkstyle'
 description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
-version = '1.1.0-beta.1'
+version = '1.1.0-beta'
 
-if (!hasProperty('buildNumber')) {
+if (!hasProperty('buildNumber') || !(hasProperty('branchName') && branchName == 'master')) {
+  // We're probably building on a dev machine or we're building a branch
   ext.buildNumber = 'dev'
 }
-if (version.contains('-')) {
-  if (hasProperty('branchName') && branchName == 'master') {
-    version += '.' + buildNumber
-  } else {
-    version += '.0'
-  }
+if (!hasProperty('revisionNumber')) {
+  // We're probably building on a dev machine
+  ext.revisionNumber = 'dev'
 }
 
-if (!hasProperty('revisionNumber')) {
-  ext.revisionNumber = 'rev'
+if (!version.contains('-') && !(hasProperty('releaseVersion') && releaseVersion == version)) {
+  // Append '-rc' if we're not releasing yet
+  version += '-rc'
 }
-if (version.contains('-') && !(hasProperty('branchName') && branchName == 'master')) {
+
+if (version.contains('-')) {
+  // Append the buildNumber if we're not releasing
+  version += '.' + buildNumber
+}
+
+if (version.contains('-')) {
+  // Append the revisionNumber if we're not releasing
   version += '+' + revisionNumber
 }
 
