@@ -7,7 +7,7 @@ apply plugin: 'checkstyle'
 description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
-version = '1.1.0-beta'
+version = '1.1.0'
 
 if (!hasProperty('buildNumber') || !(hasProperty('branchName') && branchName == 'master')) {
   // We're probably building on a dev machine or we're building a branch
