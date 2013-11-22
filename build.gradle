@@ -8,8 +8,9 @@ description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
 version = '1.1.1-beta'
+ext.releaseBranch = '1.1.x'
 
-if (!hasProperty('buildNumber') || !(hasProperty('branchName') && branchName == 'master')) {
+if (!hasProperty('buildNumber') || !(hasProperty('branchName') && branchName == releaseBranch)) {
   // We're probably building on a dev machine or we're building a branch
   ext.buildNumber = 'dev'
 }
@@ -124,7 +125,7 @@ artifacts {
 
 uploadArchives {
   if (project.hasProperty('branchName')) {
-    if (branchName == 'master') {
+    if (branchName == releaseBranch) {
       configurations {
         deployerJars
       }
@@ -142,7 +143,7 @@ uploadArchives {
         }
       }
     } else {
-      println "Skipping upload. Not on master branch (${branchName})."
+      println "Skipping upload. Not on ${releaseBranch} branch (${branchName})."
     }
   } else {
     println "Skipping upload. No branch name defined."
