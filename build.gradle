@@ -29,8 +29,8 @@ if (version.contains('-')) {
   version += '.' + buildNumber
 }
 
-if (version.contains('-')) {
-  // Append the revisionNumber if we're not releasing
+if (version.contains('-') && !(hasProperty('branchName') && branchName == releaseBranch)) {
+  // Append the revisionNumber if we're not releasing and not on a release branch
   version += '+' + revisionNumber
 }
 
