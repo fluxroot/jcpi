@@ -7,7 +7,7 @@ apply plugin: 'checkstyle'
 description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
-version = '1.1.1-beta'
+version = '1.1.1'
 ext.releaseBranch = '1.1.x'
 
 if (!hasProperty('buildNumber') || !(hasProperty('branchName') && branchName == releaseBranch)) {
