@@ -26,7 +26,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Objects;
 
 /**
  * This is the main engine class. Inherit your engine from this class and
@@ -47,7 +46,7 @@ public abstract class AbstractEngine implements IEngine, Runnable {
   }
 
   protected AbstractEngine(IProtocolHandler handler) {
-    Objects.requireNonNull(handler);
+    if (handler == null) throw new IllegalArgumentException();
 
     this.handler = handler;
   }
@@ -74,7 +73,7 @@ public abstract class AbstractEngine implements IEngine, Runnable {
   }
 
   public final void receive(EngineQuitCommand command) {
-    Objects.requireNonNull(command);
+    if (command == null) throw new IllegalArgumentException();
 
     quit();
     running = false;

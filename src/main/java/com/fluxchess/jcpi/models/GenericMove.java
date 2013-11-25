@@ -15,8 +15,6 @@
  */
 package com.fluxchess.jcpi.models;
 
-import java.util.Objects;
-
 public class GenericMove {
 
   public final GenericPosition from;
@@ -28,8 +26,8 @@ public class GenericMove {
   }
 
   public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
-    Objects.requireNonNull(from);
-    Objects.requireNonNull(to);
+    if (from == null) throw new IllegalArgumentException();
+    if (to == null) throw new IllegalArgumentException();
     if (promotion != null && !promotion.isValidPromotion()) throw new IllegalArgumentException();
 
     this.from = from;
@@ -38,7 +36,7 @@ public class GenericMove {
   }
 
   public GenericMove(String notation) throws IllegalNotationException {
-    Objects.requireNonNull(notation);
+    if (notation == null) throw new IllegalArgumentException();
 
     // Clean whitespace at the beginning and at the end
     notation = notation.trim();

@@ -31,17 +31,17 @@ public final class UciProtocol implements IProtocolHandler {
   private final BufferedReader input;
   private final PrintStream output;
 
-  private final Queue<IEngineCommand> queue = new LinkedList<>();
+  private final Queue<IEngineCommand> queue = new LinkedList<IEngineCommand>();
 
   public static boolean isProtocolKeyword(String token) {
-    Objects.requireNonNull(token);
+    if (token == null) throw new IllegalArgumentException();
 
     return token.equalsIgnoreCase("uci");
   }
 
   public UciProtocol(BufferedReader input, PrintStream output) {
-    Objects.requireNonNull(input);
-    Objects.requireNonNull(output);
+    if (input == null) throw new IllegalArgumentException();
+    if (output == null) throw new IllegalArgumentException();
 
     this.input = input;
     this.output = output;
@@ -225,7 +225,7 @@ public final class UciProtocol implements IProtocolHandler {
 
       assert board != null;
 
-      List<GenericMove> moveList = new ArrayList<>();
+      List<GenericMove> moveList = new ArrayList<GenericMove>();
 
       try {
         while (iter.hasNext()) {
@@ -259,7 +259,7 @@ public final class UciProtocol implements IProtocolHandler {
 
         if (token.equalsIgnoreCase("searchmoves")) {
           if (iter.hasNext()) {
-            List<GenericMove> searchMoveList = new ArrayList<>();
+            List<GenericMove> searchMoveList = new ArrayList<GenericMove>();
 
             try {
               while (iter.hasNext()) {

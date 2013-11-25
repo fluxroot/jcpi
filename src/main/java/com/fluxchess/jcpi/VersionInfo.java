@@ -18,7 +18,6 @@ package com.fluxchess.jcpi;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 public class VersionInfo {
@@ -31,7 +30,8 @@ public class VersionInfo {
   private final String revisionNumber;
 
   static {
-    try (InputStream inputStream = VersionInfo.class.getResourceAsStream(versionInfoProperty)) {
+    InputStream inputStream = VersionInfo.class.getResourceAsStream(versionInfoProperty);
+    try {
       if (inputStream != null) {
         Properties properties = new Properties();
         properties.load(inputStream);
@@ -46,6 +46,14 @@ public class VersionInfo {
       }
     } catch (IOException e) {
       throw new RuntimeException(String.format("Cannot load the properties file %s", versionInfoProperty), e);
+    } finally {
+      if (inputStream != null) {
+        try {
+          inputStream.close();
+        } catch (IOException e) {
+          // Do nothing
+        }
+      }
     }
   }
 
@@ -54,9 +62,9 @@ public class VersionInfo {
   }
 
   private VersionInfo(String version, String buildNumber, String revisionNumber) {
-    Objects.requireNonNull(version);
-    Objects.requireNonNull(buildNumber);
-    Objects.requireNonNull(revisionNumber);
+    if (version == null) throw new IllegalArgumentException();
+    if (buildNumber == null) throw new IllegalArgumentException();
+    if (revisionNumber == null) throw new IllegalArgumentException();
 
     this.version = version;
     this.buildNumber = buildNumber;
