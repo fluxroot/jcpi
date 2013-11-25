@@ -488,9 +488,14 @@ public class UciProtocolTest {
 
   private UciProtocol createUciProtocol(String[] commands) {
     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-    try (PrintStream stream = new PrintStream(buffer)) {
+    PrintStream stream = new PrintStream(buffer);
+    try {
       for (String command : commands) {
         stream.println(command);
+      }
+    } finally {
+      if (stream != null) {
+        stream.close();
       }
     }
 

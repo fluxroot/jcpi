@@ -15,14 +15,12 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.Objects;
-
 public class ProtocolReadyAnswerCommand implements IProtocolCommand {
 
   public final String token;
 
   public ProtocolReadyAnswerCommand(String token) {
-    Objects.requireNonNull(token);
+    if (token == null) throw new IllegalArgumentException();
 
     this.token = token;
   }
