@@ -19,7 +19,6 @@ import com.fluxchess.jcpi.models.GenericMove;
 import com.fluxchess.jcpi.models.GenericScore;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ProtocolInformationCommand implements IProtocolCommand {
 
@@ -83,7 +82,7 @@ public class ProtocolInformationCommand implements IProtocolCommand {
     }
 
     public void setMoveList(List<GenericMove> moveList) {
-        Objects.requireNonNull(moveList);
+        if (moveList == null) throw new IllegalArgumentException();
 
         this.moveList = moveList;
     }
@@ -117,7 +116,7 @@ public class ProtocolInformationCommand implements IProtocolCommand {
     }
 
     public void setValue(GenericScore value) {
-        Objects.requireNonNull(value);
+        if (value == null) throw new IllegalArgumentException();
 
         this.value = value;
     }
@@ -127,7 +126,7 @@ public class ProtocolInformationCommand implements IProtocolCommand {
     }
 
     public void setCurrentMove(GenericMove currentMove) {
-        Objects.requireNonNull(currentMove);
+        if (currentMove == null) throw new IllegalArgumentException();
 
         this.currentMove = currentMove;
     }
@@ -161,7 +160,7 @@ public class ProtocolInformationCommand implements IProtocolCommand {
     }
 
     public void setString(String string) {
-        Objects.requireNonNull(string);
+        if (string == null) throw new IllegalArgumentException();
 
         this.string = string;
     }
@@ -171,7 +170,7 @@ public class ProtocolInformationCommand implements IProtocolCommand {
     }
 
     public void setRefutationList(List<GenericMove> refutationList) {
-        Objects.requireNonNull(refutationList);
+        if (refutationList  == null) throw new IllegalArgumentException();
 
         this.refutationList = refutationList;
     }

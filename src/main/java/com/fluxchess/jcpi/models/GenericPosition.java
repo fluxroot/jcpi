@@ -17,7 +17,6 @@ package com.fluxchess.jcpi.models;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 
 public enum GenericPosition {
 
@@ -86,7 +85,7 @@ public enum GenericPosition {
     g8(GenericFile.Fg, GenericRank.R8),
     h8(GenericFile.Fh, GenericRank.R8);
 
-    private static final Map<GenericFile, Map<GenericRank, GenericPosition>> allPositions = new EnumMap<>(GenericFile.class);
+    private static final Map<GenericFile, Map<GenericRank, GenericPosition>> allPositions = new EnumMap<GenericFile, Map<GenericRank, GenericPosition>>(GenericFile.class);
 
     static {
         for (GenericFile file : GenericFile.values()) {
@@ -106,8 +105,8 @@ public enum GenericPosition {
     }
 
     public static GenericPosition valueOf(GenericFile file, GenericRank rank) {
-        Objects.requireNonNull(file);
-        Objects.requireNonNull(rank);
+        if (file == null) throw new IllegalArgumentException();
+        if (rank == null) throw new IllegalArgumentException();
 
         return allPositions.get(file).get(rank);
     }

@@ -15,8 +15,6 @@
  */
 package com.fluxchess.jcpi.models;
 
-import java.util.Objects;
-
 public enum GenericChessman {
 
     PAWN('P'),
@@ -73,7 +71,7 @@ public enum GenericChessman {
     }
 
     public char toChar(GenericColor color) {
-        Objects.requireNonNull(color);
+        if (color == null) throw new IllegalArgumentException();
 
         return color.transform(this.token);
     }

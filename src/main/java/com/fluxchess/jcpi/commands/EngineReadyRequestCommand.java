@@ -15,8 +15,6 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.Objects;
-
 public class EngineReadyRequestCommand implements IEngineCommand {
 
     public final String token;
@@ -26,7 +24,7 @@ public class EngineReadyRequestCommand implements IEngineCommand {
     }
 
     public EngineReadyRequestCommand(String token) {
-        Objects.requireNonNull(token);
+        if (token == null) throw new IllegalArgumentException();
 
         this.token = token;
     }

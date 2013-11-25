@@ -15,15 +15,13 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import java.util.Objects;
-
 public class EngineSetOptionCommand implements IEngineCommand {
 
     public final String name;
     public final String value;
 
     public EngineSetOptionCommand(String name, String value) {
-        Objects.requireNonNull(name);
+        if (name == null) throw new IllegalArgumentException();
 
         this.name = name;
         this.value = value;

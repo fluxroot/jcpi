@@ -15,8 +15,6 @@
  */
 package com.fluxchess.jcpi.models;
 
-import java.util.Objects;
-
 public enum GenericCastling {
 
     KINGSIDE("O-O", 'K'),
@@ -41,7 +39,7 @@ public enum GenericCastling {
     }
 
     public static GenericCastling valueOfLongToken(String input) {
-        Objects.requireNonNull(input);
+        if (input == null) throw new IllegalArgumentException();
 
         for (GenericCastling castling: values()) {
             if (castling.longToken.equalsIgnoreCase(input)) {
@@ -57,7 +55,7 @@ public enum GenericCastling {
     }
 
     public char toChar(GenericColor color) {
-        Objects.requireNonNull(color);
+        if (color == null) throw new IllegalArgumentException();
 
         return color.transform(this.token);
     }

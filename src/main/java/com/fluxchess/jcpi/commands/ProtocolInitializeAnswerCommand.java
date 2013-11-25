@@ -20,17 +20,16 @@ import com.fluxchess.jcpi.models.Option;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
     public final String name;
     public final String author;
-    private final List<Option> optionList = new ArrayList<>();
+    private final List<Option> optionList = new ArrayList<Option>();
 
     public ProtocolInitializeAnswerCommand(String name, String author) {
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(author);
+        if (name == null) throw new IllegalArgumentException();
+        if (author == null) throw new IllegalArgumentException();
 
         this.name = name;
         this.author = author;
@@ -45,7 +44,7 @@ public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
     }
 
     public void addOption(Option option) {
-        Objects.requireNonNull(option);
+        if (option == null) throw new IllegalArgumentException();
 
         this.optionList.add(option);
     }

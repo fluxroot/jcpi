@@ -21,14 +21,13 @@ import com.fluxchess.jcpi.models.GenericMove;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class EngineStartCalculatingCommand implements IEngineCommand {
 
     private List<GenericMove> searchMoveList = null;
     private boolean ponder = false;
-    private final Map<GenericColor, Long> clock = new EnumMap<>(GenericColor.class);
-    private final Map<GenericColor, Long> clockIncrement = new EnumMap<>(GenericColor.class);
+    private final Map<GenericColor, Long> clock = new EnumMap<GenericColor, Long>(GenericColor.class);
+    private final Map<GenericColor, Long> clockIncrement = new EnumMap<GenericColor, Long>(GenericColor.class);
     private Integer movestogo = null;
     private Integer depth = null;
     private Long nodes = null;
@@ -48,7 +47,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setSearchMoveList(List<GenericMove> searchMoveList) {
-        Objects.requireNonNull(searchMoveList);
+        if (searchMoveList == null) throw new IllegalArgumentException();
 
         this.searchMoveList = searchMoveList;
     }
@@ -66,8 +65,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setClock(GenericColor side, Long time) {
-        Objects.requireNonNull(side);
-        Objects.requireNonNull(time);
+        if (side == null) throw new IllegalArgumentException();
+        if (time == null) throw new IllegalArgumentException();
 
         this.clock.put(side, time);
     }
@@ -77,8 +76,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setClockIncrement(GenericColor side, Long time) {
-        Objects.requireNonNull(side);
-        Objects.requireNonNull(time);
+        if (side == null) throw new IllegalArgumentException();
+        if (time == null) throw new IllegalArgumentException();
 
         this.clockIncrement.put(side, time);
     }
@@ -88,7 +87,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMovesToGo(Integer movesToGo) {
-        Objects.requireNonNull(movesToGo);
+        if (movesToGo == null) throw new IllegalArgumentException();
 
         this.movestogo = movesToGo;
     }
@@ -98,7 +97,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setDepth(Integer depth) {
-        Objects.requireNonNull(depth);
+        if (depth == null) throw new IllegalArgumentException();
 
         this.depth = depth;
     }
@@ -108,7 +107,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setNodes(Long nodes) {
-        Objects.requireNonNull(nodes);
+        if (nodes == null) throw new IllegalArgumentException();
 
         this.nodes = nodes;
     }
@@ -118,7 +117,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMate(Integer mate) {
-        Objects.requireNonNull(mate);
+        if (mate == null) throw new IllegalArgumentException();
 
         this.mate = mate;
     }
@@ -128,7 +127,7 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
     }
 
     public void setMoveTime(Long moveTime) {
-        Objects.requireNonNull(moveTime);
+        if (moveTime == null) throw new IllegalArgumentException();
 
         this.movetime = moveTime;
     }
