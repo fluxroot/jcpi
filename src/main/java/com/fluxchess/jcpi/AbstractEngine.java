@@ -23,7 +23,6 @@ import com.fluxchess.jcpi.protocols.IProtocolHandler;
 import com.fluxchess.jcpi.protocols.UciProtocol;
 
 import java.io.*;
-import java.util.Objects;
 
 /**
  * This is the main engine class. Inherit your engine from this class and
@@ -44,8 +43,8 @@ public abstract class AbstractEngine implements IEngine, Runnable {
     }
 
     protected AbstractEngine(BufferedReader input, PrintStream output) {
-        Objects.requireNonNull(input);
-        Objects.requireNonNull(output);
+        if (input == null) throw new IllegalArgumentException();
+        if (output == null) throw new IllegalArgumentException();
 
         this.input = input;
         this.output = output;
@@ -88,7 +87,7 @@ public abstract class AbstractEngine implements IEngine, Runnable {
     }
 
     public final void receive(EngineQuitCommand command) {
-        Objects.requireNonNull(command);
+        if (command == null) throw new IllegalArgumentException();
 
         quit();
         running = false;

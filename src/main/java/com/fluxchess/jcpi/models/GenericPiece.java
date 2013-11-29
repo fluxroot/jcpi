@@ -17,7 +17,6 @@ package com.fluxchess.jcpi.models;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 
 public enum GenericPiece {
 
@@ -34,7 +33,7 @@ public enum GenericPiece {
     BLACKQUEEN(GenericColor.BLACK, GenericChessman.QUEEN),
     BLACKKING(GenericColor.BLACK, GenericChessman.KING);
 
-    private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<>(GenericColor.class);
+    private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<GenericColor, Map<GenericChessman, GenericPiece>>(GenericColor.class);
 
     static {
         for (GenericColor color : GenericColor.values()) {
@@ -54,8 +53,8 @@ public enum GenericPiece {
     }
 
     public static GenericPiece valueOf(GenericColor color, GenericChessman chessman) {
-        Objects.requireNonNull(color);
-        Objects.requireNonNull(chessman);
+        if (color == null) throw new IllegalArgumentException();
+        if (chessman == null) throw new IllegalArgumentException();
 
         return allPieces.get(color).get(chessman);
     }
