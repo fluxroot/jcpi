@@ -21,13 +21,13 @@ public class GenericBoard {
 
   public static final int STANDARDSETUP = 518;
 
-  private final Map<GenericPosition, GenericPiece> board = new HashMap<>();
-  private final Map<GenericColor, Map<GenericCastling, GenericFile>> castling = new EnumMap<>(GenericColor.class);
+  private final Map<GenericPosition, GenericPiece> board = new HashMap<GenericPosition, GenericPiece>();
+  private final Map<GenericColor, Map<GenericCastling, GenericFile>> castling = new EnumMap<GenericColor, Map<GenericCastling, GenericFile>>(GenericColor.class);
   private GenericPosition enPassant = null;
   private GenericColor activeColor = GenericColor.WHITE;
   private int halfMoveClock = 0;
   private int fullMoveNumber = 1;
-  private final Map<GenericColor, GenericFile> kingFile = new EnumMap<>(GenericColor.class);
+  private final Map<GenericColor, GenericFile> kingFile = new EnumMap<GenericColor, GenericFile>(GenericColor.class);
   private boolean isFrc = false;
 
   public GenericBoard() {
@@ -186,7 +186,7 @@ public class GenericBoard {
 
   public GenericBoard(String notation) throws IllegalNotationException {
     this();
-    Objects.requireNonNull(notation);
+    if (notation == null) throw new IllegalArgumentException();
 
     parse(notation);
   }
@@ -226,14 +226,14 @@ public class GenericBoard {
   }
 
   public GenericPiece getPiece(GenericPosition position) {
-    Objects.requireNonNull(position);
+    if (position == null) throw new IllegalArgumentException();
 
     return this.board.get(position);
   }
 
   public void setPiece(GenericPiece piece, GenericPosition position) {
-    Objects.requireNonNull(piece);
-    Objects.requireNonNull(position);
+    if (piece == null) throw new IllegalArgumentException();
+    if (position == null) throw new IllegalArgumentException();
 
     if (piece.chessman == GenericChessman.KING) {
       this.kingFile.put(piece.color, position.file);
@@ -242,15 +242,15 @@ public class GenericBoard {
   }
 
   public GenericFile getCastling(GenericColor color, GenericCastling castling) {
-    Objects.requireNonNull(color);
-    Objects.requireNonNull(castling);
+    if (color == null) throw new IllegalArgumentException();
+    if (castling == null) throw new IllegalArgumentException();
 
     return this.castling.get(color).get(castling);
   }
 
   public void setCastling(GenericColor color, GenericCastling castling, GenericFile file) {
-    Objects.requireNonNull(color);
-    Objects.requireNonNull(castling);
+    if (color == null) throw new IllegalArgumentException();
+    if (castling == null) throw new IllegalArgumentException();
 
     if (file != GenericFile.Fa && file != GenericFile.Fh) {
       this.isFrc = true;
@@ -263,7 +263,7 @@ public class GenericBoard {
   }
 
   public void setEnPassant(GenericPosition position) {
-    Objects.requireNonNull(position);
+    if (position == null) throw new IllegalArgumentException();
 
     this.enPassant = position;
   }
@@ -273,7 +273,7 @@ public class GenericBoard {
   }
 
   public void setActiveColor(GenericColor color) {
-    Objects.requireNonNull(color);
+    if (color == null) throw new IllegalArgumentException();
 
     this.activeColor = color;
   }
@@ -440,7 +440,7 @@ public class GenericBoard {
     // Clean notation and split into terms
     notation = notation.trim();
 
-    List<String> tokens = new ArrayList<>(Arrays.asList(notation.split(" ")));
+    List<String> tokens = new ArrayList<String>(Arrays.asList(notation.split(" ")));
     for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
       String token = iter.next();
 

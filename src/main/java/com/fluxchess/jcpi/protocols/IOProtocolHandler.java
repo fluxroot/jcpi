@@ -21,7 +21,6 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Objects;
 
 public final class IOProtocolHandler implements IProtocolHandler {
 
@@ -30,8 +29,8 @@ public final class IOProtocolHandler implements IProtocolHandler {
   private IProtocolHandler protocol = null;
 
   public IOProtocolHandler(BufferedReader input, PrintStream output) {
-    Objects.requireNonNull(input);
-    Objects.requireNonNull(output);
+    if (input == null) throw new IllegalArgumentException();
+    if (output == null) throw new IllegalArgumentException();
 
     this.input = input;
     this.output = output;

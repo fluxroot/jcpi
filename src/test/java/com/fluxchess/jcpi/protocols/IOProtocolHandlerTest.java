@@ -32,9 +32,18 @@ public class IOProtocolHandlerTest {
 
   private IOProtocolHandler createIOProtocolHandler(String[] commands) {
     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-    try (PrintStream stream = new PrintStream(buffer)) {
+    PrintStream stream = new PrintStream(buffer);
+    try {
       for (String command : commands) {
         stream.println(command);
+      }
+    } finally {
+      if (buffer != null) {
+        try {
+          buffer.close();
+        } catch (IOException e) {
+          // Do nothing
+        }
       }
     }
 

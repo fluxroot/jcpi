@@ -16,7 +16,6 @@
 package com.fluxchess.jcpi.models;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Option {
 
@@ -30,8 +29,8 @@ public class Option {
   private String value = null;
 
   public Option(String name, String type, String defaultValue, String minValue, String maxValue, List<String> varValues) {
-    Objects.requireNonNull(name);
-    Objects.requireNonNull(type);
+    if (name == null) throw new IllegalArgumentException();
+    if (type == null) throw new IllegalArgumentException();
 
     this.name = name;
     this.type = type;
@@ -48,7 +47,7 @@ public class Option {
   }
 
   public void setValue(String value) {
-    Objects.requireNonNull(value);
+    if (value == null) throw new IllegalArgumentException();
 
     this.value = value;
   }
