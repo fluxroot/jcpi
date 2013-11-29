@@ -19,7 +19,6 @@ import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericMove;
 
 import java.util.List;
-import java.util.Objects;
 
 public class EngineAnalyzeCommand implements IEngineCommand {
 
@@ -27,8 +26,8 @@ public class EngineAnalyzeCommand implements IEngineCommand {
   public final List<GenericMove> moveList;
 
   public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
-    Objects.requireNonNull(board);
-    Objects.requireNonNull(moveList);
+    if (board == null) throw new IllegalArgumentException();
+    if (moveList == null) throw new IllegalArgumentException();
 
     this.board = board;
     this.moveList = moveList;
