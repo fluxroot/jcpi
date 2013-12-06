@@ -67,8 +67,15 @@ tasks.withType(Checkstyle) {
   }
 }
 
+sourceSets {
+  integration
+}
+
 dependencies {
   testCompile 'junit:junit:4.+'
+
+  integrationCompile project(':')
+  integrationCompile 'junit:junit:4.+'
 }
 
 sourceCompatibility = 1.6
@@ -88,11 +95,6 @@ jar {
   }
 }
 
-task testsJar(type: Jar, dependsOn: testClasses) {
-  classifier = 'tests'
-  from sourceSets.test.output
-}
-
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'sources'
   from sourceSets.main.allSource
@@ -103,6 +105,11 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
   from javadoc.destinationDir
 }
 
+task integration(type: Test) {
+  testClassesDir = sourceSets.integration.output.classesDir
+  classpath = sourceSets.integration.runtimeClasspath
+}
+
 task dist(type: Zip) {
   def baseDir = "${project.name}-${project.version}"
 
@@ -111,14 +118,12 @@ task dist(type: Zip) {
     from 'LICENSE'
     from 'NOTICE'
     from jar
-    from testsJar
     from sourcesJar
     from javadocJar
   }
 }
 
 artifacts {
-  archives testsJar
   archives sourcesJar
   archives javadocJar
 }
@@ -126,6 +131,13 @@ artifacts {
 uploadArchives {
   if (project.hasProperty('branchName')) {
     if (branchName == releaseBranch) {
+      if (version.contains('-')) {
+        ext.repositoryName = 'staging'
+      } else {
+        ext.repositoryName = 'release'
+      }
+      println "Queuing upload to ${repositoryName}."
+
       configurations {
         deployerJars
       }
@@ -137,7 +149,7 @@ uploadArchives {
       repositories {
         mavenDeployer {
           configuration = configurations.deployerJars
-          repository(url: 's3://maven.fluxchess.com/release') {
+          repository(url: "s3://maven.fluxchess.com/${repositoryName}") {
             authentication(userName: s3AccessKeyId, passphrase: s3SecretAccessKey)
           }
         }
