@@ -1,0 +1,16 @@
+language: java
+
+jdk:
+- oraclejdk7
+
+env:
+- TERM=dumb
+
+before_install:
+- chmod +x gradlew
+
+script: ./gradlew clean test check dist integration
+
+after_success:
+- gradle cobertura
+- gradle coveralls

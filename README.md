@@ -2,8 +2,9 @@ Java Chess Protocol Interface
 =============================
 
 Copyright 2007-2013 Flux Chess Project  
-fluxchess.com
+http://fluxchess.com
 
+[![Build Status](https://travis-ci.org/fluxroot/jcpi.png?branch=master)](https://travis-ci.org/fluxroot/jcpi) [![Coverage Status](https://coveralls.io/repos/fluxroot/jcpi/badge.png?branch=master)](https://coveralls.io/r/fluxroot/jcpi?branch=master)
 
 Introduction
 ------------
