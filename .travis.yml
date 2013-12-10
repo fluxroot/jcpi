@@ -12,5 +12,5 @@ before_install:
 script: ./gradlew -PbuildNumber=${TRAVIS_BUILD_NUMBER} -PrevisionNumber=${TRAVIS_COMMIT} -PbranchName=${TRAVIS_BRANCH} clean test check dist integration
 
 after_success:
-- gradle cobertura
-- gradle coveralls
+- ./gradlew -PbuildNumber=${TRAVIS_BUILD_NUMBER} -PrevisionNumber=${TRAVIS_COMMIT} -PbranchName=${TRAVIS_BRANCH} cobertura
+- ./gradlew -PbuildNumber=${TRAVIS_BUILD_NUMBER} -PrevisionNumber=${TRAVIS_COMMIT} -PbranchName=${TRAVIS_BRANCH} coveralls
