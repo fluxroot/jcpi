@@ -153,8 +153,6 @@ uploadArchives {
         ext.repositoryName = 'release'
       }
 
-      doLast { println "Uploading to ${repositoryName}." }
-
       configurations {
         deployerJars
       }
