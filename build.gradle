@@ -144,7 +144,7 @@ artifacts {
   archives javadocJar
 }
 
-uploadArchives {
+uploadArchives << {
   if (project.hasProperty('branchName')) {
     if (branchName == releaseBranch) {
       if (version.contains('-')) {
