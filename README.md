@@ -6,6 +6,7 @@ http://fluxchess.com
 
 [![Build Status](https://travis-ci.org/fluxroot/jcpi.png?branch=1.1.x)](https://travis-ci.org/fluxroot/jcpi) [![Coverage Status](https://coveralls.io/repos/fluxroot/jcpi/badge.png?branch=1.1.x)](https://coveralls.io/r/fluxroot/jcpi?branch=1.1.x)
 
+
 Introduction
 ------------
 The Java Chess Protocol Interface provides a clean object-oriented interface to
