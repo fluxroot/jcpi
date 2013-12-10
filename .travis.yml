@@ -9,7 +9,7 @@ env:
 before_install:
 - chmod +x gradlew
 
-script: ./gradlew clean test check dist integration
+script: ./gradlew -PbuildNumber=${TRAVIS_BUILD_NUMBER} -PrevisionNumber=${TRAVIS_COMMIT} -PbranchName=${TRAVIS_BRANCH} clean test check dist integration
 
 after_success:
 - gradle cobertura
