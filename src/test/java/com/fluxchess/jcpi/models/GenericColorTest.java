@@ -18,7 +18,7 @@ package com.fluxchess.jcpi.models;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 
 public class GenericColorTest {
 
@@ -26,7 +26,16 @@ public class GenericColorTest {
   public final void testValueOf() {
     assertEquals(GenericColor.WHITE, GenericColor.valueOf('w'));
     assertEquals(GenericColor.BLACK, GenericColor.valueOf('b'));
-    assertNull(GenericColor.valueOf('a'));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public final void testInvalidValueOf() {
+    GenericColor.valueOf('a');
+  }
+
+  @Test
+  public final void testIsValid() {
+    assertFalse(GenericColor.isValid('a'));
   }
 
   @Test

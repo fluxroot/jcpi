@@ -25,30 +25,48 @@ public class GenericChessmanTest {
   public void testValueOf() {
     assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
     assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
-    assertNull(GenericChessman.valueOf('x'));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidValueOf() {
+    GenericChessman.valueOf('x');
+  }
+
+  @Test
+  public void testIsValid() {
+    assertFalse(GenericChessman.isValid('x'));
   }
 
   @Test
   public void testValueOfPromotion() {
     assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
     assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
-    assertNull(GenericChessman.valueOfPromotion('p'));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidValueOfPromotion() {
+    GenericChessman.valueOfPromotion('p');
   }
 
   @Test
   public void testIsValidPromotion() {
-    assertTrue(GenericChessman.QUEEN.isValidPromotion());
-    assertFalse(GenericChessman.PAWN.isValidPromotion());
+    assertFalse(GenericChessman.isValidPromotion('p'));
+  }
+
+  @Test
+  public void testIsLegalPromotion() {
+    assertTrue(GenericChessman.QUEEN.isLegalPromotion());
+    assertFalse(GenericChessman.PAWN.isLegalPromotion());
   }
 
   @Test
   public void testToCharAlgebraic() {
     assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
-    try {
-      GenericChessman.PAWN.toCharAlgebraic();
-      fail();
-    } catch (UnsupportedOperationException e) {
-    }
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testInvalidToCharAlgebraic() {
+    GenericChessman.PAWN.toCharAlgebraic();
   }
 
   @Test

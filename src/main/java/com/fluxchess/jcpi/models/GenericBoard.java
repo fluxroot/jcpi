@@ -468,9 +468,10 @@ public class GenericBoard {
         if (file == null) {
           if (character == '/') {
             file = GenericFile.Fa;
-            rank = rank.prev();
 
-            if (rank == null) {
+            if (rank.hasPrev()) {
+              rank = rank.prev();
+            } else {
               // Wrong rank position!
               throw new IllegalNotationException();
             }
@@ -480,9 +481,8 @@ public class GenericBoard {
           }
         } else {
           // Try to get piece
-          GenericPiece piece = GenericPiece.valueOf(character);
-
-          if (piece != null) {
+          if (GenericPiece.isValid(character)) {
+            GenericPiece piece = GenericPiece.valueOf(character);
             if (piece.chessman == GenericChessman.KING) {
               this.kingFile.put(piece.color, file);
             }
@@ -492,18 +492,22 @@ public class GenericBoard {
             int emptyFields = Character.getNumericValue(character);
 
             if (emptyFields >= 1 && emptyFields <= 8) {
-              file = file.next(emptyFields - 1);
+              if (file.hasNext(emptyFields - 1)) {
+                file = file.next(emptyFields - 1);
+              } else {
+                // Out of bound!
+                throw new IllegalNotationException();
+              }
             } else {
               // Wrong character!
               throw new IllegalNotationException();
             }
           }
 
-          if (file != null) {
+          if (file.hasNext()) {
             file = file.next();
           } else {
-            // Out of bound!
-            throw new IllegalNotationException();
+            file = null;
           }
         }
       }
@@ -517,10 +521,8 @@ public class GenericBoard {
 
       if (token.length() == 1) {
         char input = token.charAt(0);
-        GenericColor color = GenericColor.valueOf(input);
-
-        if (color != null) {
-          this.activeColor = color;
+        if (GenericColor.isValid(input)) {
+          this.activeColor = GenericColor.valueOf(input);
         } else {
           throw new IllegalNotationException();
         }
@@ -544,12 +546,13 @@ public class GenericBoard {
             throw new IllegalNotationException();
           }
 
-          GenericCastling castling = GenericCastling.valueOf(character);
-          GenericFile castlingFile = GenericFile.valueOf(character);
-          if (castling == null) {
-            if (castlingFile == null) {
+          GenericCastling castling;
+          GenericFile castlingFile;
+          if (!GenericCastling.isValid(character)) {
+            if (!GenericFile.isValid(character)) {
               throw new IllegalNotationException();
             } else {
+              castlingFile = GenericFile.valueOf(character);
               this.isFrc = true;
 
               GenericFile kingfile = this.kingFile.get(color);
@@ -565,6 +568,7 @@ public class GenericBoard {
               }
             }
           } else {
+            castling = GenericCastling.valueOf(character);
             if (castling == GenericCastling.KINGSIDE) {
               castlingFile = GenericFile.Fh;
             } else {
@@ -588,10 +592,10 @@ public class GenericBoard {
         // No en passant available
       } else {
         if (token.length() == 2) {
-          GenericFile file = GenericFile.valueOf(token.charAt(0));
-          GenericRank rank = GenericRank.valueOf(token.charAt(1));
+          if (GenericFile.isValid(token.charAt(0)) && GenericRank.isValid(token.charAt(1))) {
+            GenericFile file = GenericFile.valueOf(token.charAt(0));
+            GenericRank rank = GenericRank.valueOf(token.charAt(1));
 
-          if (file != null && rank != null) {
             if ((rank == GenericRank.R3 && this.activeColor == GenericColor.BLACK)
               || (rank == GenericRank.R6 && this.activeColor == GenericColor.WHITE)) {
               this.enPassant = GenericPosition.valueOf(file, rank);

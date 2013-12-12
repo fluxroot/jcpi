@@ -32,7 +32,7 @@ public enum GenericChessman {
     this.token = token;
   }
 
-  public static GenericChessman valueOf(char input) {
+  private static GenericChessman _valueOf(char input) {
     for (GenericChessman chessman : values()) {
       if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
         return chessman;
@@ -42,7 +42,20 @@ public enum GenericChessman {
     return null;
   }
 
-  public static GenericChessman valueOfPromotion(char input) {
+  public static GenericChessman valueOf(char input) {
+    GenericChessman chessman = _valueOf(input);
+    if (chessman != null) {
+      return chessman;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValid(char input) {
+    return _valueOf(input) != null;
+  }
+
+  private static GenericChessman _valueOfPromotion(char input) {
     for (GenericChessman chessman : promotions) {
       if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
         return chessman;
@@ -52,7 +65,20 @@ public enum GenericChessman {
     return null;
   }
 
-  public boolean isValidPromotion() {
+  public static GenericChessman valueOfPromotion(char input) {
+    GenericChessman chessman = _valueOfPromotion(input);
+    if (chessman != null) {
+      return chessman;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValidPromotion(char input) {
+    return _valueOfPromotion(input) != null;
+  }
+
+  public boolean isLegalPromotion() {
     for (GenericChessman chessman : promotions) {
       if (this == chessman) {
         return true;
