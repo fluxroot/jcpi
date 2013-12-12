@@ -15,6 +15,8 @@
  */
 package com.fluxchess.jcpi.models;
 
+import java.util.NoSuchElementException;
+
 public enum GenericRank {
 
   R1('1'),
@@ -32,7 +34,7 @@ public enum GenericRank {
     this.token = token;
   }
 
-  public static GenericRank valueOf(char input) {
+  private static GenericRank _valueOf(char input) {
     for (GenericRank rank : values()) {
       if (Character.toLowerCase(input) == Character.toLowerCase(rank.token)) {
         return rank;
@@ -42,15 +44,56 @@ public enum GenericRank {
     return null;
   }
 
+  public static GenericRank valueOf(char input) {
+    GenericRank rank = _valueOf(input);
+    if (rank != null) {
+      return rank;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValid(char input) {
+    return _valueOf(input) != null;
+  }
+
+  private GenericRank _prev(int i) {
+    if (i < 0) throw new IllegalArgumentException();
+
+    int position = this.ordinal() - i;
+    if (position >= 0) {
+      return values()[position];
+    } else {
+      return null;
+    }
+  }
+
   public GenericRank prev() {
     return prev(1);
   }
 
   public GenericRank prev(int i) {
+    GenericRank rank = _prev(i);
+    if (rank != null) {
+      return rank;
+    } else {
+      throw new NoSuchElementException();
+    }
+  }
+
+  public boolean hasPrev() {
+    return hasPrev(1);
+  }
+
+  public boolean hasPrev(int i) {
+    return _prev(i) != null;
+  }
+
+  private GenericRank _next(int i) {
     if (i < 0) throw new IllegalArgumentException();
 
-    int position = this.ordinal() - i;
-    if (position >= 0) {
+    int position = this.ordinal() + i;
+    if (position < values().length) {
       return values()[position];
     } else {
       return null;
@@ -62,14 +105,20 @@ public enum GenericRank {
   }
 
   public GenericRank next(int i) {
-    if (i < 0) throw new IllegalArgumentException();
-
-    int position = this.ordinal() + i;
-    if (position < values().length) {
-      return values()[position];
+    GenericRank rank = _next(i);
+    if (rank != null) {
+      return rank;
     } else {
-      return null;
+      throw new NoSuchElementException();
     }
+  }
+
+  public boolean hasNext() {
+    return hasNext(1);
+  }
+
+  public boolean hasNext(int i) {
+    return _next(i) != null;
   }
 
   public char toChar() {

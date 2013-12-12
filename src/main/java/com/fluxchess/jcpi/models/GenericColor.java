@@ -26,7 +26,7 @@ public enum GenericColor {
     this.token = token;
   }
 
-  public static GenericColor valueOf(char input) {
+  private static GenericColor _valueOf(char input) {
     for (GenericColor color : values()) {
       if (Character.toLowerCase(input) == Character.toLowerCase(color.token)) {
         return color;
@@ -34,6 +34,19 @@ public enum GenericColor {
     }
 
     return null;
+  }
+
+  public static GenericColor valueOf(char input) {
+    GenericColor color = _valueOf(input);
+    if (color != null) {
+      return color;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValid(char input) {
+    return _valueOf(input) != null;
   }
 
   public static GenericColor colorOf(char input) {

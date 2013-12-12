@@ -28,7 +28,7 @@ public class GenericMove {
   public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
     if (from == null) throw new IllegalArgumentException();
     if (to == null) throw new IllegalArgumentException();
-    if (promotion != null && !promotion.isValidPromotion()) throw new IllegalArgumentException();
+    if (promotion != null && !promotion.isLegalPromotion()) throw new IllegalArgumentException();
 
     this.from = from;
     this.to = to;
@@ -62,8 +62,9 @@ public class GenericMove {
 
     // Parse promotion
     if (notation.length() == 5) {
-      this.promotion = GenericChessman.valueOfPromotion(notation.charAt(4));
-      if (this.promotion == null) {
+      if (GenericChessman.isValidPromotion(notation.charAt(4))) {
+        this.promotion = GenericChessman.valueOfPromotion(notation.charAt(4));
+      } else {
         throw new IllegalNotationException();
       }
 
@@ -73,25 +74,31 @@ public class GenericMove {
     }
 
     if (notation.length() == 4) {
-      GenericFile file = GenericFile.valueOf(notation.charAt(0));
-      if (file == null) {
+      GenericFile file;
+      if (GenericFile.isValid(notation.charAt(0))) {
+        file = GenericFile.valueOf(notation.charAt(0));
+      } else {
         throw new IllegalNotationException();
       }
 
-      GenericRank rank = GenericRank.valueOf(notation.charAt(1));
-      if (rank == null) {
+      GenericRank rank;
+      if (GenericRank.isValid(notation.charAt(1))) {
+        rank = GenericRank.valueOf(notation.charAt(1));
+      } else {
         throw new IllegalNotationException();
       }
 
       this.from = GenericPosition.valueOf(file, rank);
 
-      file = GenericFile.valueOf(notation.charAt(2));
-      if (file == null) {
+      if (GenericFile.isValid(notation.charAt(2))) {
+        file = GenericFile.valueOf(notation.charAt(2));
+      } else {
         throw new IllegalNotationException();
       }
 
-      rank = GenericRank.valueOf(notation.charAt(3));
-      if (rank == null) {
+      if (GenericRank.isValid(notation.charAt(3))) {
+        rank = GenericRank.valueOf(notation.charAt(3));
+      } else {
         throw new IllegalNotationException();
       }
 

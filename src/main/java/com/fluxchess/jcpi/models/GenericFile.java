@@ -15,6 +15,8 @@
  */
 package com.fluxchess.jcpi.models;
 
+import java.util.NoSuchElementException;
+
 public enum GenericFile {
 
   Fa('a'),
@@ -32,7 +34,7 @@ public enum GenericFile {
     this.token = token;
   }
 
-  public static GenericFile valueOf(char input) {
+  private static GenericFile _valueOf(char input) {
     for (GenericFile file : values()) {
       if (Character.toLowerCase(input) == Character.toLowerCase(file.token)) {
         return file;
@@ -42,15 +44,56 @@ public enum GenericFile {
     return null;
   }
 
+  public static GenericFile valueOf(char input) {
+    GenericFile file = _valueOf(input);
+    if (file != null) {
+      return file;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValid(char input) {
+    return _valueOf(input) != null;
+  }
+
+  private GenericFile _prev(int i) {
+    if (i < 0) throw new IllegalArgumentException();
+
+    int position = this.ordinal() - i;
+    if (position >= 0) {
+      return values()[position];
+    } else {
+      return null;
+    }
+  }
+
   public GenericFile prev() {
     return prev(1);
   }
 
   public GenericFile prev(int i) {
+    GenericFile file = _prev(i);
+    if (file != null) {
+      return file;
+    } else {
+      throw new NoSuchElementException();
+    }
+  }
+
+  public boolean hasPrev() {
+    return hasPrev(1);
+  }
+
+  public boolean hasPrev(int i) {
+    return _prev(i) != null;
+  }
+
+  private GenericFile _next(int i) {
     if (i < 0) throw new IllegalArgumentException();
 
-    int position = this.ordinal() - i;
-    if (position >= 0) {
+    int position = this.ordinal() + i;
+    if (position < values().length) {
       return values()[position];
     } else {
       return null;
@@ -62,14 +105,20 @@ public enum GenericFile {
   }
 
   public GenericFile next(int i) {
-    if (i < 0) throw new IllegalArgumentException();
-
-    int position = this.ordinal() + i;
-    if (position < values().length) {
-      return values()[position];
+    GenericFile file = _next(i);
+    if (file != null) {
+      return file;
     } else {
-      return null;
+      throw new NoSuchElementException();
     }
+  }
+
+  public boolean hasNext() {
+    return hasNext(1);
+  }
+
+  public boolean hasNext(int i) {
+    return _next(i) != null;
   }
 
   public char toChar() {

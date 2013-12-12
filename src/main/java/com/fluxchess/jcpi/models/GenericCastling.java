@@ -28,7 +28,7 @@ public enum GenericCastling {
     this.token = token;
   }
 
-  public static GenericCastling valueOf(char input) {
+  private static GenericCastling _valueOf(char input) {
     for (GenericCastling castling : values()) {
       if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
         return castling;
@@ -38,7 +38,20 @@ public enum GenericCastling {
     return null;
   }
 
-  public static GenericCastling valueOfLongToken(String input) {
+  public static GenericCastling valueOf(char input) {
+    GenericCastling castling = _valueOf(input);
+    if (castling != null) {
+      return castling;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValid(char input) {
+    return _valueOf(input) != null;
+  }
+
+  private static GenericCastling _valueOfLongToken(String input) {
     if (input == null) throw new IllegalArgumentException();
 
     for (GenericCastling castling : values()) {
@@ -48,6 +61,19 @@ public enum GenericCastling {
     }
 
     return null;
+  }
+
+  public static GenericCastling valueOfLongToken(String input) {
+    GenericCastling castling = _valueOfLongToken(input);
+    if (castling != null) {
+      return castling;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isValidLongToken(String input) {
+    return _valueOfLongToken(input) != null;
   }
 
   public String toLongToken() {

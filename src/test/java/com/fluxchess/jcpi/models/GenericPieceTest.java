@@ -18,7 +18,7 @@ package com.fluxchess.jcpi.models;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 
 public class GenericPieceTest {
 
@@ -26,7 +26,16 @@ public class GenericPieceTest {
   public void testValueOf() {
     assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
     assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
-    assertNull(GenericPiece.valueOf('x'));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidValueOf() {
+    GenericPiece.valueOf('x');
+  }
+
+  @Test
+  public void testIsValid() {
+    assertFalse(GenericPiece.isValid('x'));
   }
 
   @Test

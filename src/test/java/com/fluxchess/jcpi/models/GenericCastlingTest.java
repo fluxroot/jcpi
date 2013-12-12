@@ -18,7 +18,7 @@ package com.fluxchess.jcpi.models;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 
 public class GenericCastlingTest {
 
@@ -26,14 +26,32 @@ public class GenericCastlingTest {
   public final void testValueOf() {
     assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOf('k'));
     assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOf('K'));
-    assertNull(GenericCastling.valueOf('a'));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public final void testInvalidValueOf() {
+    GenericCastling.valueOf('a');
+  }
+
+  @Test
+  public final void testIsValid() {
+    assertFalse(GenericCastling.isValid('a'));
   }
 
   @Test
   public final void testValueOfLongToken() {
     assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOfLongToken("o-o"));
     assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOfLongToken("O-O"));
-    assertNull(GenericCastling.valueOfLongToken("x-x"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public final void testInvalidValueOfLongToken() {
+    GenericCastling.valueOfLongToken("x-x");
+  }
+
+  @Test
+  public final void testIsValidLongToken() {
+    assertFalse(GenericCastling.isValidLongToken("x-x"));
   }
 
   @Test
