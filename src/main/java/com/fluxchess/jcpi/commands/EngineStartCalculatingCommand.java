@@ -35,9 +35,6 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
   private Long movetime = null;
   private boolean infinite = false;
 
-  public EngineStartCalculatingCommand() {
-  }
-
   public void accept(IEngine v) {
     v.receive(this);
   }
