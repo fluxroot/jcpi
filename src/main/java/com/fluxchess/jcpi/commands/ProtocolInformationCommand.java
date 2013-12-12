@@ -38,9 +38,6 @@ public class ProtocolInformationCommand implements IProtocolCommand {
   private String string = null;
   private List<GenericMove> refutationList = null;
 
-  public ProtocolInformationCommand() {
-  }
-
   public void accept(IProtocol v) {
     v.send(this);
   }
