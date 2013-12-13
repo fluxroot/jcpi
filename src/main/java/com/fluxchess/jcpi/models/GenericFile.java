@@ -34,9 +34,9 @@ public enum GenericFile {
     this.token = token;
   }
 
-  private static GenericFile _valueOf(char input) {
+  private static GenericFile _valueOf(char token) {
     for (GenericFile file : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(file.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(file.token)) {
         return file;
       }
     }
@@ -44,8 +44,8 @@ public enum GenericFile {
     return null;
   }
 
-  public static GenericFile valueOf(char input) {
-    GenericFile file = _valueOf(input);
+  public static GenericFile valueOf(char token) {
+    GenericFile file = _valueOf(token);
     if (file != null) {
       return file;
     } else {
@@ -53,8 +53,8 @@ public enum GenericFile {
     }
   }
 
-  public static boolean isValid(char input) {
-    return _valueOf(input) != null;
+  public static boolean isValid(char token) {
+    return _valueOf(token) != null;
   }
 
   private GenericFile _prev(int i) {

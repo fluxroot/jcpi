@@ -32,9 +32,9 @@ public enum GenericChessman {
     this.token = token;
   }
 
-  private static GenericChessman _valueOf(char input) {
+  private static GenericChessman _valueOf(char token) {
     for (GenericChessman chessman : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
         return chessman;
       }
     }
@@ -42,8 +42,8 @@ public enum GenericChessman {
     return null;
   }
 
-  public static GenericChessman valueOf(char input) {
-    GenericChessman chessman = _valueOf(input);
+  public static GenericChessman valueOf(char token) {
+    GenericChessman chessman = _valueOf(token);
     if (chessman != null) {
       return chessman;
     } else {
@@ -51,13 +51,13 @@ public enum GenericChessman {
     }
   }
 
-  public static boolean isValid(char input) {
-    return _valueOf(input) != null;
+  public static boolean isValid(char token) {
+    return _valueOf(token) != null;
   }
 
-  private static GenericChessman _valueOfPromotion(char input) {
+  private static GenericChessman _valueOfPromotion(char token) {
     for (GenericChessman chessman : promotions) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
         return chessman;
       }
     }
@@ -65,8 +65,8 @@ public enum GenericChessman {
     return null;
   }
 
-  public static GenericChessman valueOfPromotion(char input) {
-    GenericChessman chessman = _valueOfPromotion(input);
+  public static GenericChessman valueOfPromotion(char token) {
+    GenericChessman chessman = _valueOfPromotion(token);
     if (chessman != null) {
       return chessman;
     } else {
@@ -74,8 +74,8 @@ public enum GenericChessman {
     }
   }
 
-  public static boolean isValidPromotion(char input) {
-    return _valueOfPromotion(input) != null;
+  public static boolean isValidPromotion(char token) {
+    return _valueOfPromotion(token) != null;
   }
 
   public boolean isLegalPromotion() {

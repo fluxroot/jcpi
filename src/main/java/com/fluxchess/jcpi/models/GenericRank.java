@@ -34,9 +34,9 @@ public enum GenericRank {
     this.token = token;
   }
 
-  private static GenericRank _valueOf(char input) {
+  private static GenericRank _valueOf(char token) {
     for (GenericRank rank : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(rank.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(rank.token)) {
         return rank;
       }
     }
@@ -44,8 +44,8 @@ public enum GenericRank {
     return null;
   }
 
-  public static GenericRank valueOf(char input) {
-    GenericRank rank = _valueOf(input);
+  public static GenericRank valueOf(char token) {
+    GenericRank rank = _valueOf(token);
     if (rank != null) {
       return rank;
     } else {
@@ -53,8 +53,8 @@ public enum GenericRank {
     }
   }
 
-  public static boolean isValid(char input) {
-    return _valueOf(input) != null;
+  public static boolean isValid(char token) {
+    return _valueOf(token) != null;
   }
 
   private GenericRank _prev(int i) {
