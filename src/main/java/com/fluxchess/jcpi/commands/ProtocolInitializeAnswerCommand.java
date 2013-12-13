@@ -35,8 +35,8 @@ public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
     this.author = author;
   }
 
-  public void accept(IProtocol v) {
-    v.send(this);
+  public void accept(IProtocol protocol) {
+    protocol.send(this);
   }
 
   public Iterator<Option> optionIterator() {

@@ -59,15 +59,15 @@ public enum GenericPiece {
     return allPieces.get(color).get(chessman);
   }
 
-  public static GenericPiece valueOf(char input) {
-    GenericColor color = GenericColor.colorOf(input);
-    GenericChessman chessman = GenericChessman.valueOf(input);
+  public static GenericPiece valueOf(char token) {
+    GenericColor color = GenericColor.colorOf(token);
+    GenericChessman chessman = GenericChessman.valueOf(token);
 
     return valueOf(color, chessman);
   }
 
-  public static boolean isValid(char input) {
-    return GenericChessman.isValid(input);
+  public static boolean isValid(char token) {
+    return GenericChessman.isValid(token);
   }
 
   public char toChar() {

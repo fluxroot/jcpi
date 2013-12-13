@@ -212,33 +212,33 @@ public class UciProtocolTest {
     command = protocol.receive();
     assertEquals(EngineAnalyzeCommand.class, command.getClass());
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-    assertTrue(((EngineAnalyzeCommand) command).moveList.isEmpty());
+    assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
 
     // "a b c d position startpos"
     command = protocol.receive();
     assertEquals(EngineAnalyzeCommand.class, command.getClass());
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-    assertTrue(((EngineAnalyzeCommand) command).moveList.isEmpty());
+    assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
 
     // "a b c d position startpos moves a2a3"
     command = protocol.receive();
     assertEquals(EngineAnalyzeCommand.class, command.getClass());
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-    assertEquals(1, ((EngineAnalyzeCommand) command).moveList.size());
-    assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineAnalyzeCommand) command).moveList.get(0));
+    assertEquals(1, ((EngineAnalyzeCommand) command).moves.size());
+    assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineAnalyzeCommand) command).moves.get(0));
 
     // "a b c d position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     command = protocol.receive();
     assertEquals(EngineAnalyzeCommand.class, command.getClass());
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-    assertTrue(((EngineAnalyzeCommand) command).moveList.isEmpty());
+    assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
 
     // "a b c d position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves a4a5"
     command = protocol.receive();
     assertEquals(EngineAnalyzeCommand.class, command.getClass());
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-    assertEquals(1, ((EngineAnalyzeCommand) command).moveList.size());
-    assertEquals(new GenericMove(GenericPosition.a4, GenericPosition.a5), ((EngineAnalyzeCommand) command).moveList.get(0));
+    assertEquals(1, ((EngineAnalyzeCommand) command).moves.size());
+    assertEquals(new GenericMove(GenericPosition.a4, GenericPosition.a5), ((EngineAnalyzeCommand) command).moves.get(0));
 
     try {
       command = protocol.receive();

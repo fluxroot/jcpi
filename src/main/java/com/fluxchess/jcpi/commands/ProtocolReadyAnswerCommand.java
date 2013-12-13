@@ -25,8 +25,8 @@ public class ProtocolReadyAnswerCommand implements IProtocolCommand {
     this.token = token;
   }
 
-  public void accept(IProtocol v) {
-    v.send(this);
+  public void accept(IProtocol protocol) {
+    protocol.send(this);
   }
 
 }

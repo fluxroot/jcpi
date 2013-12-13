@@ -28,9 +28,9 @@ public enum GenericCastling {
     this.token = token;
   }
 
-  private static GenericCastling _valueOf(char input) {
+  private static GenericCastling _valueOf(char token) {
     for (GenericCastling castling : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(castling.token)) {
         return castling;
       }
     }
@@ -38,8 +38,8 @@ public enum GenericCastling {
     return null;
   }
 
-  public static GenericCastling valueOf(char input) {
-    GenericCastling castling = _valueOf(input);
+  public static GenericCastling valueOf(char token) {
+    GenericCastling castling = _valueOf(token);
     if (castling != null) {
       return castling;
     } else {
@@ -47,15 +47,15 @@ public enum GenericCastling {
     }
   }
 
-  public static boolean isValid(char input) {
-    return _valueOf(input) != null;
+  public static boolean isValid(char token) {
+    return _valueOf(token) != null;
   }
 
-  private static GenericCastling _valueOfLongToken(String input) {
-    if (input == null) throw new IllegalArgumentException();
+  private static GenericCastling _valueOfLongToken(String longToken) {
+    if (longToken == null) throw new IllegalArgumentException();
 
     for (GenericCastling castling : values()) {
-      if (castling.longToken.equalsIgnoreCase(input)) {
+      if (castling.longToken.equalsIgnoreCase(longToken)) {
         return castling;
       }
     }
@@ -63,8 +63,8 @@ public enum GenericCastling {
     return null;
   }
 
-  public static GenericCastling valueOfLongToken(String input) {
-    GenericCastling castling = _valueOfLongToken(input);
+  public static GenericCastling valueOfLongToken(String longToken) {
+    GenericCastling castling = _valueOfLongToken(longToken);
     if (castling != null) {
       return castling;
     } else {
@@ -72,8 +72,8 @@ public enum GenericCastling {
     }
   }
 
-  public static boolean isValidLongToken(String input) {
-    return _valueOfLongToken(input) != null;
+  public static boolean isValidLongToken(String longToken) {
+    return _valueOfLongToken(longToken) != null;
   }
 
   public String toLongToken() {
