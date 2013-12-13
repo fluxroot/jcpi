@@ -24,7 +24,7 @@ public enum GenericChessman {
   QUEEN('Q'),
   KING('K');
 
-  private static final GenericChessman[] promotions = new GenericChessman[]{QUEEN, ROOK, BISHOP, KNIGHT};
+  public static final GenericChessman[] promotions = new GenericChessman[]{KNIGHT, BISHOP, ROOK, QUEEN};
 
   private final char token;
 
