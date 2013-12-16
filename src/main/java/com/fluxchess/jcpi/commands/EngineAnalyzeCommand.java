@@ -25,16 +25,16 @@ public class EngineAnalyzeCommand implements IEngineCommand {
   public final GenericBoard board;
   public final List<GenericMove> moveList;
 
-  public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moveList) {
+  public EngineAnalyzeCommand(GenericBoard board, List<GenericMove> moves) {
     if (board == null) throw new IllegalArgumentException();
-    if (moveList == null) throw new IllegalArgumentException();
+    if (moves == null) throw new IllegalArgumentException();
 
     this.board = board;
-    this.moveList = moveList;
+    this.moveList = moves;
   }
 
-  public void accept(IEngine v) {
-    v.receive(this);
+  public void accept(IEngine engine) {
+    engine.receive(this);
   }
 
 }

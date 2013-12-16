@@ -32,8 +32,8 @@ public class ProtocolBestMoveCommand implements IProtocolCommand {
     }
   }
 
-  public void accept(IProtocol v) {
-    v.send(this);
+  public void accept(IProtocol protocol) {
+    protocol.send(this);
   }
 
 }

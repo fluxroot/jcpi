@@ -32,9 +32,9 @@ public enum GenericRank {
     this.token = token;
   }
 
-  public static GenericRank valueOf(char input) {
+  public static GenericRank valueOf(char token) {
     for (GenericRank rank : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(rank.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(rank.token)) {
         return rank;
       }
     }
