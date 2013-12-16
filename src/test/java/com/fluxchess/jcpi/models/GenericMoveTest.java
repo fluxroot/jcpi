@@ -22,90 +22,61 @@ import static org.junit.Assert.*;
 public class GenericMoveTest {
 
   @Test
-  public void testParse() {
-    try {
-      GenericMove move = new GenericMove("a1 e3");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertNull(move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+  public void testParse() throws IllegalNotationException {
+    GenericMove move = new GenericMove("a1 e3");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertNull(move.promotion);
 
-    try {
-      GenericMove move = new GenericMove("a1 x e3");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertNull(move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+    move = new GenericMove("a1 x e3");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertNull(move.promotion);
 
-    try {
-      GenericMove move = new GenericMove("a1 : e3");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertNull(move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+    move = new GenericMove("a1 : e3");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertNull(move.promotion);
 
-    try {
-      GenericMove move = new GenericMove("a1 x e3 = q");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertEquals(GenericChessman.QUEEN, move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+    move = new GenericMove("a1 x e3 = q");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertEquals(GenericChessman.QUEEN, move.promotion);
 
-    try {
-      GenericMove move = new GenericMove("a1 x e3 = q #");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertEquals(GenericChessman.QUEEN, move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+    move = new GenericMove("a1 x e3 = q #");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertEquals(GenericChessman.QUEEN, move.promotion);
 
-    try {
-      GenericMove move = new GenericMove("a1 - e3 = q");
-      assertEquals(GenericPosition.a1, move.from);
-      assertEquals(GenericPosition.e3, move.to);
-      assertEquals(GenericChessman.QUEEN, move.promotion);
-    } catch (IllegalNotationException e) {
-      fail();
-    }
+    move = new GenericMove("a1 - e3 = q");
+    assertEquals(GenericPosition.a1, move.from);
+    assertEquals(GenericPosition.e3, move.to);
+    assertEquals(GenericChessman.QUEEN, move.promotion);
+  }
 
-    try {
-      GenericMove move = new GenericMove("a1 - e3 = z");
-      fail();
-    } catch (IllegalNotationException e) {
-    }
+  @Test(expected = IllegalNotationException.class)
+  public void testInvalidMove1() throws IllegalNotationException {
+    GenericMove move = new GenericMove("a1 - e3 = z");
+  }
 
-    try {
-      GenericMove move = new GenericMove("n1 e3");
-      fail();
-    } catch (IllegalNotationException e) {
-    }
+  @Test(expected = IllegalNotationException.class)
+  public void testInvalidMove2() throws IllegalNotationException {
+    GenericMove move = new GenericMove("n1 e3");
+  }
 
-    try {
-      GenericMove move = new GenericMove("a9 e3");
-      fail();
-    } catch (IllegalNotationException e) {
-    }
+  @Test(expected = IllegalNotationException.class)
+  public void testInvalidMove3() throws IllegalNotationException {
+    GenericMove move = new GenericMove("a9 e3");
+  }
 
-    try {
-      GenericMove move = new GenericMove("a1 n3");
-      fail();
-    } catch (IllegalNotationException e) {
-    }
+  @Test(expected = IllegalNotationException.class)
+  public void testInvalidMove4() throws IllegalNotationException {
+    GenericMove move = new GenericMove("a1 n3");
+  }
 
-    try {
-      GenericMove move = new GenericMove("a1 e9");
-      fail();
-    } catch (IllegalNotationException e) {
-    }
+  @Test(expected = IllegalNotationException.class)
+  public void testInvalidMove5() throws IllegalNotationException {
+    GenericMove move = new GenericMove("a1 e9");
   }
 
   @Test
