@@ -28,9 +28,9 @@ public enum GenericCastling {
     this.token = token;
   }
 
-  public static GenericCastling valueOf(char input) {
+  public static GenericCastling valueOf(char token) {
     for (GenericCastling castling : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(castling.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(castling.token)) {
         return castling;
       }
     }
@@ -38,11 +38,11 @@ public enum GenericCastling {
     return null;
   }
 
-  public static GenericCastling valueOfLongToken(String input) {
-    if (input == null) throw new IllegalArgumentException();
+  public static GenericCastling valueOfLongToken(String longToken) {
+    if (longToken == null) throw new IllegalArgumentException();
 
     for (GenericCastling castling : values()) {
-      if (castling.longToken.equalsIgnoreCase(input)) {
+      if (castling.longToken.equalsIgnoreCase(longToken)) {
         return castling;
       }
     }

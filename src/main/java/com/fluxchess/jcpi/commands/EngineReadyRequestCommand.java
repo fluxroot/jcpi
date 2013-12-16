@@ -29,8 +29,8 @@ public class EngineReadyRequestCommand implements IEngineCommand {
     this.token = token;
   }
 
-  public void accept(IEngine v) {
-    v.receive(this);
+  public void accept(IEngine engine) {
+    engine.receive(this);
   }
 
 }

@@ -27,8 +27,8 @@ public class EngineSetOptionCommand implements IEngineCommand {
     this.value = value;
   }
 
-  public void accept(IEngine v) {
-    v.receive(this);
+  public void accept(IEngine engine) {
+    engine.receive(this);
   }
 
 }

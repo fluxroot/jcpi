@@ -35,8 +35,8 @@ public class EngineStartCalculatingCommand implements IEngineCommand {
   private Long movetime = null;
   private boolean infinite = false;
 
-  public void accept(IEngine v) {
-    v.receive(this);
+  public void accept(IEngine engine) {
+    engine.receive(this);
   }
 
   public List<GenericMove> getSearchMoveList() {

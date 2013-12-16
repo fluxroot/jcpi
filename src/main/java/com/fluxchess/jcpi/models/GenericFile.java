@@ -32,9 +32,9 @@ public enum GenericFile {
     this.token = token;
   }
 
-  public static GenericFile valueOf(char input) {
+  public static GenericFile valueOf(char token) {
     for (GenericFile file : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(file.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(file.token)) {
         return file;
       }
     }

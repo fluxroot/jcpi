@@ -32,9 +32,9 @@ public enum GenericChessman {
     this.token = token;
   }
 
-  public static GenericChessman valueOf(char input) {
+  public static GenericChessman valueOf(char token) {
     for (GenericChessman chessman : values()) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
         return chessman;
       }
     }
@@ -42,9 +42,9 @@ public enum GenericChessman {
     return null;
   }
 
-  public static GenericChessman valueOfPromotion(char input) {
+  public static GenericChessman valueOfPromotion(char token) {
     for (GenericChessman chessman : promotions) {
-      if (Character.toLowerCase(input) == Character.toLowerCase(chessman.token)) {
+      if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
         return chessman;
       }
     }
