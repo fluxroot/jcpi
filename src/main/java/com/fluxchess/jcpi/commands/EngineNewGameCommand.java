@@ -17,9 +17,6 @@ package com.fluxchess.jcpi.commands;
 
 public class EngineNewGameCommand implements IEngineCommand {
 
-  public EngineNewGameCommand() {
-  }
-
   public void accept(IEngine v) {
     v.receive(this);
   }

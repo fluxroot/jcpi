@@ -17,9 +17,6 @@ package com.fluxchess.jcpi.commands;
 
 public class EnginePonderHitCommand implements IEngineCommand {
 
-  public EnginePonderHitCommand() {
-  }
-
   public void accept(IEngine v) {
     v.receive(this);
   }
