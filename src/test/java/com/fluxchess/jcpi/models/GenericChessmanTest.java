@@ -44,11 +44,11 @@ public class GenericChessmanTest {
   @Test
   public void testToCharAlgebraic() {
     assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
-    try {
-      GenericChessman.PAWN.toCharAlgebraic();
-      fail();
-    } catch (UnsupportedOperationException e) {
-    }
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testInvalidToCharAlgebraic() {
+    GenericChessman.PAWN.toCharAlgebraic();
   }
 
   @Test
