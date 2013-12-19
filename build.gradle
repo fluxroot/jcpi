@@ -1,4 +1,5 @@
 apply plugin: 'maven'
+apply plugin: 'cobertura'
 apply plugin: 'coveralls'
 
 description = 'Java Chess Protocol Interface'
@@ -19,7 +20,6 @@ allprojects {
   apply plugin: 'pmd'
   apply plugin: 'findbugs'
   apply plugin: 'checkstyle'
-  apply plugin: 'cobertura'
 
   group = 'com.fluxchess'
   version = '1.2.0-alpha'
@@ -83,8 +83,6 @@ allprojects {
     }
   }
 
-  cobertura.coverageFormats = ['html', 'xml']
-
   dependencies {
     testCompile 'junit:junit:4.+'
   }
@@ -123,6 +121,8 @@ project(':jcpi-integration') {
     classpath = sourceSets.integration.runtimeClasspath
   }
 }
+
+cobertura.coverageFormats = ['html', 'xml']
 
 jar {
   manifest {
