@@ -10,7 +10,7 @@ description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
 version = '1.2.0'
-ext.releaseBranch = 'master'
+ext.releaseBranch = '1.2.x'
 
 if (!project.hasProperty('buildNumber') || !(project.hasProperty('branchName') && branchName == releaseBranch)) {
   // We're probably building on a dev machine or we're building a branch
