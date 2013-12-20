@@ -70,7 +70,7 @@ public class AbstractEngineTest {
 
     assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
 
-    thread.join(1000);
+    thread.join(5000);
     assertFalse(thread.isAlive());
   }
 
@@ -90,7 +90,7 @@ public class AbstractEngineTest {
 
     assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
 
-    thread.join(1000);
+    thread.join(5000);
     assertFalse(thread.isAlive());
   }
 
@@ -114,7 +114,7 @@ public class AbstractEngineTest {
 
     testOutput.println("quit");
 
-    thread.join(1000);
+    thread.join(5000);
   }
 
   class Engine extends AbstractEngine {
