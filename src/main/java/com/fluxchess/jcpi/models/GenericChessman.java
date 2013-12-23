@@ -15,6 +15,8 @@
  */
 package com.fluxchess.jcpi.models;
 
+import java.util.EnumSet;
+
 public enum GenericChessman {
 
   PAWN('P'),
@@ -24,9 +26,8 @@ public enum GenericChessman {
   QUEEN('Q'),
   KING('K');
 
-  public static final GenericChessman[] promotions = new GenericChessman[]{KNIGHT, BISHOP, ROOK, QUEEN};
-
-  public static final GenericChessman[] sliders = new GenericChessman[]{BISHOP, ROOK, QUEEN};
+  public static final EnumSet<GenericChessman> promotions = EnumSet.of(KNIGHT, BISHOP, ROOK, QUEEN);
+  public static final EnumSet<GenericChessman> sliders = EnumSet.of(BISHOP, ROOK, QUEEN);
 
   private final char token;
 
@@ -81,23 +82,11 @@ public enum GenericChessman {
   }
 
   public boolean isLegalPromotion() {
-    for (GenericChessman chessman : promotions) {
-      if (this == chessman) {
-        return true;
-      }
-    }
-
-    return false;
+    return promotions.contains(this);
   }
 
   public boolean isSliding() {
-    for (GenericChessman chessman : sliders) {
-      if (this == chessman) {
-        return true;
-      }
-    }
-
-    return false;
+    return sliders.contains(this);
   }
 
   public char toCharAlgebraic() {
