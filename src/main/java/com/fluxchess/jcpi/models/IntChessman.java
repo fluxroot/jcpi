@@ -148,4 +148,15 @@ public final class IntChessman {
     }
   }
 
+  public static boolean isSliding(int chessman) {
+    switch (chessman) {
+      case BISHOP:
+      case ROOK:
+      case QUEEN:
+        return true;
+      default:
+        return false;
+    }
+  }
+
 }

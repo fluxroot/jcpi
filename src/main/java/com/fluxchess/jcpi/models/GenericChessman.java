@@ -26,6 +26,8 @@ public enum GenericChessman {
 
   public static final GenericChessman[] promotions = new GenericChessman[]{KNIGHT, BISHOP, ROOK, QUEEN};
 
+  public static final GenericChessman[] sliders = new GenericChessman[]{BISHOP, ROOK, QUEEN};
+
   private final char token;
 
   private GenericChessman(char token) {
@@ -80,6 +82,16 @@ public enum GenericChessman {
 
   public boolean isLegalPromotion() {
     for (GenericChessman chessman : promotions) {
+      if (this == chessman) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean isSliding() {
+    for (GenericChessman chessman : sliders) {
       if (this == chessman) {
         return true;
       }

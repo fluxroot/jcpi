@@ -93,4 +93,14 @@ public class IntChessmanTest {
     assertFalse(IntChessman.isValidPromotion(IntChessman.PAWN));
   }
 
+  @Test
+  public void testIsSliding() {
+    assertTrue(IntChessman.isSliding(IntChessman.BISHOP));
+    assertTrue(IntChessman.isSliding(IntChessman.ROOK));
+    assertTrue(IntChessman.isSliding(IntChessman.QUEEN));
+    assertFalse(IntChessman.isSliding(IntChessman.PAWN));
+    assertFalse(IntChessman.isSliding(IntChessman.KNIGHT));
+    assertFalse(IntChessman.isSliding(IntChessman.KING));
+  }
+
 }
