@@ -60,6 +60,16 @@ public class GenericChessmanTest {
   }
 
   @Test
+  public void testIsSliding() {
+    assertTrue(GenericChessman.BISHOP.isSliding());
+    assertTrue(GenericChessman.ROOK.isSliding());
+    assertTrue(GenericChessman.QUEEN.isSliding());
+    assertFalse(GenericChessman.PAWN.isSliding());
+    assertFalse(GenericChessman.KNIGHT.isSliding());
+    assertFalse(GenericChessman.KING.isSliding());
+  }
+
+  @Test
   public void testToCharAlgebraic() {
     assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
   }
