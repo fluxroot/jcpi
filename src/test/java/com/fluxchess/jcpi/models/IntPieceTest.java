@@ -33,6 +33,7 @@ public class IntPieceTest {
   public void testValues() {
     for (GenericPiece genericPiece : GenericPiece.values()) {
       assertEquals(genericPiece, IntPiece.toGenericPiece(IntPiece.valueOf(genericPiece)));
+      assertEquals(genericPiece, IntPiece.toGenericPiece(IntPiece.valueOf(IntChessman.valueOf(genericPiece.chessman), IntColor.valueOf(genericPiece.color))));
     }
   }
 
