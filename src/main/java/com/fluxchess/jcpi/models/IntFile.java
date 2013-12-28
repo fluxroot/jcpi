@@ -25,16 +25,15 @@ public final class IntFile {
 
   public static final int MASK = 0xF;
 
-  public static final int NOFILE = 14;
-
-  public static final int Fa = 4;
-  public static final int Fb = 5;
-  public static final int Fc = 6;
-  public static final int Fd = 7;
-  public static final int Fe = 8;
-  public static final int Ff = 9;
-  public static final int Fg = 10;
-  public static final int Fh = 11;
+  public static final int Fa = 0;
+  public static final int Fb = 1;
+  public static final int Fc = 2;
+  public static final int Fd = 3;
+  public static final int Fe = 4;
+  public static final int Ff = 5;
+  public static final int Fg = 6;
+  public static final int Fh = 7;
+  public static final int NOFILE = 8;
 
   public static final int[] values = {
     Fa, Fb, Fc, Fd, Fe, Ff, Fg, Fh
@@ -86,29 +85,6 @@ public final class IntFile {
         return GenericFile.Fg;
       case Fh:
         return GenericFile.Fh;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
-
-  public static int ordinal(int file) {
-    switch (file) {
-      case Fa:
-        return 0;
-      case Fb:
-        return 1;
-      case Fc:
-        return 2;
-      case Fd:
-        return 3;
-      case Fe:
-        return 4;
-      case Ff:
-        return 5;
-      case Fg:
-        return 6;
-      case Fh:
-        return 7;
       default:
         throw new IllegalArgumentException();
     }

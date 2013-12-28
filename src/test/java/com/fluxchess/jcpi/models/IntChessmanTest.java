@@ -15,7 +15,6 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -34,6 +33,8 @@ public class IntChessmanTest {
   public void testValues() {
     for (GenericChessman genericChessman : GenericChessman.values()) {
       assertEquals(genericChessman, IntChessman.toGenericChessman(IntChessman.valueOf(genericChessman)));
+      assertEquals(genericChessman.ordinal(), IntChessman.valueOf(genericChessman));
+      assertEquals(IntChessman.valueOf(genericChessman), IntChessman.values[IntChessman.valueOf(genericChessman)]);
     }
   }
 
@@ -57,14 +58,6 @@ public class IntChessmanTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericChessman() {
     IntChessman.toGenericChessman(IntChessman.NOCHESSMAN);
-  }
-
-  @Test
-  public void testOrdinal() {
-    for (int chessman : IntChessman.values) {
-      assertEquals(IntChessman.ordinal(chessman), IntChessman.toGenericChessman(chessman).ordinal());
-      assertEquals(chessman, IntChessman.values[IntChessman.ordinal(chessman)]);
-    }
   }
 
   @Test

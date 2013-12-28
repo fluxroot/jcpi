@@ -33,6 +33,8 @@ public class IntRankTest {
   public void testValues() {
     for (GenericRank genericRank : GenericRank.values()) {
       assertEquals(genericRank, IntRank.toGenericRank(IntRank.valueOf(genericRank)));
+      assertEquals(genericRank.ordinal(), IntRank.valueOf(genericRank));
+      assertEquals(IntRank.valueOf(genericRank), IntRank.values[IntRank.valueOf(genericRank)]);
     }
   }
 
@@ -44,14 +46,6 @@ public class IntRankTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericRank() {
     IntRank.toGenericRank(IntRank.NORANK);
-  }
-
-  @Test
-  public void testOrdinal() {
-    for (int rank : IntRank.values) {
-      assertEquals(IntRank.ordinal(rank), IntRank.toGenericRank(rank).ordinal());
-      assertEquals(rank, IntRank.values[IntRank.ordinal(rank)]);
-    }
   }
 
   @Test

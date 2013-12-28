@@ -33,6 +33,8 @@ public class IntCastlingTest {
   public void testValues() {
     for (GenericCastling genericCastling : GenericCastling.values()) {
       assertEquals(genericCastling, IntCastling.toGenericCastling(IntCastling.valueOf(genericCastling)));
+      assertEquals(genericCastling.ordinal(), IntCastling.valueOf(genericCastling));
+      assertEquals(IntCastling.valueOf(genericCastling), IntCastling.values[IntCastling.valueOf(genericCastling)]);
     }
   }
 
@@ -44,14 +46,6 @@ public class IntCastlingTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericCastling() {
     IntCastling.toGenericCastling(IntCastling.NOCASTLING);
-  }
-
-  @Test
-  public void testOrdinal() {
-    for (int castling : IntCastling.values) {
-      assertEquals(IntCastling.ordinal(castling), IntCastling.toGenericCastling(castling).ordinal());
-      assertEquals(castling, IntCastling.values[IntCastling.ordinal(castling)]);
-    }
   }
 
   @Test

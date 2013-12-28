@@ -25,10 +25,9 @@ public final class IntCastling {
 
   public static final int MASK = 0x3;
 
-  public static final int NOCASTLING = 3;
-
-  public static final int KINGSIDE = 1;
-  public static final int QUEENSIDE = 2;
+  public static final int KINGSIDE = 0;
+  public static final int QUEENSIDE = 1;
+  public static final int NOCASTLING = 2;
 
   public static final int[] values = {
     KINGSIDE, QUEENSIDE
@@ -56,17 +55,6 @@ public final class IntCastling {
         return GenericCastling.KINGSIDE;
       case QUEENSIDE:
         return GenericCastling.QUEENSIDE;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
-
-  public static int ordinal(int castling) {
-    switch (castling) {
-      case KINGSIDE:
-        return 0;
-      case QUEENSIDE:
-        return 1;
       default:
         throw new IllegalArgumentException();
     }

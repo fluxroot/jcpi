@@ -25,16 +25,15 @@ public final class IntRank {
 
   public static final int MASK = 0xF;
 
-  public static final int NORANK = 5;
-
-  public static final int R1 = 6;
-  public static final int R2 = 7;
-  public static final int R3 = 8;
-  public static final int R4 = 9;
-  public static final int R5 = 10;
-  public static final int R6 = 11;
-  public static final int R7 = 12;
-  public static final int R8 = 13;
+  public static final int R1 = 0;
+  public static final int R2 = 1;
+  public static final int R3 = 2;
+  public static final int R4 = 3;
+  public static final int R5 = 4;
+  public static final int R6 = 5;
+  public static final int R7 = 6;
+  public static final int R8 = 7;
+  public static final int NORANK = 8;
 
   public static final int[] values = {
     R1, R2, R3, R4, R5, R6, R7, R8
@@ -86,29 +85,6 @@ public final class IntRank {
         return GenericRank.R7;
       case R8:
         return GenericRank.R8;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
-
-  public static int ordinal(int rank) {
-    switch (rank) {
-      case R1:
-        return 0;
-      case R2:
-        return 1;
-      case R3:
-        return 2;
-      case R4:
-        return 3;
-      case R5:
-        return 4;
-      case R6:
-        return 5;
-      case R7:
-        return 6;
-      case R8:
-        return 7;
       default:
         throw new IllegalArgumentException();
     }

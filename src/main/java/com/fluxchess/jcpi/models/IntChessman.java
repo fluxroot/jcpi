@@ -25,14 +25,13 @@ public final class IntChessman {
 
   public static final int MASK = 0x7;
 
-  public static final int NOCHESSMAN = 4;
-
-  public static final int PAWN = 1;
-  public static final int KNIGHT = 2;
-  public static final int KING = 3;
-  public static final int BISHOP = 5;
-  public static final int ROOK = 6;
-  public static final int QUEEN = 7;
+  public static final int PAWN = 0;
+  public static final int KNIGHT = 1;
+  public static final int BISHOP = 2;
+  public static final int ROOK = 3;
+  public static final int QUEEN = 4;
+  public static final int KING = 5;
+  public static final int NOCHESSMAN = 6;
 
   public static final int[] values = {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
@@ -98,25 +97,6 @@ public final class IntChessman {
         return GenericChessman.QUEEN;
       case KING:
         return GenericChessman.KING;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
-
-  public static int ordinal(int chessman) {
-    switch (chessman) {
-      case PAWN:
-        return 0;
-      case KNIGHT:
-        return 1;
-      case BISHOP:
-        return 2;
-      case ROOK:
-        return 3;
-      case QUEEN:
-        return 4;
-      case KING:
-        return 5;
       default:
         throw new IllegalArgumentException();
     }
