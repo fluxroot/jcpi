@@ -87,6 +87,47 @@ public final class IntPiece {
     }
   }
 
+  public static int valueOf(int chessman, int color) {
+    switch (color) {
+      case IntColor.WHITE:
+        switch (chessman) {
+          case IntChessman.PAWN:
+            return WHITEPAWN;
+          case IntChessman.KNIGHT:
+            return WHITEKNIGHT;
+          case IntChessman.BISHOP:
+            return WHITEBISHOP;
+          case IntChessman.ROOK:
+            return WHITEROOK;
+          case IntChessman.QUEEN:
+            return WHITEQUEEN;
+          case IntChessman.KING:
+            return WHITEKING;
+          default:
+            throw new IllegalArgumentException();
+        }
+      case IntColor.BLACK:
+        switch (chessman) {
+          case IntChessman.PAWN:
+            return BLACKPAWN;
+          case IntChessman.KNIGHT:
+            return BLACKKNIGHT;
+          case IntChessman.BISHOP:
+            return BLACKBISHOP;
+          case IntChessman.ROOK:
+            return BLACKROOK;
+          case IntChessman.QUEEN:
+            return BLACKQUEEN;
+          case IntChessman.KING:
+            return BLACKKING;
+          default:
+            throw new IllegalArgumentException();
+        }
+      default:
+        throw new IllegalArgumentException();
+    }
+  }
+
   public static GenericPiece toGenericPiece(int piece) {
     switch (piece) {
       case WHITEPAWN:
