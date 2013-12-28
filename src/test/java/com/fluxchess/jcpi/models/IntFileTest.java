@@ -54,11 +54,13 @@ public class IntFileTest {
       assertTrue(IntFile.isValid(file));
       assertEquals(file, file & IntFile.MASK);
     }
+
+    assertFalse(IntFile.isValid(IntFile.NOFILE));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntFile.isValid(IntFile.NOFILE));
+    IntFile.isValid(-1);
   }
 
 }

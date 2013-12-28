@@ -54,11 +54,13 @@ public class IntRankTest {
       assertTrue(IntRank.isValid(rank));
       assertEquals(rank, rank & IntRank.MASK);
     }
+
+    assertFalse(IntRank.isValid(IntRank.NORANK));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntRank.isValid(IntRank.NORANK));
+    IntRank.isValid(-1);
   }
 
 }

@@ -103,6 +103,7 @@ public final class IntPiece {
             return WHITEQUEEN;
           case IntChessman.KING:
             return WHITEKING;
+          case IntChessman.NOCHESSMAN:
           default:
             throw new IllegalArgumentException();
         }
@@ -120,9 +121,11 @@ public final class IntPiece {
             return BLACKQUEEN;
           case IntChessman.KING:
             return BLACKKING;
+          case IntChessman.NOCHESSMAN:
           default:
             throw new IllegalArgumentException();
         }
+      case IntColor.NOCOLOR:
       default:
         throw new IllegalArgumentException();
     }
@@ -154,6 +157,7 @@ public final class IntPiece {
         return GenericPiece.BLACKQUEEN;
       case BLACKKING:
         return GenericPiece.BLACKKING;
+      case NOPIECE:
       default:
         throw new IllegalArgumentException();
     }
@@ -185,6 +189,7 @@ public final class IntPiece {
         return 10;
       case BLACKKING:
         return 11;
+      case NOPIECE:
       default:
         throw new IllegalArgumentException();
     }
@@ -205,17 +210,59 @@ public final class IntPiece {
       case BLACKQUEEN:
       case BLACKKING:
         return true;
-      default:
+      case NOPIECE:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
   public static int getChessman(int piece) {
-    return (piece & CHESSMAN_MASK) >>> CHESSMAN_SHIFT;
+    switch (piece) {
+      case WHITEPAWN:
+      case BLACKPAWN:
+        return IntChessman.PAWN;
+      case WHITEKNIGHT:
+      case BLACKKNIGHT:
+        return IntChessman.KNIGHT;
+      case WHITEBISHOP:
+      case BLACKBISHOP:
+        return IntChessman.BISHOP;
+      case WHITEROOK:
+      case BLACKROOK:
+        return IntChessman.ROOK;
+      case WHITEQUEEN:
+      case BLACKQUEEN:
+        return IntChessman.QUEEN;
+      case WHITEKING:
+      case BLACKKING:
+        return IntChessman.KING;
+      case NOPIECE:
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
   public static int getColor(int piece) {
-    return (piece & COLOR_MASK) >>> COLOR_SHIFT;
+    switch (piece) {
+      case WHITEPAWN:
+      case WHITEKNIGHT:
+      case WHITEBISHOP:
+      case WHITEROOK:
+      case WHITEQUEEN:
+      case WHITEKING:
+        return IntColor.WHITE;
+      case BLACKPAWN:
+      case BLACKKNIGHT:
+      case BLACKBISHOP:
+      case BLACKROOK:
+      case BLACKQUEEN:
+      case BLACKKING:
+        return IntColor.BLACK;
+      case NOPIECE:
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
 }

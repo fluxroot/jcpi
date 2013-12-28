@@ -67,7 +67,6 @@ public final class IntChessman {
 
   public static int valueOfPromotion(GenericChessman genericChessman) {
     if (genericChessman == null) throw new IllegalArgumentException();
-    if (!genericChessman.isLegalPromotion()) throw new IllegalArgumentException();
 
     switch (genericChessman) {
       case KNIGHT:
@@ -78,6 +77,8 @@ public final class IntChessman {
         return ROOK;
       case QUEEN:
         return QUEEN;
+      case PAWN:
+      case KING:
       default:
         throw new IllegalArgumentException();
     }
@@ -97,6 +98,7 @@ public final class IntChessman {
         return GenericChessman.QUEEN;
       case KING:
         return GenericChessman.KING;
+      case NOCHESSMAN:
       default:
         throw new IllegalArgumentException();
     }
@@ -111,8 +113,10 @@ public final class IntChessman {
       case QUEEN:
       case KING:
         return true;
-      default:
+      case NOCHESSMAN:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
@@ -123,8 +127,12 @@ public final class IntChessman {
       case ROOK:
       case QUEEN:
         return true;
-      default:
+      case PAWN:
+      case KING:
         return false;
+      case NOCHESSMAN:
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
@@ -134,8 +142,13 @@ public final class IntChessman {
       case ROOK:
       case QUEEN:
         return true;
-      default:
+      case PAWN:
+      case KNIGHT:
+      case KING:
         return false;
+      case NOCHESSMAN:
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
