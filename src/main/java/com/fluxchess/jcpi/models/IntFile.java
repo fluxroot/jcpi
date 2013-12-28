@@ -85,6 +85,7 @@ public final class IntFile {
         return GenericFile.Fg;
       case Fh:
         return GenericFile.Fh;
+      case NOFILE:
       default:
         throw new IllegalArgumentException();
     }
@@ -101,8 +102,10 @@ public final class IntFile {
       case Fg:
       case Fh:
         return true;
-      default:
+      case NOFILE:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 

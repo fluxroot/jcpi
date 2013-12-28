@@ -43,6 +43,11 @@ public class IntChessmanTest {
     IntChessman.valueOf(null);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidToGenericChessman() {
+    IntChessman.toGenericChessman(IntChessman.NOCHESSMAN);
+  }
+
   @Test
   public void testPromotionValues() {
     for (GenericChessman genericChessman : GenericChessman.promotions) {
@@ -55,22 +60,19 @@ public class IntChessmanTest {
     IntChessman.valueOfPromotion(GenericChessman.PAWN);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericChessman() {
-    IntChessman.toGenericChessman(IntChessman.NOCHESSMAN);
-  }
-
   @Test
   public void testIsValid() {
     for (int chessman : IntChessman.values) {
       assertTrue(IntChessman.isValid(chessman));
       assertEquals(chessman, chessman & IntChessman.MASK);
     }
+
+    assertFalse(IntChessman.isValid(IntChessman.NOCHESSMAN));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntChessman.isValid(IntChessman.NOCHESSMAN));
+    IntChessman.isValid(-1);
   }
 
   @Test
@@ -79,11 +81,14 @@ public class IntChessmanTest {
       assertTrue(IntChessman.isValidPromotion(chessman));
       assertEquals(chessman, chessman & IntChessman.MASK);
     }
+
+    assertFalse(IntChessman.isValidPromotion(IntChessman.PAWN));
+    assertFalse(IntChessman.isValidPromotion(IntChessman.KING));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValidPromotion() {
-    assertFalse(IntChessman.isValidPromotion(IntChessman.PAWN));
+    IntChessman.isValidPromotion(IntChessman.NOCHESSMAN);
   }
 
   @Test
@@ -94,6 +99,11 @@ public class IntChessmanTest {
     assertFalse(IntChessman.isSliding(IntChessman.PAWN));
     assertFalse(IntChessman.isSliding(IntChessman.KNIGHT));
     assertFalse(IntChessman.isSliding(IntChessman.KING));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidIsSliding() {
+    IntChessman.isSliding(IntChessman.NOCHESSMAN);
   }
 
 }

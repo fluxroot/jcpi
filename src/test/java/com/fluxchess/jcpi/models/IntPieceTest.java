@@ -55,17 +55,24 @@ public class IntPieceTest {
     }
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidOrdinal() {
+    IntPiece.ordinal(IntPiece.NOPIECE);
+  }
+
   @Test
   public void testIsValid() {
     for (int piece : IntPiece.values) {
       assertTrue(IntPiece.isValid(piece));
       assertEquals(piece, piece & IntPiece.MASK);
     }
+
+    assertFalse(IntPiece.isValid(IntPiece.NOPIECE));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntPiece.isValid(IntPiece.NOPIECE));
+    IntPiece.isValid(-1);
   }
 
   @Test
@@ -82,8 +89,11 @@ public class IntPieceTest {
     assertEquals(IntChessman.QUEEN, IntPiece.getChessman(IntPiece.BLACKQUEEN));
     assertEquals(IntChessman.KING, IntPiece.getChessman(IntPiece.WHITEKING));
     assertEquals(IntChessman.KING, IntPiece.getChessman(IntPiece.BLACKKING));
+  }
 
-    assertEquals(IntChessman.NOCHESSMAN, IntPiece.getChessman(IntPiece.NOPIECE));
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidGetChessman() {
+    IntPiece.getChessman(IntPiece.NOPIECE);
   }
 
   @Test
@@ -100,8 +110,11 @@ public class IntPieceTest {
     assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKQUEEN));
     assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEKING));
     assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKKING));
+  }
 
-    assertEquals(IntColor.NOCOLOR, IntPiece.getColor(IntPiece.NOPIECE));
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidGetColor() {
+    IntPiece.getColor(IntPiece.NOPIECE);
   }
 
 }

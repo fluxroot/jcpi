@@ -55,6 +55,7 @@ public final class IntCastling {
         return GenericCastling.KINGSIDE;
       case QUEENSIDE:
         return GenericCastling.QUEENSIDE;
+      case NOCASTLING:
       default:
         throw new IllegalArgumentException();
     }
@@ -65,8 +66,10 @@ public final class IntCastling {
       case KINGSIDE:
       case QUEENSIDE:
         return true;
-      default:
+      case NOCASTLING:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 

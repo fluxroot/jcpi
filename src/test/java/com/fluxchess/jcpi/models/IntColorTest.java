@@ -54,11 +54,13 @@ public class IntColorTest {
       assertTrue(IntColor.isValid(color));
       assertEquals(color, color & IntColor.MASK);
     }
+
+    assertFalse(IntColor.isValid(IntColor.NOCOLOR));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntColor.isValid(IntColor.NOCOLOR));
+    IntColor.isValid(-1);
   }
 
   @Test

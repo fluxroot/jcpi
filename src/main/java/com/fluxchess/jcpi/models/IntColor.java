@@ -55,6 +55,7 @@ public final class IntColor {
         return GenericColor.WHITE;
       case BLACK:
         return GenericColor.BLACK;
+      case NOCOLOR:
       default:
         throw new IllegalArgumentException();
     }
@@ -65,8 +66,10 @@ public final class IntColor {
       case WHITE:
       case BLACK:
         return true;
-      default:
+      case NOCOLOR:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
@@ -76,6 +79,7 @@ public final class IntColor {
         return BLACK;
       case BLACK:
         return WHITE;
+      case NOCOLOR:
       default:
         throw new IllegalArgumentException();
     }

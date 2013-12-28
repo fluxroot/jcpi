@@ -54,11 +54,13 @@ public class IntCastlingTest {
       assertTrue(IntCastling.isValid(castling));
       assertEquals(castling, castling & IntCastling.MASK);
     }
+
+    assertFalse(IntCastling.isValid(IntCastling.NOCASTLING));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    assertFalse(IntCastling.isValid(IntCastling.NOCASTLING));
+    IntCastling.isValid(-1);
   }
 
 }

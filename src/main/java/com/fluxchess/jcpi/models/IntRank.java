@@ -85,6 +85,7 @@ public final class IntRank {
         return GenericRank.R7;
       case R8:
         return GenericRank.R8;
+      case NORANK:
       default:
         throw new IllegalArgumentException();
     }
@@ -101,8 +102,10 @@ public final class IntRank {
       case R7:
       case R8:
         return true;
-      default:
+      case NORANK:
         return false;
+      default:
+        throw new IllegalArgumentException();
     }
   }
 
