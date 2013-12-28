@@ -33,6 +33,8 @@ public class IntColorTest {
   public void testValues() {
     for (GenericColor genericColor : GenericColor.values()) {
       assertEquals(genericColor, IntColor.toGenericColor(IntColor.valueOf(genericColor)));
+      assertEquals(genericColor.ordinal(), IntColor.valueOf(genericColor));
+      assertEquals(IntColor.valueOf(genericColor), IntColor.values[IntColor.valueOf(genericColor)]);
     }
   }
 
@@ -44,14 +46,6 @@ public class IntColorTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericColor() {
     IntColor.toGenericColor(IntColor.NOCOLOR);
-  }
-
-  @Test
-  public void testOrdinal() {
-    for (int color : IntColor.values) {
-      assertEquals(IntColor.ordinal(color), IntColor.toGenericColor(color).ordinal());
-      assertEquals(color, IntColor.values[IntColor.ordinal(color)]);
-    }
   }
 
   @Test

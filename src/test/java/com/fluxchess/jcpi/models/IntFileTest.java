@@ -33,6 +33,8 @@ public class IntFileTest {
   public void testValues() {
     for (GenericFile genericFile : GenericFile.values()) {
       assertEquals(genericFile, IntFile.toGenericFile(IntFile.valueOf(genericFile)));
+      assertEquals(genericFile.ordinal(), IntFile.valueOf(genericFile));
+      assertEquals(IntFile.valueOf(genericFile), IntFile.values[IntFile.valueOf(genericFile)]);
     }
   }
 
@@ -44,14 +46,6 @@ public class IntFileTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericFile() {
     IntFile.toGenericFile(IntFile.NOFILE);
-  }
-
-  @Test
-  public void testOrdinal() {
-    for (int file : IntFile.values) {
-      assertEquals(IntFile.ordinal(file), IntFile.toGenericFile(file).ordinal());
-      assertEquals(file, IntFile.values[IntFile.ordinal(file)]);
-    }
   }
 
   @Test

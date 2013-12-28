@@ -25,10 +25,9 @@ public final class IntColor {
 
   public static final int MASK = 0x3;
 
-  public static final int NOCOLOR = 1;
-
-  public static final int WHITE = 2;
-  public static final int BLACK = 3;
+  public static final int WHITE = 0;
+  public static final int BLACK = 1;
+  public static final int NOCOLOR = 2;
 
   public static final int[] values = {
     WHITE, BLACK
@@ -56,17 +55,6 @@ public final class IntColor {
         return GenericColor.WHITE;
       case BLACK:
         return GenericColor.BLACK;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
-
-  public static int ordinal(int color) {
-    switch (color) {
-      case WHITE:
-        return 0;
-      case BLACK:
-        return 1;
       default:
         throw new IllegalArgumentException();
     }
