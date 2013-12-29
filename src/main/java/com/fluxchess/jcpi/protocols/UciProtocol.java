@@ -16,7 +16,11 @@
 package com.fluxchess.jcpi.protocols;
 
 import com.fluxchess.jcpi.commands.*;
-import com.fluxchess.jcpi.models.*;
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.models.GenericColor;
+import com.fluxchess.jcpi.models.GenericMove;
+import com.fluxchess.jcpi.models.IllegalNotationException;
+import com.fluxchess.jcpi.options.AbstractOption;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -390,31 +394,9 @@ public final class UciProtocol implements IProtocolHandler {
     output.println("id name " + command.name);
     output.println("id author " + command.author);
 
-    for (Iterator<Option> iter = command.optionIterator(); iter.hasNext();) {
-      Option option = iter.next();
-
-      String optionString = "option";
-      optionString += " name " + option.name;
-      optionString += " type " + option.type;
-
-      if (option.getValue() != null) {
-        optionString += " default " + option.getValue();
-      } else if (option.defaultValue != null) {
-        optionString += " default " + option.defaultValue;
-      }
-      if (option.minValue != null) {
-        optionString += " min " + option.minValue;
-      }
-      if (option.maxValue != null) {
-        optionString += " max " + option.maxValue;
-      }
-      if (option.varValues != null) {
-        for (String varValue : option.varValues) {
-          optionString += " var " + varValue;
-        }
-      }
-
-      output.println(optionString);
+    for (Iterator<AbstractOption> iter = command.optionIterator(); iter.hasNext();) {
+      AbstractOption option = iter.next();
+      output.println(option);
     }
 
     output.println("uciok");
