@@ -16,7 +16,11 @@
 package com.fluxchess.jcpi.protocols;
 
 import com.fluxchess.jcpi.commands.*;
-import com.fluxchess.jcpi.models.*;
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.models.GenericColor;
+import com.fluxchess.jcpi.models.GenericMove;
+import com.fluxchess.jcpi.models.GenericPosition;
+import com.fluxchess.jcpi.options.SpinnerOption;
 import org.junit.Test;
 
 import java.io.*;
@@ -405,7 +409,7 @@ public class UciProtocolTest {
     UciProtocol protocol = new UciProtocol(new BufferedReader(new InputStreamReader(new ByteArrayInputStream("".getBytes()))), new PrintStream(buffer));
 
     ProtocolInitializeAnswerCommand command = new ProtocolInitializeAnswerCommand("My Engine", "The Author");
-    command.addOption(new Option("Hash", "spin", "16", "4", "64", null));
+    command.addOption(new SpinnerOption("Hash", 16, 4, 64));
     protocol.send(command);
 
     BufferedReader input = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray())));

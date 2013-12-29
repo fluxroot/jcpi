@@ -15,7 +15,7 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import com.fluxchess.jcpi.models.Option;
+import com.fluxchess.jcpi.options.AbstractOption;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
   public final String name;
   public final String author;
-  private final List<Option> optionList = new ArrayList<Option>();
+  private final List<AbstractOption> options = new ArrayList<AbstractOption>();
 
   public ProtocolInitializeAnswerCommand(String name, String author) {
     if (name == null) throw new IllegalArgumentException();
@@ -39,14 +39,14 @@ public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
     protocol.send(this);
   }
 
-  public Iterator<Option> optionIterator() {
-    return this.optionList.iterator();
+  public Iterator<AbstractOption> optionIterator() {
+    return this.options.iterator();
   }
 
-  public void addOption(Option option) {
+  public void addOption(AbstractOption option) {
     if (option == null) throw new IllegalArgumentException();
 
-    this.optionList.add(option);
+    this.options.add(option);
   }
 
 }
