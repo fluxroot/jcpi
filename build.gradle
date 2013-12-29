@@ -155,6 +155,8 @@ task dist(type: Zip) {
     from jar
     from sourcesJar
     from javadocJar
+
+    from 'src/dist/engine-interface.txt'
   }
 }
 
