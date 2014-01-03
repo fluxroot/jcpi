@@ -1,10 +1,10 @@
 Java Chess Protocol Interface
 =============================
 
-Copyright 2007-2013 Flux Chess Project  
+Copyright 2007-2014 Flux Chess Project  
 http://fluxchess.com
 
-[![Build Status](https://travis-ci.org/fluxroot/jcpi.png?branch=master)](https://travis-ci.org/fluxroot/jcpi) [![Coverage Status](https://coveralls.io/repos/fluxroot/jcpi/badge.png?branch=master)](https://coveralls.io/r/fluxroot/jcpi?branch=master)
+[![Build Status](https://travis-ci.org/fluxroot/jcpi.png?branch=1.3.x)](https://travis-ci.org/fluxroot/jcpi) [![Coverage Status](https://coveralls.io/repos/fluxroot/jcpi/badge.png?branch=1.3.x)](https://coveralls.io/r/fluxroot/jcpi?branch=1.3.x)
 
 
 Introduction
@@ -32,7 +32,7 @@ To use it in Maven use the following code:
     <dependency>
         <groupId>com.fluxchess</groupId>
         <artifactId>jcpi</artifactId>
-        <version>1.2</version>
+        <version>1.3.0</version>
     </dependency>
 
 To use it in Gradle use the following code:
@@ -43,7 +43,7 @@ To use it in Gradle use the following code:
         }
     }
     dependencies {
-        compile 'com.fluxchess:jcpi:1.2.+'
+        compile 'com.fluxchess:jcpi:1.3.+'
     }
 
 
