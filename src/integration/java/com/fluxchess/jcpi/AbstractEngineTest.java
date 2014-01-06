@@ -29,8 +29,6 @@ import static org.junit.Assert.*;
 
 public class AbstractEngineTest {
 
-  com.fluxchess.test.classes.MultipleConstructorClass constructor;
-
   private BufferedReader testInput = null;
   private PrintStream testOutput = null;
   private BufferedReader engineInput = null;
