@@ -135,13 +135,14 @@ public final class X88MoveGenerator implements IMoveGenerator {
   }
 
   public long perft(int depth) {
-    if (depth <= 0) {
-      return 1;
-    }
-
     long totalNodes = 0;
 
     MoveList moves = getMoves();
+
+    if (depth <= 1) {
+      return moves.size;
+    }
+
     for (int i = 0; i < moves.size; ++i) {
       int move = moves.moves[i];
 
