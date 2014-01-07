@@ -20,5 +20,6 @@ import com.fluxchess.jcpi.models.GenericMove;
 public interface IMoveGenerator {
 
   public GenericMove[] getGenericMoves();
+  public long perft(int depth);
 
 }

@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractPerftTest {
 
-  protected abstract long miniMax(GenericBoard genericBoard, int depth);
+  protected abstract IMoveGenerator getMoveGenerator(GenericBoard genericBoard);
 
   protected void testPerft(int testDepth) throws IOException, IllegalNotationException {
     for (int i = 1; i <= testDepth; i++) {
@@ -44,8 +44,9 @@ public abstract class AbstractPerftTest {
             int nodes = Integer.parseInt(data[1]);
 
             GenericBoard genericBoard = new GenericBoard(tokens[0].trim());
+            IMoveGenerator moveGenerator = getMoveGenerator(genericBoard);
 
-            long result = miniMax(genericBoard, depth);
+            long result = moveGenerator.perft(depth);
             assertEquals(genericBoard.toString() + " at depth " + depth + "failed", nodes, result);
           }
 
