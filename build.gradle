@@ -9,8 +9,8 @@ apply plugin: 'coveralls'
 description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
-version = '1.4.0-beta'
-ext.releaseBranch = 'master'
+version = '1.4.0'
+ext.releaseBranch = '1.4.x'
 
 if (!project.hasProperty('buildNumber') || !(project.hasProperty('branchName') && branchName == releaseBranch)) {
   // We're probably building on a dev machine or we're building a branch
