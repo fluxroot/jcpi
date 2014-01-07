@@ -86,19 +86,33 @@ public class GenericMoveTest {
   }
 
   @Test
-  public void testEquals() {
+  public void testEqualsHashCode() {
     GenericMove move1 = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.QUEEN);
     GenericMove move2 = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.QUEEN);
-    GenericMove move3 = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.ROOK);
-    GenericMove move4 = new GenericMove(GenericPosition.a1, GenericPosition.e4, GenericChessman.ROOK);
-    GenericMove move5 = new GenericMove(GenericPosition.a2, GenericPosition.e4, GenericChessman.ROOK);
 
-    assertEquals(move1, move1);
-    assertEquals(move1, move2);
-    assertNotEquals(move1, new Object());
-    assertNotEquals(move1, move3);
-    assertNotEquals(move1, move4);
-    assertNotEquals(move1, move5);
+    GenericMove move3 = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.ROOK);
+    GenericMove move4 = new GenericMove(GenericPosition.a1, GenericPosition.e4, GenericChessman.QUEEN);
+    GenericMove move5 = new GenericMove(GenericPosition.a2, GenericPosition.e3, GenericChessman.QUEEN);
+
+    // reflexive test
+    assertTrue(move1.equals(move1));
+
+    // symmetric test
+    assertTrue(move1.equals(move2));
+    assertTrue(move2.equals(move1));
+
+    assertEquals(move1.hashCode(), move2.hashCode());
+
+    // null value test
+    assertFalse(move1.equals(null));
+
+    // inheritance test
+    assertFalse(move1.equals(new Object()));
+
+    // attributes test
+    assertFalse(move1.equals(move3));
+    assertFalse(move1.equals(move4));
+    assertFalse(move1.equals(move5));
   }
 
 }

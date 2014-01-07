@@ -15,7 +15,7 @@
  */
 package com.fluxchess.jcpi.models;
 
-public class GenericMove {
+public final class GenericMove {
 
   public final GenericPosition from;
   public final GenericPosition to;
@@ -143,6 +143,17 @@ public class GenericMove {
     }
 
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+
+    result = 31 * result + from.hashCode();
+    result = 31 * result + to.hashCode();
+    result = 31 * result + promotion.hashCode();
+
+    return result;
   }
 
 }

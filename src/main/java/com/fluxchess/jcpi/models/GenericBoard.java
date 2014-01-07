@@ -17,7 +17,7 @@ package com.fluxchess.jcpi.models;
 
 import java.util.*;
 
-public class GenericBoard {
+public final class GenericBoard {
 
   public static final int STANDARDSETUP = 518;
 
@@ -431,6 +431,49 @@ public class GenericBoard {
     }
 
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+
+    for (GenericPosition genericPosition : GenericPosition.values()) {
+      GenericPiece genericPiece = this.board.get(genericPosition);
+      if (genericPiece != null) {
+        result = 31 * result + genericPiece.hashCode();
+      } else {
+        result = 31 * result;
+      }
+    }
+
+    for (GenericColor genericColor : GenericColor.values()) {
+      for (GenericCastling genericCastling : GenericCastling.values()) {
+        GenericFile genericFile = this.castling.get(genericColor).get(genericCastling);
+        if (genericFile != null) {
+          result = 31 * result + genericFile.hashCode();
+        } else {
+          result = 31 * result;
+        }
+      }
+    }
+
+    if (this.enPassant != null) {
+      result = 31 * result + this.enPassant.hashCode();
+    } else {
+      result = 31 * result;
+    }
+
+    if (this.activeColor != null) {
+      result = 31 * result + this.activeColor.hashCode();
+    } else {
+      result = 31 * result;
+    }
+
+    result = 31 * result + this.halfMoveClock;
+
+    result = 31 * result + this.fullMoveNumber;
+
+    return result;
   }
 
   private void parse(String notation) throws IllegalNotationException {

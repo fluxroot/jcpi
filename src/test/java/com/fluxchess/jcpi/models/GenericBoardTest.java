@@ -44,23 +44,43 @@ public class GenericBoardTest {
   }
 
   @Test
-  public void testEquals() throws IllegalNotationException {
+  public void testEqualsHashCode() throws IllegalNotationException {
+    // Empty board test
     GenericBoard board1 = new GenericBoard();
     GenericBoard board2 = new GenericBoard();
     assertEquals(board1, board2);
+    assertEquals(board1.hashCode(), board2.hashCode());
 
+    // Standard setup test
     board1 = new GenericBoard(GenericBoard.STANDARDSETUP);
     board2 = new GenericBoard(GenericBoard.STANDARDSETUP);
-    assertEquals(board1, board2);
 
+    // reflexive test
+    assertEquals(board1, board1);
+
+    // symmetric test
+    assertEquals(board1, board2);
+    assertEquals(board2, board1);
+
+    assertEquals(board1.hashCode(), board2.hashCode());
+
+    // null value test
+    assertFalse(board1.equals(null));
+
+    // inheritance test
+    assertFalse(board1.equals(new Object()));
+
+    // FEN test
     GenericBoard board3 = new GenericBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    assertEquals(board1, board3);
+    assertEquals(board1.hashCode(), board3.hashCode());
+
     GenericBoard board4 = new GenericBoard("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1");
     GenericBoard board5 = new GenericBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
     GenericBoard board6 = new GenericBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ - 0 1");
     GenericBoard board7 = new GenericBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 1 1");
     GenericBoard board8 = new GenericBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 2");
 
-    assertEquals(board1, board3);
     assertFalse(board1.equals(board4));
     assertFalse(board1.equals(board5));
     assertFalse(board1.equals(board6));
