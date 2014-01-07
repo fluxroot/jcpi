@@ -32,10 +32,17 @@ public class MoveGeneratorTest {
   }
 
   @Test
-  public void test() {
+  public void testGetGenericMoves() {
     GenericMove[] genericMoves = MoveGenerator.getGenericMoves(new GenericBoard(GenericBoard.STANDARDSETUP));
     
     assertEquals(20, genericMoves.length);
+  }
+
+  @Test
+  public void testPerft() {
+    long result = MoveGenerator.perft(new GenericBoard(GenericBoard.STANDARDSETUP), 4);
+
+    assertEquals(197281, result);
   }
 
 }
