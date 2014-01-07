@@ -150,8 +150,10 @@ public final class GenericMove {
     int result = 17;
 
     result = 31 * result + from.hashCode();
+
     result = 31 * result + to.hashCode();
-    result = 31 * result + promotion.hashCode();
+
+    result = 31 * result + (promotion == null ? 0 : promotion.hashCode());
 
     return result;
   }
