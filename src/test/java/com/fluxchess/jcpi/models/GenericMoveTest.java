@@ -93,6 +93,7 @@ public class GenericMoveTest {
     GenericMove move3 = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.ROOK);
     GenericMove move4 = new GenericMove(GenericPosition.a1, GenericPosition.e4, GenericChessman.QUEEN);
     GenericMove move5 = new GenericMove(GenericPosition.a2, GenericPosition.e3, GenericChessman.QUEEN);
+    GenericMove move6 = new GenericMove(GenericPosition.a1, GenericPosition.e3);
 
     // reflexive test
     assertTrue(move1.equals(move1));
@@ -100,8 +101,6 @@ public class GenericMoveTest {
     // symmetric test
     assertTrue(move1.equals(move2));
     assertTrue(move2.equals(move1));
-
-    assertEquals(move1.hashCode(), move2.hashCode());
 
     // null value test
     assertFalse(move1.equals(null));
@@ -113,6 +112,14 @@ public class GenericMoveTest {
     assertFalse(move1.equals(move3));
     assertFalse(move1.equals(move4));
     assertFalse(move1.equals(move5));
+    assertFalse(move1.equals(move6));
+
+    // hash code test
+    assertEquals(move1.hashCode(), move2.hashCode());
+    assertNotEquals(move1.hashCode(), move3.hashCode());
+    assertNotEquals(move1.hashCode(), move4.hashCode());
+    assertNotEquals(move1.hashCode(), move5.hashCode());
+    assertNotEquals(move1.hashCode(), move6.hashCode());
   }
 
 }

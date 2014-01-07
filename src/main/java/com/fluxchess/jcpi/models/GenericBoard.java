@@ -439,35 +439,19 @@ public final class GenericBoard {
 
     for (GenericPosition genericPosition : GenericPosition.values()) {
       GenericPiece genericPiece = this.board.get(genericPosition);
-      if (genericPiece != null) {
-        result = 31 * result + genericPiece.hashCode();
-      } else {
-        result = 31 * result;
-      }
+      result = 31 * result + (genericPiece == null ? 0 : genericPiece.hashCode());
     }
 
     for (GenericColor genericColor : GenericColor.values()) {
       for (GenericCastling genericCastling : GenericCastling.values()) {
         GenericFile genericFile = this.castling.get(genericColor).get(genericCastling);
-        if (genericFile != null) {
-          result = 31 * result + genericFile.hashCode();
-        } else {
-          result = 31 * result;
-        }
+        result = 31 * result + (genericFile == null ? 0 : genericFile.hashCode());
       }
     }
 
-    if (this.enPassant != null) {
-      result = 31 * result + this.enPassant.hashCode();
-    } else {
-      result = 31 * result;
-    }
+    result = 31 * result + (this.enPassant == null ? 0 : this.enPassant.hashCode());
 
-    if (this.activeColor != null) {
-      result = 31 * result + this.activeColor.hashCode();
-    } else {
-      result = 31 * result;
-    }
+    result = 31 * result + (this.activeColor == null ? 0 : this.activeColor.hashCode());
 
     result = 31 * result + this.halfMoveClock;
 
