@@ -134,6 +134,25 @@ public final class X88MoveGenerator implements IMoveGenerator {
     return moveList;
   }
 
+  public long perft(int depth) {
+    if (depth <= 0) {
+      return 1;
+    }
+
+    long totalNodes = 0;
+
+    MoveList moves = getMoves();
+    for (int i = 0; i < moves.size; ++i) {
+      int move = moves.moves[i];
+
+      board.makeMove(move);
+      totalNodes += perft(depth - 1);
+      board.undoMove(move);
+    }
+
+    return totalNodes;
+  }
+
   private void generateMoves(MoveList moveList) {
     assert moveList != null;
 
