@@ -32,7 +32,7 @@ To use it in Maven use the following code:
     <dependency>
         <groupId>com.fluxchess</groupId>
         <artifactId>jcpi</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
     </dependency>
 
 To use it in Gradle use the following code:
@@ -43,7 +43,7 @@ To use it in Gradle use the following code:
         }
     }
     dependencies {
-        compile 'com.fluxchess:jcpi:1.4.+'
+        compile 'com.fluxchess:jcpi:1.5.+'
     }
 
 
