@@ -87,4 +87,16 @@ final class Square {
     return GenericPosition.valueOf(IntFile.toGenericFile(square % 16), IntRank.toGenericRank(square >>> 4));
   }
 
+  public static int toX88Square(int square) {
+    assert square >= 0 && square < Long.SIZE;
+
+    return ((square & ~7) << 1) | (square & 7);
+  }
+
+  public static int toBitSquare(int square) {
+    assert (square & 0x88) == 0;
+
+    return ((square & ~7) >>> 1) | (square & 7);
+  }
+
 }

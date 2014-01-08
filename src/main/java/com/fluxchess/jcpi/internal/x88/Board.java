@@ -24,12 +24,12 @@ final class Board {
 
   public final int[] board = new int[BOARDSIZE];
 
-  public final ChessmanList[] pawns = new ChessmanList[IntColor.values.length];
-  public final ChessmanList[] knights = new ChessmanList[IntColor.values.length];
-  public final ChessmanList[] bishops = new ChessmanList[IntColor.values.length];
-  public final ChessmanList[] rooks = new ChessmanList[IntColor.values.length];
-  public final ChessmanList[] queens = new ChessmanList[IntColor.values.length];
-  public final ChessmanList[] kings = new ChessmanList[IntColor.values.length];
+  public final long[] pawns = new long[IntColor.values.length];
+  public final long[] knights = new long[IntColor.values.length];
+  public final long[] bishops = new long[IntColor.values.length];
+  public final long[] rooks = new long[IntColor.values.length];
+  public final long[] queens = new long[IntColor.values.length];
+  public final long[] kings = new long[IntColor.values.length];
 
   public final int[][] castling = new int[IntColor.values.length][IntCastling.values.length];
   public int enPassant = Square.NOSQUARE;
@@ -60,16 +60,6 @@ final class Board {
 
     for (int i = 0; i < stack.length; ++i) {
       stack[i] = new StackEntry();
-    }
-
-    // Initialize chessman lists
-    for (int color : IntColor.values) {
-      pawns[color] = new ChessmanList();
-      knights[color] = new ChessmanList();
-      bishops[color] = new ChessmanList();
-      rooks[color] = new ChessmanList();
-      queens[color] = new ChessmanList();
-      kings[color] = new ChessmanList();
     }
 
     // Initialize board
@@ -175,22 +165,22 @@ final class Board {
 
     switch (chessman) {
       case IntChessman.PAWN:
-        pawns[color].add(square);
+        pawns[color] |= 1L << Square.toBitSquare(square);
         break;
       case IntChessman.KNIGHT:
-        knights[color].add(square);
+        knights[color] |= 1L << Square.toBitSquare(square);
         break;
       case IntChessman.BISHOP:
-        bishops[color].add(square);
+        bishops[color] |= 1L << Square.toBitSquare(square);
         break;
       case IntChessman.ROOK:
-        rooks[color].add(square);
+        rooks[color] |= 1L << Square.toBitSquare(square);
         break;
       case IntChessman.QUEEN:
-        queens[color].add(square);
+        queens[color] |= 1L << Square.toBitSquare(square);
         break;
       case IntChessman.KING:
-        kings[color].add(square);
+        kings[color] |= 1L << Square.toBitSquare(square);
         break;
       default:
         assert false : chessman;
@@ -211,22 +201,22 @@ final class Board {
 
     switch (chessman) {
       case IntChessman.PAWN:
-        pawns[color].remove(square);
+        pawns[color] &= ~(1L << Square.toBitSquare(square));
         break;
       case IntChessman.KNIGHT:
-        knights[color].remove(square);
+        knights[color] &= ~(1L << Square.toBitSquare(square));
         break;
       case IntChessman.BISHOP:
-        bishops[color].remove(square);
+        bishops[color] &= ~(1L << Square.toBitSquare(square));
         break;
       case IntChessman.ROOK:
-        rooks[color].remove(square);
+        rooks[color] &= ~(1L << Square.toBitSquare(square));
         break;
       case IntChessman.QUEEN:
-        queens[color].remove(square);
+        queens[color] &= ~(1L << Square.toBitSquare(square));
         break;
       case IntChessman.KING:
-        kings[color].remove(square);
+        kings[color] &= ~(1L << Square.toBitSquare(square));
         break;
       default:
         assert false : chessman;
@@ -250,28 +240,28 @@ final class Board {
 
     switch (chessman) {
       case IntChessman.PAWN:
-        pawns[color].remove(originSquare);
-        pawns[color].add(targetSquare);
+        pawns[color] &= ~(1L << Square.toBitSquare(originSquare));
+        pawns[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       case IntChessman.KNIGHT:
-        knights[color].remove(originSquare);
-        knights[color].add(targetSquare);
+        knights[color] &= ~(1L << Square.toBitSquare(originSquare));
+        knights[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       case IntChessman.BISHOP:
-        bishops[color].remove(originSquare);
-        bishops[color].add(targetSquare);
+        bishops[color] &= ~(1L << Square.toBitSquare(originSquare));
+        bishops[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       case IntChessman.ROOK:
-        rooks[color].remove(originSquare);
-        rooks[color].add(targetSquare);
+        rooks[color] &= ~(1L << Square.toBitSquare(originSquare));
+        rooks[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       case IntChessman.QUEEN:
-        queens[color].remove(originSquare);
-        queens[color].add(targetSquare);
+        queens[color] &= ~(1L << Square.toBitSquare(originSquare));
+        queens[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       case IntChessman.KING:
-        kings[color].remove(originSquare);
-        kings[color].add(targetSquare);
+        kings[color] &= ~(1L << Square.toBitSquare(originSquare));
+        kings[color] |= 1L << Square.toBitSquare(targetSquare);
         break;
       default:
         assert false : chessman;
