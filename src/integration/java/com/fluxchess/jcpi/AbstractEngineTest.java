@@ -66,9 +66,9 @@ public class AbstractEngineTest {
     testOutput.println("uci");
     testOutput.println("quit");
 
-    assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
+    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
 
-    thread.join(5000);
+    thread.join(10000);
     assertFalse(thread.isAlive());
   }
 
@@ -86,9 +86,9 @@ public class AbstractEngineTest {
 
     testOutput.close();
 
-    assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
+    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
 
-    thread.join(5000);
+    thread.join(10000);
     assertFalse(thread.isAlive());
   }
 
@@ -106,13 +106,13 @@ public class AbstractEngineTest {
 
     testOutput.println("uci");
 
-    assertTrue(semaphore.tryAcquire(1, TimeUnit.SECONDS));
+    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
     assertNotNull(engine.getProtocol());
     assertEquals(IOProtocolHandler.class, engine.getProtocol().getClass());
 
     testOutput.println("quit");
 
-    thread.join(5000);
+    thread.join(10000);
   }
 
   class Engine extends AbstractEngine {
