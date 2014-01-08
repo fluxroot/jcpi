@@ -35,8 +35,8 @@ public class ChessmanListTest {
 
     while (pool.size() < Long.SIZE) {
       int value = random.nextInt(Long.SIZE);
-      if (!pool.contains(Position.values[value])) {
-        pool.add(Position.values[value]);
+      if (!pool.contains(Square.values[value])) {
+        pool.add(Square.values[value]);
       }
     }
   }
@@ -44,9 +44,9 @@ public class ChessmanListTest {
   @Test
   public void testX88Positions() {
     int bitposition = 0;
-    for (int x88position : Position.values) {
-      assertEquals(bitposition, ChessmanList.toBitPosition(x88position));
-      assertEquals(x88position, ChessmanList.toX88Position(bitposition));
+    for (int x88position : Square.values) {
+      assertEquals(bitposition, ChessmanList.toBitSquare(x88position));
+      assertEquals(x88position, ChessmanList.toX88Square(bitposition));
       ++bitposition;
     }
   }
@@ -59,19 +59,19 @@ public class ChessmanListTest {
       list.add(x88position);
     }
 
-    assertEquals(-1, list.positions);
+    assertEquals(-1, list.squares);
   }
 
   @Test
   public void testRemove() {
     ChessmanList list = new ChessmanList();
-    list.positions = -1;
+    list.squares = -1;
 
     for (int x88position : pool) {
       list.remove(x88position);
     }
 
-    assertEquals(0, list.positions);
+    assertEquals(0, list.squares);
   }
 
 }
