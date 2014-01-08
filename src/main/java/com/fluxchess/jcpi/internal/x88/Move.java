@@ -23,12 +23,12 @@ import com.fluxchess.jcpi.models.IntPiece;
  * This class represents a move as a int value. The fields are represented by
  * the following bits.
  * <p/>
- *  0 -  2: the type (required)
- *  3 -  9: the origin square (required)
- * 10 - 16: the target square (required)
- * 17 - 21: the origin piece (required)
- * 22 - 26: the target piece (optional)
- * 27 - 29: the promotion chessman (optional)
+ *  0 -  2: type
+ *  3 -  9: origin square
+ * 10 - 16: target square
+ * 17 - 21: origin piece
+ * 22 - 26: target piece
+ * 27 - 29: promotion chessman
  */
 final class Move {
 
@@ -206,49 +206,6 @@ final class Move {
     move |= promotion << PROMOTION_SHIFT;
 
     return move;
-  }
-
-  public static String toString(int move) {
-    String string = "";
-
-    switch (getType(move)) {
-      case Type.NORMAL:
-        string += "NORMAL";
-        break;
-      case Type.PAWNDOUBLE:
-        string += "PAWNDOUBLE";
-        break;
-      case Type.PAWNPROMOTION:
-        string += "PAWNPROMOTION";
-        break;
-      case Type.ENPASSANT:
-        string += "ENPASSANT";
-        break;
-      case Type.CASTLING:
-        string += "CASTLING";
-        break;
-      default:
-        throw new IllegalArgumentException();
-    }
-
-    assert getOriginPiece(move) != IntPiece.NOPIECE;
-    string += ":";
-    string += IntPiece.toGenericPiece(getOriginPiece(move));
-
-    string += ":";
-    string += toGenericMove(move).toString();
-
-    if (getTargetPiece(move) != IntPiece.NOPIECE) {
-      string += ":";
-      string += IntPiece.toGenericPiece(getTargetPiece(move));
-    }
-
-    if (getType(move) == Type.PAWNPROMOTION) {
-      string += ":";
-      string += IntChessman.toGenericChessman(getPromotion(move));
-    }
-
-    return string;
   }
 
 }
