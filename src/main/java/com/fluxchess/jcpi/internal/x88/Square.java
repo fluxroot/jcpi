@@ -19,7 +19,7 @@ import com.fluxchess.jcpi.models.GenericPosition;
 import com.fluxchess.jcpi.models.IntFile;
 import com.fluxchess.jcpi.models.IntRank;
 
-final class Position {
+final class Square {
 
   public static final int MASK = 0x7F;
 
@@ -59,7 +59,7 @@ final class Position {
   public static final int g7 = 102; public static final int g8 = 118;
   public static final int h7 = 103; public static final int h8 = 119;
 
-  public static final int NOPOSITION = 127;
+  public static final int NOSQUARE = 127;
 
   public static final int[] values = {
     a1, b1, c1, d1, e1, f1, g1, h1,
@@ -72,7 +72,7 @@ final class Position {
     a8, b8, c8, d8, e8, f8, g8, h8
   };
 
-  private Position() {
+  private Square() {
   }
 
   public static int valueOf(GenericPosition genericPosition) {
@@ -81,22 +81,22 @@ final class Position {
     return IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
   }
 
-  public static GenericPosition toGenericPosition(int position) {
-    assert (position & 0x88) == 0;
+  public static GenericPosition toGenericPosition(int square) {
+    assert (square & 0x88) == 0;
 
-    return GenericPosition.valueOf(IntFile.toGenericFile(getFile(position)), IntRank.toGenericRank(getRank(position)));
+    return GenericPosition.valueOf(IntFile.toGenericFile(square % 16), IntRank.toGenericRank(square >>> 4));
   }
 
-  public static int getFile(int position) {
-    assert position != NOPOSITION;
+  public static int toX88Square(int square) {
+    assert square >= 0 && square < Long.SIZE;
 
-    return position % 16;
+    return ((square & ~7) << 1) | (square & 7);
   }
 
-  public static int getRank(int position) {
-    assert position != NOPOSITION;
+  public static int toBitSquare(int square) {
+    assert (square & 0x88) == 0;
 
-    return position >>> 4;
+    return ((square & ~7) >>> 1) | (square & 7);
   }
 
 }

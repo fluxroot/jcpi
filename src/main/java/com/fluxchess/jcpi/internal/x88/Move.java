@@ -23,12 +23,12 @@ import com.fluxchess.jcpi.models.IntPiece;
  * This class represents a move as a int value. The fields are represented by
  * the following bits.
  * <p/>
- *  0 -  2: the type (required)
- *  3 -  9: the origin position (required)
- * 10 - 16: the target position (required)
- * 17 - 21: the origin piece (required)
- * 22 - 26: the target piece (optional)
- * 27 - 29: the promotion chessman (optional)
+ *  0 -  2: type
+ *  3 -  9: origin square
+ * 10 - 16: target square
+ * 17 - 21: origin piece
+ * 22 - 26: target piece
+ * 27 - 29: promotion chessman
  */
 final class Move {
 
@@ -55,10 +55,10 @@ final class Move {
 
   private static final int TYPE_SHIFT = 0;
   private static final int TYPE_MASK = Type.MASK << TYPE_SHIFT;
-  private static final int ORIGINPOSITION_SHIFT = 3;
-  private static final int ORIGINPOSITION_MASK = Position.MASK << ORIGINPOSITION_SHIFT;
-  private static final int TARGETPOSITION_SHIFT = 10;
-  private static final int TARGETPOSITION_MASK = Position.MASK << TARGETPOSITION_SHIFT;
+  private static final int ORIGINSQUARE_SHIFT = 3;
+  private static final int ORIGINSQUARE_MASK = Square.MASK << ORIGINSQUARE_SHIFT;
+  private static final int TARGETSQUARE_SHIFT = 10;
+  private static final int TARGETSQUARE_MASK = Square.MASK << TARGETSQUARE_SHIFT;
   private static final int ORIGINPIECE_SHIFT = 17;
   private static final int ORIGINPIECE_MASK = IntPiece.MASK << ORIGINPIECE_SHIFT;
   private static final int TARGETPIECE_SHIFT = 22;
@@ -69,7 +69,7 @@ final class Move {
   private Move() {
   }
 
-  public static int valueOf(int type, int originPosition, int targetPosition, int originPiece, int targetPiece, int promotion) {
+  public static int valueOf(int type, int originSquare, int targetSquare, int originPiece, int targetPiece, int promotion) {
     int move = 0;
 
     // Encode type
@@ -80,13 +80,13 @@ final class Move {
       || type == Type.CASTLING;
     move |= type << TYPE_SHIFT;
 
-    // Encode origin position
-    assert (originPosition & 0x88) == 0;
-    move |= originPosition << ORIGINPOSITION_SHIFT;
+    // Encode origin square
+    assert (originSquare & 0x88) == 0;
+    move |= originSquare << ORIGINSQUARE_SHIFT;
 
-    // Encode target position
-    assert (targetPosition & 0x88) == 0;
-    move |= targetPosition << TARGETPOSITION_SHIFT;
+    // Encode target square
+    assert (targetSquare & 0x88) == 0;
+    move |= targetSquare << TARGETSQUARE_SHIFT;
 
     // Encode origin piece
     assert IntPiece.isValid(originPiece);
@@ -106,17 +106,17 @@ final class Move {
 
   public static GenericMove toGenericMove(int move) {
     int type = getType(move);
-    int originPosition = getOriginPosition(move);
-    int targetPosition = getTargetPosition(move);
+    int originSquare = getOriginSquare(move);
+    int targetSquare = getTargetSquare(move);
 
     switch (type) {
       case Type.NORMAL:
       case Type.PAWNDOUBLE:
       case Type.ENPASSANT:
       case Type.CASTLING:
-        return new GenericMove(Position.toGenericPosition(originPosition), Position.toGenericPosition(targetPosition));
+        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare));
       case Type.PAWNPROMOTION:
-        return new GenericMove(Position.toGenericPosition(originPosition), Position.toGenericPosition(targetPosition), IntChessman.toGenericChessman(getPromotion(move)));
+        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare), IntChessman.toGenericChessman(getPromotion(move)));
       default:
         throw new IllegalArgumentException();
     }
@@ -133,39 +133,39 @@ final class Move {
     return type;
   }
 
-  public static int getOriginPosition(int move) {
-    int originPosition = (move & ORIGINPOSITION_MASK) >>> ORIGINPOSITION_SHIFT;
-    assert (originPosition & 0x88) == 0;
+  public static int getOriginSquare(int move) {
+    int originSquare = (move & ORIGINSQUARE_MASK) >>> ORIGINSQUARE_SHIFT;
+    assert (originSquare & 0x88) == 0;
 
-    return originPosition;
+    return originSquare;
   }
 
-  public static int getTargetPosition(int move) {
-    int targetPosition = (move & TARGETPOSITION_MASK) >>> TARGETPOSITION_SHIFT;
-    assert (targetPosition & 0x88) == 0;
+  public static int getTargetSquare(int move) {
+    int targetSquare = (move & TARGETSQUARE_MASK) >>> TARGETSQUARE_SHIFT;
+    assert (targetSquare & 0x88) == 0;
 
-    return targetPosition;
+    return targetSquare;
   }
 
-  public static int setTargetPosition(int move, int targetPosition) {
-    // Zero out target position
-    move &= ~TARGETPOSITION_MASK;
+  public static int setTargetSquare(int move, int targetSquare) {
+    // Zero out target square
+    move &= ~TARGETSQUARE_MASK;
 
-    // Encode target position
-    assert (targetPosition & 0x88) == 0;
-    move |= targetPosition << TARGETPOSITION_SHIFT;
+    // Encode target square
+    assert (targetSquare & 0x88) == 0;
+    move |= targetSquare << TARGETSQUARE_SHIFT;
 
     return move;
   }
 
-  public static int setTargetPositionAndPiece(int move, int targetPosition, int targetPiece) {
-    // Zero out target position and target piece
-    move &= ~TARGETPOSITION_MASK;
+  public static int setTargetSquareAndPiece(int move, int targetSquare, int targetPiece) {
+    // Zero out target square and target piece
+    move &= ~TARGETSQUARE_MASK;
     move &= ~TARGETPIECE_MASK;
 
-    // Encode target position
-    assert (targetPosition & 0x88) == 0;
-    move |= targetPosition << TARGETPOSITION_SHIFT;
+    // Encode target square
+    assert (targetSquare & 0x88) == 0;
+    move |= targetSquare << TARGETSQUARE_SHIFT;
 
     // Encode target piece
     assert IntPiece.isValid(targetPiece) || targetPiece == IntPiece.NOPIECE;
@@ -206,49 +206,6 @@ final class Move {
     move |= promotion << PROMOTION_SHIFT;
 
     return move;
-  }
-
-  public static String toString(int move) {
-    String string = "";
-
-    switch (getType(move)) {
-      case Type.NORMAL:
-        string += "NORMAL";
-        break;
-      case Type.PAWNDOUBLE:
-        string += "PAWNDOUBLE";
-        break;
-      case Type.PAWNPROMOTION:
-        string += "PAWNPROMOTION";
-        break;
-      case Type.ENPASSANT:
-        string += "ENPASSANT";
-        break;
-      case Type.CASTLING:
-        string += "CASTLING";
-        break;
-      default:
-        throw new IllegalArgumentException();
-    }
-
-    assert getOriginPiece(move) != IntPiece.NOPIECE;
-    string += ":";
-    string += IntPiece.toGenericPiece(getOriginPiece(move));
-
-    string += ":";
-    string += toGenericMove(move).toString();
-
-    if (getTargetPiece(move) != IntPiece.NOPIECE) {
-      string += ":";
-      string += IntPiece.toGenericPiece(getTargetPiece(move));
-    }
-
-    if (getType(move) == Type.PAWNPROMOTION) {
-      string += ":";
-      string += IntChessman.toGenericChessman(getPromotion(move));
-    }
-
-    return string;
   }
 
 }
