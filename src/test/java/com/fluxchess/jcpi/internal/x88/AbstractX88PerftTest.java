@@ -15,16 +15,20 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import com.fluxchess.jcpi.models.IllegalNotationException;
-import org.junit.Test;
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.utils.AbstractPerftTest;
+import com.fluxchess.jcpi.utils.IMoveGenerator;
 
-import java.io.IOException;
+public abstract class AbstractX88PerftTest extends AbstractPerftTest {
 
-public class X88MoveGeneratorTest extends AbstractX88PerftTest {
+  @Override
+  protected IMoveGenerator getMoveGenerator(GenericBoard genericBoard) {
+    return new X88MoveGenerator(genericBoard);
+  }
 
-  @Test
-  public void test() throws IOException, IllegalNotationException {
-    testPerft(4);
+  @Override
+  protected String findMissingMoves(GenericBoard genericBoard, int depth) {
+    return "";
   }
 
 }
