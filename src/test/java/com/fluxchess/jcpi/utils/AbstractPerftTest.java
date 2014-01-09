@@ -22,11 +22,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static org.junit.Assert.assertEquals;
-
 public abstract class AbstractPerftTest {
 
   protected abstract IMoveGenerator getMoveGenerator(GenericBoard genericBoard);
+  protected abstract String findMissingMoves(GenericBoard genericBoard, int depth);
 
   protected void testPerft(int testDepth) throws IOException, IllegalNotationException {
     for (int i = 1; i <= testDepth; i++) {
@@ -47,7 +46,13 @@ public abstract class AbstractPerftTest {
             IMoveGenerator moveGenerator = getMoveGenerator(genericBoard);
 
             long result = moveGenerator.perft(depth);
-            assertEquals(genericBoard.toString() + " at depth " + depth + "failed", nodes, result);
+            if (nodes != result) {
+              String message = findMissingMoves(genericBoard, depth);
+              throw new AssertionError(message.isEmpty()
+                ? String.format("%s at depth %d failed%nExpected: %d%n  Actual: %d%n", genericBoard.toString(), depth, nodes, result)
+                : message
+              );
+            }
           }
 
           line = file.readLine();
