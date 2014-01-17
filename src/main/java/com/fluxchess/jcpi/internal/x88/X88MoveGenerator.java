@@ -222,7 +222,6 @@ public final class X88MoveGenerator implements IMoveGenerator {
     int kingSquare = Square.toX88Square(Long.numberOfTrailingZeros(board.kings[activeColor]));
     int kingPiece = board.board[kingSquare];
     int attackerColor = IntColor.opposite(activeColor);
-    int moveTemplate = Move.valueOf(Move.Type.NORMAL, kingSquare, kingSquare, kingPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
 
     // Generate king moves
     for (int delta : moveDeltaKing) {
@@ -238,12 +237,12 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (Square.isLegal(targetSquare) && !isAttacked(targetSquare, attackerColor)) {
           int targetPiece = board.board[targetSquare];
           if (targetPiece == IntPiece.NOPIECE) {
-            int move = Move.setTargetSquare(moveTemplate, targetSquare);
+            int move = Move.valueOf(Move.Type.NORMAL, kingSquare, targetSquare, kingPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
             moveList.moves[moveList.size++] = move;
           } else {
             if (IntPiece.getColor(targetPiece) == attackerColor) {
               assert IntPiece.getChessman(targetPiece) != IntChessman.KING;
-              int move = Move.setTargetSquareAndPiece(moveTemplate, targetSquare, targetPiece);
+              int move = Move.valueOf(Move.Type.NORMAL, kingSquare, targetSquare, kingPiece, targetPiece, IntChessman.NOCHESSMAN);
               moveList.moves[moveList.size++] = move;
             }
           }
@@ -338,7 +337,6 @@ public final class X88MoveGenerator implements IMoveGenerator {
     assert Square.isValid(endSquare) || endSquare == Square.NOSQUARE;
 
     boolean sliding = IntChessman.isSliding(IntPiece.getChessman(originPiece));
-    int moveTemplate = Move.valueOf(Move.Type.NORMAL, originSquare, originSquare, originPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
 
     for (int delta : moveDelta) {
       int targetSquare = originSquare + delta;
@@ -346,7 +344,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       // Get moves to empty squares
       while (Square.isLegal(targetSquare) && board.board[targetSquare] == IntPiece.NOPIECE) {
         if (endSquare == Square.NOSQUARE || targetSquare == endSquare) {
-          int move = Move.setTargetSquare(moveTemplate, targetSquare);
+          int move = Move.valueOf(Move.Type.NORMAL, originSquare, targetSquare, originPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
           moveList.moves[moveList.size++] = move;
         }
 
@@ -369,7 +367,6 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     boolean sliding = IntChessman.isSliding(IntPiece.getChessman(originPiece));
     int oppositeColor = IntColor.opposite(IntPiece.getColor(originPiece));
-    int moveTemplate = Move.valueOf(Move.Type.NORMAL, originSquare, originSquare, originPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
 
     for (int delta : moveDelta) {
       int square = originSquare + delta;
@@ -379,7 +376,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         int targetPiece = board.board[square];
         if (targetPiece == IntPiece.NOPIECE) {
           if (endSquare == Square.NOSQUARE || square == endSquare) {
-            int move = Move.setTargetSquare(moveTemplate, square);
+            int move = Move.valueOf(Move.Type.NORMAL, originSquare, square, originPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
             moveList.moves[moveList.size++] = move;
           }
 
@@ -393,7 +390,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
             // Get the move to the square the next chessman is standing on
             if (IntPiece.getColor(targetPiece) == oppositeColor
               && IntPiece.getChessman(targetPiece) != IntChessman.KING) {
-              int move = Move.setTargetSquareAndPiece(moveTemplate, square, targetPiece);
+              int move = Move.valueOf(Move.Type.NORMAL, originSquare, square, originPiece, targetPiece, IntChessman.NOCHESSMAN);
               moveList.moves[moveList.size++] = move;
             }
           }
@@ -419,15 +416,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
     if (Square.isLegal(targetSquare) && board.board[targetSquare] == IntPiece.NOPIECE) {
       if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
         || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
-        int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
-        int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
-        moveList.moves[moveList.size++] = move;
-        move = Move.setPromotion(moveTemplate, IntChessman.ROOK);
-        moveList.moves[moveList.size++] = move;
-        move = Move.setPromotion(moveTemplate, IntChessman.BISHOP);
-        moveList.moves[moveList.size++] = move;
-        move = Move.setPromotion(moveTemplate, IntChessman.KNIGHT);
-        moveList.moves[moveList.size++] = move;
+        moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.QUEEN);
+        moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.ROOK);
+        moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.BISHOP);
+        moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.KNIGHT);
       } else {
         int move = Move.valueOf(Move.Type.NORMAL, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
         moveList.moves[moveList.size++] = move;
@@ -468,15 +460,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
           if (!isPinned(pawnSquare, pawnColor)) {
             if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
               || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
-              int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
-              int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.ROOK);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.BISHOP);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.KNIGHT);
-              moveList.moves[moveList.size++] = move;
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.QUEEN);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.ROOK);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.BISHOP);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.KNIGHT);
             } else {
               int move = Move.valueOf(Move.Type.NORMAL, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
               moveList.moves[moveList.size++] = move;
@@ -529,15 +516,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
               || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
               // Pawn promotion capturing move
 
-              int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.NOCHESSMAN);
-              int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.ROOK);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.BISHOP);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.KNIGHT);
-              moveList.moves[moveList.size++] = move;
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.QUEEN);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.ROOK);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.BISHOP);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.KNIGHT);
             } else {
               // Normal capturing move
 
@@ -592,15 +574,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
           if (!isPinned(pawnSquare, pawnColor)) {
             if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
               || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
-              int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.NOCHESSMAN);
-              int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.ROOK);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.BISHOP);
-              moveList.moves[moveList.size++] = move;
-              move = Move.setPromotion(moveTemplate, IntChessman.KNIGHT);
-              moveList.moves[moveList.size++] = move;
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.QUEEN);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.ROOK);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.BISHOP);
+              moveList.moves[moveList.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.KNIGHT);
             } else {
               int move = Move.valueOf(Move.Type.NORMAL, pawnSquare, targetSquare, piece, targetPiece, IntChessman.NOCHESSMAN);
               moveList.moves[moveList.size++] = move;
