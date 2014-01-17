@@ -112,7 +112,7 @@ final class Square {
   }
 
   public static long toBitboard(int square) {
-    assert Square.isValid(square);
+    assert isValid(square);
 
     return 1L << toBitSquare(square);
   }
