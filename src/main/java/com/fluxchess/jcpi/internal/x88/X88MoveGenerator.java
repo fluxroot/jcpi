@@ -187,32 +187,32 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     for (long squares = board.pawns[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addPawnCaptureMoves(list, board.board[square], square);
+      addPawnCaptureMoves(list, square);
     }
     for (long squares = board.pawns[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addPawnNonCaptureMoves(list, board.board[square], square);
+      addPawnNonCaptureMoves(list, square);
     }
     for (long squares = board.knights[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addMoves(list, board.board[square], square, moveDeltaKnight, Square.NOSQUARE);
+      addMoves(list, square, moveDeltaKnight, Square.NOSQUARE);
     }
     for (long squares = board.bishops[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addMoves(list, board.board[square], square, moveDeltaBishop, Square.NOSQUARE);
+      addMoves(list, square, moveDeltaBishop, Square.NOSQUARE);
     }
     for (long squares = board.rooks[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addMoves(list, board.board[square], square, moveDeltaRook, Square.NOSQUARE);
+      addMoves(list, square, moveDeltaRook, Square.NOSQUARE);
     }
     for (long squares = board.queens[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
-      addMoves(list, board.board[square], square, moveDeltaQueen, Square.NOSQUARE);
+      addMoves(list, square, moveDeltaQueen, Square.NOSQUARE);
     }
     assert Long.bitCount(board.kings[activeColor]) == 1;
     int kingSquare = Square.toX88Square(Long.numberOfTrailingZeros(board.kings[activeColor]));
-    addMoves(list, board.board[kingSquare], kingSquare, moveDeltaKing, Square.NOSQUARE);
-    addCastlingMoves(list, board.board[kingSquare], kingSquare);
+    addMoves(list, kingSquare, moveDeltaKing, Square.NOSQUARE);
+    addCastlingMoves(list, kingSquare);
   }
 
   private void generateEvasion(MoveList list, Attack attack) {
@@ -264,29 +264,29 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     // Capture the attacker
 
-    addPawnCaptureMovesToTarget(list, activeColor, attackerPiece, attackerSquare);
+    addPawnCaptureMovesToTarget(list, activeColor, attackerSquare);
     for (long squares = board.knights[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       if (!isPinned(square, activeColor)) {
-        addMoves(list, board.board[square], square, moveDeltaKnight, attackerSquare);
+        addMoves(list, square, moveDeltaKnight, attackerSquare);
       }
     }
     for (long squares = board.bishops[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       if (!isPinned(square, activeColor)) {
-        addMoves(list, board.board[square], square, moveDeltaBishop, attackerSquare);
+        addMoves(list, square, moveDeltaBishop, attackerSquare);
       }
     }
     for (long squares = board.rooks[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       if (!isPinned(square, activeColor)) {
-        addMoves(list, board.board[square], square, moveDeltaRook, attackerSquare);
+        addMoves(list, square, moveDeltaRook, attackerSquare);
       }
     }
     for (long squares = board.queens[activeColor]; squares != 0; squares &= squares - 1) {
       int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       if (!isPinned(square, activeColor)) {
-        addMoves(list, board.board[square], square, moveDeltaQueen, attackerSquare);
+        addMoves(list, square, moveDeltaQueen, attackerSquare);
       }
     }
 
@@ -303,25 +303,25 @@ public final class X88MoveGenerator implements IMoveGenerator {
         for (long squares = board.knights[activeColor]; squares != 0; squares &= squares - 1) {
           int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
           if (!isPinned(square, activeColor)) {
-            addNonCaptureMoves(list, board.board[square], square, moveDeltaKnight, targetSquare);
+            addNonCaptureMoves(list, square, moveDeltaKnight, targetSquare);
           }
         }
         for (long squares = board.bishops[activeColor]; squares != 0; squares &= squares - 1) {
           int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
           if (!isPinned(square, activeColor)) {
-            addNonCaptureMoves(list, board.board[square], square, moveDeltaBishop, targetSquare);
+            addNonCaptureMoves(list, square, moveDeltaBishop, targetSquare);
           }
         }
         for (long squares = board.rooks[activeColor]; squares != 0; squares &= squares - 1) {
           int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
           if (!isPinned(square, activeColor)) {
-            addNonCaptureMoves(list, board.board[square], square, moveDeltaRook, targetSquare);
+            addNonCaptureMoves(list, square, moveDeltaRook, targetSquare);
           }
         }
         for (long squares = board.queens[activeColor]; squares != 0; squares &= squares - 1) {
           int square = Square.toX88Square(Long.numberOfTrailingZeros(squares));
           if (!isPinned(square, activeColor)) {
-            addNonCaptureMoves(list, board.board[square], square, moveDeltaQueen, targetSquare);
+            addNonCaptureMoves(list, square, moveDeltaQueen, targetSquare);
           }
         }
 
@@ -330,14 +330,14 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addNonCaptureMoves(MoveList list, int originPiece, int originSquare, int[] moveDelta, int endSquare) {
+  private void addNonCaptureMoves(MoveList list, int originSquare, int[] moveDelta, int endSquare) {
     assert list != null;
-    assert IntPiece.isValid(originPiece);
     assert Square.isValid(originSquare);
-    assert board.board[originSquare] == originPiece;
     assert moveDelta != null;
     assert Square.isValid(endSquare) || endSquare == Square.NOSQUARE;
 
+    int originPiece = board.board[originSquare];
+    assert IntPiece.isValid(originPiece);
     boolean sliding = IntChessman.isSliding(IntPiece.getChessman(originPiece));
 
     for (int delta : moveDelta) {
@@ -358,14 +358,14 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addMoves(MoveList list, int originPiece, int originSquare, int[] moveDelta, int endSquare) {
+  private void addMoves(MoveList list, int originSquare, int[] moveDelta, int endSquare) {
     assert list != null;
-    assert IntPiece.isValid(originPiece);
     assert Square.isValid(originSquare);
-    assert board.board[originSquare] == originPiece;
     assert moveDelta != null;
     assert Square.isValid(endSquare) || endSquare == Square.NOSQUARE;
 
+    int originPiece = board.board[originSquare];
+    assert IntPiece.isValid(originPiece);
     boolean sliding = IntChessman.isSliding(IntPiece.getChessman(originPiece));
     int oppositeColor = IntColor.opposite(IntPiece.getColor(originPiece));
 
@@ -399,13 +399,13 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addPawnNonCaptureMoves(MoveList list, int pawnPiece, int pawnSquare) {
+  private void addPawnNonCaptureMoves(MoveList list, int pawnSquare) {
     assert list != null;
+    assert Square.isValid(pawnSquare);
+
+    int pawnPiece = board.board[pawnSquare];
     assert IntPiece.isValid(pawnPiece);
     assert IntPiece.getChessman(pawnPiece) == IntChessman.PAWN;
-    assert Square.isValid(pawnSquare);
-    assert board.board[pawnSquare] == pawnPiece;
-
     int pawnColor = IntPiece.getColor(pawnPiece);
 
     int delta = moveDeltaPawn[pawnColor][0];
@@ -487,13 +487,13 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addPawnCaptureMoves(MoveList list, int pawnPiece, int pawnSquare) {
+  private void addPawnCaptureMoves(MoveList list, int pawnSquare) {
     assert list != null;
+    assert Square.isValid(pawnSquare);
+
+    int pawnPiece = board.board[pawnSquare];
     assert IntPiece.isValid(pawnPiece);
     assert IntPiece.getChessman(pawnPiece) == IntChessman.PAWN;
-    assert Square.isValid(pawnSquare);
-    assert board.board[pawnSquare] == pawnPiece;
-
     int pawnColor = IntPiece.getColor(pawnPiece);
 
     for (int i = 1; i < moveDeltaPawn[pawnColor].length; ++i) {
@@ -537,16 +537,17 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addPawnCaptureMovesToTarget(MoveList list, int pawnColor, int targetPiece, int targetSquare) {
+  private void addPawnCaptureMovesToTarget(MoveList list, int pawnColor, int targetSquare) {
     assert list != null;
     assert IntColor.isValid(pawnColor);
-    assert IntPiece.isValid(targetPiece);
-    assert IntPiece.getColor(targetPiece) == IntColor.opposite(pawnColor);
     assert Square.isValid(targetSquare);
-    assert board.board[targetSquare] == targetPiece;
     assert IntPiece.getChessman(board.board[targetSquare]) != IntChessman.KING;
 
+    int targetPiece = board.board[targetSquare];
+    assert IntPiece.isValid(targetPiece);
+    assert IntPiece.getColor(targetPiece) == IntColor.opposite(pawnColor);
     int pawnPiece = IntPiece.valueOf(IntChessman.PAWN, pawnColor);
+
     int enPassantDelta = (pawnColor == IntColor.WHITE ? Square.deltaN : Square.deltaS);
     int enPassantSquare = targetSquare + enPassantDelta;
 
@@ -594,12 +595,13 @@ public final class X88MoveGenerator implements IMoveGenerator {
     }
   }
 
-  private void addCastlingMoves(MoveList list, int kingPiece, int kingSquare) {
+  private void addCastlingMoves(MoveList list, int kingSquare) {
     assert list != null;
+    assert Square.isValid(kingSquare);
+
+    int kingPiece = board.board[kingSquare];
     assert IntPiece.isValid(kingPiece);
     assert IntPiece.getChessman(kingPiece) == IntChessman.KING;
-    assert Square.isValid(kingSquare);
-    assert board.board[kingSquare] == kingPiece;
 
     if (IntPiece.getColor(kingPiece) == IntColor.WHITE) {
       // Do not test g1 whether it is attacked as we will test it in isLegal()
