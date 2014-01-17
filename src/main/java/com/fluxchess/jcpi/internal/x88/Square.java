@@ -72,17 +72,29 @@ final class Square {
     a8, b8, c8, d8, e8, f8, g8, h8
   };
 
+  public static final int deltaN = 16;
+  public static final int deltaE = 1;
+  public static final int deltaS = -16;
+  public static final int deltaW = -1;
+  public static final int deltaNE = deltaN + deltaE;
+  public static final int deltaSE = deltaS + deltaE;
+  public static final int deltaSW = deltaS + deltaW;
+  public static final int deltaNW = deltaN + deltaW;
+
   private Square() {
   }
 
   public static int valueOf(GenericPosition genericPosition) {
     assert genericPosition != null;
 
-    return IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
+    int square = IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
+    assert isValid(square);
+
+    return square;
   }
 
   public static GenericPosition toGenericPosition(int square) {
-    assert Square.isValid(square);
+    assert isValid(square);
 
     return GenericPosition.valueOf(IntFile.toGenericFile(getFile(square)), IntRank.toGenericRank(getRank(square)));
   }

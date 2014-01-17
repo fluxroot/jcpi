@@ -817,7 +817,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       int attackerSquare = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       assert IntPiece.getChessman(board.board[attackerSquare]) == IntChessman.KNIGHT;
       assert attackerSquare != Square.NOSQUARE;
-      assert board.board[attackerSquare] != IntPiece.NOPIECE;
+      assert IntPiece.isValid(board.board[attackerSquare]);
       assert attackerColor == IntPiece.getColor(board.board[attackerSquare]);
       if (canAttack(IntChessman.KNIGHT, attackerColor, attackerSquare, targetSquare)) {
         if (stop) {
@@ -834,7 +834,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       int attackerSquare = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       assert IntPiece.getChessman(board.board[attackerSquare]) == IntChessman.BISHOP;
       assert attackerSquare != Square.NOSQUARE;
-      assert board.board[attackerSquare] != IntPiece.NOPIECE;
+      assert IntPiece.isValid(board.board[attackerSquare]);
       assert attackerColor == IntPiece.getColor(board.board[attackerSquare]);
       if (canAttack(IntChessman.BISHOP, attackerColor, attackerSquare, targetSquare)) {
         if (stop) {
@@ -851,7 +851,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       int attackerSquare = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       assert IntPiece.getChessman(board.board[attackerSquare]) == IntChessman.ROOK;
       assert attackerSquare != Square.NOSQUARE;
-      assert board.board[attackerSquare] != IntPiece.NOPIECE;
+      assert IntPiece.isValid(board.board[attackerSquare]);
       assert attackerColor == IntPiece.getColor(board.board[attackerSquare]);
       if (canAttack(IntChessman.ROOK, attackerColor, attackerSquare, targetSquare)) {
         if (stop) {
@@ -868,7 +868,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       int attackerSquare = Square.toX88Square(Long.numberOfTrailingZeros(squares));
       assert IntPiece.getChessman(board.board[attackerSquare]) == IntChessman.QUEEN;
       assert attackerSquare != Square.NOSQUARE;
-      assert board.board[attackerSquare] != IntPiece.NOPIECE;
+      assert IntPiece.isValid(board.board[attackerSquare]);
       assert attackerColor == IntPiece.getColor(board.board[attackerSquare]);
       if (canAttack(IntChessman.QUEEN, attackerColor, attackerSquare, targetSquare)) {
         if (stop) {
@@ -885,7 +885,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
     int attackerSquare = Square.toX88Square(Long.numberOfTrailingZeros(board.kings[attackerColor]));
     assert IntPiece.getChessman(board.board[attackerSquare]) == IntChessman.KING;
     assert attackerSquare != Square.NOSQUARE;
-    assert board.board[attackerSquare] != IntPiece.NOPIECE;
+    assert IntPiece.isValid(board.board[attackerSquare]);
     assert attackerColor == IntPiece.getColor(board.board[attackerSquare]);
     if (canAttack(IntChessman.KING, attackerColor, attackerSquare, targetSquare)) {
       if (stop) {
