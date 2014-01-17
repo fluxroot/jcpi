@@ -165,22 +165,22 @@ final class Board {
 
     switch (chessman) {
       case IntChessman.PAWN:
-        pawns[color] |= 1L << Square.toBitSquare(square);
+        pawns[color] |= Square.toBitboard(square);
         break;
       case IntChessman.KNIGHT:
-        knights[color] |= 1L << Square.toBitSquare(square);
+        knights[color] |= Square.toBitboard(square);
         break;
       case IntChessman.BISHOP:
-        bishops[color] |= 1L << Square.toBitSquare(square);
+        bishops[color] |= Square.toBitboard(square);
         break;
       case IntChessman.ROOK:
-        rooks[color] |= 1L << Square.toBitSquare(square);
+        rooks[color] |= Square.toBitboard(square);
         break;
       case IntChessman.QUEEN:
-        queens[color] |= 1L << Square.toBitSquare(square);
+        queens[color] |= Square.toBitboard(square);
         break;
       case IntChessman.KING:
-        kings[color] |= 1L << Square.toBitSquare(square);
+        kings[color] |= Square.toBitboard(square);
         break;
       default:
         assert false : chessman;
@@ -201,22 +201,22 @@ final class Board {
 
     switch (chessman) {
       case IntChessman.PAWN:
-        pawns[color] &= ~(1L << Square.toBitSquare(square));
+        pawns[color] &= ~(Square.toBitboard(square));
         break;
       case IntChessman.KNIGHT:
-        knights[color] &= ~(1L << Square.toBitSquare(square));
+        knights[color] &= ~(Square.toBitboard(square));
         break;
       case IntChessman.BISHOP:
-        bishops[color] &= ~(1L << Square.toBitSquare(square));
+        bishops[color] &= ~(Square.toBitboard(square));
         break;
       case IntChessman.ROOK:
-        rooks[color] &= ~(1L << Square.toBitSquare(square));
+        rooks[color] &= ~(Square.toBitboard(square));
         break;
       case IntChessman.QUEEN:
-        queens[color] &= ~(1L << Square.toBitSquare(square));
+        queens[color] &= ~(Square.toBitboard(square));
         break;
       case IntChessman.KING:
-        kings[color] &= ~(1L << Square.toBitSquare(square));
+        kings[color] &= ~(Square.toBitboard(square));
         break;
       default:
         assert false : chessman;

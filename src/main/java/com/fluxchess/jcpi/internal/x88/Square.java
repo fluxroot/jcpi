@@ -111,6 +111,12 @@ final class Square {
     return ((square & ~7) >>> 1) | (square & 7);
   }
 
+  public static long toBitboard(int square) {
+    assert Square.isValid(square);
+
+    return 1L << toBitSquare(square);
+  }
+
   public static boolean isValid(int square) {
     if (isLegal(square)) {
       return true;
