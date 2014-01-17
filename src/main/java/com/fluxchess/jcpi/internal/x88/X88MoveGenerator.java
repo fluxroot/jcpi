@@ -107,6 +107,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
     public int count = 0;
     public final int[] delta = new int[MAXATTACK];
     public final int[] square = new int[MAXATTACK];
+
+    public static int index(int square1, int square2) {
+      return square1 - square2 + 127;
+    }
   }
 
   public X88MoveGenerator(GenericBoard genericBoard) {
@@ -687,8 +691,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
     if (isPinned(Move.getOriginSquare(move), originColor)) {
       // We are pinned. Test if we move on the line.
       int kingSquare = Square.toX88Square(Long.numberOfTrailingZeros(board.kings[originColor]));
-      int attackDeltaOrigin = Attack.deltas[kingSquare - Move.getOriginSquare(move) + 127];
-      int attackDeltaTarget = Attack.deltas[kingSquare - Move.getTargetSquare(move) + 127];
+      int attackDeltaOrigin = Attack.deltas[Attack.index(kingSquare, Move.getOriginSquare(move))];
+      int attackDeltaTarget = Attack.deltas[Attack.index(kingSquare, Move.getTargetSquare(move))];
       return attackDeltaOrigin == attackDeltaTarget;
     }
 
@@ -702,13 +706,13 @@ public final class X88MoveGenerator implements IMoveGenerator {
     int kingSquare = Square.toX88Square(Long.numberOfTrailingZeros(board.kings[kingColor]));
 
     // We can only be pinned on an attack line
-    int attackVector = Attack.vector[kingSquare - originSquare + 127];
+    int attackVector = Attack.vector[Attack.index(kingSquare, originSquare)];
     if (attackVector == Attack.N || attackVector == Attack.K) {
       // No line
       return false;
     }
 
-    int delta = Attack.deltas[kingSquare - originSquare + 127];
+    int delta = Attack.deltas[Attack.index(kingSquare, originSquare)];
 
     // Walk towards the king
     int square = originSquare + delta;
@@ -761,7 +765,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == moveDeltaPawn[attackerColor][2];
+        assert Attack.deltas[Attack.index(targetSquare, pawnAttackerSquare)] == moveDeltaPawn[attackerColor][2];
         attack.square[attack.count] = pawnAttackerSquare;
         attack.delta[attack.count] = moveDeltaPawn[attackerColor][2];
         ++attack.count;
@@ -774,7 +778,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == moveDeltaPawn[attackerColor][1];
+        assert Attack.deltas[Attack.index(targetSquare, pawnAttackerSquare)] == moveDeltaPawn[attackerColor][1];
         attack.square[attack.count] = pawnAttackerSquare;
         attack.delta[attack.count] = moveDeltaPawn[attackerColor][1];
         ++attack.count;
@@ -790,7 +794,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+        int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
         assert attackDelta != 0;
         attack.square[attack.count] = attackerSquare;
         attack.delta[attack.count] = attackDelta;
@@ -807,7 +811,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+        int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
         assert attackDelta != 0;
         attack.square[attack.count] = attackerSquare;
         attack.delta[attack.count] = attackDelta;
@@ -824,7 +828,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+        int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
         assert attackDelta != 0;
         attack.square[attack.count] = attackerSquare;
         attack.delta[attack.count] = attackDelta;
@@ -841,7 +845,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         if (stop) {
           return true;
         }
-        int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+        int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
         assert attackDelta != 0;
         attack.square[attack.count] = attackerSquare;
         attack.delta[attack.count] = attackDelta;
@@ -858,7 +862,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       if (stop) {
         return true;
       }
-      int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+      int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
       assert attackDelta != 0;
       attack.square[attack.count] = attackerSquare;
       attack.delta[attack.count] = attackDelta;
@@ -874,7 +878,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
     assert Square.isValid(attackerSquare);
     assert Square.isValid(targetSquare);
 
-    int attackVector = Attack.vector[targetSquare - attackerSquare + 127];
+    int attackVector = Attack.vector[Attack.index(targetSquare, attackerSquare)];
 
     switch (attackerChessman) {
       case IntChessman.PAWN:
@@ -954,7 +958,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
     assert Square.isValid(attackerSquare);
     assert Square.isValid(targetSquare);
 
-    int attackDelta = Attack.deltas[targetSquare - attackerSquare + 127];
+    int attackDelta = Attack.deltas[Attack.index(targetSquare, attackerSquare)];
 
     int square = attackerSquare + attackDelta;
     while (Square.isLegal(square) && square != targetSquare && board.board[square] == IntPiece.NOPIECE) {
@@ -977,7 +981,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       case IntChessman.KNIGHT:
         break;
       case IntChessman.BISHOP:
-        attackVector = Attack.vector[targetSquare - attackerSquare + 127];
+        attackVector = Attack.vector[Attack.index(targetSquare, attackerSquare)];
         switch (attackVector) {
           case Attack.u:
           case Attack.d:
@@ -988,7 +992,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         }
         break;
       case IntChessman.ROOK:
-        attackVector = Attack.vector[targetSquare - attackerSquare + 127];
+        attackVector = Attack.vector[Attack.index(targetSquare, attackerSquare)];
         switch (attackVector) {
           case Attack.s:
           case Attack.S:
@@ -998,7 +1002,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         }
         break;
       case IntChessman.QUEEN:
-        attackVector = Attack.vector[targetSquare - attackerSquare + 127];
+        attackVector = Attack.vector[Attack.index(targetSquare, attackerSquare)];
         switch (attackVector) {
           case Attack.u:
           case Attack.d:
