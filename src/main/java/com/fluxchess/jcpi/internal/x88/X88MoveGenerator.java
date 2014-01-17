@@ -21,12 +21,34 @@ import com.fluxchess.jcpi.utils.IMoveGenerator;
 public final class X88MoveGenerator implements IMoveGenerator {
 
   // Move deltas
-  private static final int[] moveDeltaPawn = {16, 17, 15};
-  private static final int[] moveDeltaKnight = {+33, +18, -14, -31, -33, -18, +14, +31};
-  private static final int[] moveDeltaBishop = {+17, -15, -17, +15};
-  private static final int[] moveDeltaRook = {+16, +1, -16, -1};
-  private static final int[] moveDeltaQueen = {+16, +17, +1, -15, -16, -17, -1, +15};
-  private static final int[] moveDeltaKing = {+16, +17, +1, -15, -16, -17, -1, +15};
+  private static final int[][] moveDeltaPawn = {
+    {Square.deltaN, Square.deltaNE, Square.deltaNW}, // IntColor.WHITE
+    {Square.deltaS, Square.deltaSE, Square.deltaSW}  // IntColor.BLACK
+  };
+  private static final int[] moveDeltaKnight = {
+    Square.deltaN + Square.deltaN + Square.deltaE,
+    Square.deltaN + Square.deltaN + Square.deltaW,
+    Square.deltaN + Square.deltaE + Square.deltaE,
+    Square.deltaN + Square.deltaW + Square.deltaW,
+    Square.deltaS + Square.deltaS + Square.deltaE,
+    Square.deltaS + Square.deltaS + Square.deltaW,
+    Square.deltaS + Square.deltaE + Square.deltaE,
+    Square.deltaS + Square.deltaW + Square.deltaW
+  };
+  private static final int[] moveDeltaBishop = {
+    Square.deltaNE, Square.deltaNW, Square.deltaSE, Square.deltaSW
+  };
+  private static final int[] moveDeltaRook = {
+    Square.deltaN, Square.deltaE, Square.deltaS, Square.deltaW
+  };
+  private static final int[] moveDeltaQueen = {
+    Square.deltaN, Square.deltaE, Square.deltaS, Square.deltaW,
+    Square.deltaNE, Square.deltaNW, Square.deltaSE, Square.deltaSW
+  };
+  private static final int[] moveDeltaKing = {
+    Square.deltaN, Square.deltaE, Square.deltaS, Square.deltaW,
+    Square.deltaNE, Square.deltaNW, Square.deltaSE, Square.deltaSW
+  };
 
   // Board
   private final Board board;
@@ -390,18 +412,13 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     int pawnColor = IntPiece.getColor(pawnPiece);
 
-    int delta = moveDeltaPawn[0];
-    if (pawnColor == IntColor.BLACK) {
-      delta *= -1;
-    }
+    int delta = moveDeltaPawn[pawnColor][0];
 
     // Move one square forward
     int targetSquare = pawnSquare + delta;
     if (Square.isLegal(targetSquare) && board.board[targetSquare] == IntPiece.NOPIECE) {
-      // GenericRank.R8 = square > 111
-      // GenericRank.R1 = square < 8
-      if ((targetSquare > 111 && pawnColor == IntColor.WHITE)
-        || (targetSquare < 8 && pawnColor == IntColor.BLACK)) {
+      if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
+        || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
         int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
         int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
         moveList.moves[moveList.size++] = move;
@@ -418,11 +435,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
         // Move two squares forward
         targetSquare += delta;
         if (Square.isLegal(targetSquare) && board.board[targetSquare] == IntPiece.NOPIECE) {
-          // GenericRank.R4 = end >>> 4 == 3
-          // GenericRank.R5 = end >>> 4 == 4
-          if (((targetSquare >>> 4) == 3 && pawnColor == IntColor.WHITE)
-            || ((targetSquare >>> 4) == 4 && pawnColor == IntColor.BLACK)) {
-            assert ((pawnSquare >>> 4) == 1 && (targetSquare >>> 4) == 3 && pawnColor == IntColor.WHITE) || ((pawnSquare >>> 4) == 6 && (targetSquare >>> 4) == 4 && pawnColor == IntColor.BLACK);
+          if ((Square.getRank(targetSquare) == IntRank.R4 && pawnColor == IntColor.WHITE)
+            || (Square.getRank(targetSquare) == IntRank.R5 && pawnColor == IntColor.BLACK)) {
+            assert (Square.getRank(pawnSquare) == IntRank.R2 && Square.getRank(targetSquare) == IntRank.R4 && pawnColor == IntColor.WHITE)
+              || (Square.getRank(pawnSquare) == IntRank.R7 && Square.getRank(targetSquare) == IntRank.R5 && pawnColor == IntColor.BLACK);
 
             move = Move.valueOf(Move.Type.PAWNDOUBLE, pawnSquare, targetSquare, pawnPiece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
             moveList.moves[moveList.size++] = move;
@@ -438,12 +454,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
     assert Square.isValid(targetSquare);
     assert board.board[targetSquare] == IntPiece.NOPIECE;
 
-    int delta = moveDeltaPawn[0];
-    int pawnPiece = IntPiece.BLACKPAWN;
-    if (pawnColor == IntColor.WHITE) {
-      delta *= -1;
-      pawnPiece = IntPiece.WHITEPAWN;
-    }
+    int delta = -moveDeltaPawn[pawnColor][0];
+    int pawnPiece = IntPiece.valueOf(IntChessman.PAWN, pawnColor);
 
     // Move one square backward
     int pawnSquare = targetSquare + delta;
@@ -454,10 +466,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
           // We found a valid pawn
 
           if (!isPinned(pawnSquare, pawnColor)) {
-            // GenericRank.R8 = square > 111
-            // GenericRank.R1 = square < 8
-            if ((targetSquare > 111 && pawnColor == IntColor.WHITE)
-              || (targetSquare < 8 && pawnColor == IntColor.BLACK)) {
+            if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
+              || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
               int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, IntPiece.NOPIECE, IntChessman.NOCHESSMAN);
               int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
               moveList.moves[moveList.size++] = move;
@@ -477,11 +487,10 @@ public final class X88MoveGenerator implements IMoveGenerator {
         // Move two squares backward
         pawnSquare += delta;
         if (Square.isLegal(pawnSquare)) {
-          // GenericRank.R4 = end >>> 4 == 3
-          // GenericRank.R5 = end >>> 4 == 4
-          if (((pawnSquare >>> 4) == 1 && pawnColor == IntColor.WHITE)
-            || ((pawnSquare >>> 4) == 6 && pawnColor == IntColor.BLACK)) {
-            assert ((pawnSquare >>> 4) == 1 && (targetSquare >>> 4) == 3 && pawnColor == IntColor.WHITE) || ((pawnSquare >>> 4) == 6 && (targetSquare >>> 4) == 4 && pawnColor == IntColor.BLACK);
+          if ((Square.getRank(pawnSquare) == IntRank.R2 && pawnColor == IntColor.WHITE)
+            || (Square.getRank(pawnSquare) == IntRank.R7 && pawnColor == IntColor.BLACK)) {
+            assert (Square.getRank(pawnSquare) == IntRank.R2 && Square.getRank(targetSquare) == IntRank.R4 && pawnColor == IntColor.WHITE)
+              || (Square.getRank(pawnSquare) == IntRank.R7 && Square.getRank(targetSquare) == IntRank.R5 && pawnColor == IntColor.BLACK);
 
             piece = board.board[pawnSquare];
             if (piece != IntPiece.NOPIECE && piece == pawnPiece) {
@@ -505,11 +514,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     int pawnColor = IntPiece.getColor(pawnPiece);
 
-    for (int i = 1; i < moveDeltaPawn.length; ++i) {
-      int delta = moveDeltaPawn[i];
-      if (pawnColor == IntColor.BLACK) {
-        delta *= -1;
-      }
+    for (int i = 1; i < moveDeltaPawn[pawnColor].length; ++i) {
+      int delta = moveDeltaPawn[pawnColor][i];
 
       int targetSquare = pawnSquare + delta;
       if (Square.isLegal(targetSquare)) {
@@ -519,8 +525,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
             && IntPiece.getChessman(targetPiece) != IntChessman.KING) {
             // Capturing move
 
-            if ((targetSquare >>> 4 == IntRank.R8 && pawnColor == IntColor.WHITE)
-              || (targetSquare >>> 4 == IntRank.R1 && pawnColor == IntColor.BLACK)) {
+            if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
+              || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
               // Pawn promotion capturing move
 
               int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, IntChessman.NOCHESSMAN);
@@ -541,8 +547,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
           }
         } else if (targetSquare == board.enPassant) {
           // En passant move
-          assert (targetSquare >>> 4 == IntRank.R3 && pawnColor == IntColor.BLACK)
-            || ((targetSquare >>> 4) == IntRank.R6 && pawnColor == IntColor.WHITE);
+          assert (Square.getRank(targetSquare) == IntRank.R3 && pawnColor == IntColor.BLACK)
+            || (Square.getRank(targetSquare) == IntRank.R6 && pawnColor == IntColor.WHITE);
 
           int captureSquare;
           if (pawnColor == IntColor.WHITE) {
@@ -570,19 +576,12 @@ public final class X88MoveGenerator implements IMoveGenerator {
     assert board.board[targetSquare] == targetPiece;
     assert IntPiece.getChessman(board.board[targetSquare]) != IntChessman.KING;
 
-    int pawnPiece = IntPiece.BLACKPAWN;
-    int enPassantDelta = -16;
-    if (pawnColor == IntColor.WHITE) {
-      pawnPiece = IntPiece.WHITEPAWN;
-      enPassantDelta = 16;
-    }
+    int pawnPiece = IntPiece.valueOf(IntChessman.PAWN, pawnColor);
+    int enPassantDelta = (pawnColor == IntColor.WHITE ? Square.deltaN : Square.deltaS);
     int enPassantSquare = targetSquare + enPassantDelta;
 
-    for (int i = 1; i < moveDeltaPawn.length; i++) {
-      int delta = moveDeltaPawn[i];
-      if (pawnColor == IntColor.WHITE) {
-        delta *= -1;
-      }
+    for (int i = 1; i < moveDeltaPawn[pawnColor].length; i++) {
+      int delta = -moveDeltaPawn[pawnColor][i];
 
       int pawnSquare = targetSquare + delta;
       if (Square.isLegal(pawnSquare)) {
@@ -591,10 +590,8 @@ public final class X88MoveGenerator implements IMoveGenerator {
           // We found a valid pawn
 
           if (!isPinned(pawnSquare, pawnColor)) {
-            // GenericRank.R8 = square > 111
-            // GenericRank.R1 = square < 8
-            if ((targetSquare > 111 && pawnColor == IntColor.WHITE)
-              || (targetSquare < 8 && pawnColor == IntColor.BLACK)) {
+            if ((Square.getRank(targetSquare) == IntRank.R8 && pawnColor == IntColor.WHITE)
+              || (Square.getRank(targetSquare) == IntRank.R1 && pawnColor == IntColor.BLACK)) {
               int moveTemplate = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, IntChessman.NOCHESSMAN);
               int move = Move.setPromotion(moveTemplate, IntChessman.QUEEN);
               moveList.moves[moveList.size++] = move;
@@ -621,7 +618,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
             // We found a valid pawn which can do a en passant move
 
             if (!isPinned(pawnSquare, pawnColor)) {
-              assert ((enPassantSquare >>> 4) == 2 && pawnColor == IntColor.BLACK) || ((enPassantSquare >>> 4) == 5 && pawnColor == IntColor.WHITE);
+              assert (Square.getRank(enPassantSquare) == IntRank.R3 && pawnColor == IntColor.BLACK) || (Square.getRank(enPassantSquare) == IntRank.R6 && pawnColor == IntColor.WHITE);
               assert IntPiece.getChessman(targetPiece) == IntChessman.PAWN;
 
               int move = Move.valueOf(Move.Type.ENPASSANT, pawnSquare, enPassantSquare, piece, targetPiece, IntChessman.NOCHESSMAN);
@@ -779,37 +776,30 @@ public final class X88MoveGenerator implements IMoveGenerator {
     attack.count = 0;
 
     // Pawn attacks
-    int pawnPiece = IntPiece.WHITEPAWN;
-    int sign = -1;
-    if (attackerColor == IntColor.BLACK) {
-      pawnPiece = IntPiece.BLACKPAWN;
-      sign = 1;
-    } else {
-      assert attackerColor == IntColor.WHITE;
-    }
-    int pawnAttackerSquare = targetSquare + sign * 15;
+    int pawnPiece = IntPiece.valueOf(IntChessman.PAWN, attackerColor);
+    int pawnAttackerSquare = targetSquare - moveDeltaPawn[attackerColor][2];
     if (Square.isLegal(pawnAttackerSquare)) {
       int pawn = board.board[pawnAttackerSquare];
       if (pawn != IntPiece.NOPIECE && pawn == pawnPiece) {
         if (stop) {
           return true;
         }
-        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == sign * -15;
+        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == moveDeltaPawn[attackerColor][2];
         attack.square[attack.count] = pawnAttackerSquare;
-        attack.delta[attack.count] = sign * -15;
+        attack.delta[attack.count] = moveDeltaPawn[attackerColor][2];
         ++attack.count;
       }
     }
-    pawnAttackerSquare = targetSquare + sign * 17;
+    pawnAttackerSquare = targetSquare - moveDeltaPawn[attackerColor][1];
     if (Square.isLegal(pawnAttackerSquare)) {
       int pawn = board.board[pawnAttackerSquare];
       if (pawn != IntPiece.NOPIECE && pawn == pawnPiece) {
         if (stop) {
           return true;
         }
-        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == sign * -17;
+        assert Attack.deltas[targetSquare - pawnAttackerSquare + 127] == moveDeltaPawn[attackerColor][1];
         attack.square[attack.count] = pawnAttackerSquare;
-        attack.delta[attack.count] = sign * -17;
+        attack.delta[attack.count] = moveDeltaPawn[attackerColor][1];
         ++attack.count;
       }
     }
