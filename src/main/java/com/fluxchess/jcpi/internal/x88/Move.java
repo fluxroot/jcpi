@@ -81,11 +81,11 @@ final class Move {
     move |= type << TYPE_SHIFT;
 
     // Encode origin square
-    assert (originSquare & 0x88) == 0;
+    assert Square.isValid(originSquare);
     move |= originSquare << ORIGINSQUARE_SHIFT;
 
     // Encode target square
-    assert (targetSquare & 0x88) == 0;
+    assert Square.isValid(targetSquare);
     move |= targetSquare << TARGETSQUARE_SHIFT;
 
     // Encode origin piece
@@ -135,14 +135,14 @@ final class Move {
 
   public static int getOriginSquare(int move) {
     int originSquare = (move & ORIGINSQUARE_MASK) >>> ORIGINSQUARE_SHIFT;
-    assert (originSquare & 0x88) == 0;
+    assert Square.isValid(originSquare);
 
     return originSquare;
   }
 
   public static int getTargetSquare(int move) {
     int targetSquare = (move & TARGETSQUARE_MASK) >>> TARGETSQUARE_SHIFT;
-    assert (targetSquare & 0x88) == 0;
+    assert Square.isValid(targetSquare);
 
     return targetSquare;
   }
@@ -152,7 +152,7 @@ final class Move {
     move &= ~TARGETSQUARE_MASK;
 
     // Encode target square
-    assert (targetSquare & 0x88) == 0;
+    assert Square.isValid(targetSquare);
     move |= targetSquare << TARGETSQUARE_SHIFT;
 
     return move;
@@ -164,7 +164,7 @@ final class Move {
     move &= ~TARGETPIECE_MASK;
 
     // Encode target square
-    assert (targetSquare & 0x88) == 0;
+    assert Square.isValid(targetSquare);
     move |= targetSquare << TARGETSQUARE_SHIFT;
 
     // Encode target piece

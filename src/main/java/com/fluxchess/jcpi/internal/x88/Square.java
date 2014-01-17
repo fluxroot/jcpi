@@ -82,7 +82,7 @@ final class Square {
   }
 
   public static GenericPosition toGenericPosition(int square) {
-    assert (square & 0x88) == 0;
+    assert Square.isValid(square);
 
     return GenericPosition.valueOf(IntFile.toGenericFile(getFile(square)), IntRank.toGenericRank(getRank(square)));
   }
@@ -94,7 +94,7 @@ final class Square {
   }
 
   public static int toBitSquare(int square) {
-    assert (square & 0x88) == 0;
+    assert Square.isValid(square);
 
     return ((square & ~7) >>> 1) | (square & 7);
   }
