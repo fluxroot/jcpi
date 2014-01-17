@@ -37,15 +37,15 @@ final class Board {
   public int halfMoveClock = 0;
   private int halfMoveNumber;
 
-  private final StackEntry[] stack = new StackEntry[MAX_GAMEMOVES];
+  private final State[] stack = new State[MAX_GAMEMOVES];
   private int stackSize = 0;
 
-  private static final class StackEntry {
+  private static final class State {
     public final int[][] castling = new int[IntColor.values.length][IntCastling.values.length];
     public int enPassant = Square.NOSQUARE;
     public int halfMoveClock = 0;
 
-    public StackEntry() {
+    public State() {
       for (int color : IntColor.values) {
         for (int castling : IntCastling.values) {
           this.castling[color][castling] = IntFile.NOFILE;
@@ -59,7 +59,7 @@ final class Board {
 
     // Initialize stack
     for (int i = 0; i < stack.length; ++i) {
-      stack[i] = new StackEntry();
+      stack[i] = new State();
     }
 
     // Initialize board
@@ -273,7 +273,7 @@ final class Board {
   public void makeMove(int move) {
     assert Move.getOriginPiece(move) == board[Move.getOriginSquare(move)];
 
-    StackEntry entry = stack[stackSize];
+    State entry = stack[stackSize];
 
     int type = Move.getType(move);
     switch (type) {
@@ -307,7 +307,7 @@ final class Board {
 
   public void undoMove(int move) {
     --stackSize;
-    StackEntry entry = stack[stackSize];
+    State entry = stack[stackSize];
 
     --halfMoveNumber;
 
@@ -336,7 +336,7 @@ final class Board {
     }
   }
 
-  private void makeMoveNormal(int move, StackEntry entry) {
+  private void makeMoveNormal(int move, State entry) {
     // Save castling rights
     for (int color : IntColor.values) {
       for (int castling : IntCastling.values) {
@@ -450,7 +450,7 @@ final class Board {
     }
   }
 
-  private void undoMoveNormal(int move, StackEntry entry) {
+  private void undoMoveNormal(int move, State entry) {
     // Restore half move clock
     halfMoveClock = entry.halfMoveClock;
 
@@ -481,7 +481,7 @@ final class Board {
     }
   }
 
-  private void makeMovePawnDouble(int move, StackEntry entry) {
+  private void makeMovePawnDouble(int move, State entry) {
     // Move pawn
     int originSquare = Move.getOriginSquare(move);
     int targetSquare = Move.getTargetSquare(move);
@@ -507,7 +507,7 @@ final class Board {
     halfMoveClock = 0;
   }
 
-  private void undoMovePawnDouble(int move, StackEntry entry) {
+  private void undoMovePawnDouble(int move, State entry) {
     // Restore half move clock
     halfMoveClock = entry.halfMoveClock;
 
@@ -519,7 +519,7 @@ final class Board {
     move(Move.getTargetSquare(move), Move.getOriginSquare(move));
   }
 
-  private void makeMovePawnPromotion(int move, StackEntry entry) {
+  private void makeMovePawnPromotion(int move, State entry) {
     // Remove target piece and adjust castling rights.
     int targetSquare = Move.getTargetSquare(move);
     int targetPiece = Move.getTargetPiece(move);
@@ -589,7 +589,7 @@ final class Board {
     halfMoveClock = 0;
   }
 
-  private void undoMovePawnPromotion(int move, StackEntry entry) {
+  private void undoMovePawnPromotion(int move, State entry) {
     // Restore half move clock
     halfMoveClock = entry.halfMoveClock;
 
@@ -621,7 +621,7 @@ final class Board {
     put(Move.getOriginPiece(move), Move.getOriginSquare(move));
   }
 
-  private void makeMoveEnPassant(int move, StackEntry entry) {
+  private void makeMoveEnPassant(int move, State entry) {
     // Remove target pawn
     int targetSquare = Move.getTargetSquare(move);
     int originColor = IntPiece.getColor(Move.getOriginPiece(move));
@@ -650,7 +650,7 @@ final class Board {
     halfMoveClock = 0;
   }
 
-  private void undoMoveEnPassant(int move, StackEntry entry) {
+  private void undoMoveEnPassant(int move, State entry) {
     // Restore half move clock
     halfMoveClock = entry.halfMoveClock;
 
@@ -671,7 +671,7 @@ final class Board {
     put(Move.getTargetPiece(move), captureSquare);
   }
 
-  private void makeMoveCastling(int move, StackEntry entry) {
+  private void makeMoveCastling(int move, State entry) {
     // Save castling rights
     for (int color : IntColor.values) {
       for (int castling : IntCastling.values) {
@@ -748,7 +748,7 @@ final class Board {
     ++halfMoveClock;
   }
 
-  private void undoMoveCastling(int move, StackEntry entry) {
+  private void undoMoveCastling(int move, State entry) {
     // Restore half move clock
     halfMoveClock = entry.halfMoveClock;
 
