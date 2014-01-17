@@ -72,19 +72,31 @@ final class Square {
     a8, b8, c8, d8, e8, f8, g8, h8
   };
 
+  public static final int deltaN = 16;
+  public static final int deltaE = 1;
+  public static final int deltaS = -16;
+  public static final int deltaW = -1;
+  public static final int deltaNE = deltaN + deltaE;
+  public static final int deltaSE = deltaS + deltaE;
+  public static final int deltaSW = deltaS + deltaW;
+  public static final int deltaNW = deltaN + deltaW;
+
   private Square() {
   }
 
   public static int valueOf(GenericPosition genericPosition) {
     assert genericPosition != null;
 
-    return IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
+    int square = IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
+    assert isValid(square);
+
+    return square;
   }
 
   public static GenericPosition toGenericPosition(int square) {
-    assert (square & 0x88) == 0;
+    assert isValid(square);
 
-    return GenericPosition.valueOf(IntFile.toGenericFile(square % 16), IntRank.toGenericRank(square >>> 4));
+    return GenericPosition.valueOf(IntFile.toGenericFile(getFile(square)), IntRank.toGenericRank(getRank(square)));
   }
 
   public static int toX88Square(int square) {
@@ -94,9 +106,47 @@ final class Square {
   }
 
   public static int toBitSquare(int square) {
-    assert (square & 0x88) == 0;
+    assert isValid(square);
 
     return ((square & ~7) >>> 1) | (square & 7);
+  }
+
+  public static long toBitboard(int square) {
+    assert isValid(square);
+
+    return 1L << toBitSquare(square);
+  }
+
+  public static boolean isValid(int square) {
+    if (isLegal(square)) {
+      return true;
+    } else if (square == NOSQUARE) {
+      return false;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  public static boolean isLegal(int square) {
+    return (square & 0x88) == 0;
+  }
+
+  public static int getFile(int square) {
+    assert isValid(square);
+
+    int file = square % 16;
+    assert IntFile.isValid(file);
+
+    return file;
+  }
+
+  public static int getRank(int square) {
+    assert isValid(square);
+
+    int rank = square >>> 4;
+    assert IntRank.isValid(rank);
+
+    return rank;
   }
 
 }
