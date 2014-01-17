@@ -17,7 +17,7 @@ package com.fluxchess.jcpi.internal.x88;
 
 final class MoveList {
 
-  private static final int MAXSIZE = 4096;
+  private static final int MAXSIZE = 256;
 
   public final int[] moves = new int[MAXSIZE];
   public int size = 0;

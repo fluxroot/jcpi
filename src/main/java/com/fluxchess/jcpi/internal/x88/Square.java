@@ -106,7 +106,7 @@ final class Square {
   }
 
   public static int toBitSquare(int square) {
-    assert Square.isValid(square);
+    assert isValid(square);
 
     return ((square & ~7) >>> 1) | (square & 7);
   }
