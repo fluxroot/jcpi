@@ -23,45 +23,45 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntFileTest {
+public class FileTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntFile.class);
+    assertUtilityClassWellDefined(File.class);
   }
 
   @Test
   public void testValues() {
     for (GenericFile genericFile : GenericFile.values()) {
-      assertEquals(genericFile, IntFile.toGenericFile(IntFile.valueOf(genericFile)));
-      assertEquals(genericFile.ordinal(), IntFile.valueOf(genericFile));
-      assertEquals(IntFile.valueOf(genericFile), IntFile.values[IntFile.valueOf(genericFile)]);
+      assertEquals(genericFile, File.toGenericFile(File.valueOf(genericFile)));
+      assertEquals(genericFile.ordinal(), File.valueOf(genericFile));
+      assertEquals(File.valueOf(genericFile), File.values[File.valueOf(genericFile)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntFile.valueOf(null);
+    File.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericFile() {
-    IntFile.toGenericFile(IntFile.NOFILE);
+    File.toGenericFile(File.NOFILE);
   }
 
   @Test
   public void testIsValid() {
-    for (int file : IntFile.values) {
-      assertTrue(IntFile.isValid(file));
-      assertEquals(file, file & IntFile.MASK);
+    for (int file : File.values) {
+      assertTrue(File.isValid(file));
+      assertEquals(file, file & File.MASK);
     }
 
-    assertFalse(IntFile.isValid(IntFile.NOFILE));
+    assertFalse(File.isValid(File.NOFILE));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntFile.isValid(-1);
+    File.isValid(-1);
   }
 
 }

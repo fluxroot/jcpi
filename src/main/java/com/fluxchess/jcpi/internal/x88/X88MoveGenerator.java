@@ -605,7 +605,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
 
     if (IntPiece.getColor(kingPiece) == Color.WHITE) {
       // Do not test g1 whether it is attacked as we will test it in isLegal()
-      if (board.castling[Color.WHITE][Castling.KINGSIDE] != IntFile.NOFILE
+      if (board.castling[Color.WHITE][Castling.KINGSIDE] != File.NOFILE
         && board.board[Square.f1] == IntPiece.NOPIECE
         && board.board[Square.g1] == IntPiece.NOPIECE
         && !isAttacked(Square.f1, Color.BLACK)) {
@@ -615,7 +615,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         list.moves[list.size++] = Move.valueOf(Move.Type.CASTLING, kingSquare, Square.g1, kingPiece, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
       }
       // Do not test c1 whether it is attacked as we will test it in isLegal()
-      if (board.castling[Color.WHITE][Castling.QUEENSIDE] != IntFile.NOFILE
+      if (board.castling[Color.WHITE][Castling.QUEENSIDE] != File.NOFILE
         && board.board[Square.b1] == IntPiece.NOPIECE
         && board.board[Square.c1] == IntPiece.NOPIECE
         && board.board[Square.d1] == IntPiece.NOPIECE
@@ -627,7 +627,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
       }
     } else {
       // Do not test g8 whether it is attacked as we will test it in isLegal()
-      if (board.castling[Color.BLACK][Castling.KINGSIDE] != IntFile.NOFILE
+      if (board.castling[Color.BLACK][Castling.KINGSIDE] != File.NOFILE
         && board.board[Square.f8] == IntPiece.NOPIECE
         && board.board[Square.g8] == IntPiece.NOPIECE
         && !isAttacked(Square.f8, Color.WHITE)) {
@@ -637,7 +637,7 @@ public final class X88MoveGenerator implements IMoveGenerator {
         list.moves[list.size++] = Move.valueOf(Move.Type.CASTLING, kingSquare, Square.g8, kingPiece, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
       }
       // Do not test c8 whether it is attacked as we will test it in isLegal()
-      if (board.castling[Color.BLACK][Castling.QUEENSIDE] != IntFile.NOFILE
+      if (board.castling[Color.BLACK][Castling.QUEENSIDE] != File.NOFILE
         && board.board[Square.b8] == IntPiece.NOPIECE
         && board.board[Square.c8] == IntPiece.NOPIECE
         && board.board[Square.d8] == IntPiece.NOPIECE

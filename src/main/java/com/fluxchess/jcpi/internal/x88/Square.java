@@ -85,7 +85,7 @@ final class Square {
   public static int valueOf(GenericPosition genericPosition) {
     assert genericPosition != null;
 
-    int square = IntRank.valueOf(genericPosition.rank) * 16 + IntFile.valueOf(genericPosition.file);
+    int square = IntRank.valueOf(genericPosition.rank) * 16 + File.valueOf(genericPosition.file);
     assert isValid(square);
 
     return square;
@@ -94,7 +94,7 @@ final class Square {
   public static GenericPosition toGenericPosition(int square) {
     assert isValid(square);
 
-    return GenericPosition.valueOf(IntFile.toGenericFile(getFile(square)), IntRank.toGenericRank(getRank(square)));
+    return GenericPosition.valueOf(File.toGenericFile(getFile(square)), IntRank.toGenericRank(getRank(square)));
   }
 
   public static int toX88Square(int square) {
@@ -133,7 +133,7 @@ final class Square {
     assert isValid(square);
 
     int file = square % 16;
-    assert IntFile.isValid(file);
+    assert File.isValid(file);
 
     return file;
   }

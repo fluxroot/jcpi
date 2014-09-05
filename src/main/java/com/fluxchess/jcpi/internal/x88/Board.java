@@ -48,7 +48,7 @@ final class Board {
     public State() {
       for (int color : Color.values) {
         for (int castling : Castling.values) {
-          this.castling[color][castling] = IntFile.NOFILE;
+          this.castling[color][castling] = File.NOFILE;
         }
       }
     }
@@ -78,9 +78,9 @@ final class Board {
       for (int castling : Castling.values) {
         GenericFile genericFile = genericBoard.getCastling(Color.toGenericColor(color), Castling.toGenericCastling(castling));
         if (genericFile != null) {
-          this.castling[color][castling] = IntFile.valueOf(genericFile);
+          this.castling[color][castling] = File.valueOf(genericFile);
         } else {
-          this.castling[color][castling] = IntFile.NOFILE;
+          this.castling[color][castling] = File.NOFILE;
         }
       }
     }
@@ -115,8 +115,8 @@ final class Board {
     // Set castling
     for (int color : Color.values) {
       for (int castling : Castling.values) {
-        if (this.castling[color][castling] != IntFile.NOFILE) {
-          genericBoard.setCastling(Color.toGenericColor(color), Castling.toGenericCastling(castling), IntFile.toGenericFile(this.castling[color][castling]));
+        if (this.castling[color][castling] != File.NOFILE) {
+          genericBoard.setCastling(Color.toGenericColor(color), Castling.toGenericCastling(castling), File.toGenericFile(this.castling[color][castling]));
         }
       }
     }
@@ -417,8 +417,8 @@ final class Board {
     assert Color.isValid(color);
     assert Castling.isValid(castling);
 
-    if (this.castling[color][castling] != IntFile.NOFILE) {
-      this.castling[color][castling] = IntFile.NOFILE;
+    if (this.castling[color][castling] != File.NOFILE) {
+      this.castling[color][castling] = File.NOFILE;
     }
   }
 

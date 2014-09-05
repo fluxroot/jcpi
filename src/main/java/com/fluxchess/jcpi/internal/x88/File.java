@@ -23,7 +23,7 @@ import com.fluxchess.jcpi.models.GenericFile;
  * <br/>
  * <code>Bit 0 - 3</code>: the file (required)<br/>
  */
-public final class IntFile {
+public final class File {
 
   public static final int MASK = 0xF;
 
@@ -41,7 +41,7 @@ public final class IntFile {
     Fa, Fb, Fc, Fd, Fe, Ff, Fg, Fh
   };
 
-  private IntFile() {
+  private File() {
   }
 
   public static int valueOf(GenericFile genericFile) {

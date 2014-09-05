@@ -39,9 +39,9 @@ public class SquareTest {
       assertEquals(genericPosition, Square.toGenericPosition(square));
 
       int file = Square.getFile(square);
-      assertTrue(IntFile.isValid(file));
+      assertTrue(File.isValid(file));
       assertEquals(genericPosition.file.ordinal(), file);
-      assertEquals(genericPosition.file, IntFile.toGenericFile(file));
+      assertEquals(genericPosition.file, File.toGenericFile(file));
 
       int rank = Square.getRank(square);
       assertTrue(IntRank.isValid(rank));
