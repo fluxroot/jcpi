@@ -25,13 +25,11 @@ public final class MoveGenerator {
   }
 
   public static GenericMove[] getGenericMoves(GenericBoard genericBoard) {
-    IMoveGenerator x88MoveGenerator = new X88MoveGenerator(genericBoard);
-    return x88MoveGenerator.getGenericMoves();
+    return new X88MoveGenerator(genericBoard).getGenericMoves();
   }
 
   public static long perft(GenericBoard genericBoard, int depth) {
-    IMoveGenerator x88MoveGenerator = new X88MoveGenerator(genericBoard);
-    return x88MoveGenerator.perft(depth);
+    return new X88MoveGenerator(genericBoard).perft(depth);
   }
 
 }

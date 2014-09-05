@@ -16,19 +16,53 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericBoard;
-import com.fluxchess.jcpi.utils.AbstractPerftTest;
-import com.fluxchess.jcpi.utils.IMoveGenerator;
+import com.fluxchess.jcpi.models.IllegalNotationException;
 
-public abstract class AbstractX88PerftTest extends AbstractPerftTest {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-  @Override
-  protected IMoveGenerator getMoveGenerator(GenericBoard genericBoard) {
-    return new X88MoveGenerator(genericBoard);
-  }
+public abstract class AbstractX88PerftTest {
 
-  @Override
-  protected String findMissingMoves(GenericBoard genericBoard, int depth) {
-    return "";
+  protected void testPerft(int testDepth) throws IOException, IllegalNotationException {
+    for (int i = 1; i <= testDepth; i++) {
+      BufferedReader file = null;
+      try {
+        file = new BufferedReader(new InputStreamReader(AbstractX88PerftTest.class.getResourceAsStream("/perftsuite.epd")));
+
+        String line = file.readLine();
+        while (line != null) {
+          String[] tokens = line.split(";");
+
+          if (tokens.length > i) {
+            String[] data = tokens[i].trim().split(" ");
+            int depth = Integer.parseInt(data[0].substring(1));
+            int nodes = Integer.parseInt(data[1]);
+
+            GenericBoard genericBoard = new GenericBoard(tokens[0].trim());
+            X88MoveGenerator moveGenerator = new X88MoveGenerator(genericBoard);
+
+            long result = moveGenerator.perft(depth);
+            if (nodes != result) {
+              throw new AssertionError(String.format(
+                  "%s at depth %d failed%nExpected: %d%n  Actual: %d%n",
+                  genericBoard.toString(), depth, nodes, result
+              ));
+            }
+          }
+
+          line = file.readLine();
+        }
+      } finally {
+        if (file != null) {
+          try {
+            file.close();
+          } catch (IOException e) {
+            // Do nothing
+          }
+        }
+      }
+    }
   }
 
 }

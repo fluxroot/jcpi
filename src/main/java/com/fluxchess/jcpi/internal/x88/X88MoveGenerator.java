@@ -15,10 +15,10 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import com.fluxchess.jcpi.models.*;
-import com.fluxchess.jcpi.utils.IMoveGenerator;
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.models.GenericMove;
 
-public final class X88MoveGenerator implements IMoveGenerator {
+public final class X88MoveGenerator {
 
   // Move deltas
   private static final int[][] moveDeltaPawn = {
