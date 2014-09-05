@@ -85,15 +85,11 @@ cobertura.coverageFormats = ['html', 'xml']
 
 sourceSets {
   integration
-  testing
 }
 
 configurations {
   integrationCompile.extendsFrom testCompile
   integrationRuntime.extendsFrom testRuntime
-
-  testingCompile.extendsFrom testCompile
-  testingRuntime.extendsFrom testRuntime
 }
 
 dependencies {
@@ -103,8 +99,6 @@ dependencies {
   testCompile 'log4j:log4j:1.2.+'
 
   integrationCompile project(path: ':', configuration: 'testRuntime')
-
-  testingCompile project(path: ':', configuration: 'testRuntime')
 }
 
 sourceCompatibility = 1.6
@@ -112,9 +106,9 @@ targetCompatibility = 1.6
 
 processResources {
   filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [
-    version: project.version,
-    buildNumber: project.buildNumber,
-    revisionNumber: project.revisionNumber
+      version: project.version,
+      buildNumber: project.buildNumber,
+      revisionNumber: project.revisionNumber
   ])
 }
 
@@ -202,16 +196,5 @@ uploadArchives {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '1.8'
-}
-
-apply plugin: 'idea'
-
-idea {
-  module {
-    testSourceDirs += sourceSets.integration.java.srcDirs
-    testSourceDirs += sourceSets.integration.resources.srcDirs
-    testSourceDirs += sourceSets.testing.java.srcDirs
-    testSourceDirs += sourceSets.testing.resources.srcDirs
-  }
+  gradleVersion = '1.10'
 }
