@@ -43,7 +43,7 @@ public class BoardTest {
     for (GenericColor genericColor : GenericColor.values()) {
       for (GenericCastling genericCastling : GenericCastling.values()) {
         GenericFile genericFile = genericBoard.getCastling(genericColor, genericCastling);
-        int file = board.castling[IntColor.valueOf(genericColor)][Castling.valueOf(genericCastling)];
+        int file = board.castling[Color.valueOf(genericColor)][Castling.valueOf(genericCastling)];
         if (genericFile == null) {
           assertEquals(IntFile.NOFILE, file);
         } else {
@@ -60,7 +60,7 @@ public class BoardTest {
     }
 
     // Test active color
-    assertEquals(genericBoard.getActiveColor(), IntColor.toGenericColor(board.activeColor));
+    assertEquals(genericBoard.getActiveColor(), Color.toGenericColor(board.activeColor));
 
     // Test half move clock
     assertEquals(genericBoard.getHalfMoveClock(), board.halfMoveClock);
@@ -95,12 +95,12 @@ public class BoardTest {
     // Move white pawn
     int move = Move.valueOf(Move.Type.NORMAL, Square.a2, Square.a3, IntPiece.WHITEPAWN, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
     board.makeMove(move);
-    assertEquals(IntColor.BLACK, board.activeColor);
+    assertEquals(Color.BLACK, board.activeColor);
 
     // Move black pawn
     move = Move.valueOf(Move.Type.NORMAL, Square.b7, Square.b6, IntPiece.BLACKPAWN, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
     board.makeMove(move);
-    assertEquals(IntColor.WHITE, board.activeColor);
+    assertEquals(Color.WHITE, board.activeColor);
   }
 
   @Test
@@ -207,7 +207,7 @@ public class BoardTest {
     int move = Move.valueOf(Move.Type.CASTLING, Square.e1, Square.c1, IntPiece.WHITEKING, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
     board.makeMove(move);
 
-    assertEquals(IntFile.NOFILE, board.castling[IntColor.WHITE][Castling.QUEENSIDE]);
+    assertEquals(IntFile.NOFILE, board.castling[Color.WHITE][Castling.QUEENSIDE]);
 
     board.undoMove(move);
 
@@ -219,7 +219,7 @@ public class BoardTest {
     move = Move.valueOf(Move.Type.CASTLING, Square.e1, Square.g1, IntPiece.WHITEKING, IntPiece.NOPIECE, PieceType.NOCHESSMAN);
     board.makeMove(move);
 
-    assertEquals(IntFile.NOFILE, board.castling[IntColor.WHITE][Castling.KINGSIDE]);
+    assertEquals(IntFile.NOFILE, board.castling[Color.WHITE][Castling.KINGSIDE]);
 
     board.undoMove(move);
 

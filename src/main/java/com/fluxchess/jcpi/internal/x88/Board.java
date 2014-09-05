@@ -24,16 +24,16 @@ final class Board {
 
   public final int[] board = new int[BOARDSIZE];
 
-  public final long[] pawns = new long[IntColor.values.length];
-  public final long[] knights = new long[IntColor.values.length];
-  public final long[] bishops = new long[IntColor.values.length];
-  public final long[] rooks = new long[IntColor.values.length];
-  public final long[] queens = new long[IntColor.values.length];
-  public final long[] kings = new long[IntColor.values.length];
+  public final long[] pawns = new long[Color.values.length];
+  public final long[] knights = new long[Color.values.length];
+  public final long[] bishops = new long[Color.values.length];
+  public final long[] rooks = new long[Color.values.length];
+  public final long[] queens = new long[Color.values.length];
+  public final long[] kings = new long[Color.values.length];
 
-  public final int[][] castling = new int[IntColor.values.length][Castling.values.length];
+  public final int[][] castling = new int[Color.values.length][Castling.values.length];
   public int enPassant = Square.NOSQUARE;
-  public int activeColor = IntColor.WHITE;
+  public int activeColor = Color.WHITE;
   public int halfMoveClock = 0;
   private int halfMoveNumber;
 
@@ -41,12 +41,12 @@ final class Board {
   private int stackSize = 0;
 
   private static final class State {
-    public final int[][] castling = new int[IntColor.values.length][Castling.values.length];
+    public final int[][] castling = new int[Color.values.length][Castling.values.length];
     public int enPassant = Square.NOSQUARE;
     public int halfMoveClock = 0;
 
     public State() {
-      for (int color : IntColor.values) {
+      for (int color : Color.values) {
         for (int castling : Castling.values) {
           this.castling[color][castling] = IntFile.NOFILE;
         }
@@ -74,9 +74,9 @@ final class Board {
     }
 
     // Initialize castling
-    for (int color : IntColor.values) {
+    for (int color : Color.values) {
       for (int castling : Castling.values) {
-        GenericFile genericFile = genericBoard.getCastling(IntColor.toGenericColor(color), Castling.toGenericCastling(castling));
+        GenericFile genericFile = genericBoard.getCastling(Color.toGenericColor(color), Castling.toGenericCastling(castling));
         if (genericFile != null) {
           this.castling[color][castling] = IntFile.valueOf(genericFile);
         } else {
@@ -91,8 +91,8 @@ final class Board {
     }
 
     // Initialize active color
-    if (activeColor != IntColor.valueOf(genericBoard.getActiveColor())) {
-      activeColor = IntColor.valueOf(genericBoard.getActiveColor());
+    if (activeColor != Color.valueOf(genericBoard.getActiveColor())) {
+      activeColor = Color.valueOf(genericBoard.getActiveColor());
     }
 
     // Initialize half move clock
@@ -113,10 +113,10 @@ final class Board {
     }
 
     // Set castling
-    for (int color : IntColor.values) {
+    for (int color : Color.values) {
       for (int castling : Castling.values) {
         if (this.castling[color][castling] != IntFile.NOFILE) {
-          genericBoard.setCastling(IntColor.toGenericColor(color), Castling.toGenericCastling(castling), IntFile.toGenericFile(this.castling[color][castling]));
+          genericBoard.setCastling(Color.toGenericColor(color), Castling.toGenericCastling(castling), IntFile.toGenericFile(this.castling[color][castling]));
         }
       }
     }
@@ -127,7 +127,7 @@ final class Board {
     }
 
     // Set active color
-    genericBoard.setActiveColor(IntColor.toGenericColor(activeColor));
+    genericBoard.setActiveColor(Color.toGenericColor(activeColor));
 
     // Set half move clock
     genericBoard.setHalfMoveClock(halfMoveClock);
@@ -150,7 +150,7 @@ final class Board {
     assert fullMoveNumber > 0;
 
     halfMoveNumber = fullMoveNumber * 2;
-    if (activeColor == IntColor.valueOf(GenericColor.BLACK)) {
+    if (activeColor == Color.valueOf(GenericColor.BLACK)) {
       ++halfMoveNumber;
     }
   }
@@ -240,11 +240,11 @@ final class Board {
     int targetPiece = Move.getTargetPiece(move);
     int captureSquare = targetSquare;
     if (type == Move.Type.ENPASSANT) {
-      captureSquare += (originColor == IntColor.WHITE ? Square.deltaS : Square.deltaN);
+      captureSquare += (originColor == Color.WHITE ? Square.deltaS : Square.deltaN);
     }
 
     // Save castling rights
-    for (int color : IntColor.values) {
+    for (int color : Color.values) {
       for (int castling : Castling.values) {
         entry.castling[color][castling] = this.castling[color][castling];
       }
@@ -309,14 +309,14 @@ final class Board {
 
     // Update enPassant
     if (type == Move.Type.PAWNDOUBLE) {
-      enPassant = targetSquare + (originColor == IntColor.WHITE ? Square.deltaS : Square.deltaN);
+      enPassant = targetSquare + (originColor == Color.WHITE ? Square.deltaS : Square.deltaN);
       assert Square.isValid(enPassant);
     } else {
       enPassant = Square.NOSQUARE;
     }
 
     // Update activeColor
-    activeColor = IntColor.opposite(activeColor);
+    activeColor = Color.opposite(activeColor);
 
     // Update halfMoveClock
     if (IntPiece.getChessman(originPiece) == PieceType.PAWN || targetPiece != IntPiece.NOPIECE) {
@@ -347,7 +347,7 @@ final class Board {
     int targetPiece = Move.getTargetPiece(move);
     int captureSquare = targetSquare;
     if (type == Move.Type.ENPASSANT) {
-      captureSquare += (originColor == IntColor.WHITE ? Square.deltaS : Square.deltaN);
+      captureSquare += (originColor == Color.WHITE ? Square.deltaS : Square.deltaN);
       assert Square.isValid(captureSquare);
     }
 
@@ -355,7 +355,7 @@ final class Board {
     --halfMoveNumber;
 
     // Update activeColor
-    activeColor = IntColor.opposite(activeColor);
+    activeColor = Color.opposite(activeColor);
 
     // Undo move rook
     if (type == Move.Type.CASTLING) {
@@ -404,7 +404,7 @@ final class Board {
     enPassant = entry.enPassant;
 
     // Restore castling rights
-    for (int color : IntColor.values) {
+    for (int color : Color.values) {
       for (int castling : Castling.values) {
         if (entry.castling[color][castling] != this.castling[color][castling]) {
           this.castling[color][castling] = entry.castling[color][castling];
@@ -414,7 +414,7 @@ final class Board {
   }
 
   private void clearCastling(int color, int castling) {
-    assert IntColor.isValid(color);
+    assert Color.isValid(color);
     assert Castling.isValid(castling);
 
     if (this.castling[color][castling] != IntFile.NOFILE) {
@@ -427,24 +427,24 @@ final class Board {
 
     switch (square) {
       case Square.a1:
-        clearCastling(IntColor.WHITE, Castling.QUEENSIDE);
+        clearCastling(Color.WHITE, Castling.QUEENSIDE);
         break;
       case Square.h1:
-        clearCastling(IntColor.WHITE, Castling.KINGSIDE);
+        clearCastling(Color.WHITE, Castling.KINGSIDE);
         break;
       case Square.a8:
-        clearCastling(IntColor.BLACK, Castling.QUEENSIDE);
+        clearCastling(Color.BLACK, Castling.QUEENSIDE);
         break;
       case Square.h8:
-        clearCastling(IntColor.BLACK, Castling.KINGSIDE);
+        clearCastling(Color.BLACK, Castling.KINGSIDE);
         break;
       case Square.e1:
-        clearCastling(IntColor.WHITE, Castling.QUEENSIDE);
-        clearCastling(IntColor.WHITE, Castling.KINGSIDE);
+        clearCastling(Color.WHITE, Castling.QUEENSIDE);
+        clearCastling(Color.WHITE, Castling.KINGSIDE);
         break;
       case Square.e8:
-        clearCastling(IntColor.BLACK, Castling.QUEENSIDE);
-        clearCastling(IntColor.BLACK, Castling.KINGSIDE);
+        clearCastling(Color.BLACK, Castling.QUEENSIDE);
+        clearCastling(Color.BLACK, Castling.KINGSIDE);
         break;
       default:
         break;

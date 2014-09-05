@@ -31,22 +31,22 @@ public final class IntPiece {
   private static final int CHESSMAN_SHIFT = 0;
   private static final int CHESSMAN_MASK = PieceType.MASK << CHESSMAN_SHIFT;
   private static final int COLOR_SHIFT = 3;
-  private static final int COLOR_MASK = IntColor.MASK << COLOR_SHIFT;
+  private static final int COLOR_MASK = Color.MASK << COLOR_SHIFT;
 
-  public static final int NOPIECE = (PieceType.NOCHESSMAN << CHESSMAN_SHIFT) | (IntColor.NOCOLOR << COLOR_SHIFT);
+  public static final int NOPIECE = (PieceType.NOCHESSMAN << CHESSMAN_SHIFT) | (Color.NOCOLOR << COLOR_SHIFT);
 
-  public static final int WHITEPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEKING = (PieceType.KING << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int BLACKPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKKING = (PieceType.KING << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int WHITEPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int WHITEKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int WHITEBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int WHITEROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int WHITEQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int WHITEKING = (PieceType.KING << CHESSMAN_SHIFT) | (Color.WHITE << COLOR_SHIFT);
+  public static final int BLACKPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
+  public static final int BLACKKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
+  public static final int BLACKBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
+  public static final int BLACKROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
+  public static final int BLACKQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
+  public static final int BLACKKING = (PieceType.KING << CHESSMAN_SHIFT) | (Color.BLACK << COLOR_SHIFT);
 
   public static final int[] values = {
     WHITEPAWN, WHITEKNIGHT, WHITEBISHOP, WHITEROOK, WHITEQUEEN, WHITEKING,
@@ -91,7 +91,7 @@ public final class IntPiece {
 
   public static int valueOf(int chessman, int color) {
     switch (color) {
-      case IntColor.WHITE:
+      case Color.WHITE:
         switch (chessman) {
           case PieceType.PAWN:
             return WHITEPAWN;
@@ -109,7 +109,7 @@ public final class IntPiece {
           default:
             throw new IllegalArgumentException();
         }
-      case IntColor.BLACK:
+      case Color.BLACK:
         switch (chessman) {
           case PieceType.PAWN:
             return BLACKPAWN;
@@ -127,7 +127,7 @@ public final class IntPiece {
           default:
             throw new IllegalArgumentException();
         }
-      case IntColor.NOCOLOR:
+      case Color.NOCOLOR:
       default:
         throw new IllegalArgumentException();
     }
@@ -253,14 +253,14 @@ public final class IntPiece {
       case WHITEROOK:
       case WHITEQUEEN:
       case WHITEKING:
-        return IntColor.WHITE;
+        return Color.WHITE;
       case BLACKPAWN:
       case BLACKKNIGHT:
       case BLACKBISHOP:
       case BLACKROOK:
       case BLACKQUEEN:
       case BLACKKING:
-        return IntColor.BLACK;
+        return Color.BLACK;
       case NOPIECE:
       default:
         throw new IllegalArgumentException();

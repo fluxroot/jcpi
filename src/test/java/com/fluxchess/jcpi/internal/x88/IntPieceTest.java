@@ -34,7 +34,7 @@ public class IntPieceTest {
   public void testValues() {
     for (GenericPiece genericPiece : GenericPiece.values()) {
       assertEquals(genericPiece, IntPiece.toGenericPiece(IntPiece.valueOf(genericPiece)));
-      assertEquals(genericPiece, IntPiece.toGenericPiece(IntPiece.valueOf(PieceType.valueOf(genericPiece.chessman), IntColor.valueOf(genericPiece.color))));
+      assertEquals(genericPiece, IntPiece.toGenericPiece(IntPiece.valueOf(PieceType.valueOf(genericPiece.chessman), Color.valueOf(genericPiece.color))));
     }
   }
 
@@ -99,18 +99,18 @@ public class IntPieceTest {
 
   @Test
   public void testGetColor() {
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEPAWN));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKPAWN));
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEKNIGHT));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKKNIGHT));
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEBISHOP));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKBISHOP));
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEROOK));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKROOK));
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEQUEEN));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKQUEEN));
-    assertEquals(IntColor.WHITE, IntPiece.getColor(IntPiece.WHITEKING));
-    assertEquals(IntColor.BLACK, IntPiece.getColor(IntPiece.BLACKKING));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEPAWN));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKPAWN));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEKNIGHT));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKKNIGHT));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEBISHOP));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKBISHOP));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEROOK));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKROOK));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEQUEEN));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKQUEEN));
+    assertEquals(Color.WHITE, IntPiece.getColor(IntPiece.WHITEKING));
+    assertEquals(Color.BLACK, IntPiece.getColor(IntPiece.BLACKKING));
   }
 
   @Test(expected = IllegalArgumentException.class)

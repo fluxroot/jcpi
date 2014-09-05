@@ -23,7 +23,7 @@ import com.fluxchess.jcpi.models.GenericColor;
  * <br/>
  * <code>Bit 0 - 1</code>: the color (required)<br/>
  */
-public final class IntColor {
+public final class Color {
 
   public static final int MASK = 0x3;
 
@@ -35,7 +35,7 @@ public final class IntColor {
     WHITE, BLACK
   };
 
-  private IntColor() {
+  private Color() {
   }
 
   public static int valueOf(GenericColor genericColor) {
