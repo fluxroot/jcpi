@@ -23,88 +23,88 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntChessmanTest {
+public class PieceTypeTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntChessman.class);
+    assertUtilityClassWellDefined(PieceType.class);
   }
 
   @Test
   public void testValues() {
     for (GenericChessman genericChessman : GenericChessman.values()) {
-      assertEquals(genericChessman, IntChessman.toGenericChessman(IntChessman.valueOf(genericChessman)));
-      assertEquals(genericChessman.ordinal(), IntChessman.valueOf(genericChessman));
-      assertEquals(IntChessman.valueOf(genericChessman), IntChessman.values[IntChessman.valueOf(genericChessman)]);
+      assertEquals(genericChessman, PieceType.toGenericChessman(PieceType.valueOf(genericChessman)));
+      assertEquals(genericChessman.ordinal(), PieceType.valueOf(genericChessman));
+      assertEquals(PieceType.valueOf(genericChessman), PieceType.values[PieceType.valueOf(genericChessman)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntChessman.valueOf(null);
+    PieceType.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericChessman() {
-    IntChessman.toGenericChessman(IntChessman.NOCHESSMAN);
+    PieceType.toGenericChessman(PieceType.NOCHESSMAN);
   }
 
   @Test
   public void testPromotionValues() {
     for (GenericChessman genericChessman : GenericChessman.promotions) {
-      assertEquals(genericChessman, IntChessman.toGenericChessman(IntChessman.valueOfPromotion(genericChessman)));
+      assertEquals(genericChessman, PieceType.toGenericChessman(PieceType.valueOfPromotion(genericChessman)));
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOfPromotion() {
-    IntChessman.valueOfPromotion(GenericChessman.PAWN);
+    PieceType.valueOfPromotion(GenericChessman.PAWN);
   }
 
   @Test
   public void testIsValid() {
-    for (int chessman : IntChessman.values) {
-      assertTrue(IntChessman.isValid(chessman));
-      assertEquals(chessman, chessman & IntChessman.MASK);
+    for (int chessman : PieceType.values) {
+      assertTrue(PieceType.isValid(chessman));
+      assertEquals(chessman, chessman & PieceType.MASK);
     }
 
-    assertFalse(IntChessman.isValid(IntChessman.NOCHESSMAN));
+    assertFalse(PieceType.isValid(PieceType.NOCHESSMAN));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntChessman.isValid(-1);
+    PieceType.isValid(-1);
   }
 
   @Test
   public void testIsValidPromotion() {
-    for (int chessman : IntChessman.promotions) {
-      assertTrue(IntChessman.isValidPromotion(chessman));
-      assertEquals(chessman, chessman & IntChessman.MASK);
+    for (int chessman : PieceType.promotions) {
+      assertTrue(PieceType.isValidPromotion(chessman));
+      assertEquals(chessman, chessman & PieceType.MASK);
     }
 
-    assertFalse(IntChessman.isValidPromotion(IntChessman.PAWN));
-    assertFalse(IntChessman.isValidPromotion(IntChessman.KING));
+    assertFalse(PieceType.isValidPromotion(PieceType.PAWN));
+    assertFalse(PieceType.isValidPromotion(PieceType.KING));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValidPromotion() {
-    IntChessman.isValidPromotion(IntChessman.NOCHESSMAN);
+    PieceType.isValidPromotion(PieceType.NOCHESSMAN);
   }
 
   @Test
   public void testIsSliding() {
-    assertTrue(IntChessman.isSliding(IntChessman.BISHOP));
-    assertTrue(IntChessman.isSliding(IntChessman.ROOK));
-    assertTrue(IntChessman.isSliding(IntChessman.QUEEN));
-    assertFalse(IntChessman.isSliding(IntChessman.PAWN));
-    assertFalse(IntChessman.isSliding(IntChessman.KNIGHT));
-    assertFalse(IntChessman.isSliding(IntChessman.KING));
+    assertTrue(PieceType.isSliding(PieceType.BISHOP));
+    assertTrue(PieceType.isSliding(PieceType.ROOK));
+    assertTrue(PieceType.isSliding(PieceType.QUEEN));
+    assertFalse(PieceType.isSliding(PieceType.PAWN));
+    assertFalse(PieceType.isSliding(PieceType.KNIGHT));
+    assertFalse(PieceType.isSliding(PieceType.KING));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsSliding() {
-    IntChessman.isSliding(IntChessman.NOCHESSMAN);
+    PieceType.isSliding(PieceType.NOCHESSMAN);
   }
 
 }

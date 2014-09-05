@@ -164,22 +164,22 @@ final class Board {
     int color = IntPiece.getColor(piece);
 
     switch (chessman) {
-      case IntChessman.PAWN:
+      case PieceType.PAWN:
         pawns[color] |= Square.toBitboard(square);
         break;
-      case IntChessman.KNIGHT:
+      case PieceType.KNIGHT:
         knights[color] |= Square.toBitboard(square);
         break;
-      case IntChessman.BISHOP:
+      case PieceType.BISHOP:
         bishops[color] |= Square.toBitboard(square);
         break;
-      case IntChessman.ROOK:
+      case PieceType.ROOK:
         rooks[color] |= Square.toBitboard(square);
         break;
-      case IntChessman.QUEEN:
+      case PieceType.QUEEN:
         queens[color] |= Square.toBitboard(square);
         break;
-      case IntChessman.KING:
+      case PieceType.KING:
         kings[color] |= Square.toBitboard(square);
         break;
       default:
@@ -200,22 +200,22 @@ final class Board {
     int color = IntPiece.getColor(piece);
 
     switch (chessman) {
-      case IntChessman.PAWN:
+      case PieceType.PAWN:
         pawns[color] &= ~(Square.toBitboard(square));
         break;
-      case IntChessman.KNIGHT:
+      case PieceType.KNIGHT:
         knights[color] &= ~(Square.toBitboard(square));
         break;
-      case IntChessman.BISHOP:
+      case PieceType.BISHOP:
         bishops[color] &= ~(Square.toBitboard(square));
         break;
-      case IntChessman.ROOK:
+      case PieceType.ROOK:
         rooks[color] &= ~(Square.toBitboard(square));
         break;
-      case IntChessman.QUEEN:
+      case PieceType.QUEEN:
         queens[color] &= ~(Square.toBitboard(square));
         break;
-      case IntChessman.KING:
+      case PieceType.KING:
         kings[color] &= ~(Square.toBitboard(square));
         break;
       default:
@@ -299,7 +299,7 @@ final class Board {
           break;
       }
 
-      assert IntPiece.getChessman(board[rookOriginSquare]) == IntChessman.ROOK;
+      assert IntPiece.getChessman(board[rookOriginSquare]) == PieceType.ROOK;
       int rookPiece = remove(rookOriginSquare);
       put(rookPiece, rookTargetSquare);
     }
@@ -319,7 +319,7 @@ final class Board {
     activeColor = IntColor.opposite(activeColor);
 
     // Update halfMoveClock
-    if (IntPiece.getChessman(originPiece) == IntChessman.PAWN || targetPiece != IntPiece.NOPIECE) {
+    if (IntPiece.getChessman(originPiece) == PieceType.PAWN || targetPiece != IntPiece.NOPIECE) {
       halfMoveClock = 0;
     } else {
       ++halfMoveClock;
@@ -383,7 +383,7 @@ final class Board {
           break;
       }
 
-      assert IntPiece.getChessman(board[rookTargetSquare]) == IntChessman.ROOK;
+      assert IntPiece.getChessman(board[rookTargetSquare]) == PieceType.ROOK;
       int rookPiece = remove(rookTargetSquare);
       put(rookPiece, rookOriginSquare);
     }

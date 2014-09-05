@@ -62,7 +62,7 @@ final class Move {
   private static final int TARGETPIECE_SHIFT = 22;
   private static final int TARGETPIECE_MASK = IntPiece.MASK << TARGETPIECE_SHIFT;
   private static final int PROMOTION_SHIFT = 27;
-  private static final int PROMOTION_MASK = IntChessman.MASK << PROMOTION_SHIFT;
+  private static final int PROMOTION_MASK = PieceType.MASK << PROMOTION_SHIFT;
 
   private Move() {
   }
@@ -95,8 +95,8 @@ final class Move {
     move |= targetPiece << TARGETPIECE_SHIFT;
 
     // Encode promotion
-    assert (IntChessman.isValid(promotion) && IntChessman.isValidPromotion(promotion))
-      || promotion == IntChessman.NOCHESSMAN;
+    assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
+      || promotion == PieceType.NOCHESSMAN;
     move |= promotion << PROMOTION_SHIFT;
 
     return move;
@@ -114,7 +114,7 @@ final class Move {
       case Type.CASTLING:
         return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare));
       case Type.PAWNPROMOTION:
-        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare), IntChessman.toGenericChessman(getPromotion(move)));
+        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare), PieceType.toGenericChessman(getPromotion(move)));
       default:
         throw new IllegalArgumentException();
     }
@@ -161,8 +161,8 @@ final class Move {
 
   public static int getPromotion(int move) {
     int promotion = (move & PROMOTION_MASK) >>> PROMOTION_SHIFT;
-    assert (IntChessman.isValid(promotion) && IntChessman.isValidPromotion(promotion))
-      || promotion == IntChessman.NOCHESSMAN;
+    assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
+      || promotion == PieceType.NOCHESSMAN;
 
     return promotion;
   }

@@ -29,24 +29,24 @@ public final class IntPiece {
   public static final int MASK = 0x1F;
 
   private static final int CHESSMAN_SHIFT = 0;
-  private static final int CHESSMAN_MASK = IntChessman.MASK << CHESSMAN_SHIFT;
+  private static final int CHESSMAN_MASK = PieceType.MASK << CHESSMAN_SHIFT;
   private static final int COLOR_SHIFT = 3;
   private static final int COLOR_MASK = IntColor.MASK << COLOR_SHIFT;
 
-  public static final int NOPIECE = (IntChessman.NOCHESSMAN << CHESSMAN_SHIFT) | (IntColor.NOCOLOR << COLOR_SHIFT);
+  public static final int NOPIECE = (PieceType.NOCHESSMAN << CHESSMAN_SHIFT) | (IntColor.NOCOLOR << COLOR_SHIFT);
 
-  public static final int WHITEPAWN = (IntChessman.PAWN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEKNIGHT = (IntChessman.KNIGHT << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEBISHOP = (IntChessman.BISHOP << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEROOK = (IntChessman.ROOK << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEQUEEN = (IntChessman.QUEEN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int WHITEKING = (IntChessman.KING << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
-  public static final int BLACKPAWN = (IntChessman.PAWN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKKNIGHT = (IntChessman.KNIGHT << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKBISHOP = (IntChessman.BISHOP << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKROOK = (IntChessman.ROOK << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKQUEEN = (IntChessman.QUEEN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
-  public static final int BLACKKING = (IntChessman.KING << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int WHITEPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int WHITEKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int WHITEBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int WHITEROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int WHITEQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int WHITEKING = (PieceType.KING << CHESSMAN_SHIFT) | (IntColor.WHITE << COLOR_SHIFT);
+  public static final int BLACKPAWN = (PieceType.PAWN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int BLACKKNIGHT = (PieceType.KNIGHT << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int BLACKBISHOP = (PieceType.BISHOP << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int BLACKROOK = (PieceType.ROOK << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int BLACKQUEEN = (PieceType.QUEEN << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
+  public static final int BLACKKING = (PieceType.KING << CHESSMAN_SHIFT) | (IntColor.BLACK << COLOR_SHIFT);
 
   public static final int[] values = {
     WHITEPAWN, WHITEKNIGHT, WHITEBISHOP, WHITEROOK, WHITEQUEEN, WHITEKING,
@@ -93,37 +93,37 @@ public final class IntPiece {
     switch (color) {
       case IntColor.WHITE:
         switch (chessman) {
-          case IntChessman.PAWN:
+          case PieceType.PAWN:
             return WHITEPAWN;
-          case IntChessman.KNIGHT:
+          case PieceType.KNIGHT:
             return WHITEKNIGHT;
-          case IntChessman.BISHOP:
+          case PieceType.BISHOP:
             return WHITEBISHOP;
-          case IntChessman.ROOK:
+          case PieceType.ROOK:
             return WHITEROOK;
-          case IntChessman.QUEEN:
+          case PieceType.QUEEN:
             return WHITEQUEEN;
-          case IntChessman.KING:
+          case PieceType.KING:
             return WHITEKING;
-          case IntChessman.NOCHESSMAN:
+          case PieceType.NOCHESSMAN:
           default:
             throw new IllegalArgumentException();
         }
       case IntColor.BLACK:
         switch (chessman) {
-          case IntChessman.PAWN:
+          case PieceType.PAWN:
             return BLACKPAWN;
-          case IntChessman.KNIGHT:
+          case PieceType.KNIGHT:
             return BLACKKNIGHT;
-          case IntChessman.BISHOP:
+          case PieceType.BISHOP:
             return BLACKBISHOP;
-          case IntChessman.ROOK:
+          case PieceType.ROOK:
             return BLACKROOK;
-          case IntChessman.QUEEN:
+          case PieceType.QUEEN:
             return BLACKQUEEN;
-          case IntChessman.KING:
+          case PieceType.KING:
             return BLACKKING;
-          case IntChessman.NOCHESSMAN:
+          case PieceType.NOCHESSMAN:
           default:
             throw new IllegalArgumentException();
         }
@@ -223,22 +223,22 @@ public final class IntPiece {
     switch (piece) {
       case WHITEPAWN:
       case BLACKPAWN:
-        return IntChessman.PAWN;
+        return PieceType.PAWN;
       case WHITEKNIGHT:
       case BLACKKNIGHT:
-        return IntChessman.KNIGHT;
+        return PieceType.KNIGHT;
       case WHITEBISHOP:
       case BLACKBISHOP:
-        return IntChessman.BISHOP;
+        return PieceType.BISHOP;
       case WHITEROOK:
       case BLACKROOK:
-        return IntChessman.ROOK;
+        return PieceType.ROOK;
       case WHITEQUEEN:
       case BLACKQUEEN:
-        return IntChessman.QUEEN;
+        return PieceType.QUEEN;
       case WHITEKING:
       case BLACKKING:
-        return IntChessman.KING;
+        return PieceType.KING;
       case NOPIECE:
       default:
         throw new IllegalArgumentException();
