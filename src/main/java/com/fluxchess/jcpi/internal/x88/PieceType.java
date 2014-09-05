@@ -23,7 +23,7 @@ import com.fluxchess.jcpi.models.GenericChessman;
  * <br/>
  * <code>Bit 0 - 2</code>: the chessman (required)<br/>
  */
-public final class PieceType {
+final class PieceType {
 
   public static final int MASK = 0x7;
 
