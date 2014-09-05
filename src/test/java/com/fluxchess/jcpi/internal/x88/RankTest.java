@@ -23,45 +23,45 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntRankTest {
+public class RankTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntRank.class);
+    assertUtilityClassWellDefined(Rank.class);
   }
 
   @Test
   public void testValues() {
     for (GenericRank genericRank : GenericRank.values()) {
-      assertEquals(genericRank, IntRank.toGenericRank(IntRank.valueOf(genericRank)));
-      assertEquals(genericRank.ordinal(), IntRank.valueOf(genericRank));
-      assertEquals(IntRank.valueOf(genericRank), IntRank.values[IntRank.valueOf(genericRank)]);
+      assertEquals(genericRank, Rank.toGenericRank(Rank.valueOf(genericRank)));
+      assertEquals(genericRank.ordinal(), Rank.valueOf(genericRank));
+      assertEquals(Rank.valueOf(genericRank), Rank.values[Rank.valueOf(genericRank)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntRank.valueOf(null);
+    Rank.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericRank() {
-    IntRank.toGenericRank(IntRank.NORANK);
+    Rank.toGenericRank(Rank.NORANK);
   }
 
   @Test
   public void testIsValid() {
-    for (int rank : IntRank.values) {
-      assertTrue(IntRank.isValid(rank));
-      assertEquals(rank, rank & IntRank.MASK);
+    for (int rank : Rank.values) {
+      assertTrue(Rank.isValid(rank));
+      assertEquals(rank, rank & Rank.MASK);
     }
 
-    assertFalse(IntRank.isValid(IntRank.NORANK));
+    assertFalse(Rank.isValid(Rank.NORANK));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntRank.isValid(-1);
+    Rank.isValid(-1);
   }
 
 }

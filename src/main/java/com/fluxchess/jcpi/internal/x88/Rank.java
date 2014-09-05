@@ -23,7 +23,7 @@ import com.fluxchess.jcpi.models.GenericRank;
  * <br/>
  * <code>Bit 0 - 3</code>: the rank (required)<br/>
  */
-public final class IntRank {
+public final class Rank {
 
   public static final int MASK = 0xF;
 
@@ -41,7 +41,7 @@ public final class IntRank {
     R1, R2, R3, R4, R5, R6, R7, R8
   };
 
-  private IntRank() {
+  private Rank() {
   }
 
   public static int valueOf(GenericRank genericRank) {
