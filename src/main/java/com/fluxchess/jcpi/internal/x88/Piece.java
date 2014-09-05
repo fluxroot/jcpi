@@ -24,7 +24,7 @@ import com.fluxchess.jcpi.models.GenericPiece;
  * <code>Bit 0 - 2</code>: the chessman (required)<br/>
  * <code>Bit 3 - 4</code>: the color (required)<br/>
  */
-public final class IntPiece {
+public final class Piece {
 
   public static final int MASK = 0x1F;
 
@@ -53,7 +53,7 @@ public final class IntPiece {
     BLACKPAWN, BLACKKNIGHT, BLACKBISHOP, BLACKROOK, BLACKQUEEN, BLACKKING
   };
 
-  private IntPiece() {
+  private Piece() {
   }
 
   public static int valueOf(GenericPiece genericPiece) {

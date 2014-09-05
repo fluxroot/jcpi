@@ -58,9 +58,9 @@ final class Move {
   private static final int TARGETSQUARE_SHIFT = 10;
   private static final int TARGETSQUARE_MASK = Square.MASK << TARGETSQUARE_SHIFT;
   private static final int ORIGINPIECE_SHIFT = 17;
-  private static final int ORIGINPIECE_MASK = IntPiece.MASK << ORIGINPIECE_SHIFT;
+  private static final int ORIGINPIECE_MASK = Piece.MASK << ORIGINPIECE_SHIFT;
   private static final int TARGETPIECE_SHIFT = 22;
-  private static final int TARGETPIECE_MASK = IntPiece.MASK << TARGETPIECE_SHIFT;
+  private static final int TARGETPIECE_MASK = Piece.MASK << TARGETPIECE_SHIFT;
   private static final int PROMOTION_SHIFT = 27;
   private static final int PROMOTION_MASK = PieceType.MASK << PROMOTION_SHIFT;
 
@@ -87,11 +87,11 @@ final class Move {
     move |= targetSquare << TARGETSQUARE_SHIFT;
 
     // Encode origin piece
-    assert IntPiece.isValid(originPiece);
+    assert Piece.isValid(originPiece);
     move |= originPiece << ORIGINPIECE_SHIFT;
 
     // Encode target piece
-    assert IntPiece.isValid(targetPiece) || targetPiece == IntPiece.NOPIECE;
+    assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
     move |= targetPiece << TARGETPIECE_SHIFT;
 
     // Encode promotion
@@ -147,14 +147,14 @@ final class Move {
 
   public static int getOriginPiece(int move) {
     int originPiece = (move & ORIGINPIECE_MASK) >>> ORIGINPIECE_SHIFT;
-    assert IntPiece.isValid(originPiece);
+    assert Piece.isValid(originPiece);
 
     return originPiece;
   }
 
   public static int getTargetPiece(int move) {
     int targetPiece = (move & TARGETPIECE_MASK) >>> TARGETPIECE_SHIFT;
-    assert IntPiece.isValid(targetPiece) || targetPiece == IntPiece.NOPIECE;
+    assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
 
     return targetPiece;
   }

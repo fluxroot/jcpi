@@ -64,11 +64,11 @@ final class Board {
 
     // Initialize board
     for (int square : Square.values) {
-      board[square] = IntPiece.NOPIECE;
+      board[square] = Piece.NOPIECE;
 
       GenericPiece genericPiece = genericBoard.getPiece(Square.toGenericPosition(square));
       if (genericPiece != null) {
-        int piece = IntPiece.valueOf(genericPiece);
+        int piece = Piece.valueOf(genericPiece);
         put(piece, square);
       }
     }
@@ -107,8 +107,8 @@ final class Board {
 
     // Set board
     for (int square : Square.values) {
-      if (board[square] != IntPiece.NOPIECE) {
-        genericBoard.setPiece(IntPiece.toGenericPiece(board[square]), Square.toGenericPosition(square));
+      if (board[square] != Piece.NOPIECE) {
+        genericBoard.setPiece(Piece.toGenericPiece(board[square]), Square.toGenericPosition(square));
       }
     }
 
@@ -156,12 +156,12 @@ final class Board {
   }
 
   private void put(int piece, int square) {
-    assert IntPiece.isValid(piece);
+    assert Piece.isValid(piece);
     assert Square.isValid(square);
-    assert board[square] == IntPiece.NOPIECE;
+    assert board[square] == Piece.NOPIECE;
 
-    int chessman = IntPiece.getChessman(piece);
-    int color = IntPiece.getColor(piece);
+    int chessman = Piece.getChessman(piece);
+    int color = Piece.getColor(piece);
 
     switch (chessman) {
       case PieceType.PAWN:
@@ -192,12 +192,12 @@ final class Board {
 
   private int remove(int square) {
     assert Square.isValid(square);
-    assert IntPiece.isValid(board[square]);
+    assert Piece.isValid(board[square]);
 
     int piece = board[square];
 
-    int chessman = IntPiece.getChessman(piece);
-    int color = IntPiece.getColor(piece);
+    int chessman = Piece.getChessman(piece);
+    int color = Piece.getColor(piece);
 
     switch (chessman) {
       case PieceType.PAWN:
@@ -223,7 +223,7 @@ final class Board {
         break;
     }
 
-    board[square] = IntPiece.NOPIECE;
+    board[square] = Piece.NOPIECE;
 
     return piece;
   }
@@ -236,7 +236,7 @@ final class Board {
     int originSquare = Move.getOriginSquare(move);
     int targetSquare = Move.getTargetSquare(move);
     int originPiece = Move.getOriginPiece(move);
-    int originColor = IntPiece.getColor(originPiece);
+    int originColor = Piece.getColor(originPiece);
     int targetPiece = Move.getTargetPiece(move);
     int captureSquare = targetSquare;
     if (type == Move.Type.ENPASSANT) {
@@ -257,7 +257,7 @@ final class Board {
     entry.halfMoveClock = halfMoveClock;
 
     // Remove target piece and update castling rights
-    if (targetPiece != IntPiece.NOPIECE) {
+    if (targetPiece != Piece.NOPIECE) {
       assert targetPiece == board[captureSquare];
       remove(captureSquare);
 
@@ -268,7 +268,7 @@ final class Board {
     assert originPiece == board[originSquare];
     remove(originSquare);
     if (type == Move.Type.PAWNPROMOTION) {
-      put(IntPiece.valueOf(Move.getPromotion(move), originColor), targetSquare);
+      put(Piece.valueOf(Move.getPromotion(move), originColor), targetSquare);
     } else {
       put(originPiece, targetSquare);
     }
@@ -299,7 +299,7 @@ final class Board {
           break;
       }
 
-      assert IntPiece.getChessman(board[rookOriginSquare]) == PieceType.ROOK;
+      assert Piece.getChessman(board[rookOriginSquare]) == PieceType.ROOK;
       int rookPiece = remove(rookOriginSquare);
       put(rookPiece, rookTargetSquare);
     }
@@ -319,7 +319,7 @@ final class Board {
     activeColor = Color.opposite(activeColor);
 
     // Update halfMoveClock
-    if (IntPiece.getChessman(originPiece) == PieceType.PAWN || targetPiece != IntPiece.NOPIECE) {
+    if (Piece.getChessman(originPiece) == PieceType.PAWN || targetPiece != Piece.NOPIECE) {
       halfMoveClock = 0;
     } else {
       ++halfMoveClock;
@@ -343,7 +343,7 @@ final class Board {
     int originSquare = Move.getOriginSquare(move);
     int targetSquare = Move.getTargetSquare(move);
     int originPiece = Move.getOriginPiece(move);
-    int originColor = IntPiece.getColor(originPiece);
+    int originColor = Piece.getColor(originPiece);
     int targetPiece = Move.getTargetPiece(move);
     int captureSquare = targetSquare;
     if (type == Move.Type.ENPASSANT) {
@@ -383,7 +383,7 @@ final class Board {
           break;
       }
 
-      assert IntPiece.getChessman(board[rookTargetSquare]) == PieceType.ROOK;
+      assert Piece.getChessman(board[rookTargetSquare]) == PieceType.ROOK;
       int rookPiece = remove(rookTargetSquare);
       put(rookPiece, rookOriginSquare);
     }
@@ -393,7 +393,7 @@ final class Board {
     put(originPiece, originSquare);
 
     // Restore target piece
-    if (targetPiece != IntPiece.NOPIECE) {
+    if (targetPiece != Piece.NOPIECE) {
       put(targetPiece, captureSquare);
     }
 
