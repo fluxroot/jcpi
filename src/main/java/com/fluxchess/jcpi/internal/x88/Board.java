@@ -31,7 +31,7 @@ final class Board {
   public final long[] queens = new long[IntColor.values.length];
   public final long[] kings = new long[IntColor.values.length];
 
-  public final int[][] castling = new int[IntColor.values.length][IntCastling.values.length];
+  public final int[][] castling = new int[IntColor.values.length][Castling.values.length];
   public int enPassant = Square.NOSQUARE;
   public int activeColor = IntColor.WHITE;
   public int halfMoveClock = 0;
@@ -41,13 +41,13 @@ final class Board {
   private int stackSize = 0;
 
   private static final class State {
-    public final int[][] castling = new int[IntColor.values.length][IntCastling.values.length];
+    public final int[][] castling = new int[IntColor.values.length][Castling.values.length];
     public int enPassant = Square.NOSQUARE;
     public int halfMoveClock = 0;
 
     public State() {
       for (int color : IntColor.values) {
-        for (int castling : IntCastling.values) {
+        for (int castling : Castling.values) {
           this.castling[color][castling] = IntFile.NOFILE;
         }
       }
@@ -75,8 +75,8 @@ final class Board {
 
     // Initialize castling
     for (int color : IntColor.values) {
-      for (int castling : IntCastling.values) {
-        GenericFile genericFile = genericBoard.getCastling(IntColor.toGenericColor(color), IntCastling.toGenericCastling(castling));
+      for (int castling : Castling.values) {
+        GenericFile genericFile = genericBoard.getCastling(IntColor.toGenericColor(color), Castling.toGenericCastling(castling));
         if (genericFile != null) {
           this.castling[color][castling] = IntFile.valueOf(genericFile);
         } else {
@@ -114,9 +114,9 @@ final class Board {
 
     // Set castling
     for (int color : IntColor.values) {
-      for (int castling : IntCastling.values) {
+      for (int castling : Castling.values) {
         if (this.castling[color][castling] != IntFile.NOFILE) {
-          genericBoard.setCastling(IntColor.toGenericColor(color), IntCastling.toGenericCastling(castling), IntFile.toGenericFile(this.castling[color][castling]));
+          genericBoard.setCastling(IntColor.toGenericColor(color), Castling.toGenericCastling(castling), IntFile.toGenericFile(this.castling[color][castling]));
         }
       }
     }
@@ -245,7 +245,7 @@ final class Board {
 
     // Save castling rights
     for (int color : IntColor.values) {
-      for (int castling : IntCastling.values) {
+      for (int castling : Castling.values) {
         entry.castling[color][castling] = this.castling[color][castling];
       }
     }
@@ -405,7 +405,7 @@ final class Board {
 
     // Restore castling rights
     for (int color : IntColor.values) {
-      for (int castling : IntCastling.values) {
+      for (int castling : Castling.values) {
         if (entry.castling[color][castling] != this.castling[color][castling]) {
           this.castling[color][castling] = entry.castling[color][castling];
         }
@@ -415,7 +415,7 @@ final class Board {
 
   private void clearCastling(int color, int castling) {
     assert IntColor.isValid(color);
-    assert IntCastling.isValid(castling);
+    assert Castling.isValid(castling);
 
     if (this.castling[color][castling] != IntFile.NOFILE) {
       this.castling[color][castling] = IntFile.NOFILE;
@@ -427,24 +427,24 @@ final class Board {
 
     switch (square) {
       case Square.a1:
-        clearCastling(IntColor.WHITE, IntCastling.QUEENSIDE);
+        clearCastling(IntColor.WHITE, Castling.QUEENSIDE);
         break;
       case Square.h1:
-        clearCastling(IntColor.WHITE, IntCastling.KINGSIDE);
+        clearCastling(IntColor.WHITE, Castling.KINGSIDE);
         break;
       case Square.a8:
-        clearCastling(IntColor.BLACK, IntCastling.QUEENSIDE);
+        clearCastling(IntColor.BLACK, Castling.QUEENSIDE);
         break;
       case Square.h8:
-        clearCastling(IntColor.BLACK, IntCastling.KINGSIDE);
+        clearCastling(IntColor.BLACK, Castling.KINGSIDE);
         break;
       case Square.e1:
-        clearCastling(IntColor.WHITE, IntCastling.QUEENSIDE);
-        clearCastling(IntColor.WHITE, IntCastling.KINGSIDE);
+        clearCastling(IntColor.WHITE, Castling.QUEENSIDE);
+        clearCastling(IntColor.WHITE, Castling.KINGSIDE);
         break;
       case Square.e8:
-        clearCastling(IntColor.BLACK, IntCastling.QUEENSIDE);
-        clearCastling(IntColor.BLACK, IntCastling.KINGSIDE);
+        clearCastling(IntColor.BLACK, Castling.QUEENSIDE);
+        clearCastling(IntColor.BLACK, Castling.KINGSIDE);
         break;
       default:
         break;

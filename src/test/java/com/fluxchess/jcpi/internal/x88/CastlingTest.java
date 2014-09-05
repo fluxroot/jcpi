@@ -23,45 +23,45 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntCastlingTest {
+public class CastlingTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntCastling.class);
+    assertUtilityClassWellDefined(Castling.class);
   }
 
   @Test
   public void testValues() {
     for (GenericCastling genericCastling : GenericCastling.values()) {
-      assertEquals(genericCastling, IntCastling.toGenericCastling(IntCastling.valueOf(genericCastling)));
-      assertEquals(genericCastling.ordinal(), IntCastling.valueOf(genericCastling));
-      assertEquals(IntCastling.valueOf(genericCastling), IntCastling.values[IntCastling.valueOf(genericCastling)]);
+      assertEquals(genericCastling, Castling.toGenericCastling(Castling.valueOf(genericCastling)));
+      assertEquals(genericCastling.ordinal(), Castling.valueOf(genericCastling));
+      assertEquals(Castling.valueOf(genericCastling), Castling.values[Castling.valueOf(genericCastling)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntCastling.valueOf(null);
+    Castling.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidToGenericCastling() {
-    IntCastling.toGenericCastling(IntCastling.NOCASTLING);
+    Castling.toGenericCastling(Castling.NOCASTLING);
   }
 
   @Test
   public void testIsValid() {
-    for (int castling : IntCastling.values) {
-      assertTrue(IntCastling.isValid(castling));
-      assertEquals(castling, castling & IntCastling.MASK);
+    for (int castling : Castling.values) {
+      assertTrue(Castling.isValid(castling));
+      assertEquals(castling, castling & Castling.MASK);
     }
 
-    assertFalse(IntCastling.isValid(IntCastling.NOCASTLING));
+    assertFalse(Castling.isValid(Castling.NOCASTLING));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntCastling.isValid(-1);
+    Castling.isValid(-1);
   }
 
 }
