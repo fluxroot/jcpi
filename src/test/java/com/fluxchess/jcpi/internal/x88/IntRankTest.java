@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.models;
+package com.fluxchess.jcpi.internal.x88;
 
+import com.fluxchess.jcpi.models.GenericRank;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,56 +23,45 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntColorTest {
+public class IntRankTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntColor.class);
+    assertUtilityClassWellDefined(IntRank.class);
   }
 
   @Test
   public void testValues() {
-    for (GenericColor genericColor : GenericColor.values()) {
-      assertEquals(genericColor, IntColor.toGenericColor(IntColor.valueOf(genericColor)));
-      assertEquals(genericColor.ordinal(), IntColor.valueOf(genericColor));
-      assertEquals(IntColor.valueOf(genericColor), IntColor.values[IntColor.valueOf(genericColor)]);
+    for (GenericRank genericRank : GenericRank.values()) {
+      assertEquals(genericRank, IntRank.toGenericRank(IntRank.valueOf(genericRank)));
+      assertEquals(genericRank.ordinal(), IntRank.valueOf(genericRank));
+      assertEquals(IntRank.valueOf(genericRank), IntRank.values[IntRank.valueOf(genericRank)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntColor.valueOf(null);
+    IntRank.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericColor() {
-    IntColor.toGenericColor(IntColor.NOCOLOR);
+  public void testInvalidToGenericRank() {
+    IntRank.toGenericRank(IntRank.NORANK);
   }
 
   @Test
   public void testIsValid() {
-    for (int color : IntColor.values) {
-      assertTrue(IntColor.isValid(color));
-      assertEquals(color, color & IntColor.MASK);
+    for (int rank : IntRank.values) {
+      assertTrue(IntRank.isValid(rank));
+      assertEquals(rank, rank & IntRank.MASK);
     }
 
-    assertFalse(IntColor.isValid(IntColor.NOCOLOR));
+    assertFalse(IntRank.isValid(IntRank.NORANK));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntColor.isValid(-1);
-  }
-
-  @Test
-  public void testOpposite() {
-    assertEquals(IntColor.WHITE, IntColor.opposite(IntColor.BLACK));
-    assertEquals(IntColor.BLACK, IntColor.opposite(IntColor.WHITE));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidOpposite() {
-    IntColor.opposite(IntColor.NOCOLOR);
+    IntRank.isValid(-1);
   }
 
 }

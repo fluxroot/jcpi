@@ -16,8 +16,6 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericPosition;
-import com.fluxchess.jcpi.models.IntFile;
-import com.fluxchess.jcpi.models.IntRank;
 
 final class Square {
 

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.models;
+package com.fluxchess.jcpi.internal.x88;
 
+import com.fluxchess.jcpi.models.GenericFile;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.models;
+package com.fluxchess.jcpi.internal.x88;
 
+import com.fluxchess.jcpi.models.GenericColor;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,45 +23,56 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntCastlingTest {
+public class IntColorTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntCastling.class);
+    assertUtilityClassWellDefined(IntColor.class);
   }
 
   @Test
   public void testValues() {
-    for (GenericCastling genericCastling : GenericCastling.values()) {
-      assertEquals(genericCastling, IntCastling.toGenericCastling(IntCastling.valueOf(genericCastling)));
-      assertEquals(genericCastling.ordinal(), IntCastling.valueOf(genericCastling));
-      assertEquals(IntCastling.valueOf(genericCastling), IntCastling.values[IntCastling.valueOf(genericCastling)]);
+    for (GenericColor genericColor : GenericColor.values()) {
+      assertEquals(genericColor, IntColor.toGenericColor(IntColor.valueOf(genericColor)));
+      assertEquals(genericColor.ordinal(), IntColor.valueOf(genericColor));
+      assertEquals(IntColor.valueOf(genericColor), IntColor.values[IntColor.valueOf(genericColor)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntCastling.valueOf(null);
+    IntColor.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericCastling() {
-    IntCastling.toGenericCastling(IntCastling.NOCASTLING);
+  public void testInvalidToGenericColor() {
+    IntColor.toGenericColor(IntColor.NOCOLOR);
   }
 
   @Test
   public void testIsValid() {
-    for (int castling : IntCastling.values) {
-      assertTrue(IntCastling.isValid(castling));
-      assertEquals(castling, castling & IntCastling.MASK);
+    for (int color : IntColor.values) {
+      assertTrue(IntColor.isValid(color));
+      assertEquals(color, color & IntColor.MASK);
     }
 
-    assertFalse(IntCastling.isValid(IntCastling.NOCASTLING));
+    assertFalse(IntColor.isValid(IntColor.NOCOLOR));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntCastling.isValid(-1);
+    IntColor.isValid(-1);
+  }
+
+  @Test
+  public void testOpposite() {
+    assertEquals(IntColor.WHITE, IntColor.opposite(IntColor.BLACK));
+    assertEquals(IntColor.BLACK, IntColor.opposite(IntColor.WHITE));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidOpposite() {
+    IntColor.opposite(IntColor.NOCOLOR);
   }
 
 }

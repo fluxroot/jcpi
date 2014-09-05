@@ -15,8 +15,6 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import com.fluxchess.jcpi.models.IntChessman;
-import com.fluxchess.jcpi.models.IntPiece;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

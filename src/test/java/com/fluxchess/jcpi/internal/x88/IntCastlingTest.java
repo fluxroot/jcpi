@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fluxchess.jcpi.models;
+package com.fluxchess.jcpi.internal.x88;
 
+import com.fluxchess.jcpi.models.GenericCastling;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,45 +23,45 @@ import java.lang.reflect.InvocationTargetException;
 import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
-public class IntRankTest {
+public class IntCastlingTest {
 
   @Test
   public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(IntRank.class);
+    assertUtilityClassWellDefined(IntCastling.class);
   }
 
   @Test
   public void testValues() {
-    for (GenericRank genericRank : GenericRank.values()) {
-      assertEquals(genericRank, IntRank.toGenericRank(IntRank.valueOf(genericRank)));
-      assertEquals(genericRank.ordinal(), IntRank.valueOf(genericRank));
-      assertEquals(IntRank.valueOf(genericRank), IntRank.values[IntRank.valueOf(genericRank)]);
+    for (GenericCastling genericCastling : GenericCastling.values()) {
+      assertEquals(genericCastling, IntCastling.toGenericCastling(IntCastling.valueOf(genericCastling)));
+      assertEquals(genericCastling.ordinal(), IntCastling.valueOf(genericCastling));
+      assertEquals(IntCastling.valueOf(genericCastling), IntCastling.values[IntCastling.valueOf(genericCastling)]);
     }
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidValueOf() {
-    IntRank.valueOf(null);
+    IntCastling.valueOf(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericRank() {
-    IntRank.toGenericRank(IntRank.NORANK);
+  public void testInvalidToGenericCastling() {
+    IntCastling.toGenericCastling(IntCastling.NOCASTLING);
   }
 
   @Test
   public void testIsValid() {
-    for (int rank : IntRank.values) {
-      assertTrue(IntRank.isValid(rank));
-      assertEquals(rank, rank & IntRank.MASK);
+    for (int castling : IntCastling.values) {
+      assertTrue(IntCastling.isValid(castling));
+      assertEquals(castling, castling & IntCastling.MASK);
     }
 
-    assertFalse(IntRank.isValid(IntRank.NORANK));
+    assertFalse(IntCastling.isValid(IntCastling.NOCASTLING));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidIsValid() {
-    IntRank.isValid(-1);
+    IntCastling.isValid(-1);
   }
 
 }

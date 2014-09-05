@@ -16,8 +16,6 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericMove;
-import com.fluxchess.jcpi.models.IntChessman;
-import com.fluxchess.jcpi.models.IntPiece;
 
 /**
  * This class represents a move as a int value. The fields are represented by
