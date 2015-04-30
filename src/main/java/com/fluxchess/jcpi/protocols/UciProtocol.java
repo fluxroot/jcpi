@@ -494,7 +494,7 @@ public final class UciProtocol implements IProtocolHandler {
   }
 
   private List<String> getTokens(String s) {
-    List<String> tokens = Arrays.asList(s.trim().split("\\s"));
+    List<String> tokens = new ArrayList<>(Arrays.asList(s.trim().split("\\s")));
 
     for (Iterator<String> iter = tokens.iterator(); iter.hasNext();) {
       // Remove empty tokens

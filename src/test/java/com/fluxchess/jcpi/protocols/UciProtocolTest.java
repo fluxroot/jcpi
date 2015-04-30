@@ -198,6 +198,7 @@ public class UciProtocolTest {
       "position startpos",
       "a b c d position startpos",
       "a b c d position startpos moves a2a3",
+      "a b c d position startpos moves a2a3  e7e5  b2b4",
       "a b c d position startpos x y z",
       "a b c d position startpos moves",
       "a b c d position fen",
@@ -230,6 +231,15 @@ public class UciProtocolTest {
     assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
     assertEquals(1, ((EngineAnalyzeCommand) command).moves.size());
     assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineAnalyzeCommand) command).moves.get(0));
+
+    // "a b c d position startpos moves a2a3  e7e5  b2b4"
+    command = protocol.receive();
+    assertEquals(EngineAnalyzeCommand.class, command.getClass());
+    assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
+    assertEquals(3, ((EngineAnalyzeCommand) command).moves.size());
+    assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineAnalyzeCommand) command).moves.get(0));
+    assertEquals(new GenericMove(GenericPosition.e7, GenericPosition.e5), ((EngineAnalyzeCommand) command).moves.get(1));
+    assertEquals(new GenericMove(GenericPosition.b2, GenericPosition.b4), ((EngineAnalyzeCommand) command).moves.get(2));
 
     // "a b c d position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     command = protocol.receive();
