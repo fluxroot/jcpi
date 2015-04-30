@@ -9,7 +9,7 @@ apply plugin: 'coveralls'
 description = 'Java Chess Protocol Interface'
 
 group = 'com.fluxchess'
-version = '1.4.0'
+version = '1.4.1'
 ext.releaseBranch = '1.4.x'
 
 if (!project.hasProperty('buildNumber') || !(project.hasProperty('branchName') && branchName == releaseBranch)) {
