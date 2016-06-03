@@ -46,6 +46,15 @@ if (!project.hasProperty('s3SecretAccessKey_password')) {
   ext.s3SecretAccessKey_password = 'n/a'
 }
 
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
+
 buildscript {
   repositories {
     mavenCentral()
@@ -202,5 +211,5 @@ uploadArchives {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '1.8'
+  gradleVersion = '2.13'
 }
