@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.jjYBdx4IL.chess</groupId>
     <artifactId>jcpi</artifactId>
-    <version>1.4.1.1-SNAPSHOT</version>
+    <version>1.4.1.1</version>
     <packaging>jar</packaging>
     <name>JCPI</name>
     <description>A Java Chess Protocol Interface</description>
@@ -61,7 +61,7 @@
         <connection>scm:git:git://github.com/jjYBdx4IL/jcpi.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jjYBdx4IL/jcpi.git</developerConnection>
         <url>https://github.com/jjYBdx4IL/jcpi</url>
-        <tag>HEAD</tag>
+        <tag>1.4.1.1</tag>
     </scm>
 
     <organization>
@@ -113,11 +113,11 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <requireNoRepositories/>
-                                <requirePluginVersions/>
-                                <requireReleaseDeps/>
-                                <!--<requireReleaseVersion/>-->
-                                <requireUpperBoundDeps/>
+                                <requireNoRepositories />
+                                <requirePluginVersions />
+                                <requireReleaseDeps />
+                                <!--<requireReleaseVersion />-->
+                                <requireUpperBoundDeps />
                                 <requireJavaVersion>
                                     <version>[1.6,)</version>
                                 </requireJavaVersion>
