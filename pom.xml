@@ -41,18 +41,19 @@
         <license>
             <name>Apache License Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
     <distributionManagement>
         <repository>
             <id>oss.sonatype.org</id>
-            <name>CometD Maven2 Repository</name>
+            <name>oss staging</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
             <id>oss.sonatype.org</id>
-            <name>CometD Maven2 Snapshot Repository</name>
+            <name>oss snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
@@ -116,13 +117,12 @@
                                 <requireNoRepositories />
                                 <requirePluginVersions />
                                 <requireReleaseDeps />
-                                <!--<requireReleaseVersion />-->
                                 <requireUpperBoundDeps />
                                 <requireJavaVersion>
                                     <version>[1.6,)</version>
                                 </requireJavaVersion>
                                 <requireMavenVersion>
-                                    <version>[3.3,)</version>
+                                    <version>[3.0,)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -174,12 +174,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-test-jar</id>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
                         <goals>
                             <goal>jar</goal>
+                            <goal>test-jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -266,7 +279,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>3.0.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
