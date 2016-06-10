@@ -298,6 +298,7 @@ public final class GenericBoard {
     this.fullMoveNumber = fullMoveNumber;
   }
 
+  @Override
   public String toString() {
     String fen = "";
 
@@ -375,6 +376,41 @@ public final class GenericBoard {
     fen += this.fullMoveNumber;
 
     return fen;
+  }
+  
+  /**
+   * Create 2D ASCII art representing the board.
+   * @return multiple lines joined with default line feed character
+   */
+  public String toString2D() {
+    return toString2D(".", " ", System.lineSeparator());
+  }
+  
+  /**
+   * Create 2D ASCII art representing the board.
+   * @param empty placeholder for empty positions
+   * @param fill horizontal filler, set to " " to get a more quadratic loooking output
+   * @param lineSeparator line separator to use
+   * @return multiple lines
+   */
+  public String toString2D(String empty, String fill, String lineSeparator) {
+    StringBuilder sb = new StringBuilder(100);
+    for (int rank = 8; rank >= 1; rank--) {
+      sb.append(rank);
+      for (GenericFile file : GenericFile.values()) {
+	GenericPiece piece = getPiece(GenericPosition.valueOf(file.toString() + rank));
+        sb.append(fill);
+	sb.append(piece != null ? piece.toChar() : empty);
+      }
+      sb.append(lineSeparator);
+    }
+    sb.append(" ");
+    for (GenericFile file : GenericFile.values()) {
+      sb.append(fill);
+      sb.append(file.toChar());
+    }
+    sb.append(lineSeparator);
+    return sb.toString();
   }
 
   public boolean equals(Object obj) {
