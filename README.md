@@ -22,17 +22,10 @@ JCPI jar is also available from our Maven repository.
 
 To use it in Maven use the following code:
 
-    <repositories>
-        <repository>
-            <id>maven.fluxchess.com</id>
-            <url>http://maven.fluxchess.com/release</url>
-        </repository>
-    </repositories>
-
     <dependency>
-        <groupId>com.fluxchess</groupId>
-        <artifactId>jcpi</artifactId>
-        <version>1.4.0</version>
+      <groupId>com.github.jjYBdx4IL.chess</groupId>
+      <artifactId>jcpi</artifactId>
+      <version>1.4.1.1</version>
     </dependency>
 
 To use it in Gradle use the following code:
