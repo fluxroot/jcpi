@@ -25,13 +25,13 @@ To use it in Maven use the following code:
     <dependency>
         <groupId>com.fluxchess.jcpi</groupId>
         <artifactId>jcpi</artifactId>
-        <version>1.5.0</version>
+        <version>1.4.1</version>
     </dependency>
 
 To use it in Gradle use the following code:
 
     dependencies {
-        compile 'com.fluxchess:jcpi:1.5.+'
+        compile 'com.fluxchess.jcpi:jcpi:1.4.1'
     }
 
 
