@@ -194,7 +194,3 @@ uploadArchives {
     doLast { println "Skipping upload. No branch name defined." }
   }
 }
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.10'
-}
