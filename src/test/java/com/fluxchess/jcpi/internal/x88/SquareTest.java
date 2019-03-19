@@ -25,42 +25,42 @@ import static org.junit.Assert.*;
 
 public class SquareTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(Square.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(Square.class);
+	}
 
-  @Test
-  public void testValues() {
-    for (GenericPosition genericPosition : GenericPosition.values()) {
-      int square = Square.valueOf(genericPosition);
-      assertTrue(Square.isLegal(square));
-      assertTrue(Square.isValid(square));
-      assertEquals(genericPosition, Square.toGenericPosition(square));
+	@Test
+	public void testValues() {
+		for (GenericPosition genericPosition : GenericPosition.values()) {
+			int square = Square.valueOf(genericPosition);
+			assertTrue(Square.isLegal(square));
+			assertTrue(Square.isValid(square));
+			assertEquals(genericPosition, Square.toGenericPosition(square));
 
-      int file = Square.getFile(square);
-      assertTrue(File.isValid(file));
-      assertEquals(genericPosition.file.ordinal(), file);
-      assertEquals(genericPosition.file, File.toGenericFile(file));
+			int file = Square.getFile(square);
+			assertTrue(File.isValid(file));
+			assertEquals(genericPosition.file.ordinal(), file);
+			assertEquals(genericPosition.file, File.toGenericFile(file));
 
-      int rank = Square.getRank(square);
-      assertTrue(Rank.isValid(rank));
-      assertEquals(genericPosition.rank.ordinal(), rank);
-      assertEquals(genericPosition.rank, Rank.toGenericRank(rank));
-    }
+			int rank = Square.getRank(square);
+			assertTrue(Rank.isValid(rank));
+			assertEquals(genericPosition.rank.ordinal(), rank);
+			assertEquals(genericPosition.rank, Rank.toGenericRank(rank));
+		}
 
-    assertFalse(Square.isLegal(Square.NOSQUARE));
-    assertFalse(Square.isValid(Square.NOSQUARE));
-  }
+		assertFalse(Square.isLegal(Square.NOSQUARE));
+		assertFalse(Square.isValid(Square.NOSQUARE));
+	}
 
-  @Test
-  public void testX88Squares() {
-    int bitSquare = 0;
-    for (int x88Square : Square.values) {
-      assertEquals(bitSquare, Square.toBitSquare(x88Square));
-      assertEquals(x88Square, Square.toX88Square(bitSquare));
-      ++bitSquare;
-    }
-  }
+	@Test
+	public void testX88Squares() {
+		int bitSquare = 0;
+		for (int x88Square : Square.values) {
+			assertEquals(bitSquare, Square.toBitSquare(x88Square));
+			assertEquals(x88Square, Square.toX88Square(bitSquare));
+			++bitSquare;
+		}
+	}
 
 }

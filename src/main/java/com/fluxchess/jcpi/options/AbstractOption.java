@@ -17,19 +17,19 @@ package com.fluxchess.jcpi.options;
 
 public abstract class AbstractOption {
 
-  public final String name;
+	public final String name;
 
-  public AbstractOption(String name) {
-    if (name == null) throw new IllegalArgumentException();
+	public AbstractOption(String name) {
+		if (name == null) throw new IllegalArgumentException();
 
-    this.name = name;
-  }
+		this.name = name;
+	}
 
-  protected abstract String type();
+	protected abstract String type();
 
-  @Override
-  public String toString() {
-    return String.format("option name %s type %s", name, type());
-  }
+	@Override
+	public String toString() {
+		return String.format("option name %s type %s", name, type());
+	}
 
 }

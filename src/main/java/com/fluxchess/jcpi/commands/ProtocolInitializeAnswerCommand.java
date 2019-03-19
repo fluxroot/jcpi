@@ -23,30 +23,30 @@ import java.util.List;
 
 public class ProtocolInitializeAnswerCommand implements IProtocolCommand {
 
-  public final String name;
-  public final String author;
-  private final List<AbstractOption> options = new ArrayList<AbstractOption>();
+	public final String name;
+	public final String author;
+	private final List<AbstractOption> options = new ArrayList<AbstractOption>();
 
-  public ProtocolInitializeAnswerCommand(String name, String author) {
-    if (name == null) throw new IllegalArgumentException();
-    if (author == null) throw new IllegalArgumentException();
+	public ProtocolInitializeAnswerCommand(String name, String author) {
+		if (name == null) throw new IllegalArgumentException();
+		if (author == null) throw new IllegalArgumentException();
 
-    this.name = name;
-    this.author = author;
-  }
+		this.name = name;
+		this.author = author;
+	}
 
-  public void accept(IProtocol protocol) {
-    protocol.send(this);
-  }
+	public void accept(IProtocol protocol) {
+		protocol.send(this);
+	}
 
-  public Iterator<AbstractOption> optionIterator() {
-    return this.options.iterator();
-  }
+	public Iterator<AbstractOption> optionIterator() {
+		return this.options.iterator();
+	}
 
-  public void addOption(AbstractOption option) {
-    if (option == null) throw new IllegalArgumentException();
+	public void addOption(AbstractOption option) {
+		if (option == null) throw new IllegalArgumentException();
 
-    this.options.add(option);
-  }
+		this.options.add(option);
+	}
 
 }

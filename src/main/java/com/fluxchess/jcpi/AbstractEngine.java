@@ -19,8 +19,8 @@ import com.fluxchess.jcpi.commands.EngineQuitCommand;
 import com.fluxchess.jcpi.commands.IEngine;
 import com.fluxchess.jcpi.commands.IEngineCommand;
 import com.fluxchess.jcpi.commands.IProtocol;
-import com.fluxchess.jcpi.protocols.IProtocolHandler;
 import com.fluxchess.jcpi.protocols.IOProtocolHandler;
+import com.fluxchess.jcpi.protocols.IProtocolHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,50 +33,50 @@ import java.io.PrintStream;
  */
 public abstract class AbstractEngine implements IEngine, Runnable {
 
-  private boolean running = true;
-  private final IProtocolHandler handler;
+	private boolean running = true;
+	private final IProtocolHandler handler;
 
-  protected AbstractEngine() {
-    // Set the standard input and output stream
-    this(new BufferedReader(new InputStreamReader(System.in)), System.out);
-  }
+	protected AbstractEngine() {
+		// Set the standard input and output stream
+		this(new BufferedReader(new InputStreamReader(System.in)), System.out);
+	}
 
-  protected AbstractEngine(BufferedReader input, PrintStream output) {
-    this(new IOProtocolHandler(input, output));
-  }
+	protected AbstractEngine(BufferedReader input, PrintStream output) {
+		this(new IOProtocolHandler(input, output));
+	}
 
-  protected AbstractEngine(IProtocolHandler handler) {
-    if (handler == null) throw new IllegalArgumentException();
+	protected AbstractEngine(IProtocolHandler handler) {
+		if (handler == null) throw new IllegalArgumentException();
 
-    this.handler = handler;
-  }
+		this.handler = handler;
+	}
 
-  public final void run() {
-    try {
-      // Run the engine
-      while (running) {
-        IEngineCommand command = handler.receive();
-        assert command != null;
+	public final void run() {
+		try {
+			// Run the engine
+			while (running) {
+				IEngineCommand command = handler.receive();
+				assert command != null;
 
-        command.accept(this);
-      }
-    } catch (IOException e) {
-      // Something's wrong with the communication channel
-      new EngineQuitCommand().accept(this);
-    }
-  }
+				command.accept(this);
+			}
+		} catch (IOException e) {
+			// Something's wrong with the communication channel
+			new EngineQuitCommand().accept(this);
+		}
+	}
 
-  protected abstract void quit();
+	protected abstract void quit();
 
-  protected final IProtocol getProtocol() {
-    return handler;
-  }
+	protected final IProtocol getProtocol() {
+		return handler;
+	}
 
-  public final void receive(EngineQuitCommand command) {
-    if (command == null) throw new IllegalArgumentException();
+	public final void receive(EngineQuitCommand command) {
+		if (command == null) throw new IllegalArgumentException();
 
-    quit();
-    running = false;
-  }
+		quit();
+		running = false;
+	}
 
 }

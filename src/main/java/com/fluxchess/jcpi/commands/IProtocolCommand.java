@@ -17,6 +17,6 @@ package com.fluxchess.jcpi.commands;
 
 public interface IProtocolCommand {
 
-  void accept(IProtocol protocol);
+	void accept(IProtocol protocol);
 
 }

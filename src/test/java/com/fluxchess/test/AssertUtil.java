@@ -25,23 +25,23 @@ import static org.junit.Assert.assertTrue;
 
 public final class AssertUtil {
 
-  public static void assertUtilityClassWellDefined(Class<?> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-    assertTrue(String.format("%s must be final", clazz), Modifier.isFinal(clazz.getModifiers()));
+	public static void assertUtilityClassWellDefined(Class<?> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+		assertTrue(String.format("%s must be final", clazz), Modifier.isFinal(clazz.getModifiers()));
 
-    assertEquals("There must be only one constructor", 1, clazz.getDeclaredConstructors().length);
+		assertEquals("There must be only one constructor", 1, clazz.getDeclaredConstructors().length);
 
-    Constructor<?> constructor = clazz.getDeclaredConstructor();
-    assertTrue("Constructor must be private", Modifier.isPrivate(constructor.getModifiers()));
+		Constructor<?> constructor = clazz.getDeclaredConstructor();
+		assertTrue("Constructor must be private", Modifier.isPrivate(constructor.getModifiers()));
 
-    for (Method method : clazz.getMethods()) {
-      if (method.getDeclaringClass().equals(clazz)) {
-        assertTrue(String.format("%s is not static", method), Modifier.isStatic(method.getModifiers()));
-      }
-    }
+		for (Method method : clazz.getMethods()) {
+			if (method.getDeclaringClass().equals(clazz)) {
+				assertTrue(String.format("%s is not static", method), Modifier.isStatic(method.getModifiers()));
+			}
+		}
 
-    constructor.setAccessible(true);
-    constructor.newInstance();
-    constructor.setAccessible(false);
-  }
+		constructor.setAccessible(true);
+		constructor.newInstance();
+		constructor.setAccessible(false);
+	}
 
 }

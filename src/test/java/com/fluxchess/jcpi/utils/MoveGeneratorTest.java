@@ -26,23 +26,23 @@ import static org.junit.Assert.assertEquals;
 
 public class MoveGeneratorTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(MoveGenerator.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(MoveGenerator.class);
+	}
 
-  @Test
-  public void testGetGenericMoves() {
-    GenericMove[] genericMoves = MoveGenerator.getGenericMoves(new GenericBoard(GenericBoard.STANDARDSETUP));
-    
-    assertEquals(20, genericMoves.length);
-  }
+	@Test
+	public void testGetGenericMoves() {
+		GenericMove[] genericMoves = MoveGenerator.getGenericMoves(new GenericBoard(GenericBoard.STANDARDSETUP));
 
-  @Test
-  public void testPerft() {
-    long result = MoveGenerator.perft(new GenericBoard(GenericBoard.STANDARDSETUP), 4);
+		assertEquals(20, genericMoves.length);
+	}
 
-    assertEquals(197281, result);
-  }
+	@Test
+	public void testPerft() {
+		long result = MoveGenerator.perft(new GenericBoard(GenericBoard.STANDARDSETUP), 4);
+
+		assertEquals(197281, result);
+	}
 
 }

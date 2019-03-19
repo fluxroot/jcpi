@@ -24,64 +24,64 @@ import java.io.PrintStream;
 
 public final class IOProtocolHandler implements IProtocolHandler {
 
-  private final BufferedReader input;
-  private final PrintStream output;
-  private IProtocolHandler protocol = null;
+	private final BufferedReader input;
+	private final PrintStream output;
+	private IProtocolHandler protocol = null;
 
-  public IOProtocolHandler(BufferedReader input, PrintStream output) {
-    if (input == null) throw new IllegalArgumentException();
-    if (output == null) throw new IllegalArgumentException();
+	public IOProtocolHandler(BufferedReader input, PrintStream output) {
+		if (input == null) throw new IllegalArgumentException();
+		if (output == null) throw new IllegalArgumentException();
 
-    this.input = input;
-    this.output = output;
-  }
+		this.input = input;
+		this.output = output;
+	}
 
-  @Override
-  public IEngineCommand receive() throws IOException {
-    // Wait for the protocol keyword
-    while (protocol == null) {
-      String line = input.readLine();
-      if (line != null) {
-        line = line.trim();
+	@Override
+	public IEngineCommand receive() throws IOException {
+		// Wait for the protocol keyword
+		while (protocol == null) {
+			String line = input.readLine();
+			if (line != null) {
+				line = line.trim();
 
-        if (UciProtocol.isProtocolKeyword(line)) {
-          protocol = new UciProtocol(input, output);
-        }
-      } else {
-        // Something's wrong with the communication channel
-        throw new EOFException();
-      }
-    }
+				if (UciProtocol.isProtocolKeyword(line)) {
+					protocol = new UciProtocol(input, output);
+				}
+			} else {
+				// Something's wrong with the communication channel
+				throw new EOFException();
+			}
+		}
 
-    return protocol.receive();
-  }
+		return protocol.receive();
+	}
 
-  @Override
-  public void send(ProtocolInitializeAnswerCommand command) {
-    if (protocol == null) throw new NoProtocolException();
+	@Override
+	public void send(ProtocolInitializeAnswerCommand command) {
+		if (protocol == null) throw new NoProtocolException();
 
-    protocol.send(command);
-  }
+		protocol.send(command);
+	}
 
-  @Override
-  public void send(ProtocolReadyAnswerCommand command) {
-    if (protocol == null) throw new NoProtocolException();
+	@Override
+	public void send(ProtocolReadyAnswerCommand command) {
+		if (protocol == null) throw new NoProtocolException();
 
-    protocol.send(command);
-  }
+		protocol.send(command);
+	}
 
-  @Override
-  public void send(ProtocolBestMoveCommand command) {
-    if (protocol == null) throw new NoProtocolException();
+	@Override
+	public void send(ProtocolBestMoveCommand command) {
+		if (protocol == null) throw new NoProtocolException();
 
-    protocol.send(command);
-  }
+		protocol.send(command);
+	}
 
-  @Override
-  public void send(ProtocolInformationCommand command) {
-    if (protocol == null) throw new NoProtocolException();
+	@Override
+	public void send(ProtocolInformationCommand command) {
+		if (protocol == null) throw new NoProtocolException();
 
-    protocol.send(command);
-  }
+		protocol.send(command);
+	}
 
 }

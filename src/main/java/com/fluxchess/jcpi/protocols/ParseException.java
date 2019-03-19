@@ -17,13 +17,13 @@ package com.fluxchess.jcpi.protocols;
 
 public class ParseException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  public ParseException() {
-  }
+	public ParseException() {
+	}
 
-  public ParseException(String message) {
-    super(message);
-  }
+	public ParseException(String message) {
+		super(message);
+	}
 
 }

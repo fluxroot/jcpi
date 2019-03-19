@@ -25,43 +25,43 @@ import static org.junit.Assert.*;
 
 public class RankTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(Rank.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(Rank.class);
+	}
 
-  @Test
-  public void testValues() {
-    for (GenericRank genericRank : GenericRank.values()) {
-      assertEquals(genericRank, Rank.toGenericRank(Rank.valueOf(genericRank)));
-      assertEquals(genericRank.ordinal(), Rank.valueOf(genericRank));
-      assertEquals(Rank.valueOf(genericRank), Rank.values[Rank.valueOf(genericRank)]);
-    }
-  }
+	@Test
+	public void testValues() {
+		for (GenericRank genericRank : GenericRank.values()) {
+			assertEquals(genericRank, Rank.toGenericRank(Rank.valueOf(genericRank)));
+			assertEquals(genericRank.ordinal(), Rank.valueOf(genericRank));
+			assertEquals(Rank.valueOf(genericRank), Rank.values[Rank.valueOf(genericRank)]);
+		}
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    Rank.valueOf(null);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		Rank.valueOf(null);
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericRank() {
-    Rank.toGenericRank(Rank.NORANK);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidToGenericRank() {
+		Rank.toGenericRank(Rank.NORANK);
+	}
 
-  @Test
-  public void testIsValid() {
-    for (int rank : Rank.values) {
-      assertTrue(Rank.isValid(rank));
-      assertEquals(rank, rank & Rank.MASK);
-    }
+	@Test
+	public void testIsValid() {
+		for (int rank : Rank.values) {
+			assertTrue(Rank.isValid(rank));
+			assertEquals(rank, rank & Rank.MASK);
+		}
 
-    assertFalse(Rank.isValid(Rank.NORANK));
-  }
+		assertFalse(Rank.isValid(Rank.NORANK));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidIsValid() {
-    Rank.isValid(-1);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidIsValid() {
+		Rank.isValid(-1);
+	}
 
 }

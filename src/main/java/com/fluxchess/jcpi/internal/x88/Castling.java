@@ -25,54 +25,54 @@ import com.fluxchess.jcpi.models.GenericCastling;
  */
 final class Castling {
 
-  public static final int MASK = 0x3;
+	public static final int MASK = 0x3;
 
-  public static final int KINGSIDE = 0;
-  public static final int QUEENSIDE = 1;
-  public static final int NOCASTLING = 2;
+	public static final int KINGSIDE = 0;
+	public static final int QUEENSIDE = 1;
+	public static final int NOCASTLING = 2;
 
-  public static final int[] values = {
-    KINGSIDE, QUEENSIDE
-  };
+	public static final int[] values = {
+			KINGSIDE, QUEENSIDE
+	};
 
-  private Castling() {
-  }
+	private Castling() {
+	}
 
-  public static int valueOf(GenericCastling genericCastling) {
-    if (genericCastling == null) throw new IllegalArgumentException();
+	public static int valueOf(GenericCastling genericCastling) {
+		if (genericCastling == null) throw new IllegalArgumentException();
 
-    switch (genericCastling) {
-      case KINGSIDE:
-        return KINGSIDE;
-      case QUEENSIDE:
-        return QUEENSIDE;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+		switch (genericCastling) {
+			case KINGSIDE:
+				return KINGSIDE;
+			case QUEENSIDE:
+				return QUEENSIDE;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-  public static GenericCastling toGenericCastling(int castling) {
-    switch (castling) {
-      case KINGSIDE:
-        return GenericCastling.KINGSIDE;
-      case QUEENSIDE:
-        return GenericCastling.QUEENSIDE;
-      case NOCASTLING:
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static GenericCastling toGenericCastling(int castling) {
+		switch (castling) {
+			case KINGSIDE:
+				return GenericCastling.KINGSIDE;
+			case QUEENSIDE:
+				return GenericCastling.QUEENSIDE;
+			case NOCASTLING:
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-  public static boolean isValid(int castling) {
-    switch (castling) {
-      case KINGSIDE:
-      case QUEENSIDE:
-        return true;
-      case NOCASTLING:
-        return false;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static boolean isValid(int castling) {
+		switch (castling) {
+			case KINGSIDE:
+			case QUEENSIDE:
+				return true;
+			case NOCASTLING:
+				return false;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
 }

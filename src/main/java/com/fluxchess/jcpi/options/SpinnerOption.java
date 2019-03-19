@@ -17,24 +17,24 @@ package com.fluxchess.jcpi.options;
 
 public final class SpinnerOption extends AbstractValueOption {
 
-  public final int minValue;
-  public final int maxValue;
+	public final int minValue;
+	public final int maxValue;
 
-  public SpinnerOption(String name, int defaultValue, int minValue, int maxValue) {
-    super(name, Integer.toString(defaultValue));
+	public SpinnerOption(String name, int defaultValue, int minValue, int maxValue) {
+		super(name, Integer.toString(defaultValue));
 
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-  }
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+	}
 
-  @Override
-  protected String type() {
-    return "spin";
-  }
+	@Override
+	protected String type() {
+		return "spin";
+	}
 
-  @Override
-  public String toString() {
-    return String.format("%s min %d max %d", super.toString(), minValue, maxValue);
-  }
+	@Override
+	public String toString() {
+		return String.format("%s min %d max %d", super.toString(), minValue, maxValue);
+	}
 
 }

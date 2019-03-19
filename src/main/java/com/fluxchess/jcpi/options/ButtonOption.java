@@ -17,13 +17,13 @@ package com.fluxchess.jcpi.options;
 
 public final class ButtonOption extends AbstractOption {
 
-  public ButtonOption(String name) {
-    super(name);
-  }
+	public ButtonOption(String name) {
+		super(name);
+	}
 
-  @Override
-  protected String type() {
-    return "button";
-  }
+	@Override
+	protected String type() {
+		return "button";
+	}
 
 }

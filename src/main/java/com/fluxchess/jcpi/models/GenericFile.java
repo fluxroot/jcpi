@@ -19,114 +19,114 @@ import java.util.NoSuchElementException;
 
 public enum GenericFile {
 
-  Fa('a'),
-  Fb('b'),
-  Fc('c'),
-  Fd('d'),
-  Fe('e'),
-  Ff('f'),
-  Fg('g'),
-  Fh('h');
+	Fa('a'),
+	Fb('b'),
+	Fc('c'),
+	Fd('d'),
+	Fe('e'),
+	Ff('f'),
+	Fg('g'),
+	Fh('h');
 
-  private final char token;
+	private final char token;
 
-  private GenericFile(char token) {
-    this.token = token;
-  }
+	private GenericFile(char token) {
+		this.token = token;
+	}
 
-  private static GenericFile _valueOf(char token) {
-    for (GenericFile file : values()) {
-      if (Character.toLowerCase(token) == Character.toLowerCase(file.token)) {
-        return file;
-      }
-    }
+	private static GenericFile _valueOf(char token) {
+		for (GenericFile file : values()) {
+			if (Character.toLowerCase(token) == Character.toLowerCase(file.token)) {
+				return file;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public static GenericFile valueOf(char token) {
-    GenericFile file = _valueOf(token);
-    if (file != null) {
-      return file;
-    } else {
-      throw new IllegalArgumentException();
-    }
-  }
+	public static GenericFile valueOf(char token) {
+		GenericFile file = _valueOf(token);
+		if (file != null) {
+			return file;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
 
-  public static boolean isValid(char token) {
-    return _valueOf(token) != null;
-  }
+	public static boolean isValid(char token) {
+		return _valueOf(token) != null;
+	}
 
-  private GenericFile _prev(int i) {
-    if (i < 0) throw new IllegalArgumentException();
+	private GenericFile _prev(int i) {
+		if (i < 0) throw new IllegalArgumentException();
 
-    int position = this.ordinal() - i;
-    if (position >= 0) {
-      return values()[position];
-    } else {
-      return null;
-    }
-  }
+		int position = this.ordinal() - i;
+		if (position >= 0) {
+			return values()[position];
+		} else {
+			return null;
+		}
+	}
 
-  public GenericFile prev() {
-    return prev(1);
-  }
+	public GenericFile prev() {
+		return prev(1);
+	}
 
-  public GenericFile prev(int i) {
-    GenericFile file = _prev(i);
-    if (file != null) {
-      return file;
-    } else {
-      throw new NoSuchElementException();
-    }
-  }
+	public GenericFile prev(int i) {
+		GenericFile file = _prev(i);
+		if (file != null) {
+			return file;
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
 
-  public boolean hasPrev() {
-    return hasPrev(1);
-  }
+	public boolean hasPrev() {
+		return hasPrev(1);
+	}
 
-  public boolean hasPrev(int i) {
-    return _prev(i) != null;
-  }
+	public boolean hasPrev(int i) {
+		return _prev(i) != null;
+	}
 
-  private GenericFile _next(int i) {
-    if (i < 0) throw new IllegalArgumentException();
+	private GenericFile _next(int i) {
+		if (i < 0) throw new IllegalArgumentException();
 
-    int position = this.ordinal() + i;
-    if (position < values().length) {
-      return values()[position];
-    } else {
-      return null;
-    }
-  }
+		int position = this.ordinal() + i;
+		if (position < values().length) {
+			return values()[position];
+		} else {
+			return null;
+		}
+	}
 
-  public GenericFile next() {
-    return next(1);
-  }
+	public GenericFile next() {
+		return next(1);
+	}
 
-  public GenericFile next(int i) {
-    GenericFile file = _next(i);
-    if (file != null) {
-      return file;
-    } else {
-      throw new NoSuchElementException();
-    }
-  }
+	public GenericFile next(int i) {
+		GenericFile file = _next(i);
+		if (file != null) {
+			return file;
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
 
-  public boolean hasNext() {
-    return hasNext(1);
-  }
+	public boolean hasNext() {
+		return hasNext(1);
+	}
 
-  public boolean hasNext(int i) {
-    return _next(i) != null;
-  }
+	public boolean hasNext(int i) {
+		return _next(i) != null;
+	}
 
-  public char toChar() {
-    return this.token;
-  }
+	public char toChar() {
+		return this.token;
+	}
 
-  public String toString() {
-    return Character.toString(this.token);
-  }
+	public String toString() {
+		return Character.toString(this.token);
+	}
 
 }

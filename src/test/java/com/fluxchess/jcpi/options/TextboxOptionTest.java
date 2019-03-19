@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 public class TextboxOptionTest {
 
-  @Test
-  public void test() {
-    TextboxOption option = new TextboxOption("NalimovPath", "C:\\");
-    assertEquals("option name NalimovPath type string default C:\\", option.toString());
-  }
+	@Test
+	public void test() {
+		TextboxOption option = new TextboxOption("NalimovPath", "C:\\");
+		assertEquals("option name NalimovPath type string default C:\\", option.toString());
+	}
 
 }

@@ -25,66 +25,66 @@ import com.fluxchess.jcpi.models.GenericColor;
  */
 final class Color {
 
-  public static final int MASK = 0x3;
+	public static final int MASK = 0x3;
 
-  public static final int WHITE = 0;
-  public static final int BLACK = 1;
-  public static final int NOCOLOR = 2;
+	public static final int WHITE = 0;
+	public static final int BLACK = 1;
+	public static final int NOCOLOR = 2;
 
-  public static final int[] values = {
-    WHITE, BLACK
-  };
+	public static final int[] values = {
+			WHITE, BLACK
+	};
 
-  private Color() {
-  }
+	private Color() {
+	}
 
-  public static int valueOf(GenericColor genericColor) {
-    if (genericColor == null) throw new IllegalArgumentException();
+	public static int valueOf(GenericColor genericColor) {
+		if (genericColor == null) throw new IllegalArgumentException();
 
-    switch (genericColor) {
-      case WHITE:
-        return WHITE;
-      case BLACK:
-        return BLACK;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+		switch (genericColor) {
+			case WHITE:
+				return WHITE;
+			case BLACK:
+				return BLACK;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-  public static GenericColor toGenericColor(int color) {
-    switch (color) {
-      case WHITE:
-        return GenericColor.WHITE;
-      case BLACK:
-        return GenericColor.BLACK;
-      case NOCOLOR:
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static GenericColor toGenericColor(int color) {
+		switch (color) {
+			case WHITE:
+				return GenericColor.WHITE;
+			case BLACK:
+				return GenericColor.BLACK;
+			case NOCOLOR:
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-  public static boolean isValid(int color) {
-    switch (color) {
-      case WHITE:
-      case BLACK:
-        return true;
-      case NOCOLOR:
-        return false;
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static boolean isValid(int color) {
+		switch (color) {
+			case WHITE:
+			case BLACK:
+				return true;
+			case NOCOLOR:
+				return false;
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-  public static int opposite(int color) {
-    switch (color) {
-      case WHITE:
-        return BLACK;
-      case BLACK:
-        return WHITE;
-      case NOCOLOR:
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static int opposite(int color) {
+		switch (color) {
+			case WHITE:
+				return BLACK;
+			case BLACK:
+				return WHITE;
+			case NOCOLOR:
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
 }

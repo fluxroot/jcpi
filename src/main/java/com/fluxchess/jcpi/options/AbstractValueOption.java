@@ -17,17 +17,17 @@ package com.fluxchess.jcpi.options;
 
 public abstract class AbstractValueOption extends AbstractOption {
 
-  public final String defaultValue;
+	public final String defaultValue;
 
-  public AbstractValueOption(String name, String defaultValue) {
-    super(name);
+	public AbstractValueOption(String name, String defaultValue) {
+		super(name);
 
-    this.defaultValue = defaultValue;
-  }
+		this.defaultValue = defaultValue;
+	}
 
-  @Override
-  public String toString() {
-    return String.format("%s default %s", super.toString(), defaultValue);
-  }
+	@Override
+	public String toString() {
+		return String.format("%s default %s", super.toString(), defaultValue);
+	}
 
 }

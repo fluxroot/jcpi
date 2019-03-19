@@ -25,43 +25,43 @@ import static org.junit.Assert.*;
 
 public class FileTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(File.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(File.class);
+	}
 
-  @Test
-  public void testValues() {
-    for (GenericFile genericFile : GenericFile.values()) {
-      assertEquals(genericFile, File.toGenericFile(File.valueOf(genericFile)));
-      assertEquals(genericFile.ordinal(), File.valueOf(genericFile));
-      assertEquals(File.valueOf(genericFile), File.values[File.valueOf(genericFile)]);
-    }
-  }
+	@Test
+	public void testValues() {
+		for (GenericFile genericFile : GenericFile.values()) {
+			assertEquals(genericFile, File.toGenericFile(File.valueOf(genericFile)));
+			assertEquals(genericFile.ordinal(), File.valueOf(genericFile));
+			assertEquals(File.valueOf(genericFile), File.values[File.valueOf(genericFile)]);
+		}
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    File.valueOf(null);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		File.valueOf(null);
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericFile() {
-    File.toGenericFile(File.NOFILE);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidToGenericFile() {
+		File.toGenericFile(File.NOFILE);
+	}
 
-  @Test
-  public void testIsValid() {
-    for (int file : File.values) {
-      assertTrue(File.isValid(file));
-      assertEquals(file, file & File.MASK);
-    }
+	@Test
+	public void testIsValid() {
+		for (int file : File.values) {
+			assertTrue(File.isValid(file));
+			assertEquals(file, file & File.MASK);
+		}
 
-    assertFalse(File.isValid(File.NOFILE));
-  }
+		assertFalse(File.isValid(File.NOFILE));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidIsValid() {
-    File.isValid(-1);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidIsValid() {
+		File.isValid(-1);
+	}
 
 }

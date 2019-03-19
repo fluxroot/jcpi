@@ -17,8 +17,8 @@ package com.fluxchess.jcpi.commands;
 
 public class EngineInitializeRequestCommand implements IEngineCommand {
 
-  public void accept(IEngine engine) {
-    engine.receive(this);
-  }
+	public void accept(IEngine engine) {
+		engine.receive(this);
+	}
 
 }

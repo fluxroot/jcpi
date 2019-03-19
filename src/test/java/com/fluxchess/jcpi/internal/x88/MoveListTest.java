@@ -21,14 +21,14 @@ import static org.junit.Assert.assertEquals;
 
 public class MoveListTest {
 
-  @Test
-  public void test() {
-    MoveList moveList = new MoveList();
+	@Test
+	public void test() {
+		MoveList moveList = new MoveList();
 
-    assertEquals(0, moveList.size);
+		assertEquals(0, moveList.size);
 
-    moveList.moves[moveList.size++] = 1;
-    assertEquals(1, moveList.size);
-  }
+		moveList.moves[moveList.size++] = 1;
+		assertEquals(1, moveList.size);
+	}
 
 }

@@ -17,10 +17,10 @@ package com.fluxchess.test.classes;
 
 public final class ValidUtilityClass {
 
-  private ValidUtilityClass() {
-  }
+	private ValidUtilityClass() {
+	}
 
-  public static void validStaticMethod() {
-  }
+	public static void validStaticMethod() {
+	}
 
 }

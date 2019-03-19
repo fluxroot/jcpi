@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 public class CheckboxOptionTest {
 
-  @Test
-  public void test() {
-    CheckboxOption option = new CheckboxOption("Nullmove", true);
-    assertEquals("option name Nullmove type check default true", option.toString());
-  }
+	@Test
+	public void test() {
+		CheckboxOption option = new CheckboxOption("Nullmove", true);
+		assertEquals("option name Nullmove type check default true", option.toString());
+	}
 
 }

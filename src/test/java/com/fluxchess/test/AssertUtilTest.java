@@ -24,34 +24,34 @@ import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 
 public class AssertUtilTest {
 
-  @Test(expected = AssertionError.class)
-  public void testFinalModifier() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(NonFinalClass.class);
-  }
+	@Test(expected = AssertionError.class)
+	public void testFinalModifier() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(NonFinalClass.class);
+	}
 
-  @Test(expected = AssertionError.class)
-  public void testOneConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(MultipleConstructorClass.class);
-  }
+	@Test(expected = AssertionError.class)
+	public void testOneConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(MultipleConstructorClass.class);
+	}
 
-  @Test(expected = AssertionError.class)
-  public void testPrivateConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(PublicConstructorClass.class);
-  }
+	@Test(expected = AssertionError.class)
+	public void testPrivateConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(PublicConstructorClass.class);
+	}
 
-  @Test(expected = AssertionError.class)
-  public void testProtectedConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(ProtectedConstructorClass.class);
-  }
+	@Test(expected = AssertionError.class)
+	public void testProtectedConstructor() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(ProtectedConstructorClass.class);
+	}
 
-  @Test(expected = AssertionError.class)
-  public void testStaticMethodModifier() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(NonStaticMethodClass.class);
-  }
+	@Test(expected = AssertionError.class)
+	public void testStaticMethodModifier() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(NonStaticMethodClass.class);
+	}
 
-  @Test
-  public void testValidUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(ValidUtilityClass.class);
-  }
+	@Test
+	public void testValidUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(ValidUtilityClass.class);
+	}
 
 }

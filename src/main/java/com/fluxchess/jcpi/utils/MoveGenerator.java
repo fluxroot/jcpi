@@ -21,15 +21,15 @@ import com.fluxchess.jcpi.models.GenericMove;
 
 public final class MoveGenerator {
 
-  private MoveGenerator() {
-  }
+	private MoveGenerator() {
+	}
 
-  public static GenericMove[] getGenericMoves(GenericBoard genericBoard) {
-    return new X88MoveGenerator(genericBoard).getGenericMoves();
-  }
+	public static GenericMove[] getGenericMoves(GenericBoard genericBoard) {
+		return new X88MoveGenerator(genericBoard).getGenericMoves();
+	}
 
-  public static long perft(GenericBoard genericBoard, int depth) {
-    return new X88MoveGenerator(genericBoard).perft(depth);
-  }
+	public static long perft(GenericBoard genericBoard, int depth) {
+		return new X88MoveGenerator(genericBoard).perft(depth);
+	}
 
 }

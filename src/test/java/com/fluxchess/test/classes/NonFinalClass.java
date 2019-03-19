@@ -16,4 +16,5 @@
 package com.fluxchess.test.classes;
 
 public class NonFinalClass {
+
 }

@@ -21,8 +21,8 @@ import com.fluxchess.jcpi.models.GenericMove;
  * This class represents a move as a int value. The fields are represented by
  * the following bits.
  * <p/>
- *  0 -  2: type
- *  3 -  9: origin square
+ * 0 -  2: type
+ * 3 -  9: origin square
  * 10 - 16: target square
  * 17 - 21: origin piece
  * 22 - 26: target piece
@@ -30,141 +30,142 @@ import com.fluxchess.jcpi.models.GenericMove;
  */
 final class Move {
 
-  public static final class Type {
-    public static final int MASK = 0x7;
+	public static final class Type {
 
-    public static final int NORMAL = 0;
-    public static final int PAWNDOUBLE = 1;
-    public static final int PAWNPROMOTION = 2;
-    public static final int ENPASSANT = 3;
-    public static final int CASTLING = 4;
+		public static final int MASK = 0x7;
 
-    public static final int[] values = {
-      NORMAL,
-      PAWNDOUBLE,
-      PAWNPROMOTION,
-      ENPASSANT,
-      CASTLING
-    };
+		public static final int NORMAL = 0;
+		public static final int PAWNDOUBLE = 1;
+		public static final int PAWNPROMOTION = 2;
+		public static final int ENPASSANT = 3;
+		public static final int CASTLING = 4;
 
-    private Type() {
-    }
-  }
+		public static final int[] values = {
+				NORMAL,
+				PAWNDOUBLE,
+				PAWNPROMOTION,
+				ENPASSANT,
+				CASTLING
+		};
 
-  private static final int TYPE_SHIFT = 0;
-  private static final int TYPE_MASK = Type.MASK << TYPE_SHIFT;
-  private static final int ORIGINSQUARE_SHIFT = 3;
-  private static final int ORIGINSQUARE_MASK = Square.MASK << ORIGINSQUARE_SHIFT;
-  private static final int TARGETSQUARE_SHIFT = 10;
-  private static final int TARGETSQUARE_MASK = Square.MASK << TARGETSQUARE_SHIFT;
-  private static final int ORIGINPIECE_SHIFT = 17;
-  private static final int ORIGINPIECE_MASK = Piece.MASK << ORIGINPIECE_SHIFT;
-  private static final int TARGETPIECE_SHIFT = 22;
-  private static final int TARGETPIECE_MASK = Piece.MASK << TARGETPIECE_SHIFT;
-  private static final int PROMOTION_SHIFT = 27;
-  private static final int PROMOTION_MASK = PieceType.MASK << PROMOTION_SHIFT;
+		private Type() {
+		}
+	}
 
-  private Move() {
-  }
+	private static final int TYPE_SHIFT = 0;
+	private static final int TYPE_MASK = Type.MASK << TYPE_SHIFT;
+	private static final int ORIGINSQUARE_SHIFT = 3;
+	private static final int ORIGINSQUARE_MASK = Square.MASK << ORIGINSQUARE_SHIFT;
+	private static final int TARGETSQUARE_SHIFT = 10;
+	private static final int TARGETSQUARE_MASK = Square.MASK << TARGETSQUARE_SHIFT;
+	private static final int ORIGINPIECE_SHIFT = 17;
+	private static final int ORIGINPIECE_MASK = Piece.MASK << ORIGINPIECE_SHIFT;
+	private static final int TARGETPIECE_SHIFT = 22;
+	private static final int TARGETPIECE_MASK = Piece.MASK << TARGETPIECE_SHIFT;
+	private static final int PROMOTION_SHIFT = 27;
+	private static final int PROMOTION_MASK = PieceType.MASK << PROMOTION_SHIFT;
 
-  public static int valueOf(int type, int originSquare, int targetSquare, int originPiece, int targetPiece, int promotion) {
-    int move = 0;
+	private Move() {
+	}
 
-    // Encode type
-    assert type == Type.NORMAL
-      || type == Type.PAWNDOUBLE
-      || type == Type.PAWNPROMOTION
-      || type == Type.ENPASSANT
-      || type == Type.CASTLING;
-    move |= type << TYPE_SHIFT;
+	public static int valueOf(int type, int originSquare, int targetSquare, int originPiece, int targetPiece, int promotion) {
+		int move = 0;
 
-    // Encode origin square
-    assert Square.isValid(originSquare);
-    move |= originSquare << ORIGINSQUARE_SHIFT;
+		// Encode type
+		assert type == Type.NORMAL
+				|| type == Type.PAWNDOUBLE
+				|| type == Type.PAWNPROMOTION
+				|| type == Type.ENPASSANT
+				|| type == Type.CASTLING;
+		move |= type << TYPE_SHIFT;
 
-    // Encode target square
-    assert Square.isValid(targetSquare);
-    move |= targetSquare << TARGETSQUARE_SHIFT;
+		// Encode origin square
+		assert Square.isValid(originSquare);
+		move |= originSquare << ORIGINSQUARE_SHIFT;
 
-    // Encode origin piece
-    assert Piece.isValid(originPiece);
-    move |= originPiece << ORIGINPIECE_SHIFT;
+		// Encode target square
+		assert Square.isValid(targetSquare);
+		move |= targetSquare << TARGETSQUARE_SHIFT;
 
-    // Encode target piece
-    assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
-    move |= targetPiece << TARGETPIECE_SHIFT;
+		// Encode origin piece
+		assert Piece.isValid(originPiece);
+		move |= originPiece << ORIGINPIECE_SHIFT;
 
-    // Encode promotion
-    assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
-      || promotion == PieceType.NOCHESSMAN;
-    move |= promotion << PROMOTION_SHIFT;
+		// Encode target piece
+		assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
+		move |= targetPiece << TARGETPIECE_SHIFT;
 
-    return move;
-  }
+		// Encode promotion
+		assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
+				|| promotion == PieceType.NOCHESSMAN;
+		move |= promotion << PROMOTION_SHIFT;
 
-  public static GenericMove toGenericMove(int move) {
-    int type = getType(move);
-    int originSquare = getOriginSquare(move);
-    int targetSquare = getTargetSquare(move);
+		return move;
+	}
 
-    switch (type) {
-      case Type.NORMAL:
-      case Type.PAWNDOUBLE:
-      case Type.ENPASSANT:
-      case Type.CASTLING:
-        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare));
-      case Type.PAWNPROMOTION:
-        return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare), PieceType.toGenericChessman(getPromotion(move)));
-      default:
-        throw new IllegalArgumentException();
-    }
-  }
+	public static GenericMove toGenericMove(int move) {
+		int type = getType(move);
+		int originSquare = getOriginSquare(move);
+		int targetSquare = getTargetSquare(move);
 
-  public static int getType(int move) {
-    int type = (move & TYPE_MASK) >>> TYPE_SHIFT;
-    assert type == Type.NORMAL
-      || type == Type.PAWNDOUBLE
-      || type == Type.PAWNPROMOTION
-      || type == Type.ENPASSANT
-      || type == Type.CASTLING;
+		switch (type) {
+			case Type.NORMAL:
+			case Type.PAWNDOUBLE:
+			case Type.ENPASSANT:
+			case Type.CASTLING:
+				return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare));
+			case Type.PAWNPROMOTION:
+				return new GenericMove(Square.toGenericPosition(originSquare), Square.toGenericPosition(targetSquare), PieceType.toGenericChessman(getPromotion(move)));
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
 
-    return type;
-  }
+	public static int getType(int move) {
+		int type = (move & TYPE_MASK) >>> TYPE_SHIFT;
+		assert type == Type.NORMAL
+				|| type == Type.PAWNDOUBLE
+				|| type == Type.PAWNPROMOTION
+				|| type == Type.ENPASSANT
+				|| type == Type.CASTLING;
 
-  public static int getOriginSquare(int move) {
-    int originSquare = (move & ORIGINSQUARE_MASK) >>> ORIGINSQUARE_SHIFT;
-    assert Square.isValid(originSquare);
+		return type;
+	}
 
-    return originSquare;
-  }
+	public static int getOriginSquare(int move) {
+		int originSquare = (move & ORIGINSQUARE_MASK) >>> ORIGINSQUARE_SHIFT;
+		assert Square.isValid(originSquare);
 
-  public static int getTargetSquare(int move) {
-    int targetSquare = (move & TARGETSQUARE_MASK) >>> TARGETSQUARE_SHIFT;
-    assert Square.isValid(targetSquare);
+		return originSquare;
+	}
 
-    return targetSquare;
-  }
+	public static int getTargetSquare(int move) {
+		int targetSquare = (move & TARGETSQUARE_MASK) >>> TARGETSQUARE_SHIFT;
+		assert Square.isValid(targetSquare);
 
-  public static int getOriginPiece(int move) {
-    int originPiece = (move & ORIGINPIECE_MASK) >>> ORIGINPIECE_SHIFT;
-    assert Piece.isValid(originPiece);
+		return targetSquare;
+	}
 
-    return originPiece;
-  }
+	public static int getOriginPiece(int move) {
+		int originPiece = (move & ORIGINPIECE_MASK) >>> ORIGINPIECE_SHIFT;
+		assert Piece.isValid(originPiece);
 
-  public static int getTargetPiece(int move) {
-    int targetPiece = (move & TARGETPIECE_MASK) >>> TARGETPIECE_SHIFT;
-    assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
+		return originPiece;
+	}
 
-    return targetPiece;
-  }
+	public static int getTargetPiece(int move) {
+		int targetPiece = (move & TARGETPIECE_MASK) >>> TARGETPIECE_SHIFT;
+		assert Piece.isValid(targetPiece) || targetPiece == Piece.NOPIECE;
 
-  public static int getPromotion(int move) {
-    int promotion = (move & PROMOTION_MASK) >>> PROMOTION_SHIFT;
-    assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
-      || promotion == PieceType.NOCHESSMAN;
+		return targetPiece;
+	}
 
-    return promotion;
-  }
+	public static int getPromotion(int move) {
+		int promotion = (move & PROMOTION_MASK) >>> PROMOTION_SHIFT;
+		assert (PieceType.isValid(promotion) && PieceType.isValidPromotion(promotion))
+				|| promotion == PieceType.NOCHESSMAN;
+
+		return promotion;
+	}
 
 }

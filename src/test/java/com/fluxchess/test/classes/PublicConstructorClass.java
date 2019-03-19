@@ -17,7 +17,7 @@ package com.fluxchess.test.classes;
 
 public final class PublicConstructorClass {
 
-  public PublicConstructorClass() {
-  }
+	public PublicConstructorClass() {
+	}
 
 }

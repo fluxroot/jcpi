@@ -29,138 +29,138 @@ import static org.junit.Assert.*;
 
 public class AbstractEngineTest {
 
-  private BufferedReader testInput = null;
-  private PrintStream testOutput = null;
-  private BufferedReader engineInput = null;
-  private PrintStream engineOutput = null;
+	private BufferedReader testInput = null;
+	private PrintStream testOutput = null;
+	private BufferedReader engineInput = null;
+	private PrintStream engineOutput = null;
 
-  @Before
-  public void setUp() throws IOException {
-    PipedInputStream testInputPipe = new PipedInputStream();
-    PipedOutputStream testOutputPipe = new PipedOutputStream();
-    PipedInputStream engineInputPipe = new PipedInputStream(testOutputPipe);
-    PipedOutputStream engineOutputPipe = new PipedOutputStream(testInputPipe);
+	@Before
+	public void setUp() throws IOException {
+		PipedInputStream testInputPipe = new PipedInputStream();
+		PipedOutputStream testOutputPipe = new PipedOutputStream();
+		PipedInputStream engineInputPipe = new PipedInputStream(testOutputPipe);
+		PipedOutputStream engineOutputPipe = new PipedOutputStream(testInputPipe);
 
-    testInput = new BufferedReader(new InputStreamReader(testInputPipe));
-    testOutput = new PrintStream(testOutputPipe);
-    engineInput = new BufferedReader(new InputStreamReader(engineInputPipe));
-    engineOutput = new PrintStream(engineOutputPipe);
-  }
+		testInput = new BufferedReader(new InputStreamReader(testInputPipe));
+		testOutput = new PrintStream(testOutputPipe);
+		engineInput = new BufferedReader(new InputStreamReader(engineInputPipe));
+		engineOutput = new PrintStream(engineOutputPipe);
+	}
 
-  @After
-  public void tearDown() {
-  }
+	@After
+	public void tearDown() {
+	}
 
-  @Test
-  public void testAbstractEngine() throws IOException, InterruptedException {
-    final Semaphore semaphore = new Semaphore(0);
-    Engine engine = new Engine(engineInput, engineOutput) {
-      @Override
-      protected void quit() {
-        semaphore.release();
-      }
-    };
-    Thread thread = new Thread(engine);
-    thread.start();
+	@Test
+	public void testAbstractEngine() throws IOException, InterruptedException {
+		final Semaphore semaphore = new Semaphore(0);
+		Engine engine = new Engine(engineInput, engineOutput) {
+			@Override
+			protected void quit() {
+				semaphore.release();
+			}
+		};
+		Thread thread = new Thread(engine);
+		thread.start();
 
-    testOutput.println("uci");
-    testOutput.println("quit");
+		testOutput.println("uci");
+		testOutput.println("quit");
 
-    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
+		assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
 
-    thread.join(10000);
-    assertFalse(thread.isAlive());
-  }
+		thread.join(10000);
+		assertFalse(thread.isAlive());
+	}
 
-  @Test
-  public void testStreamClose() throws InterruptedException {
-    final Semaphore semaphore = new Semaphore(0);
-    Engine engine = new Engine(engineInput, engineOutput) {
-      @Override
-      protected void quit() {
-        semaphore.release();
-      }
-    };
-    Thread thread = new Thread(engine);
-    thread.start();
+	@Test
+	public void testStreamClose() throws InterruptedException {
+		final Semaphore semaphore = new Semaphore(0);
+		Engine engine = new Engine(engineInput, engineOutput) {
+			@Override
+			protected void quit() {
+				semaphore.release();
+			}
+		};
+		Thread thread = new Thread(engine);
+		thread.start();
 
-    testOutput.close();
+		testOutput.close();
 
-    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
+		assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
 
-    thread.join(10000);
-    assertFalse(thread.isAlive());
-  }
+		thread.join(10000);
+		assertFalse(thread.isAlive());
+	}
 
-  @Test
-  public void testGetUciProtocol() throws Exception {
-    final Semaphore semaphore = new Semaphore(0);
-    Engine engine = new Engine(engineInput, engineOutput) {
-      @Override
-      public void receive(EngineInitializeRequestCommand command) {
-        semaphore.release();
-      }
-    };
-    Thread thread = new Thread(engine);
-    thread.start();
+	@Test
+	public void testGetUciProtocol() throws Exception {
+		final Semaphore semaphore = new Semaphore(0);
+		Engine engine = new Engine(engineInput, engineOutput) {
+			@Override
+			public void receive(EngineInitializeRequestCommand command) {
+				semaphore.release();
+			}
+		};
+		Thread thread = new Thread(engine);
+		thread.start();
 
-    testOutput.println("uci");
+		testOutput.println("uci");
 
-    assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
-    assertNotNull(engine.getProtocol());
-    assertEquals(IOProtocolHandler.class, engine.getProtocol().getClass());
+		assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
+		assertNotNull(engine.getProtocol());
+		assertEquals(IOProtocolHandler.class, engine.getProtocol().getClass());
 
-    testOutput.println("quit");
+		testOutput.println("quit");
 
-    thread.join(10000);
-  }
+		thread.join(10000);
+	}
 
-  class Engine extends AbstractEngine {
+	class Engine extends AbstractEngine {
 
-    public Engine(BufferedReader input, PrintStream output) {
-      super(input, output);
-    }
+		public Engine(BufferedReader input, PrintStream output) {
+			super(input, output);
+		}
 
-    @Override
-    protected void quit() {
-    }
+		@Override
+		protected void quit() {
+		}
 
-    @Override
-    public void receive(EngineInitializeRequestCommand command) {
-    }
+		@Override
+		public void receive(EngineInitializeRequestCommand command) {
+		}
 
-    @Override
-    public void receive(EngineSetOptionCommand command) {
-    }
+		@Override
+		public void receive(EngineSetOptionCommand command) {
+		}
 
-    @Override
-    public void receive(EngineDebugCommand command) {
-    }
+		@Override
+		public void receive(EngineDebugCommand command) {
+		}
 
-    @Override
-    public void receive(EngineReadyRequestCommand command) {
-    }
+		@Override
+		public void receive(EngineReadyRequestCommand command) {
+		}
 
-    @Override
-    public void receive(EngineNewGameCommand command) {
-    }
+		@Override
+		public void receive(EngineNewGameCommand command) {
+		}
 
-    @Override
-    public void receive(EngineAnalyzeCommand command) {
-    }
+		@Override
+		public void receive(EngineAnalyzeCommand command) {
+		}
 
-    @Override
-    public void receive(EngineStartCalculatingCommand command) {
-    }
+		@Override
+		public void receive(EngineStartCalculatingCommand command) {
+		}
 
-    @Override
-    public void receive(EngineStopCalculatingCommand command) {
-    }
+		@Override
+		public void receive(EngineStopCalculatingCommand command) {
+		}
 
-    @Override
-    public void receive(EnginePonderHitCommand command) {
-    }
+		@Override
+		public void receive(EnginePonderHitCommand command) {
+		}
 
-  }
+	}
 
 }
