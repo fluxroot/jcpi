@@ -38,7 +38,9 @@ tasks.named<Jar>("jar").configure {
 	manifest {
 		attributes(
 				"Implementation-Title" to project.name,
-				"Implementation-Version" to project.version)
+				"Implementation-Version" to project.the<VersioningExtension>().version,
+				"Build-Number" to project.the<VersioningExtension>().buildNo,
+				"Commit-Id" to project.the<VersioningExtension>().commitId)
 	}
 }
 
