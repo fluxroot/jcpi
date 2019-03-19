@@ -18,17 +18,9 @@ package com.fluxchess.jcpi.internal.x88;
 import com.fluxchess.jcpi.models.GenericColor;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
-import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
 public class ColorTest {
-
-	@Test
-	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		assertUtilityClassWellDefined(Color.class);
-	}
 
 	@Test
 	public void testValues() {
