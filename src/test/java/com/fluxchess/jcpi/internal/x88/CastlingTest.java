@@ -18,17 +18,9 @@ package com.fluxchess.jcpi.internal.x88;
 import com.fluxchess.jcpi.models.GenericCastling;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
-import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
 public class CastlingTest {
-
-	@Test
-	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		assertUtilityClassWellDefined(Castling.class);
-	}
 
 	@Test
 	public void testValues() {

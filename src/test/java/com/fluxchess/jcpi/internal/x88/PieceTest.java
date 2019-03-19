@@ -18,17 +18,9 @@ package com.fluxchess.jcpi.internal.x88;
 import com.fluxchess.jcpi.models.GenericPiece;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
-import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.*;
 
 public class PieceTest {
-
-	@Test
-	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		assertUtilityClassWellDefined(Piece.class);
-	}
 
 	@Test
 	public void testValues() {

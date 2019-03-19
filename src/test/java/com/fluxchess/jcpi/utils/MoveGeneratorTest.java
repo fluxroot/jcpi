@@ -19,17 +19,9 @@ import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericMove;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
-import static com.fluxchess.test.AssertUtil.assertUtilityClassWellDefined;
 import static org.junit.Assert.assertEquals;
 
 public class MoveGeneratorTest {
-
-	@Test
-	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		assertUtilityClassWellDefined(MoveGenerator.class);
-	}
 
 	@Test
 	public void testGetGenericMoves() {
