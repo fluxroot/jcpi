@@ -17,10 +17,10 @@ package com.fluxchess.test.classes;
 
 public final class NonStaticMethodClass {
 
-  private NonStaticMethodClass() {
-  }
+	private NonStaticMethodClass() {
+	}
 
-  public void nonStaticMethod() {
-  }
+	public void nonStaticMethod() {
+	}
 
 }

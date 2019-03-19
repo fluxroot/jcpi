@@ -17,11 +17,11 @@ package com.fluxchess.jcpi.protocols;
 
 public class NoProtocolException extends RuntimeException {
 
-  public NoProtocolException() {
-  }
+	public NoProtocolException() {
+	}
 
-  public NoProtocolException(String message) {
-    super(message);
-  }
+	public NoProtocolException(String message) {
+		super(message);
+	}
 
 }

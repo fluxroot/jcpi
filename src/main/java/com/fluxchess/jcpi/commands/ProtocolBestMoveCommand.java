@@ -19,21 +19,21 @@ import com.fluxchess.jcpi.models.GenericMove;
 
 public class ProtocolBestMoveCommand implements IProtocolCommand {
 
-  public final GenericMove bestMove;
-  public final GenericMove ponderMove;
+	public final GenericMove bestMove;
+	public final GenericMove ponderMove;
 
-  public ProtocolBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
-    this.bestMove = bestMove;
-    if (bestMove == null) {
-      // Force null on ponder move
-      this.ponderMove = null;
-    } else {
-      this.ponderMove = ponderMove;
-    }
-  }
+	public ProtocolBestMoveCommand(GenericMove bestMove, GenericMove ponderMove) {
+		this.bestMove = bestMove;
+		if (bestMove == null) {
+			// Force null on ponder move
+			this.ponderMove = null;
+		} else {
+			this.ponderMove = ponderMove;
+		}
+	}
 
-  public void accept(IProtocol protocol) {
-    protocol.send(this);
-  }
+	public void accept(IProtocol protocol) {
+		protocol.send(this);
+	}
 
 }

@@ -17,7 +17,7 @@ package com.fluxchess.test.classes;
 
 public final class ProtectedConstructorClass {
 
-  protected ProtectedConstructorClass() {
-  }
+	protected ProtectedConstructorClass() {
+	}
 
 }

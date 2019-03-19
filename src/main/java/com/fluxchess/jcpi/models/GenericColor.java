@@ -17,68 +17,68 @@ package com.fluxchess.jcpi.models;
 
 public enum GenericColor {
 
-  WHITE('w'),
-  BLACK('b');
+	WHITE('w'),
+	BLACK('b');
 
-  private final char token;
+	private final char token;
 
-  private GenericColor(char token) {
-    this.token = token;
-  }
+	private GenericColor(char token) {
+		this.token = token;
+	}
 
-  private static GenericColor _valueOf(char token) {
-    for (GenericColor color : values()) {
-      if (Character.toLowerCase(token) == Character.toLowerCase(color.token)) {
-        return color;
-      }
-    }
+	private static GenericColor _valueOf(char token) {
+		for (GenericColor color : values()) {
+			if (Character.toLowerCase(token) == Character.toLowerCase(color.token)) {
+				return color;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public static GenericColor valueOf(char token) {
-    GenericColor color = _valueOf(token);
-    if (color != null) {
-      return color;
-    } else {
-      throw new IllegalArgumentException();
-    }
-  }
+	public static GenericColor valueOf(char token) {
+		GenericColor color = _valueOf(token);
+		if (color != null) {
+			return color;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
 
-  public static boolean isValid(char token) {
-    return _valueOf(token) != null;
-  }
+	public static boolean isValid(char token) {
+		return _valueOf(token) != null;
+	}
 
-  public static GenericColor colorOf(char c) {
-    if (Character.isLowerCase(c)) {
-      return BLACK;
-    } else {
-      return WHITE;
-    }
-  }
+	public static GenericColor colorOf(char c) {
+		if (Character.isLowerCase(c)) {
+			return BLACK;
+		} else {
+			return WHITE;
+		}
+	}
 
-  public char transform(char c) {
-    if (this == WHITE) {
-      return Character.toUpperCase(c);
-    } else {
-      assert this == BLACK;
+	public char transform(char c) {
+		if (this == WHITE) {
+			return Character.toUpperCase(c);
+		} else {
+			assert this == BLACK;
 
-      return Character.toLowerCase(c);
-    }
-  }
+			return Character.toLowerCase(c);
+		}
+	}
 
-  public GenericColor opposite() {
-    if (this == WHITE) {
-      return BLACK;
-    } else {
-      assert this == BLACK;
+	public GenericColor opposite() {
+		if (this == WHITE) {
+			return BLACK;
+		} else {
+			assert this == BLACK;
 
-      return WHITE;
-    }
-  }
+			return WHITE;
+		}
+	}
 
-  public char toChar() {
-    return this.token;
-  }
+	public char toChar() {
+		return this.token;
+	}
 
 }

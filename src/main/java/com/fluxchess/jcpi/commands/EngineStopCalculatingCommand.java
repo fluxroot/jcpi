@@ -17,8 +17,8 @@ package com.fluxchess.jcpi.commands;
 
 public class EngineStopCalculatingCommand implements IEngineCommand {
 
-  public void accept(IEngine engine) {
-    engine.receive(this);
-  }
+	public void accept(IEngine engine) {
+		engine.receive(this);
+	}
 
 }

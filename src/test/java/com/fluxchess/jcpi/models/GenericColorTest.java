@@ -22,45 +22,45 @@ import static org.junit.Assert.assertFalse;
 
 public class GenericColorTest {
 
-  @Test
-  public final void testValueOf() {
-    assertEquals(GenericColor.WHITE, GenericColor.valueOf('w'));
-    assertEquals(GenericColor.BLACK, GenericColor.valueOf('b'));
-  }
+	@Test
+	public final void testValueOf() {
+		assertEquals(GenericColor.WHITE, GenericColor.valueOf('w'));
+		assertEquals(GenericColor.BLACK, GenericColor.valueOf('b'));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public final void testInvalidValueOf() {
-    GenericColor.valueOf('a');
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public final void testInvalidValueOf() {
+		GenericColor.valueOf('a');
+	}
 
-  @Test
-  public final void testIsValid() {
-    assertFalse(GenericColor.isValid('a'));
-  }
+	@Test
+	public final void testIsValid() {
+		assertFalse(GenericColor.isValid('a'));
+	}
 
-  @Test
-  public final void testColorOf() {
-    assertEquals(GenericColor.WHITE, GenericColor.colorOf('A'));
-    assertEquals(GenericColor.BLACK, GenericColor.colorOf('a'));
-  }
+	@Test
+	public final void testColorOf() {
+		assertEquals(GenericColor.WHITE, GenericColor.colorOf('A'));
+		assertEquals(GenericColor.BLACK, GenericColor.colorOf('a'));
+	}
 
-  @Test
-  public final void testTransform() {
-    assertEquals('A', GenericColor.WHITE.transform('A'));
-    assertEquals('A', GenericColor.WHITE.transform('a'));
-    assertEquals('a', GenericColor.BLACK.transform('A'));
-  }
+	@Test
+	public final void testTransform() {
+		assertEquals('A', GenericColor.WHITE.transform('A'));
+		assertEquals('A', GenericColor.WHITE.transform('a'));
+		assertEquals('a', GenericColor.BLACK.transform('A'));
+	}
 
-  @Test
-  public final void testOpposite() {
-    assertEquals(GenericColor.WHITE, GenericColor.BLACK.opposite());
-    assertEquals(GenericColor.BLACK, GenericColor.WHITE.opposite());
-  }
+	@Test
+	public final void testOpposite() {
+		assertEquals(GenericColor.WHITE, GenericColor.BLACK.opposite());
+		assertEquals(GenericColor.BLACK, GenericColor.WHITE.opposite());
+	}
 
-  @Test
-  public final void testToChar() {
-    assertEquals('w', GenericColor.WHITE.toChar());
-    assertEquals('b', GenericColor.BLACK.toChar());
-  }
+	@Test
+	public final void testToChar() {
+		assertEquals('w', GenericColor.WHITE.toChar());
+		assertEquals('b', GenericColor.BLACK.toChar());
+	}
 
 }

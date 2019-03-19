@@ -22,25 +22,25 @@ import static org.junit.Assert.assertFalse;
 
 public class GenericPieceTest {
 
-  @Test
-  public void testValueOf() {
-    assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
-    assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
-  }
+	@Test
+	public void testValueOf() {
+		assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
+		assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    GenericPiece.valueOf('x');
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		GenericPiece.valueOf('x');
+	}
 
-  @Test
-  public void testIsValid() {
-    assertFalse(GenericPiece.isValid('x'));
-  }
+	@Test
+	public void testIsValid() {
+		assertFalse(GenericPiece.isValid('x'));
+	}
 
-  @Test
-  public void testToChar() {
-    assertEquals('q', GenericPiece.BLACKQUEEN.toChar());
-  }
+	@Test
+	public void testToChar() {
+		assertEquals('q', GenericPiece.BLACKQUEEN.toChar());
+	}
 
 }

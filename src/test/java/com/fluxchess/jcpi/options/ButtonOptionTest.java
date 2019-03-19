@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 public class ButtonOptionTest {
 
-  @Test
-  public void test() {
-    ButtonOption option = new ButtonOption("Clear Hash");
-    assertEquals("option name Clear Hash type button", option.toString());
-  }
+	@Test
+	public void test() {
+		ButtonOption option = new ButtonOption("Clear Hash");
+		assertEquals("option name Clear Hash type button", option.toString());
+	}
 
 }

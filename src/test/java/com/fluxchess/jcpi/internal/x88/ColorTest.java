@@ -25,54 +25,54 @@ import static org.junit.Assert.*;
 
 public class ColorTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(Color.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(Color.class);
+	}
 
-  @Test
-  public void testValues() {
-    for (GenericColor genericColor : GenericColor.values()) {
-      assertEquals(genericColor, Color.toGenericColor(Color.valueOf(genericColor)));
-      assertEquals(genericColor.ordinal(), Color.valueOf(genericColor));
-      assertEquals(Color.valueOf(genericColor), Color.values[Color.valueOf(genericColor)]);
-    }
-  }
+	@Test
+	public void testValues() {
+		for (GenericColor genericColor : GenericColor.values()) {
+			assertEquals(genericColor, Color.toGenericColor(Color.valueOf(genericColor)));
+			assertEquals(genericColor.ordinal(), Color.valueOf(genericColor));
+			assertEquals(Color.valueOf(genericColor), Color.values[Color.valueOf(genericColor)]);
+		}
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    Color.valueOf(null);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		Color.valueOf(null);
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericColor() {
-    Color.toGenericColor(Color.NOCOLOR);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidToGenericColor() {
+		Color.toGenericColor(Color.NOCOLOR);
+	}
 
-  @Test
-  public void testIsValid() {
-    for (int color : Color.values) {
-      assertTrue(Color.isValid(color));
-      assertEquals(color, color & Color.MASK);
-    }
+	@Test
+	public void testIsValid() {
+		for (int color : Color.values) {
+			assertTrue(Color.isValid(color));
+			assertEquals(color, color & Color.MASK);
+		}
 
-    assertFalse(Color.isValid(Color.NOCOLOR));
-  }
+		assertFalse(Color.isValid(Color.NOCOLOR));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidIsValid() {
-    Color.isValid(-1);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidIsValid() {
+		Color.isValid(-1);
+	}
 
-  @Test
-  public void testOpposite() {
-    assertEquals(Color.WHITE, Color.opposite(Color.BLACK));
-    assertEquals(Color.BLACK, Color.opposite(Color.WHITE));
-  }
+	@Test
+	public void testOpposite() {
+		assertEquals(Color.WHITE, Color.opposite(Color.BLACK));
+		assertEquals(Color.BLACK, Color.opposite(Color.WHITE));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidOpposite() {
-    Color.opposite(Color.NOCOLOR);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidOpposite() {
+		Color.opposite(Color.NOCOLOR);
+	}
 
 }

@@ -17,10 +17,10 @@ package com.fluxchess.test.classes;
 
 public final class MultipleConstructorClass {
 
-  private MultipleConstructorClass() {
-  }
+	private MultipleConstructorClass() {
+	}
 
-  private MultipleConstructorClass(int i) {
-  }
+	private MultipleConstructorClass(int i) {
+	}
 
 }

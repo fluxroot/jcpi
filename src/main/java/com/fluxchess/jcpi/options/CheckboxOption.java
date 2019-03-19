@@ -17,13 +17,13 @@ package com.fluxchess.jcpi.options;
 
 public final class CheckboxOption extends AbstractValueOption {
 
-  public CheckboxOption(String name, boolean defaultValue) {
-    super(name, Boolean.toString(defaultValue));
-  }
+	public CheckboxOption(String name, boolean defaultValue) {
+		super(name, Boolean.toString(defaultValue));
+	}
 
-  @Override
-  protected String type() {
-    return "check";
-  }
+	@Override
+	protected String type() {
+		return "check";
+	}
 
 }

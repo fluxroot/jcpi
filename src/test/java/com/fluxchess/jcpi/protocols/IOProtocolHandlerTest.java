@@ -22,32 +22,32 @@ import java.io.*;
 
 public class IOProtocolHandlerTest {
 
-  @Test(expected = NoProtocolException.class)
-  public void testSend() {
-    String[] commands = {""};
-    IOProtocolHandler handler = createIOProtocolHandler(commands);
+	@Test(expected = NoProtocolException.class)
+	public void testSend() {
+		String[] commands = {""};
+		IOProtocolHandler handler = createIOProtocolHandler(commands);
 
-    handler.send(new ProtocolInitializeAnswerCommand("Engine 1.0", "Author"));
-  }
+		handler.send(new ProtocolInitializeAnswerCommand("Engine 1.0", "Author"));
+	}
 
-  private IOProtocolHandler createIOProtocolHandler(String[] commands) {
-    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-    PrintStream stream = new PrintStream(buffer);
-    try {
-      for (String command : commands) {
-        stream.println(command);
-      }
-    } finally {
-      if (buffer != null) {
-        try {
-          buffer.close();
-        } catch (IOException e) {
-          // Do nothing
-        }
-      }
-    }
+	private IOProtocolHandler createIOProtocolHandler(String[] commands) {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		PrintStream stream = new PrintStream(buffer);
+		try {
+			for (String command : commands) {
+				stream.println(command);
+			}
+		} finally {
+			if (buffer != null) {
+				try {
+					buffer.close();
+				} catch (IOException e) {
+					// Do nothing
+				}
+			}
+		}
 
-    return new IOProtocolHandler(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray()))), new PrintStream(new ByteArrayOutputStream()));
-  }
+		return new IOProtocolHandler(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray()))), new PrintStream(new ByteArrayOutputStream()));
+	}
 
 }

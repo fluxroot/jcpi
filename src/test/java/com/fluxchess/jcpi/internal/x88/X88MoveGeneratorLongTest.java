@@ -21,9 +21,9 @@ import java.io.IOException;
 
 public final class X88MoveGeneratorLongTest extends AbstractX88PerftTest {
 
-  public static void main(String[] args) throws IOException, IllegalNotationException {
-    X88MoveGeneratorLongTest x88MoveGeneratorLongTest = new X88MoveGeneratorLongTest();
-    x88MoveGeneratorLongTest.testPerft(6);
-  }
+	public static void main(String[] args) throws IOException, IllegalNotationException {
+		X88MoveGeneratorLongTest x88MoveGeneratorLongTest = new X88MoveGeneratorLongTest();
+		x88MoveGeneratorLongTest.testPerft(6);
+	}
 
 }

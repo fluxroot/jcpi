@@ -17,16 +17,16 @@ package com.fluxchess.jcpi.commands;
 
 public class ProtocolReadyAnswerCommand implements IProtocolCommand {
 
-  public final String token;
+	public final String token;
 
-  public ProtocolReadyAnswerCommand(String token) {
-    if (token == null) throw new IllegalArgumentException();
+	public ProtocolReadyAnswerCommand(String token) {
+		if (token == null) throw new IllegalArgumentException();
 
-    this.token = token;
-  }
+		this.token = token;
+	}
 
-  public void accept(IProtocol protocol) {
-    protocol.send(this);
-  }
+	public void accept(IProtocol protocol) {
+		protocol.send(this);
+	}
 
 }

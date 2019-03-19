@@ -22,9 +22,9 @@ import java.io.IOException;
 
 public class X88MoveGeneratorTest extends AbstractX88PerftTest {
 
-  @Test
-  public void test() throws IOException, IllegalNotationException {
-    testPerft(4);
-  }
+	@Test
+	public void test() throws IOException, IllegalNotationException {
+		testPerft(4);
+	}
 
 }

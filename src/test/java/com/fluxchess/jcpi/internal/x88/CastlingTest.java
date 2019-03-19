@@ -25,43 +25,43 @@ import static org.junit.Assert.*;
 
 public class CastlingTest {
 
-  @Test
-  public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    assertUtilityClassWellDefined(Castling.class);
-  }
+	@Test
+	public void testUtilityClass() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		assertUtilityClassWellDefined(Castling.class);
+	}
 
-  @Test
-  public void testValues() {
-    for (GenericCastling genericCastling : GenericCastling.values()) {
-      assertEquals(genericCastling, Castling.toGenericCastling(Castling.valueOf(genericCastling)));
-      assertEquals(genericCastling.ordinal(), Castling.valueOf(genericCastling));
-      assertEquals(Castling.valueOf(genericCastling), Castling.values[Castling.valueOf(genericCastling)]);
-    }
-  }
+	@Test
+	public void testValues() {
+		for (GenericCastling genericCastling : GenericCastling.values()) {
+			assertEquals(genericCastling, Castling.toGenericCastling(Castling.valueOf(genericCastling)));
+			assertEquals(genericCastling.ordinal(), Castling.valueOf(genericCastling));
+			assertEquals(Castling.valueOf(genericCastling), Castling.values[Castling.valueOf(genericCastling)]);
+		}
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    Castling.valueOf(null);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		Castling.valueOf(null);
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidToGenericCastling() {
-    Castling.toGenericCastling(Castling.NOCASTLING);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidToGenericCastling() {
+		Castling.toGenericCastling(Castling.NOCASTLING);
+	}
 
-  @Test
-  public void testIsValid() {
-    for (int castling : Castling.values) {
-      assertTrue(Castling.isValid(castling));
-      assertEquals(castling, castling & Castling.MASK);
-    }
+	@Test
+	public void testIsValid() {
+		for (int castling : Castling.values) {
+			assertTrue(Castling.isValid(castling));
+			assertEquals(castling, castling & Castling.MASK);
+		}
 
-    assertFalse(Castling.isValid(Castling.NOCASTLING));
-  }
+		assertFalse(Castling.isValid(Castling.NOCASTLING));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidIsValid() {
-    Castling.isValid(-1);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidIsValid() {
+		Castling.isValid(-1);
+	}
 
 }

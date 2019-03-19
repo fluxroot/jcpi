@@ -22,6 +22,6 @@ import java.io.IOException;
 
 public interface IProtocolHandler extends IProtocol {
 
-  IEngineCommand receive() throws IOException;
+	IEngineCommand receive() throws IOException;
 
 }

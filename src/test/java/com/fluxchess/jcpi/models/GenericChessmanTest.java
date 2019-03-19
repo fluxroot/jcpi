@@ -21,67 +21,67 @@ import static org.junit.Assert.*;
 
 public class GenericChessmanTest {
 
-  @Test
-  public void testValueOf() {
-    assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
-    assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
-  }
+	@Test
+	public void testValueOf() {
+		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
+		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOf() {
-    GenericChessman.valueOf('x');
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOf() {
+		GenericChessman.valueOf('x');
+	}
 
-  @Test
-  public void testIsValid() {
-    assertFalse(GenericChessman.isValid('x'));
-  }
+	@Test
+	public void testIsValid() {
+		assertFalse(GenericChessman.isValid('x'));
+	}
 
-  @Test
-  public void testValueOfPromotion() {
-    assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
-    assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
-  }
+	@Test
+	public void testValueOfPromotion() {
+		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
+		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidValueOfPromotion() {
-    GenericChessman.valueOfPromotion('p');
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidValueOfPromotion() {
+		GenericChessman.valueOfPromotion('p');
+	}
 
-  @Test
-  public void testIsValidPromotion() {
-    assertFalse(GenericChessman.isValidPromotion('p'));
-  }
+	@Test
+	public void testIsValidPromotion() {
+		assertFalse(GenericChessman.isValidPromotion('p'));
+	}
 
-  @Test
-  public void testIsLegalPromotion() {
-    assertTrue(GenericChessman.QUEEN.isLegalPromotion());
-    assertFalse(GenericChessman.PAWN.isLegalPromotion());
-  }
+	@Test
+	public void testIsLegalPromotion() {
+		assertTrue(GenericChessman.QUEEN.isLegalPromotion());
+		assertFalse(GenericChessman.PAWN.isLegalPromotion());
+	}
 
-  @Test
-  public void testIsSliding() {
-    assertTrue(GenericChessman.BISHOP.isSliding());
-    assertTrue(GenericChessman.ROOK.isSliding());
-    assertTrue(GenericChessman.QUEEN.isSliding());
-    assertFalse(GenericChessman.PAWN.isSliding());
-    assertFalse(GenericChessman.KNIGHT.isSliding());
-    assertFalse(GenericChessman.KING.isSliding());
-  }
+	@Test
+	public void testIsSliding() {
+		assertTrue(GenericChessman.BISHOP.isSliding());
+		assertTrue(GenericChessman.ROOK.isSliding());
+		assertTrue(GenericChessman.QUEEN.isSliding());
+		assertFalse(GenericChessman.PAWN.isSliding());
+		assertFalse(GenericChessman.KNIGHT.isSliding());
+		assertFalse(GenericChessman.KING.isSliding());
+	}
 
-  @Test
-  public void testToCharAlgebraic() {
-    assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
-  }
+	@Test
+	public void testToCharAlgebraic() {
+		assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
+	}
 
-  @Test(expected = UnsupportedOperationException.class)
-  public void testInvalidToCharAlgebraic() {
-    GenericChessman.PAWN.toCharAlgebraic();
-  }
+	@Test(expected = UnsupportedOperationException.class)
+	public void testInvalidToCharAlgebraic() {
+		GenericChessman.PAWN.toCharAlgebraic();
+	}
 
-  @Test
-  public void testToChar() {
-    assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
-  }
+	@Test
+	public void testToChar() {
+		assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
+	}
 
 }

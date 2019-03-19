@@ -21,13 +21,13 @@ import static org.junit.Assert.assertEquals;
 
 public class VersionInfoTest {
 
-  @Test
-  public void testVersionInfo() {
-    VersionInfo versionInfo = VersionInfo.current();
+	@Test
+	public void testVersionInfo() {
+		VersionInfo versionInfo = VersionInfo.current();
 
-    assertEquals("0.1.0-alpha.1", versionInfo.getVersion());
-    assertEquals("dev", versionInfo.getBuildNumber());
-    assertEquals("rev", versionInfo.getRevisionNumber());
-  }
+		assertEquals("0.1.0-alpha.1", versionInfo.getVersion());
+		assertEquals("dev", versionInfo.getBuildNumber());
+		assertEquals("rev", versionInfo.getRevisionNumber());
+	}
 
 }

@@ -17,17 +17,24 @@ package com.fluxchess.jcpi.commands;
 
 public interface IEngine {
 
-  void receive(EngineInitializeRequestCommand command);
-  void receive(EngineSetOptionCommand command);
-  void receive(EngineQuitCommand command);
+	void receive(EngineInitializeRequestCommand command);
 
-  void receive(EngineDebugCommand command);
-  void receive(EngineReadyRequestCommand command);
+	void receive(EngineSetOptionCommand command);
 
-  void receive(EngineNewGameCommand command);
-  void receive(EngineAnalyzeCommand command);
-  void receive(EngineStartCalculatingCommand command);
-  void receive(EngineStopCalculatingCommand command);
-  void receive(EnginePonderHitCommand command);
+	void receive(EngineQuitCommand command);
+
+	void receive(EngineDebugCommand command);
+
+	void receive(EngineReadyRequestCommand command);
+
+	void receive(EngineNewGameCommand command);
+
+	void receive(EngineAnalyzeCommand command);
+
+	void receive(EngineStartCalculatingCommand command);
+
+	void receive(EngineStopCalculatingCommand command);
+
+	void receive(EnginePonderHitCommand command);
 
 }

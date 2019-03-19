@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 public class ComboboxOptionTest {
 
-  @Test
-  public void test() {
-    ComboboxOption option = new ComboboxOption("Style", "Normal", new String[]{"Solid", "Normal", "Risky"});
-    assertEquals("option name Style type combo default Normal var Solid var Normal var Risky", option.toString());
-  }
+	@Test
+	public void test() {
+		ComboboxOption option = new ComboboxOption("Style", "Normal", new String[]{"Solid", "Normal", "Risky"});
+		assertEquals("option name Style type combo default Normal var Solid var Normal var Risky", option.toString());
+	}
 
 }

@@ -17,13 +17,13 @@ package com.fluxchess.jcpi.options;
 
 public final class TextboxOption extends AbstractValueOption {
 
-  public TextboxOption(String name, String defaultValue) {
-    super(name, defaultValue);
-  }
+	public TextboxOption(String name, String defaultValue) {
+		super(name, defaultValue);
+	}
 
-  @Override
-  protected String type() {
-    return "string";
-  }
+	@Override
+	protected String type() {
+		return "string";
+	}
 
 }

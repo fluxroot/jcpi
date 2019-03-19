@@ -17,28 +17,28 @@ package com.fluxchess.jcpi.options;
 
 public final class ComboboxOption extends AbstractValueOption {
 
-  public final String[] varValues;
+	public final String[] varValues;
 
-  public ComboboxOption(String name, String defaultValue, String[] varValues) {
-    super(name, defaultValue);
+	public ComboboxOption(String name, String defaultValue, String[] varValues) {
+		super(name, defaultValue);
 
-    this.varValues = varValues;
-  }
+		this.varValues = varValues;
+	}
 
-  @Override
-  protected String type() {
-    return "combo";
-  }
+	@Override
+	protected String type() {
+		return "combo";
+	}
 
-  @Override
-  public String toString() {
-    String s = super.toString();
+	@Override
+	public String toString() {
+		String s = super.toString();
 
-    for (String value : varValues) {
-      s += String.format(" var %s", value);
-    }
+		for (String value : varValues) {
+			s += String.format(" var %s", value);
+		}
 
-    return s;
-  }
+		return s;
+	}
 
 }

@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 
 public class SpinnerOptionTest {
 
-  @Test
-  public void test() {
-    SpinnerOption option = new SpinnerOption("Selectivity", 2, 0, 4);
-    assertEquals("option name Selectivity type spin default 2 min 0 max 4", option.toString());
-  }
+	@Test
+	public void test() {
+		SpinnerOption option = new SpinnerOption("Selectivity", 2, 0, 4);
+		assertEquals("option name Selectivity type spin default 2 min 0 max 4", option.toString());
+	}
 
 }
