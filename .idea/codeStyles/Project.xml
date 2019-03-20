@@ -1,13 +1,11 @@
 ﻿<component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <codeStyleSettings language="JAVA">
-      <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
       <indentOptions>
         <option name="USE_TAB_CHARACTER" value="true" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="kotlin">
-      <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
       <indentOptions>
         <option name="USE_TAB_CHARACTER" value="true" />
       </indentOptions>

@@ -15,91 +15,96 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericFileTest {
 
 	@Test
 	public void testValueOf() {
-		assertEquals(GenericFile.Fa, GenericFile.valueOf('a'));
-		assertEquals(GenericFile.Fa, GenericFile.valueOf('A'));
+		assertThat(GenericFile.valueOf('a')).isEqualTo(GenericFile.Fa);
+		assertThat(GenericFile.valueOf('A')).isEqualTo(GenericFile.Fa);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		GenericFile.valueOf('i');
+		Throwable thrown = catchThrowable(() -> GenericFile.valueOf('i'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
-		assertFalse(GenericFile.isValid('i'));
+		assertThat(GenericFile.isValid('i')).isFalse();
 	}
 
 	@Test
 	public void testPrev() {
-		assertEquals(GenericFile.Fg, GenericFile.Fh.prev());
-		assertEquals(GenericFile.Fa, GenericFile.Fh.prev(7));
+		assertThat(GenericFile.Fh.prev()).isEqualTo(GenericFile.Fg);
+		assertThat(GenericFile.Fh.prev(7)).isEqualTo(GenericFile.Fa);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalPrev1() {
-		GenericFile.Fa.prev();
+		Throwable thrown = catchThrowable(() -> GenericFile.Fa.prev());
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalPrev2() {
-		GenericFile.Fg.prev(7);
+		Throwable thrown = catchThrowable(() -> GenericFile.Fg.prev(7));
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasPrev1() {
-		assertFalse(GenericFile.Fa.hasPrev());
+		assertThat(GenericFile.Fa.hasPrev()).isFalse();
 	}
 
 	@Test
 	public void testHasPrev2() {
-		assertFalse(GenericFile.Fg.hasPrev(7));
+		assertThat(GenericFile.Fg.hasPrev(7)).isFalse();
 	}
 
 	@Test
 	public void testNext() {
-		assertEquals(GenericFile.Fb, GenericFile.Fa.next());
-		assertEquals(GenericFile.Fh, GenericFile.Fa.next(7));
+		assertThat(GenericFile.Fa.next()).isEqualTo(GenericFile.Fb);
+		assertThat(GenericFile.Fa.next(7)).isEqualTo(GenericFile.Fh);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalNext1() {
-		GenericFile.Fh.next();
+		Throwable thrown = catchThrowable(() -> GenericFile.Fh.next());
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalNext2() {
-		GenericFile.Fb.next(7);
+		Throwable thrown = catchThrowable(() -> GenericFile.Fb.next(7));
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasNext1() {
-		assertFalse(GenericFile.Fh.hasNext());
+		assertThat(GenericFile.Fh.hasNext()).isFalse();
 	}
 
 	@Test
 	public void testHasNext2() {
-		assertFalse(GenericFile.Fb.hasNext(7));
+		assertThat(GenericFile.Fb.hasNext(7)).isFalse();
 	}
 
 	@Test
 	public void testToChar() {
-		assertEquals('a', GenericFile.Fa.toChar());
+		assertThat(GenericFile.Fa.toChar()).isEqualTo('a');
 	}
 
 	@Test
 	public void testToString() {
-		assertEquals("a", GenericFile.Fa.toString());
+		assertThat(GenericFile.Fa.toString()).isEqualTo("a");
 	}
 
 }

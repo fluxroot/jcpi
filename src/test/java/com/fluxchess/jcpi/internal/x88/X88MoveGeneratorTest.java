@@ -16,7 +16,7 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.IllegalNotationException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 

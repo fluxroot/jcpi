@@ -15,74 +15,80 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericMoveTest {
 
 	@Test
 	public void testParse() throws IllegalNotationException {
 		GenericMove move = new GenericMove("a1 e3");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertNull(move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isNull();
 
 		move = new GenericMove("a1 x e3");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertNull(move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isNull();
 
 		move = new GenericMove("a1 : e3");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertNull(move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isNull();
 
 		move = new GenericMove("a1 x e3 = q");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertEquals(GenericChessman.QUEEN, move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isEqualTo(GenericChessman.QUEEN);
 
 		move = new GenericMove("a1 x e3 = q #");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertEquals(GenericChessman.QUEEN, move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isEqualTo(GenericChessman.QUEEN);
 
 		move = new GenericMove("a1 - e3 = q");
-		assertEquals(GenericPosition.a1, move.from);
-		assertEquals(GenericPosition.e3, move.to);
-		assertEquals(GenericChessman.QUEEN, move.promotion);
+		assertThat(move.from).isEqualTo(GenericPosition.a1);
+		assertThat(move.to).isEqualTo(GenericPosition.e3);
+		assertThat(move.promotion).isEqualTo(GenericChessman.QUEEN);
 	}
 
-	@Test(expected = IllegalNotationException.class)
+	@Test
 	public void testInvalidMove1() throws IllegalNotationException {
-		GenericMove move = new GenericMove("a1 - e3 = z");
+		Throwable thrown = catchThrowable(() -> new GenericMove("a1 - e3 = z"));
+		assertThat(thrown).isInstanceOf(IllegalNotationException.class);
 	}
 
-	@Test(expected = IllegalNotationException.class)
+	@Test
 	public void testInvalidMove2() throws IllegalNotationException {
-		GenericMove move = new GenericMove("n1 e3");
+		Throwable thrown = catchThrowable(() -> new GenericMove("n1 e3"));
+		assertThat(thrown).isInstanceOf(IllegalNotationException.class);
 	}
 
-	@Test(expected = IllegalNotationException.class)
+	@Test
 	public void testInvalidMove3() throws IllegalNotationException {
-		GenericMove move = new GenericMove("a9 e3");
+		Throwable thrown = catchThrowable(() -> new GenericMove("a9 e3"));
+		assertThat(thrown).isInstanceOf(IllegalNotationException.class);
 	}
 
-	@Test(expected = IllegalNotationException.class)
+	@Test
 	public void testInvalidMove4() throws IllegalNotationException {
-		GenericMove move = new GenericMove("a1 n3");
+		Throwable thrown = catchThrowable(() -> new GenericMove("a1 n3"));
+		assertThat(thrown).isInstanceOf(IllegalNotationException.class);
 	}
 
-	@Test(expected = IllegalNotationException.class)
+	@Test
 	public void testInvalidMove5() throws IllegalNotationException {
-		GenericMove move = new GenericMove("a1 e9");
+		Throwable thrown = catchThrowable(() -> new GenericMove("a1 e9"));
+		assertThat(thrown).isInstanceOf(IllegalNotationException.class);
 	}
 
 	@Test
 	public void testToString() {
 		GenericMove move = new GenericMove(GenericPosition.a1, GenericPosition.e3, GenericChessman.ROOK);
-		assertEquals("a1e3r", move.toString());
+		assertThat(move.toString()).isEqualTo("a1e3r");
 	}
 
 	@Test
@@ -96,30 +102,30 @@ public class GenericMoveTest {
 		GenericMove move6 = new GenericMove(GenericPosition.a1, GenericPosition.e3);
 
 		// reflexive test
-		assertTrue(move1.equals(move1));
+		assertThat(move1.equals(move1)).isTrue();
 
 		// symmetric test
-		assertTrue(move1.equals(move2));
-		assertTrue(move2.equals(move1));
+		assertThat(move1.equals(move2)).isTrue();
+		assertThat(move2.equals(move1)).isTrue();
 
 		// null value test
-		assertFalse(move1.equals(null));
+		assertThat(move1.equals(null)).isFalse();
 
 		// inheritance test
-		assertFalse(move1.equals(new Object()));
+		assertThat(move1.equals(new Object())).isFalse();
 
 		// attributes test
-		assertFalse(move1.equals(move3));
-		assertFalse(move1.equals(move4));
-		assertFalse(move1.equals(move5));
-		assertFalse(move1.equals(move6));
+		assertThat(move1.equals(move3)).isFalse();
+		assertThat(move1.equals(move4)).isFalse();
+		assertThat(move1.equals(move5)).isFalse();
+		assertThat(move1.equals(move6)).isFalse();
 
 		// hash code test
-		assertEquals(move1.hashCode(), move2.hashCode());
-		assertNotEquals(move1.hashCode(), move3.hashCode());
-		assertNotEquals(move1.hashCode(), move4.hashCode());
-		assertNotEquals(move1.hashCode(), move5.hashCode());
-		assertNotEquals(move1.hashCode(), move6.hashCode());
+		assertThat(move2.hashCode()).isEqualTo(move1.hashCode());
+		assertThat(move3.hashCode()).isNotEqualTo(move1.hashCode());
+		assertThat(move4.hashCode()).isNotEqualTo(move1.hashCode());
+		assertThat(move5.hashCode()).isNotEqualTo(move1.hashCode());
+		assertThat(move6.hashCode()).isNotEqualTo(move1.hashCode());
 	}
 
 }

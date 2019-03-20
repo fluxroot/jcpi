@@ -16,55 +16,60 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericColor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class ColorTest {
 
 	@Test
 	public void testValues() {
 		for (GenericColor genericColor : GenericColor.values()) {
-			assertEquals(genericColor, Color.toGenericColor(Color.valueOf(genericColor)));
-			assertEquals(genericColor.ordinal(), Color.valueOf(genericColor));
-			assertEquals(Color.valueOf(genericColor), Color.values[Color.valueOf(genericColor)]);
+			assertThat(Color.toGenericColor(Color.valueOf(genericColor))).isEqualTo(genericColor);
+			assertThat(Color.valueOf(genericColor)).isEqualTo(genericColor.ordinal());
+			assertThat(Color.values[Color.valueOf(genericColor)]).isEqualTo(Color.valueOf(genericColor));
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		Color.valueOf(null);
+		Throwable thrown = catchThrowable(() -> Color.valueOf(null));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidToGenericColor() {
-		Color.toGenericColor(Color.NOCOLOR);
+		Throwable thrown = catchThrowable(() -> Color.toGenericColor(Color.NOCOLOR));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
 		for (int color : Color.values) {
-			assertTrue(Color.isValid(color));
-			assertEquals(color, color & Color.MASK);
+			assertThat(Color.isValid(color)).isTrue();
+			assertThat(color & Color.MASK).isEqualTo(color);
 		}
 
-		assertFalse(Color.isValid(Color.NOCOLOR));
+		assertThat(Color.isValid(Color.NOCOLOR)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsValid() {
-		Color.isValid(-1);
+		Throwable thrown = catchThrowable(() -> Color.isValid(-1));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testOpposite() {
-		assertEquals(Color.WHITE, Color.opposite(Color.BLACK));
-		assertEquals(Color.BLACK, Color.opposite(Color.WHITE));
+		assertThat(Color.opposite(Color.BLACK)).isEqualTo(Color.WHITE);
+		assertThat(Color.opposite(Color.WHITE)).isEqualTo(Color.BLACK);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidOpposite() {
-		Color.opposite(Color.NOCOLOR);
+		Throwable thrown = catchThrowable(() -> Color.opposite(Color.NOCOLOR));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

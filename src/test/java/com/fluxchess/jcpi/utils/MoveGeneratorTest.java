@@ -17,9 +17,9 @@ package com.fluxchess.jcpi.utils;
 
 import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericMove;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MoveGeneratorTest {
 
@@ -27,14 +27,14 @@ public class MoveGeneratorTest {
 	public void testGetGenericMoves() {
 		GenericMove[] genericMoves = MoveGenerator.getGenericMoves(new GenericBoard(GenericBoard.STANDARDSETUP));
 
-		assertEquals(20, genericMoves.length);
+		assertThat(genericMoves.length).isEqualTo(20);
 	}
 
 	@Test
 	public void testPerft() {
 		long result = MoveGenerator.perft(new GenericBoard(GenericBoard.STANDARDSETUP), 4);
 
-		assertEquals(197281, result);
+		assertThat(result).isEqualTo(197281);
 	}
 
 }

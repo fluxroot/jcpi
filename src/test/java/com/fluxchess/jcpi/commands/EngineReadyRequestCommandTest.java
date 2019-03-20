@@ -15,19 +15,19 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class EngineReadyRequestCommandTest {
+class EngineReadyRequestCommandTest {
 
 	@Test
-	public final void testEngineReadyRequestCommand() {
+	void testEngineReadyRequestCommand() {
 		EngineReadyRequestCommand command = new EngineReadyRequestCommand();
-		assertEquals("", command.token);
+		assertThat(command.token).isEmpty();
 
 		command = new EngineReadyRequestCommand("mytoken");
-		assertEquals("mytoken", command.token);
+		assertThat(command.token).isEqualTo("mytoken");
 	}
 
 }

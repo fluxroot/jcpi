@@ -15,58 +15,58 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OptionsTest {
 
 	@Test
 	public void test() {
 		AbstractOption option = Options.newHashOption(16, 4, 64);
-		assertEquals("option name Hash type spin default 16 min 4 max 64", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Hash type spin default 16 min 4 max 64");
 
 		option = Options.newNalimovPathOption("C:\\");
-		assertEquals("option name NalimovPath type string default C:\\", option.toString());
+		assertThat(option.toString()).isEqualTo("option name NalimovPath type string default C:\\");
 
 		option = Options.newNalimovCacheOption(16, 4, 64);
-		assertEquals("option name NalimovCache type spin default 16 min 4 max 64", option.toString());
+		assertThat(option.toString()).isEqualTo("option name NalimovCache type spin default 16 min 4 max 64");
 
 		option = Options.newPonderOption(true);
-		assertEquals("option name Ponder type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Ponder type check default true");
 
 		option = Options.newOwnBookOption(true);
-		assertEquals("option name OwnBook type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name OwnBook type check default true");
 
 		option = Options.newMultiPVOption(1, 1, 8);
-		assertEquals("option name MultiPV type spin default 1 min 1 max 8", option.toString());
+		assertThat(option.toString()).isEqualTo("option name MultiPV type spin default 1 min 1 max 8");
 
 		option = Options.newUciShowCurrLineOption(true);
-		assertEquals("option name UCI_ShowCurrLine type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_ShowCurrLine type check default true");
 
 		option = Options.newUciShowRefutationsOption(true);
-		assertEquals("option name UCI_ShowRefutations type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_ShowRefutations type check default true");
 
 		option = Options.newUciLimitStrengthOption(true);
-		assertEquals("option name UCI_LimitStrength type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_LimitStrength type check default true");
 
 		option = Options.newUciEloOption(1500, 1200, 2500);
-		assertEquals("option name UCI_Elo type spin default 1500 min 1200 max 2500", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_Elo type spin default 1500 min 1200 max 2500");
 
 		option = Options.newUciAnalyseModeOption(true);
-		assertEquals("option name UCI_AnalyseMode type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_AnalyseMode type check default true");
 
 		option = Options.newUciOpponentOption("none");
-		assertEquals("option name UCI_Opponent type string default none", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_Opponent type string default none");
 
 		option = Options.newUciEngineAboutOption("some text");
-		assertEquals("option name UCI_EngineAbout type string default some text", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_EngineAbout type string default some text");
 
 		option = Options.newUciShredderbasesPathOption("C:\\");
-		assertEquals("option name UCI_ShredderbasesPath type string default C:\\", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_ShredderbasesPath type string default C:\\");
 
 		option = Options.newUciSetPositionValueOption("clearall");
-		assertEquals("option name UCI_SetPositionValue type string default clearall", option.toString());
+		assertThat(option.toString()).isEqualTo("option name UCI_SetPositionValue type string default clearall");
 	}
 
 }

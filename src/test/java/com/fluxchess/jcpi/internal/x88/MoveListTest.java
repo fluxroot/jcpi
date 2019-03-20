@@ -15,9 +15,9 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MoveListTest {
 
@@ -25,10 +25,10 @@ public class MoveListTest {
 	public void test() {
 		MoveList moveList = new MoveList();
 
-		assertEquals(0, moveList.size);
+		assertThat(moveList.size).isZero();
 
 		moveList.moves[moveList.size++] = 1;
-		assertEquals(1, moveList.size);
+		assertThat(moveList.size).isOne();
 	}
 
 }

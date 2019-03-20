@@ -15,16 +15,16 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ComboboxOptionTest {
 
 	@Test
 	public void test() {
 		ComboboxOption option = new ComboboxOption("Style", "Normal", new String[]{"Solid", "Normal", "Risky"});
-		assertEquals("option name Style type combo default Normal var Solid var Normal var Risky", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Style type combo default Normal var Solid var Normal var Risky");
 	}
 
 }

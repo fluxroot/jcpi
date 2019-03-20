@@ -15,17 +15,16 @@
  */
 package com.fluxchess.jcpi.commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class EngineDebugCommandTest {
+class EngineDebugCommandTest {
 
 	@Test
-	public final void testEngineDebugCommand() {
+	void testEngineDebugCommand() {
 		EngineDebugCommand command = new EngineDebugCommand(false, true);
-
-		assertEquals(true, command.debug);
+		assertThat(command.debug).isTrue();
 	}
 
 }

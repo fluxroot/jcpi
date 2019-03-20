@@ -15,9 +15,9 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GenericPositionTest {
 
@@ -25,7 +25,7 @@ public class GenericPositionTest {
 	public void testPosition() {
 		GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
 		GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
-		assertEquals(position1, position2);
+		assertThat(position2).isEqualTo(position1);
 	}
 
 }

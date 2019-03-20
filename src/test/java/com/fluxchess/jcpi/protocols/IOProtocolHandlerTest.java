@@ -16,18 +16,22 @@
 package com.fluxchess.jcpi.protocols;
 
 import com.fluxchess.jcpi.commands.ProtocolInitializeAnswerCommand;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+
 public class IOProtocolHandlerTest {
 
-	@Test(expected = NoProtocolException.class)
+	@Test
 	public void testSend() {
 		String[] commands = {""};
 		IOProtocolHandler handler = createIOProtocolHandler(commands);
 
-		handler.send(new ProtocolInitializeAnswerCommand("Engine 1.0", "Author"));
+		Throwable thrown = catchThrowable(() -> handler.send(new ProtocolInitializeAnswerCommand("Engine 1.0", "Author")));
+		assertThat(thrown).isInstanceOf(NoProtocolException.class);
 	}
 
 	private IOProtocolHandler createIOProtocolHandler(String[] commands) {

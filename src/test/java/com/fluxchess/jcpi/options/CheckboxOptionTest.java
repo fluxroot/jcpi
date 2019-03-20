@@ -15,16 +15,16 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckboxOptionTest {
 
 	@Test
 	public void test() {
 		CheckboxOption option = new CheckboxOption("Nullmove", true);
-		assertEquals("option name Nullmove type check default true", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Nullmove type check default true");
 	}
 
 }

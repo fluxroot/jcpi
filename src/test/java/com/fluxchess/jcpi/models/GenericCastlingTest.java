@@ -15,53 +15,55 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericCastlingTest {
 
 	@Test
 	public final void testValueOf() {
-		assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOf('k'));
-		assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOf('K'));
+		assertThat(GenericCastling.valueOf('k')).isEqualTo(GenericCastling.KINGSIDE);
+		assertThat(GenericCastling.valueOf('K')).isEqualTo(GenericCastling.KINGSIDE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public final void testInvalidValueOf() {
-		GenericCastling.valueOf('a');
+		Throwable thrown = catchThrowable(() -> GenericCastling.valueOf('a'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public final void testIsValid() {
-		assertFalse(GenericCastling.isValid('a'));
+		assertThat(GenericCastling.isValid('a')).isFalse();
 	}
 
 	@Test
 	public final void testValueOfLongToken() {
-		assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOfLongToken("o-o"));
-		assertEquals(GenericCastling.KINGSIDE, GenericCastling.valueOfLongToken("O-O"));
+		assertThat(GenericCastling.valueOfLongToken("o-o")).isEqualTo(GenericCastling.KINGSIDE);
+		assertThat(GenericCastling.valueOfLongToken("O-O")).isEqualTo(GenericCastling.KINGSIDE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public final void testInvalidValueOfLongToken() {
-		GenericCastling.valueOfLongToken("x-x");
+		Throwable thrown = catchThrowable(() -> GenericCastling.valueOfLongToken("x-x"));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public final void testIsValidLongToken() {
-		assertFalse(GenericCastling.isValidLongToken("x-x"));
+		assertThat(GenericCastling.isValidLongToken("x-x")).isFalse();
 	}
 
 	@Test
 	public final void testToLongToken() {
-		assertEquals("O-O", GenericCastling.KINGSIDE.toLongToken());
+		assertThat(GenericCastling.KINGSIDE.toLongToken()).isEqualTo("O-O");
 	}
 
 	@Test
 	public final void testToChar() {
-		assertEquals('k', GenericCastling.KINGSIDE.toChar(GenericColor.BLACK));
+		assertThat(GenericCastling.KINGSIDE.toChar(GenericColor.BLACK)).isEqualTo('k');
 	}
 
 }

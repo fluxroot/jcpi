@@ -15,16 +15,16 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ButtonOptionTest {
 
 	@Test
 	public void test() {
 		ButtonOption option = new ButtonOption("Clear Hash");
-		assertEquals("option name Clear Hash type button", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Clear Hash type button");
 	}
 
 }

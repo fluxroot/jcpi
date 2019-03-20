@@ -26,12 +26,18 @@ buildScan {
 }
 
 dependencies {
-	testImplementation("junit:junit:4.12")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.1")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.1")
+	testImplementation("org.assertj:assertj-core:3.12.2")
 	testImplementation("org.slf4j:slf4j-log4j12:1.7.26")
 }
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.named<Test>("test") {
+	useJUnitPlatform()
 }
 
 tasks.named<Jar>("jar").configure {

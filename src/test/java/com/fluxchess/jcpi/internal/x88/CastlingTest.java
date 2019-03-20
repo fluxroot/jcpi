@@ -16,44 +16,48 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericCastling;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class CastlingTest {
+class CastlingTest {
 
 	@Test
-	public void testValues() {
+	void testValues() {
 		for (GenericCastling genericCastling : GenericCastling.values()) {
-			assertEquals(genericCastling, Castling.toGenericCastling(Castling.valueOf(genericCastling)));
-			assertEquals(genericCastling.ordinal(), Castling.valueOf(genericCastling));
-			assertEquals(Castling.valueOf(genericCastling), Castling.values[Castling.valueOf(genericCastling)]);
+			assertThat(Castling.toGenericCastling(Castling.valueOf(genericCastling))).isEqualTo(genericCastling);
+			assertThat(Castling.valueOf(genericCastling)).isEqualTo(genericCastling.ordinal());
+			assertThat(Castling.values[Castling.valueOf(genericCastling)]).isEqualTo(Castling.valueOf(genericCastling));
 		}
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidValueOf() {
-		Castling.valueOf(null);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidToGenericCastling() {
-		Castling.toGenericCastling(Castling.NOCASTLING);
 	}
 
 	@Test
-	public void testIsValid() {
-		for (int castling : Castling.values) {
-			assertTrue(Castling.isValid(castling));
-			assertEquals(castling, castling & Castling.MASK);
-		}
-
-		assertFalse(Castling.isValid(Castling.NOCASTLING));
+	void testInvalidValueOf() {
+		Throwable thrown = catchThrowable(() -> Castling.valueOf(null));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidIsValid() {
-		Castling.isValid(-1);
+	@Test
+	void testInvalidToGenericCastling() {
+		Throwable thrown = catchThrowable(() -> Castling.toGenericCastling(Castling.NOCASTLING));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	void testIsValid() {
+		for (int castling : Castling.values) {
+			assertThat(Castling.isValid(castling)).isTrue();
+			assertThat(castling & Castling.MASK).isEqualTo(castling);
+		}
+
+		assertThat(Castling.isValid(Castling.NOCASTLING)).isFalse();
+	}
+
+	@Test
+	void testInvalidIsValid() {
+		Throwable thrown = catchThrowable(() -> Castling.isValid(-1));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }
