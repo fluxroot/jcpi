@@ -16,87 +16,94 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericChessman;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class PieceTypeTest {
 
 	@Test
 	public void testValues() {
 		for (GenericChessman genericChessman : GenericChessman.values()) {
-			assertEquals(genericChessman, PieceType.toGenericChessman(PieceType.valueOf(genericChessman)));
-			assertEquals(genericChessman.ordinal(), PieceType.valueOf(genericChessman));
-			assertEquals(PieceType.valueOf(genericChessman), PieceType.values[PieceType.valueOf(genericChessman)]);
+			assertThat(PieceType.toGenericChessman(PieceType.valueOf(genericChessman))).isEqualTo(genericChessman);
+			assertThat(PieceType.valueOf(genericChessman)).isEqualTo(genericChessman.ordinal());
+			assertThat(PieceType.values[PieceType.valueOf(genericChessman)]).isEqualTo(PieceType.valueOf(genericChessman));
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		PieceType.valueOf(null);
+		Throwable thrown = catchThrowable(() -> PieceType.valueOf(null));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidToGenericChessman() {
-		PieceType.toGenericChessman(PieceType.NOCHESSMAN);
+		Throwable thrown = catchThrowable(() -> PieceType.toGenericChessman(PieceType.NOCHESSMAN));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testPromotionValues() {
 		for (GenericChessman genericChessman : GenericChessman.promotions) {
-			assertEquals(genericChessman, PieceType.toGenericChessman(PieceType.valueOfPromotion(genericChessman)));
+			assertThat(PieceType.toGenericChessman(PieceType.valueOfPromotion(genericChessman))).isEqualTo(genericChessman);
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOfPromotion() {
-		PieceType.valueOfPromotion(GenericChessman.PAWN);
+		Throwable thrown = catchThrowable(() -> PieceType.valueOfPromotion(GenericChessman.PAWN));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
 		for (int chessman : PieceType.values) {
-			assertTrue(PieceType.isValid(chessman));
-			assertEquals(chessman, chessman & PieceType.MASK);
+			assertThat(PieceType.isValid(chessman)).isTrue();
+			assertThat(chessman & PieceType.MASK).isEqualTo(chessman);
 		}
 
-		assertFalse(PieceType.isValid(PieceType.NOCHESSMAN));
+		assertThat(PieceType.isValid(PieceType.NOCHESSMAN)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsValid() {
-		PieceType.isValid(-1);
+		Throwable thrown = catchThrowable(() -> PieceType.isValid(-1));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValidPromotion() {
 		for (int chessman : PieceType.promotions) {
-			assertTrue(PieceType.isValidPromotion(chessman));
-			assertEquals(chessman, chessman & PieceType.MASK);
+			assertThat(PieceType.isValidPromotion(chessman)).isTrue();
+			assertThat(chessman & PieceType.MASK).isEqualTo(chessman);
 		}
 
-		assertFalse(PieceType.isValidPromotion(PieceType.PAWN));
-		assertFalse(PieceType.isValidPromotion(PieceType.KING));
+		assertThat(PieceType.isValidPromotion(PieceType.PAWN)).isFalse();
+		assertThat(PieceType.isValidPromotion(PieceType.KING)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsValidPromotion() {
-		PieceType.isValidPromotion(PieceType.NOCHESSMAN);
+		Throwable thrown = catchThrowable(() -> PieceType.isValidPromotion(PieceType.NOCHESSMAN));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsSliding() {
-		assertTrue(PieceType.isSliding(PieceType.BISHOP));
-		assertTrue(PieceType.isSliding(PieceType.ROOK));
-		assertTrue(PieceType.isSliding(PieceType.QUEEN));
-		assertFalse(PieceType.isSliding(PieceType.PAWN));
-		assertFalse(PieceType.isSliding(PieceType.KNIGHT));
-		assertFalse(PieceType.isSliding(PieceType.KING));
+		assertThat(PieceType.isSliding(PieceType.BISHOP)).isTrue();
+		assertThat(PieceType.isSliding(PieceType.ROOK)).isTrue();
+		assertThat(PieceType.isSliding(PieceType.QUEEN)).isTrue();
+		assertThat(PieceType.isSliding(PieceType.PAWN)).isFalse();
+		assertThat(PieceType.isSliding(PieceType.KNIGHT)).isFalse();
+		assertThat(PieceType.isSliding(PieceType.KING)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsSliding() {
-		PieceType.isSliding(PieceType.NOCHESSMAN);
+		Throwable thrown = catchThrowable(() -> PieceType.isSliding(PieceType.NOCHESSMAN));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

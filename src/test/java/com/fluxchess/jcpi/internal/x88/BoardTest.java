@@ -16,14 +16,14 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardTest {
+class BoardTest {
 
 	@Test
-	public void testConstructor() {
+	void testConstructor() {
 		// Setup a new board
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
@@ -33,9 +33,9 @@ public class BoardTest {
 			GenericPiece genericPiece = genericBoard.getPiece(genericPosition);
 			int piece = board.board[Square.valueOf(genericPosition)];
 			if (genericPiece == null) {
-				assertEquals(Piece.NOPIECE, piece);
+				assertThat(piece).isEqualTo(Piece.NOPIECE);
 			} else {
-				assertEquals(genericPiece, Piece.toGenericPiece(piece));
+				assertThat(Piece.toGenericPiece(piece)).isEqualTo(genericPiece);
 			}
 		}
 
@@ -45,73 +45,73 @@ public class BoardTest {
 				GenericFile genericFile = genericBoard.getCastling(genericColor, genericCastling);
 				int file = board.castling[Color.valueOf(genericColor)][Castling.valueOf(genericCastling)];
 				if (genericFile == null) {
-					assertEquals(File.NOFILE, file);
+					assertThat(file).isEqualTo(File.NOFILE);
 				} else {
-					assertEquals(genericFile, File.toGenericFile(file));
+					assertThat(File.toGenericFile(file)).isEqualTo(genericFile);
 				}
 			}
 		}
 
 		// Test en passant
 		if (genericBoard.getEnPassant() == null) {
-			assertEquals(Square.NOSQUARE, board.enPassant);
+			assertThat(board.enPassant).isEqualTo(Square.NOSQUARE);
 		} else {
-			assertEquals(genericBoard.getEnPassant(), Square.toGenericPosition(board.enPassant));
+			assertThat(Square.toGenericPosition(board.enPassant)).isEqualTo(genericBoard.getEnPassant());
 		}
 
 		// Test active color
-		assertEquals(genericBoard.getActiveColor(), Color.toGenericColor(board.activeColor));
+		assertThat(Color.toGenericColor(board.activeColor)).isEqualTo(genericBoard.getActiveColor());
 
 		// Test half move clock
-		assertEquals(genericBoard.getHalfMoveClock(), board.halfMoveClock);
+		assertThat(board.halfMoveClock).isEqualTo(genericBoard.getHalfMoveClock());
 
 		// Test full move number
-		assertEquals(genericBoard.getFullMoveNumber(), board.getFullMoveNumber());
+		assertThat(board.getFullMoveNumber()).isEqualTo(genericBoard.getFullMoveNumber());
 	}
 
 	@Test
-	public void testToGenericBoard() {
+	void testToGenericBoard() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 	@Test
-	public void testToString() throws IllegalNotationException {
+	void testToString() throws IllegalNotationException {
 		String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 		GenericBoard genericBoard = new GenericBoard(fen);
 		Board board = new Board(genericBoard);
 
-		assertEquals(fen, board.toString());
+		assertThat(board.toString()).isEqualTo(fen);
 	}
 
 	@Test
-	public void testActiveColor() {
+	void testActiveColor() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
 		// Move white pawn
 		int move = Move.valueOf(Move.Type.NORMAL, Square.a2, Square.a3, Piece.WHITEPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(Color.BLACK, board.activeColor);
+		assertThat(board.activeColor).isEqualTo(Color.BLACK);
 
 		// Move black pawn
 		move = Move.valueOf(Move.Type.NORMAL, Square.b7, Square.b6, Piece.BLACKPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(Color.WHITE, board.activeColor);
+		assertThat(board.activeColor).isEqualTo(Color.WHITE);
 	}
 
 	@Test
-	public void testHalfMoveClock() {
+	void testHalfMoveClock() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
 		// Move white pawn
 		int move = Move.valueOf(Move.Type.NORMAL, Square.a2, Square.a3, Piece.WHITEPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(0, board.halfMoveClock);
+		assertThat(board.halfMoveClock).isZero();
 
 		// Move black pawn
 		move = Move.valueOf(Move.Type.NORMAL, Square.b7, Square.b6, Piece.BLACKPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
@@ -120,27 +120,27 @@ public class BoardTest {
 		// Move white knight
 		move = Move.valueOf(Move.Type.NORMAL, Square.b1, Square.c3, Piece.WHITEKNIGHT, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(1, board.halfMoveClock);
+		assertThat(board.halfMoveClock).isOne();
 	}
 
 	@Test
-	public void testFullMoveNumber() {
+	void testFullMoveNumber() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
 		// Move white pawn
 		int move = Move.valueOf(Move.Type.NORMAL, Square.a2, Square.a3, Piece.WHITEPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(1, board.getFullMoveNumber());
+		assertThat(board.getFullMoveNumber()).isOne();
 
 		// Move black pawn
 		move = Move.valueOf(Move.Type.NORMAL, Square.b7, Square.b6, Piece.BLACKPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
-		assertEquals(2, board.getFullMoveNumber());
+		assertThat(board.getFullMoveNumber()).isEqualTo(2);
 	}
 
 	@Test
-	public void testNormalMove() {
+	void testNormalMove() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
@@ -148,41 +148,41 @@ public class BoardTest {
 		board.makeMove(move);
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 	@Test
-	public void testPawnDoubleMove() {
+	void testPawnDoubleMove() {
 		GenericBoard genericBoard = new GenericBoard(GenericBoard.STANDARDSETUP);
 		Board board = new Board(genericBoard);
 
 		int move = Move.valueOf(Move.Type.PAWNDOUBLE, Square.a2, Square.a4, Piece.WHITEPAWN, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
 
-		assertEquals(Square.a3, board.enPassant);
+		assertThat(board.enPassant).isEqualTo(Square.a3);
 
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 	@Test
-	public void testPawnPromotionMove() throws IllegalNotationException {
+	void testPawnPromotionMove() throws IllegalNotationException {
 		GenericBoard genericBoard = new GenericBoard("8/P5k1/8/8/2K5/8/8/8 w - - 0 1");
 		Board board = new Board(genericBoard);
 
 		int move = Move.valueOf(Move.Type.PAWNPROMOTION, Square.a7, Square.a8, Piece.WHITEPAWN, Piece.NOPIECE, PieceType.QUEEN);
 		board.makeMove(move);
 
-		assertEquals(Piece.WHITEQUEEN, board.board[Square.a8]);
+		assertThat(board.board[Square.a8]).isEqualTo(Piece.WHITEQUEEN);
 
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 	@Test
-	public void testEnPassantMove() throws IllegalNotationException {
+	void testEnPassantMove() throws IllegalNotationException {
 		GenericBoard genericBoard = new GenericBoard("5k2/8/8/8/3Pp3/8/8/3K4 b - d3 0 1");
 		Board board = new Board(genericBoard);
 
@@ -190,28 +190,28 @@ public class BoardTest {
 		int move = Move.valueOf(Move.Type.ENPASSANT, Square.e4, Square.d3, Piece.BLACKPAWN, Piece.WHITEPAWN, PieceType.NOCHESSMAN);
 		board.makeMove(move);
 
-		assertEquals(Piece.NOPIECE, board.board[Square.d4]);
-		assertEquals(Piece.BLACKPAWN, board.board[Square.d3]);
-		assertEquals(Square.NOSQUARE, board.enPassant);
+		assertThat(board.board[Square.d4]).isEqualTo(Piece.NOPIECE);
+		assertThat(board.board[Square.d3]).isEqualTo(Piece.BLACKPAWN);
+		assertThat(board.enPassant).isEqualTo(Square.NOSQUARE);
 
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 	@Test
-	public void testCastlingMove() throws IllegalNotationException {
+	void testCastlingMove() throws IllegalNotationException {
 		GenericBoard genericBoard = new GenericBoard("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 		Board board = new Board(genericBoard);
 
 		int move = Move.valueOf(Move.Type.CASTLING, Square.e1, Square.c1, Piece.WHITEKING, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
 
-		assertEquals(File.NOFILE, board.castling[Color.WHITE][Castling.QUEENSIDE]);
+		assertThat(board.castling[Color.WHITE][Castling.QUEENSIDE]).isEqualTo(File.NOFILE);
 
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 
 		genericBoard = new GenericBoard("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 		board = new Board(genericBoard);
@@ -219,11 +219,11 @@ public class BoardTest {
 		move = Move.valueOf(Move.Type.CASTLING, Square.e1, Square.g1, Piece.WHITEKING, Piece.NOPIECE, PieceType.NOCHESSMAN);
 		board.makeMove(move);
 
-		assertEquals(File.NOFILE, board.castling[Color.WHITE][Castling.KINGSIDE]);
+		assertThat(board.castling[Color.WHITE][Castling.KINGSIDE]).isEqualTo(File.NOFILE);
 
 		board.undoMove(move);
 
-		assertEquals(genericBoard, board.toGenericBoard());
+		assertThat(board.toGenericBoard()).isEqualTo(genericBoard);
 	}
 
 }

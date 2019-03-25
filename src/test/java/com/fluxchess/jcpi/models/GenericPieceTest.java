@@ -15,32 +15,33 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericPieceTest {
 
 	@Test
 	public void testValueOf() {
-		assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN));
-		assertEquals(GenericPiece.WHITEPAWN, GenericPiece.valueOf('P'));
+		assertThat(GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN)).isEqualTo(GenericPiece.WHITEPAWN);
+		assertThat(GenericPiece.valueOf('P')).isEqualTo(GenericPiece.WHITEPAWN);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		GenericPiece.valueOf('x');
+		Throwable thrown = catchThrowable(() -> GenericPiece.valueOf('x'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
-		assertFalse(GenericPiece.isValid('x'));
+		assertThat(GenericPiece.isValid('x')).isFalse();
 	}
 
 	@Test
 	public void testToChar() {
-		assertEquals('q', GenericPiece.BLACKQUEEN.toChar());
+		assertThat(GenericPiece.BLACKQUEEN.toChar()).isEqualTo('q');
 	}
 
 }

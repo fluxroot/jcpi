@@ -22,14 +22,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public abstract class AbstractX88PerftTest {
+abstract class AbstractX88PerftTest {
 
-	protected void testPerft(int testDepth) throws IOException, IllegalNotationException {
+	void testPerft(int testDepth) throws IOException, IllegalNotationException {
 		for (int i = 1; i <= testDepth; i++) {
-			BufferedReader file = null;
-			try {
-				file = new BufferedReader(new InputStreamReader(AbstractX88PerftTest.class.getResourceAsStream("/perftsuite.epd")));
-
+			try (BufferedReader file = new BufferedReader(new InputStreamReader(AbstractX88PerftTest.class.getResourceAsStream("/perftsuite.epd")))) {
 				String line = file.readLine();
 				while (line != null) {
 					String[] tokens = line.split(";");
@@ -52,14 +49,6 @@ public abstract class AbstractX88PerftTest {
 					}
 
 					line = file.readLine();
-				}
-			} finally {
-				if (file != null) {
-					try {
-						file.close();
-					} catch (IOException e) {
-						// Do nothing
-					}
 				}
 			}
 		}

@@ -21,20 +21,21 @@ import com.fluxchess.jcpi.models.GenericColor;
 import com.fluxchess.jcpi.models.GenericMove;
 import com.fluxchess.jcpi.models.GenericPosition;
 import com.fluxchess.jcpi.options.SpinnerOption;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UciProtocolTest {
 
 	@Test
 	public void testIsProtocolKeyword() {
-		assertTrue(UciProtocol.isProtocolKeyword("uci"));
-		assertTrue(UciProtocol.isProtocolKeyword("UCI"));
+		assertThat(UciProtocol.isProtocolKeyword("uci")).isTrue();
+		assertThat(UciProtocol.isProtocolKeyword("UCI")).isTrue();
 
-		assertFalse(UciProtocol.isProtocolKeyword("xboard"));
+		assertThat(UciProtocol.isProtocolKeyword("xboard")).isFalse();
 	}
 
 	@Test
@@ -45,7 +46,7 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -65,24 +66,24 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "debug"
 		command = protocol.receive();
-		assertEquals(EngineDebugCommand.class, command.getClass());
-		assertEquals(true, ((EngineDebugCommand) command).toggle);
+		assertThat(command.getClass()).isEqualTo(EngineDebugCommand.class);
+		assertThat(((EngineDebugCommand) command).toggle).isEqualTo(true);
 
 		// "debug on"
 		command = protocol.receive();
-		assertEquals(EngineDebugCommand.class, command.getClass());
-		assertEquals(false, ((EngineDebugCommand) command).toggle);
-		assertEquals(true, ((EngineDebugCommand) command).debug);
+		assertThat(command.getClass()).isEqualTo(EngineDebugCommand.class);
+		assertThat(((EngineDebugCommand) command).toggle).isEqualTo(false);
+		assertThat(((EngineDebugCommand) command).debug).isEqualTo(true);
 
 		// "debug off"
 		command = protocol.receive();
-		assertEquals(EngineDebugCommand.class, command.getClass());
-		assertEquals(false, ((EngineDebugCommand) command).toggle);
-		assertEquals(false, ((EngineDebugCommand) command).debug);
+		assertThat(command.getClass()).isEqualTo(EngineDebugCommand.class);
+		assertThat(((EngineDebugCommand) command).toggle).isEqualTo(false);
+		assertThat(((EngineDebugCommand) command).debug).isEqualTo(false);
 
 		try {
 			command = protocol.receive();
@@ -97,11 +98,11 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "isready"
 		command = protocol.receive();
-		assertEquals(EngineReadyRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineReadyRequestCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -124,31 +125,31 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "setoption name Clear Hash"
 		command = protocol.receive();
-		assertEquals(EngineSetOptionCommand.class, command.getClass());
-		assertEquals("Clear Hash", ((EngineSetOptionCommand) command).name);
-		assertEquals(null, ((EngineSetOptionCommand) command).value);
+		assertThat(command.getClass()).isEqualTo(EngineSetOptionCommand.class);
+		assertThat(((EngineSetOptionCommand) command).name).isEqualTo("Clear Hash");
+		assertThat(((EngineSetOptionCommand) command).value).isEqualTo(null);
 
 		// "setoption name Clear   Hash"
 		command = protocol.receive();
-		assertEquals(EngineSetOptionCommand.class, command.getClass());
-		assertEquals("Clear   Hash", ((EngineSetOptionCommand) command).name);
-		assertEquals(null, ((EngineSetOptionCommand) command).value);
+		assertThat(command.getClass()).isEqualTo(EngineSetOptionCommand.class);
+		assertThat(((EngineSetOptionCommand) command).name).isEqualTo("Clear   Hash");
+		assertThat(((EngineSetOptionCommand) command).value).isEqualTo(null);
 
 		// "setoption name Clear Hash value 5"
 		command = protocol.receive();
-		assertEquals(EngineSetOptionCommand.class, command.getClass());
-		assertEquals("Clear Hash", ((EngineSetOptionCommand) command).name);
-		assertEquals("5", ((EngineSetOptionCommand) command).value);
+		assertThat(command.getClass()).isEqualTo(EngineSetOptionCommand.class);
+		assertThat(((EngineSetOptionCommand) command).name).isEqualTo("Clear Hash");
+		assertThat(((EngineSetOptionCommand) command).value).isEqualTo("5");
 
 		// "setoption name Clear Hash value 5 4 3 2 1"
 		command = protocol.receive();
-		assertEquals(EngineSetOptionCommand.class, command.getClass());
-		assertEquals("Clear Hash", ((EngineSetOptionCommand) command).name);
-		assertEquals("5 4 3 2 1", ((EngineSetOptionCommand) command).value);
+		assertThat(command.getClass()).isEqualTo(EngineSetOptionCommand.class);
+		assertThat(((EngineSetOptionCommand) command).name).isEqualTo("Clear Hash");
+		assertThat(((EngineSetOptionCommand) command).value).isEqualTo("5 4 3 2 1");
 
 		try {
 			command = protocol.receive();
@@ -163,7 +164,7 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -178,11 +179,11 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "ucinewgame"
 		command = protocol.receive();
-		assertEquals(EngineNewGameCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineNewGameCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -210,38 +211,38 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "position startpos"
 		command = protocol.receive();
-		assertEquals(EngineAnalyzeCommand.class, command.getClass());
-		assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-		assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
+		assertThat(command.getClass()).isEqualTo(EngineAnalyzeCommand.class);
+		assertThat(((EngineAnalyzeCommand) command).board).isEqualTo(new GenericBoard(GenericBoard.STANDARDSETUP));
+		assertThat(((EngineAnalyzeCommand) command).moves.isEmpty()).isTrue();
 
 		// "a b c d position startpos"
 		command = protocol.receive();
-		assertEquals(EngineAnalyzeCommand.class, command.getClass());
-		assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-		assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
+		assertThat(command.getClass()).isEqualTo(EngineAnalyzeCommand.class);
+		assertThat(((EngineAnalyzeCommand) command).board).isEqualTo(new GenericBoard(GenericBoard.STANDARDSETUP));
+		assertThat(((EngineAnalyzeCommand) command).moves.isEmpty()).isTrue();
 
 		// "a b c d position startpos moves a2a3"
 		command = protocol.receive();
-		assertEquals(EngineAnalyzeCommand.class, command.getClass());
-		assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-		assertEquals(1, ((EngineAnalyzeCommand) command).moves.size());
+		assertThat(command.getClass()).isEqualTo(EngineAnalyzeCommand.class);
+		assertThat(((EngineAnalyzeCommand) command).board).isEqualTo(new GenericBoard(GenericBoard.STANDARDSETUP));
+		assertThat(((EngineAnalyzeCommand) command).moves.size()).isEqualTo(1);
 		assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineAnalyzeCommand) command).moves.get(0));
 
 		// "a b c d position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 		command = protocol.receive();
-		assertEquals(EngineAnalyzeCommand.class, command.getClass());
-		assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-		assertTrue(((EngineAnalyzeCommand) command).moves.isEmpty());
+		assertThat(command.getClass()).isEqualTo(EngineAnalyzeCommand.class);
+		assertThat(((EngineAnalyzeCommand) command).board).isEqualTo(new GenericBoard(GenericBoard.STANDARDSETUP));
+		assertThat(((EngineAnalyzeCommand) command).moves.isEmpty()).isTrue();
 
 		// "a b c d position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves a4a5"
 		command = protocol.receive();
-		assertEquals(EngineAnalyzeCommand.class, command.getClass());
-		assertEquals(new GenericBoard(GenericBoard.STANDARDSETUP), ((EngineAnalyzeCommand) command).board);
-		assertEquals(1, ((EngineAnalyzeCommand) command).moves.size());
+		assertThat(command.getClass()).isEqualTo(EngineAnalyzeCommand.class);
+		assertThat(((EngineAnalyzeCommand) command).board).isEqualTo(new GenericBoard(GenericBoard.STANDARDSETUP));
+		assertThat(((EngineAnalyzeCommand) command).moves.size()).isEqualTo(1);
 		assertEquals(new GenericMove(GenericPosition.a4, GenericPosition.a5), ((EngineAnalyzeCommand) command).moves.get(0));
 
 		try {
@@ -291,72 +292,72 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "go"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
 
 		// "go searchmoves a2a3"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(1, ((EngineStartCalculatingCommand) command).getSearchMoveList().size());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getSearchMoveList().size()).isEqualTo(1);
 		assertEquals(new GenericMove(GenericPosition.a2, GenericPosition.a3), ((EngineStartCalculatingCommand) command).getSearchMoveList().get(0));
 
 		// "go ponder"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(true, ((EngineStartCalculatingCommand) command).getPonder());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getPonder()).isEqualTo(true);
 
 		// "go wtime 100"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(100, ((EngineStartCalculatingCommand) command).getClock(GenericColor.WHITE).longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getClock(GenericColor.WHITE).longValue()).isEqualTo(100);
 
 		// "go btime 100"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(100, ((EngineStartCalculatingCommand) command).getClock(GenericColor.BLACK).longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getClock(GenericColor.BLACK).longValue()).isEqualTo(100);
 
 		// "go winc 50"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(50, ((EngineStartCalculatingCommand) command).getClockIncrement(GenericColor.WHITE).longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getClockIncrement(GenericColor.WHITE).longValue()).isEqualTo(50);
 
 		// "go binc 50"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(50, ((EngineStartCalculatingCommand) command).getClockIncrement(GenericColor.BLACK).longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getClockIncrement(GenericColor.BLACK).longValue()).isEqualTo(50);
 
 		// "go movestogo 20"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(20, ((EngineStartCalculatingCommand) command).getMovesToGo().intValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getMovesToGo().intValue()).isEqualTo(20);
 
 		// "go depth 5"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(5, ((EngineStartCalculatingCommand) command).getDepth().intValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getDepth().intValue()).isEqualTo(5);
 
 		// "go nodes 1000"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(1000, ((EngineStartCalculatingCommand) command).getNodes().longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getNodes().longValue()).isEqualTo(1000);
 
 		// "go mate 4"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(4, ((EngineStartCalculatingCommand) command).getMate().intValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getMate().intValue()).isEqualTo(4);
 
 		// "go movetime 1000"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(1000, ((EngineStartCalculatingCommand) command).getMoveTime().longValue());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getMoveTime().longValue()).isEqualTo(1000);
 
 		// "go infinite"
 		command = protocol.receive();
-		assertEquals(EngineStartCalculatingCommand.class, command.getClass());
-		assertEquals(true, ((EngineStartCalculatingCommand) command).getInfinite());
+		assertThat(command.getClass()).isEqualTo(EngineStartCalculatingCommand.class);
+		assertThat(((EngineStartCalculatingCommand) command).getInfinite()).isEqualTo(true);
 
 		try {
 			command = protocol.receive();
@@ -371,11 +372,11 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "stop"
 		command = protocol.receive();
-		assertEquals(EngineStopCalculatingCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineStopCalculatingCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -390,11 +391,11 @@ public class UciProtocolTest {
 		UciProtocol protocol = createUciProtocol(commands);
 
 		IEngineCommand command = protocol.receive();
-		assertEquals(EngineInitializeRequestCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EngineInitializeRequestCommand.class);
 
 		// "ponderhit"
 		command = protocol.receive();
-		assertEquals(EnginePonderHitCommand.class, command.getClass());
+		assertThat(command.getClass()).isEqualTo(EnginePonderHitCommand.class);
 
 		try {
 			command = protocol.receive();
@@ -414,13 +415,13 @@ public class UciProtocolTest {
 
 		BufferedReader input = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray())));
 		String line = input.readLine();
-		assertEquals("id name My Engine", line);
+		assertThat(line).isEqualTo("id name My Engine");
 		line = input.readLine();
-		assertEquals("id author The Author", line);
+		assertThat(line).isEqualTo("id author The Author");
 		line = input.readLine();
-		assertEquals("option name Hash type spin default 16 min 4 max 64", line);
+		assertThat(line).isEqualTo("option name Hash type spin default 16 min 4 max 64");
 		line = input.readLine();
-		assertEquals("uciok", line);
+		assertThat(line).isEqualTo("uciok");
 		assertNull(input.readLine());
 	}
 
@@ -434,7 +435,7 @@ public class UciProtocolTest {
 
 		BufferedReader input = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray())));
 		String line = input.readLine();
-		assertEquals("readyok", line);
+		assertThat(line).isEqualTo("readyok");
 		assertNull(input.readLine());
 	}
 
@@ -458,11 +459,11 @@ public class UciProtocolTest {
 
 		// 1. Test
 		String line = input.readLine();
-		assertEquals("bestmove a2a3 ponder d3e5", line);
+		assertThat(line).isEqualTo("bestmove a2a3 ponder d3e5");
 
 		// 2. Test
 		line = input.readLine();
-		assertEquals("bestmove nomove", line);
+		assertThat(line).isEqualTo("bestmove nomove");
 
 		assertNull(input.readLine());
 	}
@@ -486,7 +487,7 @@ public class UciProtocolTest {
 
 		BufferedReader input = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer.toByteArray())));
 		String line = input.readLine();
-		assertEquals("info depth 8 seldepth 20 score cp 400 currmove a2a3 currmovenumber 30 hashfull 50 nps 300 time 3000 nodes 5000", line);
+		assertThat(line).isEqualTo("info depth 8 seldepth 20 score cp 400 currmove a2a3 currmovenumber 30 hashfull 50 nps 300 time 3000 nodes 5000");
 		assertNull(input.readLine());
 	}
 

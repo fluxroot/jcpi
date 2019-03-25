@@ -15,16 +15,16 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpinnerOptionTest {
 
 	@Test
 	public void test() {
 		SpinnerOption option = new SpinnerOption("Selectivity", 2, 0, 4);
-		assertEquals("option name Selectivity type spin default 2 min 0 max 4", option.toString());
+		assertThat(option.toString()).isEqualTo("option name Selectivity type spin default 2 min 0 max 4");
 	}
 
 }

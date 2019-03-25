@@ -17,15 +17,15 @@ package com.fluxchess.jcpi;
 
 import com.fluxchess.jcpi.commands.*;
 import com.fluxchess.jcpi.protocols.IOProtocolHandler;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AbstractEngineTest {
 
@@ -34,7 +34,7 @@ public class AbstractEngineTest {
 	private BufferedReader engineInput = null;
 	private PrintStream engineOutput = null;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws IOException {
 		PipedInputStream testInputPipe = new PipedInputStream();
 		PipedOutputStream testOutputPipe = new PipedOutputStream();
@@ -47,7 +47,7 @@ public class AbstractEngineTest {
 		engineOutput = new PrintStream(engineOutputPipe);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() {
 	}
 

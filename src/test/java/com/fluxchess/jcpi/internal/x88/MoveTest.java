@@ -15,9 +15,9 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MoveTest {
 
@@ -25,19 +25,19 @@ public class MoveTest {
 	public void testCreation() {
 		int move = Move.valueOf(Move.Type.PAWNPROMOTION, Square.a7, Square.b8, Piece.WHITEPAWN, Piece.BLACKQUEEN, PieceType.KNIGHT);
 
-		assertEquals(Move.Type.PAWNPROMOTION, Move.getType(move));
-		assertEquals(Square.a7, Move.getOriginSquare(move));
-		assertEquals(Square.b8, Move.getTargetSquare(move));
-		assertEquals(Piece.WHITEPAWN, Move.getOriginPiece(move));
-		assertEquals(Piece.BLACKQUEEN, Move.getTargetPiece(move));
-		assertEquals(PieceType.KNIGHT, Move.getPromotion(move));
+		assertThat(Move.getType(move)).isEqualTo(Move.Type.PAWNPROMOTION);
+		assertThat(Move.getOriginSquare(move)).isEqualTo(Square.a7);
+		assertThat(Move.getTargetSquare(move)).isEqualTo(Square.b8);
+		assertThat(Move.getOriginPiece(move)).isEqualTo(Piece.WHITEPAWN);
+		assertThat(Move.getTargetPiece(move)).isEqualTo(Piece.BLACKQUEEN);
+		assertThat(Move.getPromotion(move)).isEqualTo(PieceType.KNIGHT);
 	}
 
 	@Test
 	public void testPromotion() {
 		int move = Move.valueOf(Move.Type.PAWNPROMOTION, Square.b7, Square.c8, Piece.WHITEPAWN, Piece.BLACKQUEEN, PieceType.KNIGHT);
 
-		assertEquals(PieceType.KNIGHT, Move.getPromotion(move));
+		assertThat(Move.getPromotion(move)).isEqualTo(PieceType.KNIGHT);
 	}
 
 }

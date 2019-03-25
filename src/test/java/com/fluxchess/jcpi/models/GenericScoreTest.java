@@ -15,9 +15,9 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GenericScoreTest {
 
@@ -28,7 +28,7 @@ public class GenericScoreTest {
 			if (prev == null) {
 				prev = value;
 			} else {
-				assertTrue(prev.ordinal() < value.ordinal());
+				assertThat(prev.ordinal() < value.ordinal()).isTrue();
 			}
 		}
 	}

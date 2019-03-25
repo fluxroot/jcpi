@@ -15,16 +15,16 @@
  */
 package com.fluxchess.jcpi.options;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TextboxOptionTest {
 
 	@Test
 	public void test() {
 		TextboxOption option = new TextboxOption("NalimovPath", "C:\\");
-		assertEquals("option name NalimovPath type string default C:\\", option.toString());
+		assertThat(option.toString()).isEqualTo("option name NalimovPath type string default C:\\");
 	}
 
 }

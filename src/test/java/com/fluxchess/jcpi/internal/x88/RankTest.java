@@ -16,44 +16,48 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericRank;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class RankTest {
 
 	@Test
 	public void testValues() {
 		for (GenericRank genericRank : GenericRank.values()) {
-			assertEquals(genericRank, Rank.toGenericRank(Rank.valueOf(genericRank)));
-			assertEquals(genericRank.ordinal(), Rank.valueOf(genericRank));
-			assertEquals(Rank.valueOf(genericRank), Rank.values[Rank.valueOf(genericRank)]);
+			assertThat(Rank.toGenericRank(Rank.valueOf(genericRank))).isEqualTo(genericRank);
+			assertThat(Rank.valueOf(genericRank)).isEqualTo(genericRank.ordinal());
+			assertThat(Rank.values[Rank.valueOf(genericRank)]).isEqualTo(Rank.valueOf(genericRank));
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		Rank.valueOf(null);
+		Throwable thrown = catchThrowable(() -> Rank.valueOf(null));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidToGenericRank() {
-		Rank.toGenericRank(Rank.NORANK);
+		Throwable thrown = catchThrowable(() -> Rank.toGenericRank(Rank.NORANK));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
 		for (int rank : Rank.values) {
-			assertTrue(Rank.isValid(rank));
-			assertEquals(rank, rank & Rank.MASK);
+			assertThat(Rank.isValid(rank)).isTrue();
+			assertThat(rank & Rank.MASK).isEqualTo(rank);
 		}
 
-		assertFalse(Rank.isValid(Rank.NORANK));
+		assertThat(Rank.isValid(Rank.NORANK)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsValid() {
-		Rank.isValid(-1);
+		Throwable thrown = catchThrowable(() -> Rank.isValid(-1));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

@@ -15,52 +15,53 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericColorTest {
 
 	@Test
 	public final void testValueOf() {
-		assertEquals(GenericColor.WHITE, GenericColor.valueOf('w'));
-		assertEquals(GenericColor.BLACK, GenericColor.valueOf('b'));
+		assertThat(GenericColor.valueOf('w')).isEqualTo(GenericColor.WHITE);
+		assertThat(GenericColor.valueOf('b')).isEqualTo(GenericColor.BLACK);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public final void testInvalidValueOf() {
-		GenericColor.valueOf('a');
+		Throwable thrown = catchThrowable(() -> GenericColor.valueOf('a'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public final void testIsValid() {
-		assertFalse(GenericColor.isValid('a'));
+		assertThat(GenericColor.isValid('a')).isFalse();
 	}
 
 	@Test
 	public final void testColorOf() {
-		assertEquals(GenericColor.WHITE, GenericColor.colorOf('A'));
-		assertEquals(GenericColor.BLACK, GenericColor.colorOf('a'));
+		assertThat(GenericColor.colorOf('A')).isEqualTo(GenericColor.WHITE);
+		assertThat(GenericColor.colorOf('a')).isEqualTo(GenericColor.BLACK);
 	}
 
 	@Test
 	public final void testTransform() {
-		assertEquals('A', GenericColor.WHITE.transform('A'));
-		assertEquals('A', GenericColor.WHITE.transform('a'));
-		assertEquals('a', GenericColor.BLACK.transform('A'));
+		assertThat(GenericColor.WHITE.transform('A')).isEqualTo('A');
+		assertThat(GenericColor.WHITE.transform('a')).isEqualTo('A');
+		assertThat(GenericColor.BLACK.transform('A')).isEqualTo('a');
 	}
 
 	@Test
 	public final void testOpposite() {
-		assertEquals(GenericColor.WHITE, GenericColor.BLACK.opposite());
-		assertEquals(GenericColor.BLACK, GenericColor.WHITE.opposite());
+		assertThat(GenericColor.BLACK.opposite()).isEqualTo(GenericColor.WHITE);
+		assertThat(GenericColor.WHITE.opposite()).isEqualTo(GenericColor.BLACK);
 	}
 
 	@Test
 	public final void testToChar() {
-		assertEquals('w', GenericColor.WHITE.toChar());
-		assertEquals('b', GenericColor.BLACK.toChar());
+		assertThat(GenericColor.WHITE.toChar()).isEqualTo('w');
+		assertThat(GenericColor.BLACK.toChar()).isEqualTo('b');
 	}
 
 }

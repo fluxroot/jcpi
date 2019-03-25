@@ -16,98 +16,105 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericPiece;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class PieceTest {
 
 	@Test
 	public void testValues() {
 		for (GenericPiece genericPiece : GenericPiece.values()) {
-			assertEquals(genericPiece, Piece.toGenericPiece(Piece.valueOf(genericPiece)));
-			assertEquals(genericPiece, Piece.toGenericPiece(Piece.valueOf(PieceType.valueOf(genericPiece.chessman), Color.valueOf(genericPiece.color))));
+			assertThat(Piece.toGenericPiece(Piece.valueOf(genericPiece))).isEqualTo(genericPiece);
+			assertThat(Piece.toGenericPiece(Piece.valueOf(PieceType.valueOf(genericPiece.chessman), Color.valueOf(genericPiece.color)))).isEqualTo(genericPiece);
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		Piece.valueOf(null);
+		Throwable thrown = catchThrowable(() -> Piece.valueOf(null));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidToGenericPiece() {
-		Piece.toGenericPiece(Piece.NOPIECE);
+		Throwable thrown = catchThrowable(() -> Piece.toGenericPiece(Piece.NOPIECE));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testOrdinal() {
 		for (int piece : Piece.values) {
-			assertEquals(Piece.ordinal(piece), Piece.toGenericPiece(piece).ordinal());
-			assertEquals(piece, Piece.values[Piece.ordinal(piece)]);
+			assertThat(Piece.toGenericPiece(piece).ordinal()).isEqualTo(Piece.ordinal(piece));
+			assertThat(Piece.values[Piece.ordinal(piece)]).isEqualTo(piece);
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidOrdinal() {
-		Piece.ordinal(Piece.NOPIECE);
+		Throwable thrown = catchThrowable(() -> Piece.ordinal(Piece.NOPIECE));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
 		for (int piece : Piece.values) {
-			assertTrue(Piece.isValid(piece));
-			assertEquals(piece, piece & Piece.MASK);
+			assertThat(Piece.isValid(piece)).isTrue();
+			assertThat(piece & Piece.MASK).isEqualTo(piece);
 		}
 
-		assertFalse(Piece.isValid(Piece.NOPIECE));
+		assertThat(Piece.isValid(Piece.NOPIECE)).isFalse();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidIsValid() {
-		Piece.isValid(-1);
+		Throwable thrown = catchThrowable(() -> Piece.isValid(-1));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testGetChessman() {
-		assertEquals(PieceType.PAWN, Piece.getChessman(Piece.WHITEPAWN));
-		assertEquals(PieceType.PAWN, Piece.getChessman(Piece.BLACKPAWN));
-		assertEquals(PieceType.KNIGHT, Piece.getChessman(Piece.WHITEKNIGHT));
-		assertEquals(PieceType.KNIGHT, Piece.getChessman(Piece.BLACKKNIGHT));
-		assertEquals(PieceType.BISHOP, Piece.getChessman(Piece.WHITEBISHOP));
-		assertEquals(PieceType.BISHOP, Piece.getChessman(Piece.BLACKBISHOP));
-		assertEquals(PieceType.ROOK, Piece.getChessman(Piece.WHITEROOK));
-		assertEquals(PieceType.ROOK, Piece.getChessman(Piece.BLACKROOK));
-		assertEquals(PieceType.QUEEN, Piece.getChessman(Piece.WHITEQUEEN));
-		assertEquals(PieceType.QUEEN, Piece.getChessman(Piece.BLACKQUEEN));
-		assertEquals(PieceType.KING, Piece.getChessman(Piece.WHITEKING));
-		assertEquals(PieceType.KING, Piece.getChessman(Piece.BLACKKING));
+		assertThat(Piece.getChessman(Piece.WHITEPAWN)).isEqualTo(PieceType.PAWN);
+		assertThat(Piece.getChessman(Piece.BLACKPAWN)).isEqualTo(PieceType.PAWN);
+		assertThat(Piece.getChessman(Piece.WHITEKNIGHT)).isEqualTo(PieceType.KNIGHT);
+		assertThat(Piece.getChessman(Piece.BLACKKNIGHT)).isEqualTo(PieceType.KNIGHT);
+		assertThat(Piece.getChessman(Piece.WHITEBISHOP)).isEqualTo(PieceType.BISHOP);
+		assertThat(Piece.getChessman(Piece.BLACKBISHOP)).isEqualTo(PieceType.BISHOP);
+		assertThat(Piece.getChessman(Piece.WHITEROOK)).isEqualTo(PieceType.ROOK);
+		assertThat(Piece.getChessman(Piece.BLACKROOK)).isEqualTo(PieceType.ROOK);
+		assertThat(Piece.getChessman(Piece.WHITEQUEEN)).isEqualTo(PieceType.QUEEN);
+		assertThat(Piece.getChessman(Piece.BLACKQUEEN)).isEqualTo(PieceType.QUEEN);
+		assertThat(Piece.getChessman(Piece.WHITEKING)).isEqualTo(PieceType.KING);
+		assertThat(Piece.getChessman(Piece.BLACKKING)).isEqualTo(PieceType.KING);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidGetChessman() {
-		Piece.getChessman(Piece.NOPIECE);
+		Throwable thrown = catchThrowable(() -> Piece.getChessman(Piece.NOPIECE));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testGetColor() {
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEPAWN));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKPAWN));
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEKNIGHT));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKKNIGHT));
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEBISHOP));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKBISHOP));
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEROOK));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKROOK));
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEQUEEN));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKQUEEN));
-		assertEquals(Color.WHITE, Piece.getColor(Piece.WHITEKING));
-		assertEquals(Color.BLACK, Piece.getColor(Piece.BLACKKING));
+		assertThat(Piece.getColor(Piece.WHITEPAWN)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKPAWN)).isEqualTo(Color.BLACK);
+		assertThat(Piece.getColor(Piece.WHITEKNIGHT)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKKNIGHT)).isEqualTo(Color.BLACK);
+		assertThat(Piece.getColor(Piece.WHITEBISHOP)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKBISHOP)).isEqualTo(Color.BLACK);
+		assertThat(Piece.getColor(Piece.WHITEROOK)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKROOK)).isEqualTo(Color.BLACK);
+		assertThat(Piece.getColor(Piece.WHITEQUEEN)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKQUEEN)).isEqualTo(Color.BLACK);
+		assertThat(Piece.getColor(Piece.WHITEKING)).isEqualTo(Color.WHITE);
+		assertThat(Piece.getColor(Piece.BLACKKING)).isEqualTo(Color.BLACK);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidGetColor() {
-		Piece.getColor(Piece.NOPIECE);
+		Throwable thrown = catchThrowable(() -> Piece.getColor(Piece.NOPIECE));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

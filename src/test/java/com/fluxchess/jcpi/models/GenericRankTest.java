@@ -15,90 +15,95 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericRankTest {
 
 	@Test
 	public void testValueOf() {
-		assertEquals(GenericRank.R1, GenericRank.valueOf('1'));
+		assertThat(GenericRank.valueOf('1')).isEqualTo(GenericRank.R1);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		GenericRank.valueOf('9');
+		Throwable thrown = catchThrowable(() -> GenericRank.valueOf('9'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
-		assertFalse(GenericRank.isValid('9'));
+		assertThat(GenericRank.isValid('9')).isFalse();
 	}
 
 	@Test
 	public void testPrev() {
-		assertEquals(GenericRank.R7, GenericRank.R8.prev());
-		assertEquals(GenericRank.R1, GenericRank.R8.prev(7));
+		assertThat(GenericRank.R8.prev()).isEqualTo(GenericRank.R7);
+		assertThat(GenericRank.R8.prev(7)).isEqualTo(GenericRank.R1);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalPrev1() {
-		GenericRank.R1.prev();
+		Throwable thrown = catchThrowable(() -> GenericRank.R1.prev());
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalPrev2() {
-		GenericRank.R7.prev(7);
+		Throwable thrown = catchThrowable(() -> GenericRank.R7.prev(7));
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasPrev1() {
-		assertFalse(GenericRank.R1.hasPrev());
+		assertThat(GenericRank.R1.hasPrev()).isFalse();
 	}
 
 	@Test
 	public void testHasPrev2() {
-		assertFalse(GenericRank.R7.hasPrev(7));
+		assertThat(GenericRank.R7.hasPrev(7)).isFalse();
 	}
 
 	@Test
 	public void testNext() {
-		assertEquals(GenericRank.R2, GenericRank.R1.next());
-		assertEquals(GenericRank.R8, GenericRank.R1.next(7));
+		assertThat(GenericRank.R1.next()).isEqualTo(GenericRank.R2);
+		assertThat(GenericRank.R1.next(7)).isEqualTo(GenericRank.R8);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalNext1() {
-		GenericRank.R8.next();
+		Throwable thrown = catchThrowable(() -> GenericRank.R8.next());
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testIllegalNext2() {
-		GenericRank.R2.next(7);
+		Throwable thrown = catchThrowable(() -> GenericRank.R2.next(7));
+		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasNext1() {
-		assertFalse(GenericRank.R8.hasNext());
+		assertThat(GenericRank.R8.hasNext()).isFalse();
 	}
 
 	@Test
 	public void testHasNext2() {
-		assertFalse(GenericRank.R2.hasNext(7));
+		assertThat(GenericRank.R2.hasNext(7)).isFalse();
 	}
 
 	@Test
 	public void testToChar() {
-		assertEquals('1', GenericRank.R1.toChar());
+		assertThat(GenericRank.R1.toChar()).isEqualTo('1');
 	}
 
 	@Test
 	public void testToString() {
-		assertEquals("1", GenericRank.R1.toString());
+		assertThat(GenericRank.R1.toString()).isEqualTo("1");
 	}
 
 }

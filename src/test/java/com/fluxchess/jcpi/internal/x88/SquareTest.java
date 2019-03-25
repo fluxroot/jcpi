@@ -16,9 +16,9 @@
 package com.fluxchess.jcpi.internal.x88;
 
 import com.fluxchess.jcpi.models.GenericPosition;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SquareTest {
 
@@ -26,31 +26,31 @@ public class SquareTest {
 	public void testValues() {
 		for (GenericPosition genericPosition : GenericPosition.values()) {
 			int square = Square.valueOf(genericPosition);
-			assertTrue(Square.isLegal(square));
-			assertTrue(Square.isValid(square));
-			assertEquals(genericPosition, Square.toGenericPosition(square));
+			assertThat(Square.isLegal(square)).isTrue();
+			assertThat(Square.isValid(square)).isTrue();
+			assertThat(Square.toGenericPosition(square)).isEqualTo(genericPosition);
 
 			int file = Square.getFile(square);
-			assertTrue(File.isValid(file));
-			assertEquals(genericPosition.file.ordinal(), file);
-			assertEquals(genericPosition.file, File.toGenericFile(file));
+			assertThat(File.isValid(file)).isTrue();
+			assertThat(file).isEqualTo(genericPosition.file.ordinal());
+			assertThat(File.toGenericFile(file)).isEqualTo(genericPosition.file);
 
 			int rank = Square.getRank(square);
-			assertTrue(Rank.isValid(rank));
-			assertEquals(genericPosition.rank.ordinal(), rank);
-			assertEquals(genericPosition.rank, Rank.toGenericRank(rank));
+			assertThat(Rank.isValid(rank)).isTrue();
+			assertThat(rank).isEqualTo(genericPosition.rank.ordinal());
+			assertThat(Rank.toGenericRank(rank)).isEqualTo(genericPosition.rank);
 		}
 
-		assertFalse(Square.isLegal(Square.NOSQUARE));
-		assertFalse(Square.isValid(Square.NOSQUARE));
+		assertThat(Square.isLegal(Square.NOSQUARE)).isFalse();
+		assertThat(Square.isValid(Square.NOSQUARE)).isFalse();
 	}
 
 	@Test
 	public void testX88Squares() {
 		int bitSquare = 0;
 		for (int x88Square : Square.values) {
-			assertEquals(bitSquare, Square.toBitSquare(x88Square));
-			assertEquals(x88Square, Square.toX88Square(bitSquare));
+			assertThat(Square.toBitSquare(x88Square)).isEqualTo(bitSquare);
+			assertThat(Square.toX88Square(bitSquare)).isEqualTo(x88Square);
 			++bitSquare;
 		}
 	}

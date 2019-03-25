@@ -15,73 +15,77 @@
  */
 package com.fluxchess.jcpi.models;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class GenericChessmanTest {
 
 	@Test
 	public void testValueOf() {
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('q'));
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOf('Q'));
+		assertThat(GenericChessman.valueOf('q')).isEqualTo(GenericChessman.QUEEN);
+		assertThat(GenericChessman.valueOf('Q')).isEqualTo(GenericChessman.QUEEN);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOf() {
-		GenericChessman.valueOf('x');
+		Throwable thrown = catchThrowable(() -> GenericChessman.valueOf('x'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValid() {
-		assertFalse(GenericChessman.isValid('x'));
+		assertThat(GenericChessman.isValid('x')).isFalse();
 	}
 
 	@Test
 	public void testValueOfPromotion() {
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('q'));
-		assertEquals(GenericChessman.QUEEN, GenericChessman.valueOfPromotion('Q'));
+		assertThat(GenericChessman.valueOfPromotion('q')).isEqualTo(GenericChessman.QUEEN);
+		assertThat(GenericChessman.valueOfPromotion('Q')).isEqualTo(GenericChessman.QUEEN);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidValueOfPromotion() {
-		GenericChessman.valueOfPromotion('p');
+		Throwable thrown = catchThrowable(() -> GenericChessman.valueOfPromotion('p'));
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testIsValidPromotion() {
-		assertFalse(GenericChessman.isValidPromotion('p'));
+		assertThat(GenericChessman.isValidPromotion('p')).isFalse();
 	}
 
 	@Test
 	public void testIsLegalPromotion() {
-		assertTrue(GenericChessman.QUEEN.isLegalPromotion());
-		assertFalse(GenericChessman.PAWN.isLegalPromotion());
+		assertThat(GenericChessman.QUEEN.isLegalPromotion()).isTrue();
+		assertThat(GenericChessman.PAWN.isLegalPromotion()).isFalse();
 	}
 
 	@Test
 	public void testIsSliding() {
-		assertTrue(GenericChessman.BISHOP.isSliding());
-		assertTrue(GenericChessman.ROOK.isSliding());
-		assertTrue(GenericChessman.QUEEN.isSliding());
-		assertFalse(GenericChessman.PAWN.isSliding());
-		assertFalse(GenericChessman.KNIGHT.isSliding());
-		assertFalse(GenericChessman.KING.isSliding());
+		assertThat(GenericChessman.BISHOP.isSliding()).isTrue();
+		assertThat(GenericChessman.ROOK.isSliding()).isTrue();
+		assertThat(GenericChessman.QUEEN.isSliding()).isTrue();
+		assertThat(GenericChessman.PAWN.isSliding()).isFalse();
+		assertThat(GenericChessman.KNIGHT.isSliding()).isFalse();
+		assertThat(GenericChessman.KING.isSliding()).isFalse();
 	}
 
 	@Test
 	public void testToCharAlgebraic() {
-		assertEquals(GenericChessman.QUEEN.toCharAlgebraic(), 'Q');
+		assertThat('Q').isEqualTo(GenericChessman.QUEEN.toCharAlgebraic());
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testInvalidToCharAlgebraic() {
-		GenericChessman.PAWN.toCharAlgebraic();
+		Throwable thrown = catchThrowable(() -> GenericChessman.PAWN.toCharAlgebraic());
+		assertThat(thrown).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test
 	public void testToChar() {
-		assertEquals('q', GenericChessman.QUEEN.toChar(GenericColor.BLACK));
+		assertThat(GenericChessman.QUEEN.toChar(GenericColor.BLACK)).isEqualTo('q');
 	}
 
 }
