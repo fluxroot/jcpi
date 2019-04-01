@@ -59,8 +59,6 @@ final class Board {
 	}
 
 	public Board(GenericBoard genericBoard) {
-		assert genericBoard != null;
-
 		// Initialize stack
 		for (int i = 0; i < stack.length; ++i) {
 			stack[i] = new State();
@@ -151,8 +149,6 @@ final class Board {
 	}
 
 	private void setFullMoveNumber(int fullMoveNumber) {
-		assert fullMoveNumber > 0;
-
 		halfMoveNumber = fullMoveNumber * 2;
 		if (activeColor == Color.valueOf(GenericColor.BLACK)) {
 			++halfMoveNumber;
@@ -160,10 +156,6 @@ final class Board {
 	}
 
 	private void put(int piece, int square) {
-		assert Piece.isValid(piece);
-		assert Square.isValid(square);
-		assert board[square] == Piece.NOPIECE;
-
 		int chessman = Piece.getChessman(piece);
 		int color = Piece.getColor(piece);
 
@@ -187,17 +179,13 @@ final class Board {
 				kings[color] |= Square.toBitboard(square);
 				break;
 			default:
-				assert false : chessman;
-				break;
+				throw new IllegalStateException();
 		}
 
 		board[square] = piece;
 	}
 
 	private int remove(int square) {
-		assert Square.isValid(square);
-		assert Piece.isValid(board[square]);
-
 		int piece = board[square];
 
 		int chessman = Piece.getChessman(piece);
@@ -223,8 +211,7 @@ final class Board {
 				kings[color] &= ~(Square.toBitboard(square));
 				break;
 			default:
-				assert false : chessman;
-				break;
+				throw new IllegalStateException();
 		}
 
 		board[square] = Piece.NOPIECE;
@@ -262,14 +249,12 @@ final class Board {
 
 		// Remove target piece and update castling rights
 		if (targetPiece != Piece.NOPIECE) {
-			assert targetPiece == board[captureSquare];
 			remove(captureSquare);
 
 			clearCastling(captureSquare);
 		}
 
 		// Move piece
-		assert originPiece == board[originSquare];
 		remove(originSquare);
 		if (type == Move.Type.PAWNPROMOTION) {
 			put(Piece.valueOf(Move.getPromotion(move), originColor), targetSquare);
@@ -299,11 +284,9 @@ final class Board {
 					rookTargetSquare = Square.d8;
 					break;
 				default:
-					assert false : targetSquare;
-					break;
+					throw new IllegalStateException();
 			}
 
-			assert Piece.getChessman(board[rookOriginSquare]) == PieceType.ROOK;
 			int rookPiece = remove(rookOriginSquare);
 			put(rookPiece, rookTargetSquare);
 		}
@@ -314,7 +297,6 @@ final class Board {
 		// Update enPassant
 		if (type == Move.Type.PAWNDOUBLE) {
 			enPassant = targetSquare + (originColor == Color.WHITE ? Square.deltaS : Square.deltaN);
-			assert Square.isValid(enPassant);
 		} else {
 			enPassant = Square.NOSQUARE;
 		}
@@ -333,13 +315,10 @@ final class Board {
 		++halfMoveNumber;
 
 		++stackSize;
-		assert stackSize < MAX_GAMEMOVES;
 	}
 
 	public void undoMove(int move) {
 		--stackSize;
-		assert stackSize >= 0;
-
 		State entry = stack[stackSize];
 
 		// Get variables
@@ -352,7 +331,6 @@ final class Board {
 		int captureSquare = targetSquare;
 		if (type == Move.Type.ENPASSANT) {
 			captureSquare += (originColor == Color.WHITE ? Square.deltaS : Square.deltaN);
-			assert Square.isValid(captureSquare);
 		}
 
 		// Update fullMoveNumber
@@ -383,11 +361,9 @@ final class Board {
 					rookTargetSquare = Square.d8;
 					break;
 				default:
-					assert false : targetSquare;
-					break;
+					throw new IllegalStateException();
 			}
 
-			assert Piece.getChessman(board[rookTargetSquare]) == PieceType.ROOK;
 			int rookPiece = remove(rookTargetSquare);
 			put(rookPiece, rookOriginSquare);
 		}
@@ -418,17 +394,12 @@ final class Board {
 	}
 
 	private void clearCastling(int color, int castling) {
-		assert Color.isValid(color);
-		assert Castling.isValid(castling);
-
 		if (this.castling[color][castling] != File.NOFILE) {
 			this.castling[color][castling] = File.NOFILE;
 		}
 	}
 
 	private void clearCastling(int square) {
-		assert Square.isLegal(square);
-
 		switch (square) {
 			case Square.a1:
 				clearCastling(Color.WHITE, Castling.QUEENSIDE);

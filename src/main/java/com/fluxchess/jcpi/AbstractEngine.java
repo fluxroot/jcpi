@@ -56,8 +56,6 @@ public abstract class AbstractEngine implements IEngine, Runnable {
 			// Run the engine
 			while (running) {
 				IEngineCommand command = handler.receive();
-				assert command != null;
-
 				command.accept(this);
 			}
 		} catch (IOException e) {
