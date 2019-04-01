@@ -97,7 +97,6 @@ public final class UciProtocol implements IProtocolHandler {
 						}
 
 						if (tokens.length > 1) {
-							assert tokens.length == 2;
 							tokens = tokens[1].trim().split("\\s", 2);
 						} else {
 							break;
@@ -119,8 +118,6 @@ public final class UciProtocol implements IProtocolHandler {
 	}
 
 	private void parseDebugCommand(String[] tokens) throws ParseException {
-		assert tokens != null;
-
 		if (tokens.length > 1) {
 			String token = tokens[1].trim();
 
@@ -137,8 +134,6 @@ public final class UciProtocol implements IProtocolHandler {
 	}
 
 	private void parseSetOptionCommand(String[] tokens) throws ParseException {
-		assert tokens != null;
-
 		if (tokens.length > 1) {
 			String token = tokens[1].trim();
 
@@ -182,12 +177,8 @@ public final class UciProtocol implements IProtocolHandler {
 	}
 
 	private void parsePositionCommand(String[] tokens) throws ParseException {
-		assert tokens != null;
-
 		if (tokens.length > 1) {
 			List<String> list = getTokens(tokens[1]);
-			assert !list.isEmpty();
-
 			Iterator<String> iter = list.iterator();
 			String token = iter.next();
 			GenericBoard board = null;
@@ -227,8 +218,6 @@ public final class UciProtocol implements IProtocolHandler {
 				}
 			}
 
-			assert board != null;
-
 			List<GenericMove> moveList = new ArrayList<GenericMove>();
 
 			try {
@@ -249,14 +238,10 @@ public final class UciProtocol implements IProtocolHandler {
 	}
 
 	private void parseGoCommand(String[] tokens) throws ParseException {
-		assert tokens != null;
-
 		EngineStartCalculatingCommand engineCommand = new EngineStartCalculatingCommand();
 
 		if (tokens.length > 1) {
 			List<String> list = getTokens(tokens[1]);
-			assert !list.isEmpty();
-
 			Iterator<String> iter = list.iterator();
 			while (iter.hasNext()) {
 				String token = iter.next();
@@ -451,7 +436,7 @@ public final class UciProtocol implements IProtocolHandler {
 					infoCommand += " lowerbound";
 					break;
 				default:
-					assert false : command.getValue();
+					throw new IllegalStateException();
 			}
 		}
 		if (command.getMoveList() != null) {

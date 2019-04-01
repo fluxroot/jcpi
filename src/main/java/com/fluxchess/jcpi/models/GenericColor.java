@@ -61,8 +61,6 @@ public enum GenericColor {
 		if (this == WHITE) {
 			return Character.toUpperCase(c);
 		} else {
-			assert this == BLACK;
-
 			return Character.toLowerCase(c);
 		}
 	}
@@ -71,8 +69,6 @@ public enum GenericColor {
 		if (this == WHITE) {
 			return BLACK;
 		} else {
-			assert this == BLACK;
-
 			return WHITE;
 		}
 	}

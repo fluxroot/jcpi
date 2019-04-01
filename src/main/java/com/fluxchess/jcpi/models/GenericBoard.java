@@ -69,8 +69,7 @@ public final class GenericBoard {
 				file = GenericFile.Fh;
 				break;
 			default:
-				assert false;
-				break;
+				throw new IllegalStateException();
 		}
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEBISHOP);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKBISHOP);
@@ -92,8 +91,7 @@ public final class GenericBoard {
 				file = GenericFile.Fg;
 				break;
 			default:
-				assert false;
-				break;
+				throw new IllegalStateException();
 		}
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEBISHOP);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKBISHOP);
@@ -112,13 +110,11 @@ public final class GenericBoard {
 				}
 			}
 		}
-		assert file != null;
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R1), GenericPiece.WHITEQUEEN);
 		this.board.put(GenericPosition.valueOf(file, GenericRank.R8), GenericPiece.BLACKQUEEN);
 		x = x / 6;
 
 		// Setup kern ("KRN")
-		assert x >= 0 && x <= 9;
 		GenericChessman[] kern = null;
 		switch (x) {
 			case 0:
@@ -152,10 +148,8 @@ public final class GenericBoard {
 				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KING, GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KNIGHT};
 				break;
 			default:
-				assert false;
-				break;
+				throw new IllegalStateException();
 		}
-		assert kern != null;
 		Iterator<GenericChessman> iter = Arrays.asList(kern).iterator();
 		for (GenericFile kernFile : GenericFile.values()) {
 			if (this.board.get(GenericPosition.valueOf(kernFile, GenericRank.R1)) == null) {
@@ -176,12 +170,9 @@ public final class GenericBoard {
 						this.kingFile.put(GenericColor.WHITE, kernFile);
 						this.kingFile.put(GenericColor.BLACK, kernFile);
 					}
-				} else {
-					assert false;
 				}
 			}
 		}
-		assert !iter.hasNext();
 	}
 
 	public GenericBoard(String notation) throws IllegalNotationException {
@@ -404,8 +395,6 @@ public final class GenericBoard {
 					if (myFile != rhsFile) {
 						return false;
 					}
-				} else {
-					assert myFile == null && rhsFile == null;
 				}
 			}
 		}
@@ -461,7 +450,6 @@ public final class GenericBoard {
 	}
 
 	private void parse(String notation) throws IllegalNotationException {
-		assert notation != null;
 		// Precondition: board is clear!
 
 		// Clean notation and split into terms
@@ -480,7 +468,6 @@ public final class GenericBoard {
 	}
 
 	private void parse(List<String> tokens) throws IllegalNotationException {
-		assert tokens != null;
 		if (tokens.size() < 4 || tokens.size() > 6) throw new IllegalNotationException();
 
 		Iterator<String> iter = tokens.iterator();
@@ -587,7 +574,6 @@ public final class GenericBoard {
 								if (castlingFile.compareTo(kingfile) < 0) {
 									castling = GenericCastling.QUEENSIDE;
 								} else {
-									assert castlingFile.compareTo(kingfile) > 0;
 									castling = GenericCastling.KINGSIDE;
 								}
 							} else {
@@ -599,7 +585,6 @@ public final class GenericBoard {
 						if (castling == GenericCastling.KINGSIDE) {
 							castlingFile = GenericFile.Fh;
 						} else {
-							assert castling == GenericCastling.QUEENSIDE;
 							castlingFile = GenericFile.Fa;
 						}
 					}
