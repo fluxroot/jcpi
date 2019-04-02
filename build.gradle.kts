@@ -43,6 +43,7 @@ tasks.named<Test>("test") {
 tasks.named<Jar>("jar").configure {
 	manifest {
 		attributes(
+				"Automatic-Module-Name" to "com.fluxchess.jcpi",
 				"Implementation-Title" to project.name,
 				"Implementation-Version" to project.the<VersioningExtension>().version,
 				"Build-Number" to project.the<VersioningExtension>().buildNo,
