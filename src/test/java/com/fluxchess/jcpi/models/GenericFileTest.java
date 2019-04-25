@@ -17,94 +17,91 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
-
+import static com.fluxchess.jcpi.models.GenericFile.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class GenericFileTest {
+class GenericFileTest {
 
 	@Test
-	public void testValueOf() {
-		assertThat(GenericFile.valueOf('a')).isEqualTo(GenericFile.A);
-		assertThat(GenericFile.valueOf('A')).isEqualTo(GenericFile.A);
+	void allTokensShouldBeLowercase() {
+		for (GenericFile file : GenericFile.values()) {
+			assertThat(file.toChar()).isLowerCase();
+		}
 	}
 
 	@Test
-	public void testInvalidValueOf() {
-		Throwable thrown = catchThrowable(() -> GenericFile.valueOf('i'));
-		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	void valueOfLowercaseCharShouldReturnCorrectFile() {
+		assertThat(GenericFile.of('a')).hasValue(a);
 	}
 
 	@Test
-	public void testIsValid() {
-		assertThat(GenericFile.isValid('i')).isFalse();
+	void valueOfUppercaseCharShouldReturnCorrectFile() {
+		assertThat(GenericFile.of('A')).hasValue(a);
 	}
 
 	@Test
-	public void testPrev() {
-		assertThat(GenericFile.H.prev()).isEqualTo(GenericFile.G);
-		assertThat(GenericFile.H.prev(7)).isEqualTo(GenericFile.A);
+	void valueOfInvalidCharShouldReturnNoFile() {
+		assertThat(GenericFile.of('i')).isEmpty();
 	}
 
 	@Test
-	public void testIllegalPrev1() {
-		Throwable thrown = catchThrowable(() -> GenericFile.A.prev());
-		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
+	void prevShouldReturnCorrectFileIfExists() {
+		assertThat(h.prev()).hasValue(g);
 	}
 
 	@Test
-	public void testIllegalPrev2() {
-		Throwable thrown = catchThrowable(() -> GenericFile.G.prev(7));
-		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
+	void prevWithNumberShouldReturnCorrectFileIfExists() {
+		assertThat(h.prev(7)).hasValue(a);
 	}
 
 	@Test
-	public void testHasPrev1() {
-		assertThat(GenericFile.A.hasPrev()).isFalse();
+	void prevShouldReturnNoFileIfNotExists() {
+		assertThat(a.prev()).isEmpty();
 	}
 
 	@Test
-	public void testHasPrev2() {
-		assertThat(GenericFile.G.hasPrev(7)).isFalse();
+	void prevWithNumberShouldReturnNoFileIfNotExists() {
+		assertThat(g.prev(7)).isEmpty();
 	}
 
 	@Test
-	public void testNext() {
-		assertThat(GenericFile.A.next()).isEqualTo(GenericFile.B);
-		assertThat(GenericFile.A.next(7)).isEqualTo(GenericFile.H);
+	void prevWithNumberShouldReturnNoFileIfNumberIsInvalid() {
+		assertThat(g.prev(-1)).isEmpty();
 	}
 
 	@Test
-	public void testIllegalNext1() {
-		Throwable thrown = catchThrowable(() -> GenericFile.H.next());
-		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
+	void nextShouldReturnCorrectFileIfExists() {
+		assertThat(a.next()).hasValue(b);
 	}
 
 	@Test
-	public void testIllegalNext2() {
-		Throwable thrown = catchThrowable(() -> GenericFile.B.next(7));
-		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
+	void nextWithNumberShouldReturnCorrectFileIfExists() {
+		assertThat(a.next(7)).hasValue(h);
 	}
 
 	@Test
-	public void testHasNext1() {
-		assertThat(GenericFile.H.hasNext()).isFalse();
+	void nextShouldReturnNoFileIfNotExists() {
+		assertThat(h.next()).isEmpty();
 	}
 
 	@Test
-	public void testHasNext2() {
-		assertThat(GenericFile.B.hasNext(7)).isFalse();
+	void nextWithNumberShouldReturnNoFileIfNotExists() {
+		assertThat(b.next(7)).isEmpty();
 	}
 
 	@Test
-	public void testToChar() {
-		assertThat(GenericFile.A.toChar()).isEqualTo('a');
+	void nextWithNumberShouldReturnNoFileIfNumberIsInvalid() {
+		assertThat(b.next(-1)).isEmpty();
 	}
 
 	@Test
-	public void testToString() {
-		assertThat(GenericFile.A.toString()).isEqualTo("a");
+	void toCharShouldReturnTokenAsCharacter() {
+		assertThat(a.toChar()).isEqualTo('a');
+	}
+
+	@Test
+	void toStringShouldReturnTokenAsString() {
+		assertThat(a.toString()).isEqualTo("a");
 	}
 
 }

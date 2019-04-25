@@ -15,6 +15,8 @@
  */
 package com.fluxchess.jcpi.models;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.*;
 
 import static com.fluxchess.jcpi.models.GenericCastling.KINGSIDE;
@@ -484,56 +486,7 @@ public final class GenericBoard {
 		// Parse data
 		if (iter.hasNext()) {
 			String token = iter.next();
-			GenericFile file = A;
-			GenericRank rank = _8;
-
-			for (char character : token.toCharArray()) {
-				if (file == null) {
-					if (character == '/') {
-						file = A;
-
-						if (rank.hasPrev()) {
-							rank = rank.prev();
-						} else {
-							// Wrong rank position!
-							throw new IllegalNotationException();
-						}
-					} else {
-						// Wrong file position!
-						throw new IllegalNotationException();
-					}
-				} else {
-					// Try to get piece
-					if (GenericPiece.isValid(character)) {
-						GenericPiece piece = GenericPiece.valueOf(character);
-						if (piece.chessman == KING) {
-							this.kingFile.put(piece.color, file);
-						}
-						this.board.put(GenericPosition.valueOf(file, rank), piece);
-					} else {
-						// Try to get empty fields
-						int emptyFields = Character.getNumericValue(character);
-
-						if (emptyFields >= 1 && emptyFields <= 8) {
-							if (file.hasNext(emptyFields - 1)) {
-								file = file.next(emptyFields - 1);
-							} else {
-								// Out of bound!
-								throw new IllegalNotationException();
-							}
-						} else {
-							// Wrong character!
-							throw new IllegalNotationException();
-						}
-					}
-
-					if (file.hasNext()) {
-						file = file.next();
-					} else {
-						file = null;
-					}
-				}
-			}
+			parsePiecePlacement(token);
 		} else {
 			throw new IllegalNotationException();
 		}
@@ -572,22 +525,18 @@ public final class GenericBoard {
 					GenericCastling castling;
 					GenericFile castlingFile;
 					if (!GenericCastling.isValid(character)) {
-						if (!GenericFile.isValid(character)) {
-							throw new IllegalNotationException();
-						} else {
-							castlingFile = GenericFile.valueOf(character);
-							this.isFrc = true;
+						castlingFile = GenericFile.of(character).orElseThrow(IllegalNotationException::new);
+						this.isFrc = true;
 
-							GenericFile kingfile = this.kingFile.get(color);
-							if (kingfile != null) {
-								if (castlingFile.compareTo(kingfile) < 0) {
-									castling = QUEENSIDE;
-								} else {
-									castling = KINGSIDE;
-								}
+						GenericFile kingfile = this.kingFile.get(color);
+						if (kingfile != null) {
+							if (castlingFile.compareTo(kingfile) < 0) {
+								castling = QUEENSIDE;
 							} else {
-								throw new IllegalNotationException();
+								castling = KINGSIDE;
 							}
+						} else {
+							throw new IllegalNotationException();
 						}
 					} else {
 						castling = GenericCastling.valueOf(character);
@@ -613,8 +562,8 @@ public final class GenericBoard {
 				// No en passant available
 			} else {
 				if (token.length() == 2) {
-					if (GenericFile.isValid(token.charAt(0)) && GenericRank.isValid(token.charAt(1))) {
-						GenericFile file = GenericFile.valueOf(token.charAt(0));
+					GenericFile file = GenericFile.of(token.charAt(0)).orElseThrow(IllegalNotationException::new);
+					if (GenericRank.isValid(token.charAt(1))) {
 						GenericRank rank = GenericRank.valueOf(token.charAt(1));
 
 						if ((rank == GenericRank._3 && this.activeColor == BLACK)
@@ -665,6 +614,57 @@ public final class GenericBoard {
 				}
 			} catch (NumberFormatException e) {
 				throw new IllegalNotationException();
+			}
+		}
+	}
+
+	private void parsePiecePlacement(String token) throws IllegalNotationException {
+		GenericFile file = A;
+		GenericRank rank = _8;
+		CharacterIterator iter = new StringCharacterIterator(token);
+
+		char character = iter.first();
+		while (true) {
+			// Try to get piece
+			if (GenericPiece.isValid(character)) {
+				GenericPiece piece = GenericPiece.valueOf(character);
+				if (piece.chessman == KING) {
+					this.kingFile.put(piece.color, file);
+				}
+				this.board.put(GenericPosition.valueOf(file, rank), piece);
+			} else {
+				// Try to get empty fields
+				int emptyFields = Character.getNumericValue(character);
+				if (emptyFields < 1) {
+					throw new IllegalNotationException();
+				}
+				if (emptyFields == 1) {
+					// Stay
+				} else if (emptyFields > 1 && emptyFields <= 8) {
+					file = file.next(emptyFields - 1).orElseThrow(IllegalNotationException::new);
+				} else {
+					throw new IllegalNotationException();
+				}
+			}
+
+			character = iter.next();
+			if (character == '/') {
+				if (file == H) {
+					file = A;
+					if (rank.hasPrev()) {
+						rank = rank.prev();
+					} else {
+						// Wrong rank position!
+						throw new IllegalNotationException();
+					}
+					character = iter.next();
+				} else {
+					throw new IllegalNotationException();
+				}
+			} else if (character == CharacterIterator.DONE) {
+				break;
+			} else {
+				file = file.next().orElseThrow(IllegalNotationException::new);
 			}
 		}
 	}

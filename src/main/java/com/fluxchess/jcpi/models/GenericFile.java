@@ -15,7 +15,7 @@
  */
 package com.fluxchess.jcpi.models;
 
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public enum GenericFile {
 
@@ -34,99 +34,91 @@ public enum GenericFile {
 		this.token = token;
 	}
 
-	private static GenericFile _valueOf(char token) {
+	/**
+	 * Tries to convert the specified token to a {@link GenericFile}. The token can be lowercase or uppercase.
+	 *
+	 * @param token a character to convert to a {@link GenericFile}
+	 * @return an {@link Optional} containing the {@link GenericFile} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericFile> of(char token) {
 		for (GenericFile file : values()) {
-			if (Character.toLowerCase(token) == Character.toLowerCase(file.token)) {
-				return file;
+			if (Character.toLowerCase(token) == file.token) {
+				return Optional.of(file);
 			}
 		}
-
-		return null;
+		return Optional.empty();
 	}
 
-	public static GenericFile valueOf(char token) {
-		GenericFile file = _valueOf(token);
-		if (file != null) {
-			return file;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public static boolean isValid(char token) {
-		return _valueOf(token) != null;
-	}
-
-	private GenericFile _prev(int i) {
-		if (i < 0) throw new IllegalArgumentException();
-
-		int position = this.ordinal() - i;
-		if (position >= 0) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
-
-	public GenericFile prev() {
+	/**
+	 * Returns the previous {@link GenericFile} if it exists.
+	 *
+	 * @return the previous {@link GenericFile} if it exists, {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericFile> prev() {
 		return prev(1);
 	}
 
-	public GenericFile prev(int i) {
-		GenericFile file = _prev(i);
-		if (file != null) {
-			return file;
-		} else {
-			throw new NoSuchElementException();
+	/**
+	 * Return a previous {@link GenericFile} if it exists by skipping i number of files.
+	 *
+	 * @param i number of files to skip. Must be greater than zero.
+	 * @return a previous {@link GenericFile} if it exists by skipping i number of files,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericFile> prev(int i) {
+		if (i < 1) return Optional.empty();
+
+		int position = ordinal() - i;
+		if (position >= 0) {
+			return Optional.of(values()[position]);
 		}
+		return Optional.empty();
 	}
 
-	public boolean hasPrev() {
-		return hasPrev(1);
-	}
-
-	public boolean hasPrev(int i) {
-		return _prev(i) != null;
-	}
-
-	private GenericFile _next(int i) {
-		if (i < 0) throw new IllegalArgumentException();
-
-		int position = this.ordinal() + i;
-		if (position < values().length) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
-
-	public GenericFile next() {
+	/**
+	 * Returns the next {@link GenericFile} if it exists.
+	 *
+	 * @return the next {@link GenericFile} if it exists, {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericFile> next() {
 		return next(1);
 	}
 
-	public GenericFile next(int i) {
-		GenericFile file = _next(i);
-		if (file != null) {
-			return file;
-		} else {
-			throw new NoSuchElementException();
+	/**
+	 * Returns a next {@link GenericFile} if it exists by skipping i number of files.
+	 *
+	 * @param i number of files to skip. Must be greater than zero.
+	 * @return a next {@link GenericFile} if it exists by skipping i number of files,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericFile> next(int i) {
+		if (i < 1) return Optional.empty();
+
+		int position = ordinal() + i;
+		if (position < values().length) {
+			return Optional.of(values()[position]);
 		}
+		return Optional.empty();
 	}
 
-	public boolean hasNext() {
-		return hasNext(1);
-	}
-
-	public boolean hasNext(int i) {
-		return _next(i) != null;
-	}
-
+	/**
+	 * Returns the character representing this {@link GenericFile}.
+	 *
+	 * @return the character representing this {@link GenericFile}
+	 */
 	public char toChar() {
-		return this.token;
+		return token;
 	}
 
+	/**
+	 * Returns the character representing this {@link GenericFile} as string.
+	 *
+	 * @return the character representing this {@link GenericFile} as string
+	 */
+	@Override
 	public String toString() {
-		return Character.toString(this.token);
+		return Character.toString(token);
 	}
 
 }
