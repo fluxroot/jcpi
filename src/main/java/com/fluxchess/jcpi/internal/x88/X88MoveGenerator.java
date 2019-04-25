@@ -383,8 +383,8 @@ public final class X88MoveGenerator {
 		// Move one square forward
 		int targetSquare = pawnSquare + delta;
 		if (Square.isLegal(targetSquare) && board.board[targetSquare] == Piece.NOPIECE) {
-			if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank.R8)
-					|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank.R1)) {
+			if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank._8)
+					|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank._1)) {
 				list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, Piece.NOPIECE, PieceType.QUEEN);
 				list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, Piece.NOPIECE, PieceType.ROOK);
 				list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, Piece.NOPIECE, PieceType.BISHOP);
@@ -395,8 +395,8 @@ public final class X88MoveGenerator {
 				// Move two squares forward
 				targetSquare += delta;
 				if (Square.isLegal(targetSquare) && board.board[targetSquare] == Piece.NOPIECE) {
-					if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank.R4)
-							|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank.R5)) {
+					if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank._4)
+							|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank._5)) {
 						list.moves[list.size++] = Move.valueOf(Move.Type.PAWNDOUBLE, pawnSquare, targetSquare, pawnPiece, Piece.NOPIECE, PieceType.NOCHESSMAN);
 					}
 				}
@@ -417,8 +417,8 @@ public final class X88MoveGenerator {
 					// We found a valid pawn
 
 					if (!isPinned(pawnSquare, pawnColor)) {
-						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank.R8)
-								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank.R1)) {
+						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank._8)
+								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank._1)) {
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, Piece.NOPIECE, PieceType.QUEEN);
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, Piece.NOPIECE, PieceType.ROOK);
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, Piece.NOPIECE, PieceType.BISHOP);
@@ -432,8 +432,8 @@ public final class X88MoveGenerator {
 				// Move two squares backward
 				pawnSquare += delta;
 				if (Square.isLegal(pawnSquare)) {
-					if ((pawnColor == Color.WHITE && Square.getRank(pawnSquare) == Rank.R2)
-							|| (pawnColor == Color.BLACK && Square.getRank(pawnSquare) == Rank.R7)) {
+					if ((pawnColor == Color.WHITE && Square.getRank(pawnSquare) == Rank._2)
+							|| (pawnColor == Color.BLACK && Square.getRank(pawnSquare) == Rank._7)) {
 						piece = board.board[pawnSquare];
 						if (piece != Piece.NOPIECE && piece == pawnPiece) {
 							if (!isPinned(pawnSquare, pawnColor)) {
@@ -461,8 +461,8 @@ public final class X88MoveGenerator {
 							&& Piece.getChessman(targetPiece) != PieceType.KING) {
 						// Capturing move
 
-						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank.R8)
-								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank.R1)) {
+						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank._8)
+								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank._1)) {
 							// Pawn promotion capturing move
 
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, pawnPiece, targetPiece, PieceType.QUEEN);
@@ -502,8 +502,8 @@ public final class X88MoveGenerator {
 					// We found a valid pawn
 
 					if (!isPinned(pawnSquare, pawnColor)) {
-						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank.R8)
-								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank.R1)) {
+						if ((pawnColor == Color.WHITE && Square.getRank(targetSquare) == Rank._8)
+								|| (pawnColor == Color.BLACK && Square.getRank(targetSquare) == Rank._1)) {
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, PieceType.QUEEN);
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, PieceType.ROOK);
 							list.moves[list.size++] = Move.valueOf(Move.Type.PAWNPROMOTION, pawnSquare, targetSquare, piece, targetPiece, PieceType.BISHOP);

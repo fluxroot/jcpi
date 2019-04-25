@@ -27,18 +27,18 @@ final class File {
 
 	public static final int MASK = 0xF;
 
-	public static final int Fa = 0;
-	public static final int Fb = 1;
-	public static final int Fc = 2;
-	public static final int Fd = 3;
-	public static final int Fe = 4;
-	public static final int Ff = 5;
-	public static final int Fg = 6;
-	public static final int Fh = 7;
+	public static final int A = 0;
+	public static final int B = 1;
+	public static final int C = 2;
+	public static final int D = 3;
+	public static final int E = 4;
+	public static final int F = 5;
+	public static final int G = 6;
+	public static final int H = 7;
 	public static final int NOFILE = 8;
 
 	public static final int[] values = {
-			Fa, Fb, Fc, Fd, Fe, Ff, Fg, Fh
+			A, B, C, D, E, F, G, H
 	};
 
 	private File() {
@@ -48,22 +48,22 @@ final class File {
 		if (genericFile == null) throw new IllegalArgumentException();
 
 		switch (genericFile) {
-			case Fa:
-				return Fa;
-			case Fb:
-				return Fb;
-			case Fc:
-				return Fc;
-			case Fd:
-				return Fd;
-			case Fe:
-				return Fe;
-			case Ff:
-				return Ff;
-			case Fg:
-				return Fg;
-			case Fh:
-				return Fh;
+			case A:
+				return A;
+			case B:
+				return B;
+			case C:
+				return C;
+			case D:
+				return D;
+			case E:
+				return E;
+			case F:
+				return F;
+			case G:
+				return G;
+			case H:
+				return H;
 			default:
 				throw new IllegalArgumentException();
 		}
@@ -71,22 +71,22 @@ final class File {
 
 	public static GenericFile toGenericFile(int file) {
 		switch (file) {
-			case Fa:
-				return GenericFile.Fa;
-			case Fb:
-				return GenericFile.Fb;
-			case Fc:
-				return GenericFile.Fc;
-			case Fd:
-				return GenericFile.Fd;
-			case Fe:
-				return GenericFile.Fe;
-			case Ff:
-				return GenericFile.Ff;
-			case Fg:
-				return GenericFile.Fg;
-			case Fh:
-				return GenericFile.Fh;
+			case A:
+				return GenericFile.A;
+			case B:
+				return GenericFile.B;
+			case C:
+				return GenericFile.C;
+			case D:
+				return GenericFile.D;
+			case E:
+				return GenericFile.E;
+			case F:
+				return GenericFile.F;
+			case G:
+				return GenericFile.G;
+			case H:
+				return GenericFile.H;
 			case NOFILE:
 			default:
 				throw new IllegalArgumentException();
@@ -95,14 +95,14 @@ final class File {
 
 	public static boolean isValid(int file) {
 		switch (file) {
-			case Fa:
-			case Fb:
-			case Fc:
-			case Fd:
-			case Fe:
-			case Ff:
-			case Fg:
-			case Fh:
+			case A:
+			case B:
+			case C:
+			case D:
+			case E:
+			case F:
+			case G:
+			case H:
 				return true;
 			case NOFILE:
 				return false;

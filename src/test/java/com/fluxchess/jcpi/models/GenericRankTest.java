@@ -26,7 +26,7 @@ public class GenericRankTest {
 
 	@Test
 	public void testValueOf() {
-		assertThat(GenericRank.valueOf('1')).isEqualTo(GenericRank.R1);
+		assertThat(GenericRank.valueOf('1')).isEqualTo(GenericRank._1);
 	}
 
 	@Test
@@ -42,68 +42,68 @@ public class GenericRankTest {
 
 	@Test
 	public void testPrev() {
-		assertThat(GenericRank.R8.prev()).isEqualTo(GenericRank.R7);
-		assertThat(GenericRank.R8.prev(7)).isEqualTo(GenericRank.R1);
+		assertThat(GenericRank._8.prev()).isEqualTo(GenericRank._7);
+		assertThat(GenericRank._8.prev(7)).isEqualTo(GenericRank._1);
 	}
 
 	@Test
 	public void testIllegalPrev1() {
-		Throwable thrown = catchThrowable(() -> GenericRank.R1.prev());
+		Throwable thrown = catchThrowable(() -> GenericRank._1.prev());
 		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testIllegalPrev2() {
-		Throwable thrown = catchThrowable(() -> GenericRank.R7.prev(7));
+		Throwable thrown = catchThrowable(() -> GenericRank._7.prev(7));
 		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasPrev1() {
-		assertThat(GenericRank.R1.hasPrev()).isFalse();
+		assertThat(GenericRank._1.hasPrev()).isFalse();
 	}
 
 	@Test
 	public void testHasPrev2() {
-		assertThat(GenericRank.R7.hasPrev(7)).isFalse();
+		assertThat(GenericRank._7.hasPrev(7)).isFalse();
 	}
 
 	@Test
 	public void testNext() {
-		assertThat(GenericRank.R1.next()).isEqualTo(GenericRank.R2);
-		assertThat(GenericRank.R1.next(7)).isEqualTo(GenericRank.R8);
+		assertThat(GenericRank._1.next()).isEqualTo(GenericRank._2);
+		assertThat(GenericRank._1.next(7)).isEqualTo(GenericRank._8);
 	}
 
 	@Test
 	public void testIllegalNext1() {
-		Throwable thrown = catchThrowable(() -> GenericRank.R8.next());
+		Throwable thrown = catchThrowable(() -> GenericRank._8.next());
 		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testIllegalNext2() {
-		Throwable thrown = catchThrowable(() -> GenericRank.R2.next(7));
+		Throwable thrown = catchThrowable(() -> GenericRank._2.next(7));
 		assertThat(thrown).isInstanceOf(NoSuchElementException.class);
 	}
 
 	@Test
 	public void testHasNext1() {
-		assertThat(GenericRank.R8.hasNext()).isFalse();
+		assertThat(GenericRank._8.hasNext()).isFalse();
 	}
 
 	@Test
 	public void testHasNext2() {
-		assertThat(GenericRank.R2.hasNext(7)).isFalse();
+		assertThat(GenericRank._2.hasNext(7)).isFalse();
 	}
 
 	@Test
 	public void testToChar() {
-		assertThat(GenericRank.R1.toChar()).isEqualTo('1');
+		assertThat(GenericRank._1.toChar()).isEqualTo('1');
 	}
 
 	@Test
 	public void testToString() {
-		assertThat(GenericRank.R1.toString()).isEqualTo("1");
+		assertThat(GenericRank._1.toString()).isEqualTo("1");
 	}
 
 }
