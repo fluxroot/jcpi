@@ -17,6 +17,15 @@ package com.fluxchess.jcpi.models;
 
 import java.util.*;
 
+import static com.fluxchess.jcpi.models.GenericCastling.KINGSIDE;
+import static com.fluxchess.jcpi.models.GenericCastling.QUEENSIDE;
+import static com.fluxchess.jcpi.models.GenericChessman.*;
+import static com.fluxchess.jcpi.models.GenericColor.BLACK;
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
+import static com.fluxchess.jcpi.models.GenericFile.*;
+import static com.fluxchess.jcpi.models.GenericPiece.*;
+import static com.fluxchess.jcpi.models.GenericRank.*;
+
 public final class GenericBoard {
 
 	public static final int STANDARDSETUP = 518;
@@ -24,7 +33,7 @@ public final class GenericBoard {
 	private final Map<GenericPosition, GenericPiece> board = new HashMap<GenericPosition, GenericPiece>();
 	private final Map<GenericColor, Map<GenericCastling, GenericFile>> castling = new EnumMap<GenericColor, Map<GenericCastling, GenericFile>>(GenericColor.class);
 	private GenericPosition enPassant = null;
-	private GenericColor activeColor = GenericColor.WHITE;
+	private GenericColor activeColor = WHITE;
 	private int halfMoveClock = 0;
 	private int fullMoveNumber = 1;
 	private final Map<GenericColor, GenericFile> kingFile = new EnumMap<GenericColor, GenericFile>(GenericColor.class);
@@ -46,8 +55,8 @@ public final class GenericBoard {
 
 		// Setup pawns
 		for (GenericFile file : GenericFile.values()) {
-			this.board.put(GenericPosition.valueOf(file, GenericRank._2), GenericPiece.WHITEPAWN);
-			this.board.put(GenericPosition.valueOf(file, GenericRank._7), GenericPiece.BLACKPAWN);
+			this.board.put(GenericPosition.valueOf(file, _2), WHITEPAWN);
+			this.board.put(GenericPosition.valueOf(file, _7), BLACKPAWN);
 		}
 
 		int x = setup;
@@ -57,51 +66,51 @@ public final class GenericBoard {
 		int remainder = x % 4;
 		switch (remainder) {
 			case 0:
-				file = GenericFile.B;
+				file = B;
 				break;
 			case 1:
-				file = GenericFile.D;
+				file = D;
 				break;
 			case 2:
-				file = GenericFile.F;
+				file = F;
 				break;
 			case 3:
-				file = GenericFile.H;
+				file = H;
 				break;
 			default:
 				throw new IllegalStateException();
 		}
-		this.board.put(GenericPosition.valueOf(file, GenericRank._1), GenericPiece.WHITEBISHOP);
-		this.board.put(GenericPosition.valueOf(file, GenericRank._8), GenericPiece.BLACKBISHOP);
+		this.board.put(GenericPosition.valueOf(file, _1), WHITEBISHOP);
+		this.board.put(GenericPosition.valueOf(file, _8), BLACKBISHOP);
 		x = x / 4;
 
 		// Setup dark-square bishop
 		remainder = x % 4;
 		switch (remainder) {
 			case 0:
-				file = GenericFile.A;
+				file = A;
 				break;
 			case 1:
-				file = GenericFile.C;
+				file = C;
 				break;
 			case 2:
-				file = GenericFile.E;
+				file = E;
 				break;
 			case 3:
-				file = GenericFile.G;
+				file = G;
 				break;
 			default:
 				throw new IllegalStateException();
 		}
-		this.board.put(GenericPosition.valueOf(file, GenericRank._1), GenericPiece.WHITEBISHOP);
-		this.board.put(GenericPosition.valueOf(file, GenericRank._8), GenericPiece.BLACKBISHOP);
+		this.board.put(GenericPosition.valueOf(file, _1), WHITEBISHOP);
+		this.board.put(GenericPosition.valueOf(file, _8), BLACKBISHOP);
 		x = x / 4;
 
 		// Setup queen
 		file = null;
 		remainder = x % 6;
 		for (GenericFile queenFile : GenericFile.values()) {
-			if (this.board.get(GenericPosition.valueOf(queenFile, GenericRank._1)) == null) {
+			if (this.board.get(GenericPosition.valueOf(queenFile, _1)) == null) {
 				if (remainder == 0) {
 					file = queenFile;
 					break;
@@ -110,65 +119,65 @@ public final class GenericBoard {
 				}
 			}
 		}
-		this.board.put(GenericPosition.valueOf(file, GenericRank._1), GenericPiece.WHITEQUEEN);
-		this.board.put(GenericPosition.valueOf(file, GenericRank._8), GenericPiece.BLACKQUEEN);
+		this.board.put(GenericPosition.valueOf(file, _1), WHITEQUEEN);
+		this.board.put(GenericPosition.valueOf(file, _8), BLACKQUEEN);
 		x = x / 6;
 
 		// Setup kern ("KRN")
 		GenericChessman[] kern = null;
 		switch (x) {
 			case 0:
-				kern = new GenericChessman[]{GenericChessman.KNIGHT, GenericChessman.KNIGHT, GenericChessman.ROOK, GenericChessman.KING, GenericChessman.ROOK};
+				kern = new GenericChessman[]{KNIGHT, KNIGHT, ROOK, KING, ROOK};
 				break;
 			case 1:
-				kern = new GenericChessman[]{GenericChessman.KNIGHT, GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KING, GenericChessman.ROOK};
+				kern = new GenericChessman[]{KNIGHT, ROOK, KNIGHT, KING, ROOK};
 				break;
 			case 2:
-				kern = new GenericChessman[]{GenericChessman.KNIGHT, GenericChessman.ROOK, GenericChessman.KING, GenericChessman.KNIGHT, GenericChessman.ROOK};
+				kern = new GenericChessman[]{KNIGHT, ROOK, KING, KNIGHT, ROOK};
 				break;
 			case 3:
-				kern = new GenericChessman[]{GenericChessman.KNIGHT, GenericChessman.ROOK, GenericChessman.KING, GenericChessman.ROOK, GenericChessman.KNIGHT};
+				kern = new GenericChessman[]{KNIGHT, ROOK, KING, ROOK, KNIGHT};
 				break;
 			case 4:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KNIGHT, GenericChessman.KING, GenericChessman.ROOK};
+				kern = new GenericChessman[]{ROOK, KNIGHT, KNIGHT, KING, ROOK};
 				break;
 			case 5:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KING, GenericChessman.KNIGHT, GenericChessman.ROOK};
+				kern = new GenericChessman[]{ROOK, KNIGHT, KING, KNIGHT, ROOK};
 				break;
 			case 6:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KING, GenericChessman.ROOK, GenericChessman.KNIGHT};
+				kern = new GenericChessman[]{ROOK, KNIGHT, KING, ROOK, KNIGHT};
 				break;
 			case 7:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KING, GenericChessman.KNIGHT, GenericChessman.KNIGHT, GenericChessman.ROOK};
+				kern = new GenericChessman[]{ROOK, KING, KNIGHT, KNIGHT, ROOK};
 				break;
 			case 8:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KING, GenericChessman.KNIGHT, GenericChessman.ROOK, GenericChessman.KNIGHT};
+				kern = new GenericChessman[]{ROOK, KING, KNIGHT, ROOK, KNIGHT};
 				break;
 			case 9:
-				kern = new GenericChessman[]{GenericChessman.ROOK, GenericChessman.KING, GenericChessman.ROOK, GenericChessman.KNIGHT, GenericChessman.KNIGHT};
+				kern = new GenericChessman[]{ROOK, KING, ROOK, KNIGHT, KNIGHT};
 				break;
 			default:
 				throw new IllegalStateException();
 		}
 		Iterator<GenericChessman> iter = Arrays.asList(kern).iterator();
 		for (GenericFile kernFile : GenericFile.values()) {
-			if (this.board.get(GenericPosition.valueOf(kernFile, GenericRank._1)) == null) {
+			if (this.board.get(GenericPosition.valueOf(kernFile, _1)) == null) {
 				if (iter.hasNext()) {
 					GenericChessman chessman = iter.next();
-					this.board.put(GenericPosition.valueOf(kernFile, GenericRank._1), GenericPiece.valueOf(GenericColor.WHITE, chessman));
-					this.board.put(GenericPosition.valueOf(kernFile, GenericRank._8), GenericPiece.valueOf(GenericColor.BLACK, chessman));
+					this.board.put(GenericPosition.valueOf(kernFile, _1), GenericPiece.valueOf(WHITE, chessman));
+					this.board.put(GenericPosition.valueOf(kernFile, _8), GenericPiece.valueOf(BLACK, chessman));
 
-					if (chessman == GenericChessman.ROOK) {
-						if (this.kingFile.get(GenericColor.WHITE) == null) {
-							this.castling.get(GenericColor.WHITE).put(GenericCastling.QUEENSIDE, kernFile);
-							this.castling.get(GenericColor.BLACK).put(GenericCastling.QUEENSIDE, kernFile);
+					if (chessman == ROOK) {
+						if (this.kingFile.get(WHITE) == null) {
+							this.castling.get(WHITE).put(QUEENSIDE, kernFile);
+							this.castling.get(BLACK).put(QUEENSIDE, kernFile);
 						} else {
-							this.castling.get(GenericColor.WHITE).put(GenericCastling.KINGSIDE, kernFile);
-							this.castling.get(GenericColor.BLACK).put(GenericCastling.KINGSIDE, kernFile);
+							this.castling.get(WHITE).put(KINGSIDE, kernFile);
+							this.castling.get(BLACK).put(KINGSIDE, kernFile);
 						}
-					} else if (chessman == GenericChessman.KING) {
-						this.kingFile.put(GenericColor.WHITE, kernFile);
-						this.kingFile.put(GenericColor.BLACK, kernFile);
+					} else if (chessman == KING) {
+						this.kingFile.put(WHITE, kernFile);
+						this.kingFile.put(BLACK, kernFile);
 					}
 				}
 			}
@@ -199,7 +208,7 @@ public final class GenericBoard {
 		this.enPassant = null;
 
 		// Clear active color
-		this.activeColor = GenericColor.WHITE;
+		this.activeColor = WHITE;
 
 		// Clear half move clock
 		this.halfMoveClock = 0;
@@ -226,7 +235,7 @@ public final class GenericBoard {
 		if (piece == null) throw new IllegalArgumentException();
 		if (position == null) throw new IllegalArgumentException();
 
-		if (piece.chessman == GenericChessman.KING) {
+		if (piece.chessman == KING) {
 			this.kingFile.put(piece.color, position.file);
 		}
 		this.board.put(position, piece);
@@ -243,7 +252,7 @@ public final class GenericBoard {
 		if (color == null) throw new IllegalArgumentException();
 		if (castling == null) throw new IllegalArgumentException();
 
-		if (file != GenericFile.A && file != GenericFile.H) {
+		if (file != A && file != H) {
 			this.isFrc = true;
 		}
 		this.castling.get(color).put(castling, file);
@@ -475,13 +484,13 @@ public final class GenericBoard {
 		// Parse data
 		if (iter.hasNext()) {
 			String token = iter.next();
-			GenericFile file = GenericFile.A;
-			GenericRank rank = GenericRank._8;
+			GenericFile file = A;
+			GenericRank rank = _8;
 
 			for (char character : token.toCharArray()) {
 				if (file == null) {
 					if (character == '/') {
-						file = GenericFile.A;
+						file = A;
 
 						if (rank.hasPrev()) {
 							rank = rank.prev();
@@ -497,7 +506,7 @@ public final class GenericBoard {
 					// Try to get piece
 					if (GenericPiece.isValid(character)) {
 						GenericPiece piece = GenericPiece.valueOf(character);
-						if (piece.chessman == GenericChessman.KING) {
+						if (piece.chessman == KING) {
 							this.kingFile.put(piece.color, file);
 						}
 						this.board.put(GenericPosition.valueOf(file, rank), piece);
@@ -572,9 +581,9 @@ public final class GenericBoard {
 							GenericFile kingfile = this.kingFile.get(color);
 							if (kingfile != null) {
 								if (castlingFile.compareTo(kingfile) < 0) {
-									castling = GenericCastling.QUEENSIDE;
+									castling = QUEENSIDE;
 								} else {
-									castling = GenericCastling.KINGSIDE;
+									castling = KINGSIDE;
 								}
 							} else {
 								throw new IllegalNotationException();
@@ -582,10 +591,10 @@ public final class GenericBoard {
 						}
 					} else {
 						castling = GenericCastling.valueOf(character);
-						if (castling == GenericCastling.KINGSIDE) {
-							castlingFile = GenericFile.H;
+						if (castling == KINGSIDE) {
+							castlingFile = H;
 						} else {
-							castlingFile = GenericFile.A;
+							castlingFile = A;
 						}
 					}
 
@@ -608,8 +617,8 @@ public final class GenericBoard {
 						GenericFile file = GenericFile.valueOf(token.charAt(0));
 						GenericRank rank = GenericRank.valueOf(token.charAt(1));
 
-						if ((rank == GenericRank._3 && this.activeColor == GenericColor.BLACK)
-								|| (rank == GenericRank._6 && this.activeColor == GenericColor.WHITE)) {
+						if ((rank == GenericRank._3 && this.activeColor == BLACK)
+								|| (rank == GenericRank._6 && this.activeColor == WHITE)) {
 							this.enPassant = GenericPosition.valueOf(file, rank);
 						} else {
 							throw new IllegalNotationException();

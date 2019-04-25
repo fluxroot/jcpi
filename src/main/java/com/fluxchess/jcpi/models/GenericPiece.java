@@ -18,20 +18,24 @@ package com.fluxchess.jcpi.models;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static com.fluxchess.jcpi.models.GenericChessman.*;
+import static com.fluxchess.jcpi.models.GenericColor.BLACK;
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
+
 public enum GenericPiece {
 
-	WHITEPAWN(GenericColor.WHITE, GenericChessman.PAWN),
-	WHITEKNIGHT(GenericColor.WHITE, GenericChessman.KNIGHT),
-	WHITEBISHOP(GenericColor.WHITE, GenericChessman.BISHOP),
-	WHITEROOK(GenericColor.WHITE, GenericChessman.ROOK),
-	WHITEQUEEN(GenericColor.WHITE, GenericChessman.QUEEN),
-	WHITEKING(GenericColor.WHITE, GenericChessman.KING),
-	BLACKPAWN(GenericColor.BLACK, GenericChessman.PAWN),
-	BLACKKNIGHT(GenericColor.BLACK, GenericChessman.KNIGHT),
-	BLACKBISHOP(GenericColor.BLACK, GenericChessman.BISHOP),
-	BLACKROOK(GenericColor.BLACK, GenericChessman.ROOK),
-	BLACKQUEEN(GenericColor.BLACK, GenericChessman.QUEEN),
-	BLACKKING(GenericColor.BLACK, GenericChessman.KING);
+	WHITEPAWN(WHITE, PAWN),
+	WHITEKNIGHT(WHITE, KNIGHT),
+	WHITEBISHOP(WHITE, BISHOP),
+	WHITEROOK(WHITE, ROOK),
+	WHITEQUEEN(WHITE, QUEEN),
+	WHITEKING(WHITE, KING),
+	BLACKPAWN(BLACK, PAWN),
+	BLACKKNIGHT(BLACK, KNIGHT),
+	BLACKBISHOP(BLACK, BISHOP),
+	BLACKROOK(BLACK, ROOK),
+	BLACKQUEEN(BLACK, QUEEN),
+	BLACKKING(BLACK, KING);
 
 	private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<GenericColor, Map<GenericChessman, GenericPiece>>(GenericColor.class);
 
