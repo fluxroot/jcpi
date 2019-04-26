@@ -68,16 +68,16 @@ public final class GenericBoard {
 		int remainder = x % 4;
 		switch (remainder) {
 			case 0:
-				file = B;
+				file = b;
 				break;
 			case 1:
-				file = D;
+				file = d;
 				break;
 			case 2:
-				file = F;
+				file = f;
 				break;
 			case 3:
-				file = H;
+				file = h;
 				break;
 			default:
 				throw new IllegalStateException();
@@ -90,16 +90,16 @@ public final class GenericBoard {
 		remainder = x % 4;
 		switch (remainder) {
 			case 0:
-				file = A;
+				file = a;
 				break;
 			case 1:
-				file = C;
+				file = c;
 				break;
 			case 2:
-				file = E;
+				file = e;
 				break;
 			case 3:
-				file = G;
+				file = g;
 				break;
 			default:
 				throw new IllegalStateException();
@@ -254,7 +254,7 @@ public final class GenericBoard {
 		if (color == null) throw new IllegalArgumentException();
 		if (castling == null) throw new IllegalArgumentException();
 
-		if (file != A && file != H) {
+		if (file != a && file != h) {
 			this.isFrc = true;
 		}
 		this.castling.get(color).put(castling, file);
@@ -541,9 +541,9 @@ public final class GenericBoard {
 					} else {
 						castling = GenericCastling.valueOf(character);
 						if (castling == KINGSIDE) {
-							castlingFile = H;
+							castlingFile = h;
 						} else {
-							castlingFile = A;
+							castlingFile = a;
 						}
 					}
 
@@ -614,7 +614,7 @@ public final class GenericBoard {
 	}
 
 	private void parsePiecePlacement(String token) throws IllegalNotationException {
-		GenericFile file = A;
+		GenericFile file = a;
 		GenericRank rank = _8;
 		CharacterIterator iter = new StringCharacterIterator(token);
 
@@ -644,8 +644,8 @@ public final class GenericBoard {
 
 			character = iter.next();
 			if (character == '/') {
-				if (file == H) {
-					file = A;
+				if (file == h) {
+					file = a;
 					rank = rank.prev().orElseThrow(IllegalNotationException::new);
 					character = iter.next();
 				} else {

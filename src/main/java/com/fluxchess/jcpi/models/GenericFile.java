@@ -19,14 +19,14 @@ import java.util.Optional;
 
 public enum GenericFile {
 
-	A('a'),
-	B('b'),
-	C('c'),
-	D('d'),
-	E('e'),
-	F('f'),
-	G('g'),
-	H('h');
+	a('a'),
+	b('b'),
+	c('c'),
+	d('d'),
+	e('e'),
+	f('f'),
+	g('g'),
+	h('h');
 
 	private final char token;
 
