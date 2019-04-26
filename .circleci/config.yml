@@ -23,3 +23,6 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
       - run: ./gradlew build --scan
+
+      - store_test_results:
+          path: build/test-results
