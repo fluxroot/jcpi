@@ -76,11 +76,11 @@ public final class GenericMove {
 		if (notation.length() == 4) {
 			GenericFile file = GenericFile.of(notation.charAt(0)).orElseThrow(IllegalNotationException::new);
 			GenericRank rank = GenericRank.of(notation.charAt(1)).orElseThrow(IllegalNotationException::new);
-			this.from = GenericPosition.valueOf(file, rank);
+			this.from = GenericPosition.of(file, rank);
 
 			file = GenericFile.of(notation.charAt(2)).orElseThrow(IllegalNotationException::new);
 			rank = GenericRank.of(notation.charAt(3)).orElseThrow(IllegalNotationException::new);
-			this.to = GenericPosition.valueOf(file, rank);
+			this.to = GenericPosition.of(file, rank);
 		} else {
 			throw new IllegalNotationException();
 		}

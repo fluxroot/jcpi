@@ -88,14 +88,14 @@ public enum GenericPosition {
 	g8(g, _8),
 	h8(h, _8);
 
-	private static final Map<GenericFile, Map<GenericRank, GenericPosition>> allPositions = new EnumMap<GenericFile, Map<GenericRank, GenericPosition>>(GenericFile.class);
+	private static final Map<GenericFile, Map<GenericRank, GenericPosition>> positions = new EnumMap<>(GenericFile.class);
 
 	static {
 		for (GenericFile file : GenericFile.values()) {
-			allPositions.put(file, new EnumMap<GenericRank, GenericPosition>(GenericRank.class));
+			positions.put(file, new EnumMap<>(GenericRank.class));
 		}
 		for (GenericPosition position : values()) {
-			allPositions.get(position.file).put(position.rank, position);
+			positions.get(position.file).put(position.rank, position);
 		}
 	}
 
@@ -107,15 +107,28 @@ public enum GenericPosition {
 		this.rank = rank;
 	}
 
-	public static GenericPosition valueOf(GenericFile file, GenericRank rank) {
+	/**
+	 * Returns the {@link GenericPosition} for the specified {@link GenericFile} and {@link GenericRank}.
+	 *
+	 * @param file a {@link GenericFile}
+	 * @param rank a {@link GenericRank}
+	 * @return the {@link GenericPosition} for the specified {@link GenericFile} and {@link GenericRank}
+	 */
+	public static GenericPosition of(GenericFile file, GenericRank rank) {
 		if (file == null) throw new IllegalArgumentException();
 		if (rank == null) throw new IllegalArgumentException();
 
-		return allPositions.get(file).get(rank);
+		return positions.get(file).get(rank);
 	}
 
+	/**
+	 * Returns the string representing this {@link GenericPosition}.
+	 *
+	 * @return the string representing this {@link GenericPosition}
+	 */
+	@Override
 	public String toString() {
-		return this.file.toString() + this.rank.toString();
+		return file.toString() + rank.toString();
 	}
 
 }

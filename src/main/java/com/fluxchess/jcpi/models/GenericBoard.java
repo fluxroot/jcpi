@@ -57,8 +57,8 @@ public final class GenericBoard {
 
 		// Setup pawns
 		for (GenericFile file : GenericFile.values()) {
-			this.board.put(GenericPosition.valueOf(file, _2), WHITEPAWN);
-			this.board.put(GenericPosition.valueOf(file, _7), BLACKPAWN);
+			this.board.put(GenericPosition.of(file, _2), WHITEPAWN);
+			this.board.put(GenericPosition.of(file, _7), BLACKPAWN);
 		}
 
 		int x = setup;
@@ -82,8 +82,8 @@ public final class GenericBoard {
 			default:
 				throw new IllegalStateException();
 		}
-		this.board.put(GenericPosition.valueOf(file, _1), WHITEBISHOP);
-		this.board.put(GenericPosition.valueOf(file, _8), BLACKBISHOP);
+		this.board.put(GenericPosition.of(file, _1), WHITEBISHOP);
+		this.board.put(GenericPosition.of(file, _8), BLACKBISHOP);
 		x = x / 4;
 
 		// Setup dark-square bishop
@@ -104,15 +104,15 @@ public final class GenericBoard {
 			default:
 				throw new IllegalStateException();
 		}
-		this.board.put(GenericPosition.valueOf(file, _1), WHITEBISHOP);
-		this.board.put(GenericPosition.valueOf(file, _8), BLACKBISHOP);
+		this.board.put(GenericPosition.of(file, _1), WHITEBISHOP);
+		this.board.put(GenericPosition.of(file, _8), BLACKBISHOP);
 		x = x / 4;
 
 		// Setup queen
 		file = null;
 		remainder = x % 6;
 		for (GenericFile queenFile : GenericFile.values()) {
-			if (this.board.get(GenericPosition.valueOf(queenFile, _1)) == null) {
+			if (this.board.get(GenericPosition.of(queenFile, _1)) == null) {
 				if (remainder == 0) {
 					file = queenFile;
 					break;
@@ -121,8 +121,8 @@ public final class GenericBoard {
 				}
 			}
 		}
-		this.board.put(GenericPosition.valueOf(file, _1), WHITEQUEEN);
-		this.board.put(GenericPosition.valueOf(file, _8), BLACKQUEEN);
+		this.board.put(GenericPosition.of(file, _1), WHITEQUEEN);
+		this.board.put(GenericPosition.of(file, _8), BLACKQUEEN);
 		x = x / 6;
 
 		// Setup kern ("KRN")
@@ -163,11 +163,11 @@ public final class GenericBoard {
 		}
 		Iterator<GenericChessman> iter = Arrays.asList(kern).iterator();
 		for (GenericFile kernFile : GenericFile.values()) {
-			if (this.board.get(GenericPosition.valueOf(kernFile, _1)) == null) {
+			if (this.board.get(GenericPosition.of(kernFile, _1)) == null) {
 				if (iter.hasNext()) {
 					GenericChessman chessman = iter.next();
-					this.board.put(GenericPosition.valueOf(kernFile, _1), GenericPiece.valueOf(WHITE, chessman));
-					this.board.put(GenericPosition.valueOf(kernFile, _8), GenericPiece.valueOf(BLACK, chessman));
+					this.board.put(GenericPosition.of(kernFile, _1), GenericPiece.valueOf(WHITE, chessman));
+					this.board.put(GenericPosition.of(kernFile, _8), GenericPiece.valueOf(BLACK, chessman));
 
 					if (chessman == ROOK) {
 						if (this.kingFile.get(WHITE) == null) {
@@ -309,7 +309,7 @@ public final class GenericBoard {
 			int emptySquares = 0;
 
 			for (GenericFile file : GenericFile.values()) {
-				GenericPiece piece = this.board.get(GenericPosition.valueOf(file, rank));
+				GenericPiece piece = this.board.get(GenericPosition.of(file, rank));
 
 				if (piece == null) {
 					emptySquares++;
@@ -566,7 +566,7 @@ public final class GenericBoard {
 					GenericRank rank = GenericRank.of(token.charAt(1)).orElseThrow(IllegalNotationException::new);
 					if ((rank == GenericRank._3 && this.activeColor == BLACK)
 							|| (rank == GenericRank._6 && this.activeColor == WHITE)) {
-						this.enPassant = GenericPosition.valueOf(file, rank);
+						this.enPassant = GenericPosition.of(file, rank);
 					} else {
 						throw new IllegalNotationException();
 					}
@@ -626,7 +626,7 @@ public final class GenericBoard {
 				if (piece.chessman == KING) {
 					this.kingFile.put(piece.color, file);
 				}
-				this.board.put(GenericPosition.valueOf(file, rank), piece);
+				this.board.put(GenericPosition.of(file, rank), piece);
 			} else {
 				// Try to get empty fields
 				int emptyFields = Character.getNumericValue(character);

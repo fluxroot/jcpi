@@ -17,15 +17,37 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
+import static com.fluxchess.jcpi.models.GenericFile.a;
+import static com.fluxchess.jcpi.models.GenericPosition.a1;
+import static com.fluxchess.jcpi.models.GenericRank._1;
+import static java.util.Arrays.stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GenericPositionTest {
+class GenericPositionTest {
 
 	@Test
-	public void testPosition() {
-		GenericPosition position1 = GenericPosition.valueOf(GenericFile.a, GenericRank._1);
-		GenericPosition position2 = GenericPosition.valueOf(GenericFile.a, GenericRank._1);
-		assertThat(position2).isEqualTo(position1);
+	void valuesShouldContainCorrectFileAndRank() {
+		Iterator<GenericPosition> iter = stream(GenericPosition.values()).iterator();
+		for (GenericRank rank : GenericRank.values()) {
+			for (GenericFile file : GenericFile.values()) {
+				GenericPosition position = iter.next();
+
+				assertThat(position.file).isEqualTo(file);
+				assertThat(position.rank).isEqualTo(rank);
+			}
+		}
+	}
+
+	@Test
+	void valueOfFileAndRankShouldReturnCorrectPosition() {
+		assertThat(GenericPosition.of(a, _1)).isEqualTo(a1);
+	}
+
+	@Test
+	void toStringShouldReturnCorrectString() {
+		assertThat(a1.toString()).isEqualTo("a1");
 	}
 
 }

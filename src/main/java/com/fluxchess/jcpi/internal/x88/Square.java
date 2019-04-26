@@ -119,7 +119,7 @@ final class Square {
 	}
 
 	public static GenericPosition toGenericPosition(int square) {
-		return GenericPosition.valueOf(File.toGenericFile(getFile(square)), Rank.toGenericRank(getRank(square)));
+		return GenericPosition.of(File.toGenericFile(getFile(square)), Rank.toGenericRank(getRank(square)));
 	}
 
 	public static int toX88Square(int square) {
