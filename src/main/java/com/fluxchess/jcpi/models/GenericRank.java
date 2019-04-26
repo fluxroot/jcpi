@@ -15,7 +15,7 @@
  */
 package com.fluxchess.jcpi.models;
 
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public enum GenericRank {
 
@@ -34,99 +34,91 @@ public enum GenericRank {
 		this.token = token;
 	}
 
-	private static GenericRank _valueOf(char token) {
+	/**
+	 * Tries to convert the specified token to a {@link GenericRank}.
+	 *
+	 * @param token a character to convert to a {@link GenericRank}
+	 * @return an {@link Optional} containing the {@link GenericRank} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericRank> of(char token) {
 		for (GenericRank rank : values()) {
-			if (Character.toLowerCase(token) == Character.toLowerCase(rank.token)) {
-				return rank;
+			if (token == rank.token) {
+				return Optional.of(rank);
 			}
 		}
-
-		return null;
+		return Optional.empty();
 	}
 
-	public static GenericRank valueOf(char token) {
-		GenericRank rank = _valueOf(token);
-		if (rank != null) {
-			return rank;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public static boolean isValid(char token) {
-		return _valueOf(token) != null;
-	}
-
-	private GenericRank _prev(int i) {
-		if (i < 0) throw new IllegalArgumentException();
-
-		int position = this.ordinal() - i;
-		if (position >= 0) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
-
-	public GenericRank prev() {
+	/**
+	 * Returns the previous {@link GenericRank} if it exists.
+	 *
+	 * @return the previous {@link GenericRank} if it exists, {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericRank> prev() {
 		return prev(1);
 	}
 
-	public GenericRank prev(int i) {
-		GenericRank rank = _prev(i);
-		if (rank != null) {
-			return rank;
-		} else {
-			throw new NoSuchElementException();
+	/**
+	 * Return a previous {@link GenericRank} if it exists by skipping i number of ranks.
+	 *
+	 * @param i number of ranks to skip. Must be greater than zero.
+	 * @return a previous {@link GenericRank} if it exists by skipping i number of ranks,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericRank> prev(int i) {
+		if (i < 1) return Optional.empty();
+
+		int position = ordinal() - i;
+		if (position >= 0) {
+			return Optional.of(values()[position]);
 		}
+		return Optional.empty();
 	}
 
-	public boolean hasPrev() {
-		return hasPrev(1);
-	}
-
-	public boolean hasPrev(int i) {
-		return _prev(i) != null;
-	}
-
-	private GenericRank _next(int i) {
-		if (i < 0) throw new IllegalArgumentException();
-
-		int position = this.ordinal() + i;
-		if (position < values().length) {
-			return values()[position];
-		} else {
-			return null;
-		}
-	}
-
-	public GenericRank next() {
+	/**
+	 * Returns the next {@link GenericRank} if it exists.
+	 *
+	 * @return the next {@link GenericRank} if it exists, {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericRank> next() {
 		return next(1);
 	}
 
-	public GenericRank next(int i) {
-		GenericRank rank = _next(i);
-		if (rank != null) {
-			return rank;
-		} else {
-			throw new NoSuchElementException();
+	/**
+	 * Returns a next {@link GenericRank} if it exists by skipping i number of ranks.
+	 *
+	 * @param i number of ranks to skip. Must be greater than zero.
+	 * @return a next {@link GenericRank} if it exists by skipping i number of ranks,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public Optional<GenericRank> next(int i) {
+		if (i < 1) return Optional.empty();
+
+		int position = ordinal() + i;
+		if (position < values().length) {
+			return Optional.of(values()[position]);
 		}
+		return Optional.empty();
 	}
 
-	public boolean hasNext() {
-		return hasNext(1);
-	}
-
-	public boolean hasNext(int i) {
-		return _next(i) != null;
-	}
-
+	/**
+	 * Returns the character representing this {@link GenericRank}.
+	 *
+	 * @return the character representing this {@link GenericRank}
+	 */
 	public char toChar() {
-		return this.token;
+		return token;
 	}
 
+	/**
+	 * Returns the character representing this {@link GenericRank} as string.
+	 *
+	 * @return the character representing this {@link GenericRank} as string
+	 */
+	@Override
 	public String toString() {
-		return Character.toString(this.token);
+		return Character.toString(token);
 	}
 
 }

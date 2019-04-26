@@ -563,15 +563,10 @@ public final class GenericBoard {
 			} else {
 				if (token.length() == 2) {
 					GenericFile file = GenericFile.of(token.charAt(0)).orElseThrow(IllegalNotationException::new);
-					if (GenericRank.isValid(token.charAt(1))) {
-						GenericRank rank = GenericRank.valueOf(token.charAt(1));
-
-						if ((rank == GenericRank._3 && this.activeColor == BLACK)
-								|| (rank == GenericRank._6 && this.activeColor == WHITE)) {
-							this.enPassant = GenericPosition.valueOf(file, rank);
-						} else {
-							throw new IllegalNotationException();
-						}
+					GenericRank rank = GenericRank.of(token.charAt(1)).orElseThrow(IllegalNotationException::new);
+					if ((rank == GenericRank._3 && this.activeColor == BLACK)
+							|| (rank == GenericRank._6 && this.activeColor == WHITE)) {
+						this.enPassant = GenericPosition.valueOf(file, rank);
 					} else {
 						throw new IllegalNotationException();
 					}
@@ -651,12 +646,7 @@ public final class GenericBoard {
 			if (character == '/') {
 				if (file == H) {
 					file = A;
-					if (rank.hasPrev()) {
-						rank = rank.prev();
-					} else {
-						// Wrong rank position!
-						throw new IllegalNotationException();
-					}
+					rank = rank.prev().orElseThrow(IllegalNotationException::new);
 					character = iter.next();
 				} else {
 					throw new IllegalNotationException();
