@@ -17,51 +17,72 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
+import static com.fluxchess.jcpi.models.GenericColor.BLACK;
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class GenericColorTest {
+class GenericColorTest {
 
 	@Test
-	public final void testValueOf() {
-		assertThat(GenericColor.valueOf('w')).isEqualTo(GenericColor.WHITE);
-		assertThat(GenericColor.valueOf('b')).isEqualTo(GenericColor.BLACK);
+	void allTokensShouldBeLowercase() {
+		for (GenericColor color : GenericColor.values()) {
+			assertThat(color.toChar()).isLowerCase();
+		}
 	}
 
 	@Test
-	public final void testInvalidValueOf() {
-		Throwable thrown = catchThrowable(() -> GenericColor.valueOf('a'));
-		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	public void valueOfLowercaseTokenShouldReturnCorrectColor() {
+		assertThat(GenericColor.of('w')).hasValue(WHITE);
 	}
 
 	@Test
-	public final void testIsValid() {
-		assertThat(GenericColor.isValid('a')).isFalse();
+	public void valueOfUppercaseTokenShouldReturnCorrectColor() {
+		assertThat(GenericColor.of('W')).hasValue(WHITE);
 	}
 
 	@Test
-	public final void testColorOf() {
-		assertThat(GenericColor.colorOf('A')).isEqualTo(GenericColor.WHITE);
-		assertThat(GenericColor.colorOf('a')).isEqualTo(GenericColor.BLACK);
+	public void valueOfInvalidTokenShouldReturnNoColor() {
+		assertThat(GenericColor.of('a')).isEmpty();
 	}
 
 	@Test
-	public final void testTransform() {
-		assertThat(GenericColor.WHITE.transform('A')).isEqualTo('A');
-		assertThat(GenericColor.WHITE.transform('a')).isEqualTo('A');
-		assertThat(GenericColor.BLACK.transform('A')).isEqualTo('a');
+	public void colorOfUppercaseCharShouldReturnWhite() {
+		assertThat(GenericColor.colorOf('A')).isEqualTo(WHITE);
 	}
 
 	@Test
-	public final void testOpposite() {
-		assertThat(GenericColor.BLACK.opposite()).isEqualTo(GenericColor.WHITE);
-		assertThat(GenericColor.WHITE.opposite()).isEqualTo(GenericColor.BLACK);
+	public void colorOfLowercaseCharShouldReturnBlack() {
+		assertThat(GenericColor.colorOf('a')).isEqualTo(BLACK);
 	}
 
 	@Test
-	public final void testToChar() {
-		assertThat(GenericColor.WHITE.toChar()).isEqualTo('w');
-		assertThat(GenericColor.BLACK.toChar()).isEqualTo('b');
+	public void transformingUppercaseCharToWhiteShouldReturnUppercaseChar() {
+		assertThat(WHITE.transform('A')).isEqualTo('A');
+	}
+
+	@Test
+	public void transformingLowercaseCharToWhiteShouldReturnUppercaseChar() {
+		assertThat(WHITE.transform('a')).isEqualTo('A');
+	}
+
+	@Test
+	public void transformingUppercaseCharToBlackShouldReturnLowercaseChar() {
+		assertThat(BLACK.transform('A')).isEqualTo('a');
+	}
+
+	@Test
+	public void oppositeOfWhiteShouldBeBlack() {
+		assertThat(WHITE.opposite()).isEqualTo(BLACK);
+	}
+
+	@Test
+	public void oppositeOfBlackShouldBeWhite() {
+		assertThat(BLACK.opposite()).isEqualTo(WHITE);
+	}
+
+	@Test
+	public void toCharShouldReturnToken() {
+		assertThat(WHITE.toChar()).isEqualTo('w');
 	}
 
 }

@@ -497,11 +497,7 @@ public final class GenericBoard {
 
 			if (token.length() == 1) {
 				char input = token.charAt(0);
-				if (GenericColor.isValid(input)) {
-					this.activeColor = GenericColor.valueOf(input);
-				} else {
-					throw new IllegalNotationException();
-				}
+				this.activeColor = GenericColor.of(input).orElseThrow(IllegalNotationException::new);
 			} else {
 				throw new IllegalNotationException();
 			}

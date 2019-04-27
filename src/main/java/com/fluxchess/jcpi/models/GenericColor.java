@@ -15,6 +15,8 @@
  */
 package com.fluxchess.jcpi.models;
 
+import java.util.Optional;
+
 public enum GenericColor {
 
 	WHITE('w'),
@@ -26,55 +28,60 @@ public enum GenericColor {
 		this.token = token;
 	}
 
-	private static GenericColor _valueOf(char token) {
+	/**
+	 * Tries to convert the specified token to a {@link GenericColor}. The token can be lowercase or uppercase.
+	 *
+	 * @param token a character to convert to a {@link GenericColor}
+	 * @return an {@link Optional} containing the {@link GenericColor} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericColor> of(char token) {
 		for (GenericColor color : values()) {
-			if (Character.toLowerCase(token) == Character.toLowerCase(color.token)) {
-				return color;
+			if (Character.toLowerCase(token) == color.token) {
+				return Optional.of(color);
 			}
 		}
-
-		return null;
+		return Optional.empty();
 	}
 
-	public static GenericColor valueOf(char token) {
-		GenericColor color = _valueOf(token);
-		if (color != null) {
-			return color;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public static boolean isValid(char token) {
-		return _valueOf(token) != null;
-	}
-
+	/**
+	 * Returns {@link GenericColor#WHITE} if the specified character c is uppercase,
+	 * {@link GenericColor#BLACK} if c is lowercase.
+	 *
+	 * @param c a character to get the {@link GenericColor} from
+	 * @return {@link GenericColor#WHITE} if c is uppercase, {@link GenericColor#BLACK} if c is lowercase
+	 */
 	public static GenericColor colorOf(char c) {
-		if (Character.isLowerCase(c)) {
-			return BLACK;
-		} else {
-			return WHITE;
-		}
+		return Character.isUpperCase(c) ? WHITE : BLACK;
 	}
 
+	/**
+	 * Transforms the specified character c to this {@link GenericColor}.
+	 *
+	 * @param c a character to transform
+	 * @return an uppercase character if this {@link GenericColor} is {@link GenericColor#WHITE}, a lowercase character
+	 * if this {@link GenericColor} is {@link GenericColor#BLACK}
+	 */
 	public char transform(char c) {
-		if (this == WHITE) {
-			return Character.toUpperCase(c);
-		} else {
-			return Character.toLowerCase(c);
-		}
+		return this == WHITE ? Character.toUpperCase(c) : Character.toLowerCase(c);
 	}
 
+	/**
+	 * Returns the opposite color of this {@link GenericColor}.
+	 *
+	 * @return the opposite color of this {@link GenericColor}
+	 */
 	public GenericColor opposite() {
-		if (this == WHITE) {
-			return BLACK;
-		} else {
-			return WHITE;
-		}
+		return this == WHITE ? BLACK : WHITE;
 	}
 
+	/**
+	 * Returns the character representing this {@link GenericColor}.
+	 *
+	 * @return the character representing this {@link GenericColor}
+	 */
 	public char toChar() {
-		return this.token;
+		return token;
 	}
 
 }
