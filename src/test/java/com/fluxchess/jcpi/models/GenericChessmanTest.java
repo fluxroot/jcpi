@@ -17,75 +17,72 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
+import static com.fluxchess.jcpi.models.GenericChessman.PAWN;
+import static com.fluxchess.jcpi.models.GenericChessman.QUEEN;
+import static com.fluxchess.jcpi.models.GenericColor.BLACK;
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class GenericChessmanTest {
+class GenericChessmanTest {
 
 	@Test
-	public void testValueOf() {
-		assertThat(GenericChessman.valueOf('q')).isEqualTo(GenericChessman.QUEEN);
-		assertThat(GenericChessman.valueOf('Q')).isEqualTo(GenericChessman.QUEEN);
+	public void valueFromLowercaseTokenShouldReturnCorrectChessman() {
+		assertThat(GenericChessman.from('q')).hasValue(QUEEN);
 	}
 
 	@Test
-	public void testInvalidValueOf() {
-		Throwable thrown = catchThrowable(() -> GenericChessman.valueOf('x'));
-		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	public void valueFromUppercaseTokenShouldReturnCorrectChessman() {
+		assertThat(GenericChessman.from('Q')).hasValue(QUEEN);
 	}
 
 	@Test
-	public void testIsValid() {
-		assertThat(GenericChessman.isValid('x')).isFalse();
+	public void valueFromInvalidTokenShouldReturnNoChessman() {
+		assertThat(GenericChessman.from('a')).isEmpty();
 	}
 
 	@Test
-	public void testValueOfPromotion() {
-		assertThat(GenericChessman.valueOfPromotion('q')).isEqualTo(GenericChessman.QUEEN);
-		assertThat(GenericChessman.valueOfPromotion('Q')).isEqualTo(GenericChessman.QUEEN);
+	public void valueFromLowercaseTokenForPromotionShouldReturnValidPromotedChessman() {
+		assertThat(GenericChessman.promotionFrom('q')).hasValue(QUEEN);
 	}
 
 	@Test
-	public void testInvalidValueOfPromotion() {
-		Throwable thrown = catchThrowable(() -> GenericChessman.valueOfPromotion('p'));
-		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	public void valueFromUppercaseTokenForPromotionShouldReturnValidPromotedChessman() {
+		assertThat(GenericChessman.promotionFrom('Q')).hasValue(QUEEN);
 	}
 
 	@Test
-	public void testIsValidPromotion() {
-		assertThat(GenericChessman.isValidPromotion('p')).isFalse();
+	public void valueFromInvalidTokenForPromotionShouldReturnNoChessman() {
+		assertThat(GenericChessman.promotionFrom('a')).isEmpty();
 	}
 
 	@Test
-	public void testIsLegalPromotion() {
-		assertThat(GenericChessman.QUEEN.isLegalPromotion()).isTrue();
-		assertThat(GenericChessman.PAWN.isLegalPromotion()).isFalse();
+	public void isPromotionShouldReturnTrueForValidPromotedChessman() {
+		assertThat(QUEEN.isPromotion()).isTrue();
 	}
 
 	@Test
-	public void testIsSliding() {
-		assertThat(GenericChessman.BISHOP.isSliding()).isTrue();
-		assertThat(GenericChessman.ROOK.isSliding()).isTrue();
-		assertThat(GenericChessman.QUEEN.isSliding()).isTrue();
-		assertThat(GenericChessman.PAWN.isSliding()).isFalse();
-		assertThat(GenericChessman.KNIGHT.isSliding()).isFalse();
-		assertThat(GenericChessman.KING.isSliding()).isFalse();
+	public void isPromotionShouldReturnFalseForInvalidPromotedChessman() {
+		assertThat(PAWN.isPromotion()).isFalse();
 	}
 
 	@Test
-	public void testToCharAlgebraic() {
-		assertThat('Q').isEqualTo(GenericChessman.QUEEN.toCharAlgebraic());
+	public void toAlgebraicCharShouldReturnToken() {
+		assertThat(QUEEN.toAlgebraicChar()).hasValue('Q');
 	}
 
 	@Test
-	public void testInvalidToCharAlgebraic() {
-		Throwable thrown = catchThrowable(() -> GenericChessman.PAWN.toCharAlgebraic());
-		assertThat(thrown).isInstanceOf(UnsupportedOperationException.class);
+	public void toAlgebraicCharShouldReturnNoTokenForPawn() {
+		assertThat(PAWN.toAlgebraicChar()).isEmpty();
 	}
 
 	@Test
-	public void testToChar() {
-		assertThat(GenericChessman.QUEEN.toChar(GenericColor.BLACK)).isEqualTo('q');
+	public void toNotationShouldReturnLowercaseNotationForBlack() {
+		assertThat(QUEEN.toNotation(BLACK)).isEqualTo("q");
+	}
+
+	@Test
+	public void toNotationShouldReturnUppercaseNotationForWhite() {
+		assertThat(QUEEN.toNotation(WHITE)).isEqualTo("Q");
 	}
 
 }

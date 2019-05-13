@@ -17,31 +17,41 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
+import static com.fluxchess.jcpi.models.GenericChessman.PAWN;
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
+import static com.fluxchess.jcpi.models.GenericPiece.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class GenericPieceTest {
+class GenericPieceTest {
 
 	@Test
-	public void testValueOf() {
-		assertThat(GenericPiece.valueOf(GenericColor.WHITE, GenericChessman.PAWN)).isEqualTo(GenericPiece.WHITEPAWN);
-		assertThat(GenericPiece.valueOf('P')).isEqualTo(GenericPiece.WHITEPAWN);
+	public void valueOfColorAndChessmanShouldReturnCorrectPiece() {
+		assertThat(GenericPiece.of(WHITE, PAWN)).isEqualTo(WHITEPAWN);
 	}
 
 	@Test
-	public void testInvalidValueOf() {
-		Throwable thrown = catchThrowable(() -> GenericPiece.valueOf('x'));
-		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+	public void valueFromLowercaseTokenShouldReturnCorrectPiece() {
+		assertThat(GenericPiece.from('p')).hasValue(BLACKPAWN);
 	}
 
 	@Test
-	public void testIsValid() {
-		assertThat(GenericPiece.isValid('x')).isFalse();
+	public void valueFromUppercaseTokenShouldReturnCorrectPiece() {
+		assertThat(GenericPiece.from('P')).hasValue(WHITEPAWN);
 	}
 
 	@Test
-	public void testToChar() {
-		assertThat(GenericPiece.BLACKQUEEN.toChar()).isEqualTo('q');
+	public void valueFromInvalidTokenShouldReturnNoChessman() {
+		assertThat(GenericPiece.from('a')).isEmpty();
+	}
+
+	@Test
+	public void toNotationShouldReturnLowercaseNotationForBlackPiece() {
+		assertThat(BLACKQUEEN.toNotation()).isEqualTo("q");
+	}
+
+	@Test
+	public void toNotationShouldReturnUppercaseNotationForWhitePiece() {
+		assertThat(WHITEQUEEN.toNotation()).isEqualTo("Q");
 	}
 
 }

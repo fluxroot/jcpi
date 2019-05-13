@@ -28,7 +28,7 @@ public final class GenericMove {
 	public GenericMove(GenericPosition from, GenericPosition to, GenericChessman promotion) {
 		if (from == null) throw new IllegalArgumentException();
 		if (to == null) throw new IllegalArgumentException();
-		if (promotion != null && !promotion.isLegalPromotion()) throw new IllegalArgumentException();
+		if (promotion != null && !promotion.isPromotion()) throw new IllegalArgumentException();
 
 		this.from = from;
 		this.to = to;
@@ -62,12 +62,7 @@ public final class GenericMove {
 
 		// Parse promotion
 		if (notation.length() == 5) {
-			if (GenericChessman.isValidPromotion(notation.charAt(4))) {
-				this.promotion = GenericChessman.valueOfPromotion(notation.charAt(4));
-			} else {
-				throw new IllegalNotationException();
-			}
-
+			this.promotion = GenericChessman.promotionFrom(notation.charAt(4)).orElseThrow(IllegalNotationException::new);
 			notation = notation.substring(0, 4);
 		} else {
 			this.promotion = null;
@@ -90,7 +85,7 @@ public final class GenericMove {
 		String result = this.from.toString() + this.to.toString();
 
 		if (this.promotion != null) {
-			result += Character.toLowerCase(this.promotion.toCharAlgebraic());
+			result += Character.toLowerCase(this.promotion.toAlgebraicChar().orElseThrow(IllegalStateException::new));
 		}
 
 		return result;

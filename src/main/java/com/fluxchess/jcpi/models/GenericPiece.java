@@ -17,6 +17,7 @@ package com.fluxchess.jcpi.models;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.fluxchess.jcpi.models.GenericChessman.*;
 import static com.fluxchess.jcpi.models.GenericColor.BLACK;
@@ -37,14 +38,14 @@ public enum GenericPiece {
 	BLACKQUEEN(BLACK, QUEEN),
 	BLACKKING(BLACK, KING);
 
-	private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> allPieces = new EnumMap<GenericColor, Map<GenericChessman, GenericPiece>>(GenericColor.class);
+	private static final Map<GenericColor, Map<GenericChessman, GenericPiece>> pieces = new EnumMap<>(GenericColor.class);
 
 	static {
 		for (GenericColor color : GenericColor.values()) {
-			allPieces.put(color, new EnumMap<GenericChessman, GenericPiece>(GenericChessman.class));
+			pieces.put(color, new EnumMap<>(GenericChessman.class));
 		}
 		for (GenericPiece piece : values()) {
-			allPieces.get(piece.color).put(piece.chessman, piece);
+			pieces.get(piece.color).put(piece.chessman, piece);
 		}
 	}
 
@@ -56,26 +57,39 @@ public enum GenericPiece {
 		this.chessman = chessman;
 	}
 
-	public static GenericPiece valueOf(GenericColor color, GenericChessman chessman) {
+	/**
+	 * Returns the {@link GenericPiece} for the specified {@link GenericColor} and {@link GenericChessman}.
+	 *
+	 * @param color    a {@link GenericColor}
+	 * @param chessman a {@link GenericChessman}
+	 * @return the {@link GenericPiece} for the specified {@link GenericColor} and {@link GenericChessman}
+	 */
+	public static GenericPiece of(GenericColor color, GenericChessman chessman) {
 		if (color == null) throw new IllegalArgumentException();
 		if (chessman == null) throw new IllegalArgumentException();
 
-		return allPieces.get(color).get(chessman);
+		return pieces.get(color).get(chessman);
 	}
 
-	public static GenericPiece valueOf(char token) {
+	/**
+	 * Tries to convert the specified token to a {@link GenericPiece}. The token can be lowercase or uppercase.
+	 *
+	 * @param token a character to convert to a {@link GenericPiece}
+	 * @return an {@link Optional} containing the {@link GenericPiece} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericPiece> from(char token) {
 		GenericColor color = GenericColor.colorOf(token);
-		GenericChessman chessman = GenericChessman.valueOf(token);
-
-		return valueOf(color, chessman);
+		return GenericChessman.from(token).map(chessman -> of(color, chessman));
 	}
 
-	public static boolean isValid(char token) {
-		return GenericChessman.isValid(token);
-	}
-
-	public char toChar() {
-		return this.chessman.toChar(this.color);
+	/**
+	 * Returns the notation representing this {@link GenericPiece}.
+	 *
+	 * @return the notation representing this {@link GenericPiece}
+	 */
+	public String toNotation() {
+		return chessman.toNotation(color);
 	}
 
 }

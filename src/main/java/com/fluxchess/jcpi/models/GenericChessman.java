@@ -16,6 +16,8 @@
 package com.fluxchess.jcpi.models;
 
 import java.util.EnumSet;
+import java.util.Optional;
+import java.util.Set;
 
 public enum GenericChessman {
 
@@ -26,8 +28,7 @@ public enum GenericChessman {
 	QUEEN('Q'),
 	KING('K');
 
-	public static final EnumSet<GenericChessman> promotions = EnumSet.of(KNIGHT, BISHOP, ROOK, QUEEN);
-	public static final EnumSet<GenericChessman> sliders = EnumSet.of(BISHOP, ROOK, QUEEN);
+	private static final Set<GenericChessman> promotions = EnumSet.of(KNIGHT, BISHOP, ROOK, QUEEN);
 
 	private final char token;
 
@@ -35,72 +36,75 @@ public enum GenericChessman {
 		this.token = token;
 	}
 
-	private static GenericChessman _valueOf(char token) {
+	/**
+	 * Tries to convert the specified token to a {@link GenericChessman}. The token can be lowercase or uppercase.
+	 *
+	 * @param token a character to convert to a {@link GenericChessman}
+	 * @return an {@link Optional} containing the {@link GenericChessman} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericChessman> from(char token) {
 		for (GenericChessman chessman : values()) {
-			if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
-				return chessman;
+			if (Character.toUpperCase(token) == chessman.token) {
+				return Optional.of(chessman);
 			}
 		}
-
-		return null;
+		return Optional.empty();
 	}
 
-	public static GenericChessman valueOf(char token) {
-		GenericChessman chessman = _valueOf(token);
-		if (chessman != null) {
-			return chessman;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public static boolean isValid(char token) {
-		return _valueOf(token) != null;
-	}
-
-	private static GenericChessman _valueOfPromotion(char token) {
+	/**
+	 * Tries to convert the specified token to a valid promoted {@link GenericChessman}. The token can be lowercase
+	 * or uppercase.
+	 *
+	 * @param token a character to convert to a valid promoted {@link GenericChessman}
+	 * @return an {@link Optional} containing the valid promoted {@link GenericChessman} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericChessman> promotionFrom(char token) {
 		for (GenericChessman chessman : promotions) {
-			if (Character.toLowerCase(token) == Character.toLowerCase(chessman.token)) {
-				return chessman;
+			if (Character.toUpperCase(token) == chessman.token) {
+				return Optional.of(chessman);
 			}
 		}
-
-		return null;
+		return Optional.empty();
 	}
 
-	public static GenericChessman valueOfPromotion(char token) {
-		GenericChessman chessman = _valueOfPromotion(token);
-		if (chessman != null) {
-			return chessman;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	public static boolean isValidPromotion(char token) {
-		return _valueOfPromotion(token) != null;
-	}
-
-	public boolean isLegalPromotion() {
+	/**
+	 * Returns whether this {@link GenericChessman} is a valid promoted {@link GenericChessman}.
+	 *
+	 * @return true if this {@link GenericChessman} is a valid promoted {@link GenericChessman}, false otherwise
+	 */
+	public boolean isPromotion() {
 		return promotions.contains(this);
 	}
 
-	public boolean isSliding() {
-		return sliders.contains(this);
-	}
-
-	public char toCharAlgebraic() {
+	/**
+	 * Returns the algebraic character representing this {@link GenericChessman}. Please note,
+	 * for {@link GenericChessman#PAWN} there exists no algebraic character and {@link Optional#empty()} is returned
+	 * instead.
+	 *
+	 * @return an {@link Optional} containing the algebraic character representing this {@link GenericChessman},
+	 * {@link Optional#empty()} if this {@link GenericChessman} is a {@link GenericChessman#PAWN}.
+	 */
+	public Optional<Character> toAlgebraicChar() {
 		if (this == PAWN) {
-			throw new UnsupportedOperationException();
+			return Optional.empty();
 		}
-
-		return this.token;
+		return Optional.of(token);
 	}
 
-	public char toChar(GenericColor color) {
+	/**
+	 * Returns the notation representing this {@link GenericChessman} using the specified {@link GenericColor}
+	 * for transformation.
+	 *
+	 * @param color a {@link GenericColor} for transformation
+	 * @return an uppercase string if the specified {@link GenericColor} is {@link GenericColor#WHITE}, a lowercase
+	 * string if the specified {@link GenericColor} is {@link GenericColor#BLACK}
+	 */
+	public String toNotation(GenericColor color) {
 		if (color == null) throw new IllegalArgumentException();
 
-		return color.transform(this.token);
+		return String.valueOf(color.transform(token));
 	}
 
 }

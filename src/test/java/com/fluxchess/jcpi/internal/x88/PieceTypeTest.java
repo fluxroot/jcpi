@@ -45,13 +45,6 @@ public class PieceTypeTest {
 	}
 
 	@Test
-	public void testPromotionValues() {
-		for (GenericChessman genericChessman : GenericChessman.promotions) {
-			assertThat(PieceType.toGenericChessman(PieceType.valueOfPromotion(genericChessman))).isEqualTo(genericChessman);
-		}
-	}
-
-	@Test
 	public void testInvalidValueOfPromotion() {
 		Throwable thrown = catchThrowable(() -> PieceType.valueOfPromotion(GenericChessman.PAWN));
 		assertThat(thrown).isInstanceOf(IllegalArgumentException.class);

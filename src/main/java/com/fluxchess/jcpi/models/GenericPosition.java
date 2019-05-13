@@ -17,6 +17,7 @@ package com.fluxchess.jcpi.models;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.fluxchess.jcpi.models.GenericFile.*;
 import static com.fluxchess.jcpi.models.GenericRank.*;
@@ -119,6 +120,26 @@ public enum GenericPosition {
 		if (rank == null) throw new IllegalArgumentException();
 
 		return positions.get(file).get(rank);
+	}
+
+	/**
+	 * Tries to convert the specified token to a {@link GenericPosition}. The token can be lowercase or uppercase.
+	 *
+	 * @param token a string of length 2 to convert to a {@link GenericPosition}
+	 * @return an {@link Optional} containing the {@link GenericPosition} if conversion was successful,
+	 * {@link Optional#empty()} otherwise
+	 */
+	public static Optional<GenericPosition> from(String token) {
+		if (token == null) throw new IllegalArgumentException();
+		if (token.length() != 2) throw new IllegalArgumentException();
+
+		Optional<GenericFile> file = GenericFile.of(token.charAt(0));
+		Optional<GenericRank> rank = GenericRank.of(token.charAt(1));
+
+		if (file.isPresent() && rank.isPresent()) {
+			return Optional.of(of(file.get(), rank.get()));
+		}
+		return Optional.empty();
 	}
 
 	/**
