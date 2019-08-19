@@ -41,7 +41,7 @@ public enum GenericFile {
 	 * @return an {@link Optional} containing the {@link GenericFile} if conversion was successful,
 	 * {@link Optional#empty()} otherwise
 	 */
-	public static Optional<GenericFile> of(char token) {
+	public static Optional<GenericFile> from(char token) {
 		for (GenericFile file : values()) {
 			if (Character.toLowerCase(token) == file.token) {
 				return Optional.of(file);
@@ -55,8 +55,8 @@ public enum GenericFile {
 	 *
 	 * @return the previous {@link GenericFile} if it exists, {@link Optional#empty()} otherwise
 	 */
-	public Optional<GenericFile> prev() {
-		return prev(1);
+	public Optional<GenericFile> previous() {
+		return previous(1);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public enum GenericFile {
 	 * @return a previous {@link GenericFile} if it exists by skipping i number of files,
 	 * {@link Optional#empty()} otherwise
 	 */
-	public Optional<GenericFile> prev(int i) {
+	public Optional<GenericFile> previous(int i) {
 		if (i < 1) return Optional.empty();
 
 		int position = ordinal() - i;
@@ -103,22 +103,26 @@ public enum GenericFile {
 	}
 
 	/**
-	 * Returns the character representing this {@link GenericFile}.
+	 * Returns the notation representing this {@link GenericFile}.
 	 *
-	 * @return the character representing this {@link GenericFile}
+	 * @return the notation representing this {@link GenericFile}
 	 */
-	public char toChar() {
-		return token;
+	public String toNotation() {
+		return String.valueOf(token);
 	}
 
 	/**
-	 * Returns the character representing this {@link GenericFile} as string.
+	 * Returns the notation representing this {@link GenericFile} using the specified {@link GenericColor}
+	 * for transformation.
 	 *
-	 * @return the character representing this {@link GenericFile} as string
+	 * @param color a {@link GenericColor} for transformation
+	 * @return an uppercase string if the specified {@link GenericColor} is {@link GenericColor#WHITE}, a lowercase
+	 * string if the specified {@link GenericColor} is {@link GenericColor#BLACK}
 	 */
-	@Override
-	public String toString() {
-		return Character.toString(token);
+	public String toNotation(GenericColor color) {
+		if (color == null) throw new IllegalArgumentException();
+
+		return String.valueOf(color.transform(token));
 	}
 
 }

@@ -334,7 +334,7 @@ public final class GenericBoard {
 		fen += ' ';
 
 		// Color
-		fen += this.activeColor.toChar();
+		fen += this.activeColor.toNotation();
 
 		fen += ' ';
 
@@ -345,7 +345,7 @@ public final class GenericBoard {
 				GenericFile value = this.castling.get(color).get(castling);
 				if (value != null) {
 					if (this.isFrc) {
-						fen += color.transform(value.toChar());
+						fen += value.toNotation(color);
 					} else {
 						fen += castling.toChar(color);
 					}
@@ -361,7 +361,7 @@ public final class GenericBoard {
 
 		// En passant
 		if (this.enPassant != null) {
-			fen += this.enPassant.toString();
+			fen += this.enPassant.toNotation();
 		} else {
 			fen += '-';
 		}
@@ -497,7 +497,7 @@ public final class GenericBoard {
 
 			if (token.length() == 1) {
 				char input = token.charAt(0);
-				this.activeColor = GenericColor.of(input).orElseThrow(IllegalNotationException::new);
+				this.activeColor = GenericColor.from(input).orElseThrow(IllegalNotationException::new);
 			} else {
 				throw new IllegalNotationException();
 			}
@@ -521,7 +521,7 @@ public final class GenericBoard {
 					GenericCastling castling;
 					GenericFile castlingFile;
 					if (!GenericCastling.isValid(character)) {
-						castlingFile = GenericFile.of(character).orElseThrow(IllegalNotationException::new);
+						castlingFile = GenericFile.from(character).orElseThrow(IllegalNotationException::new);
 						this.isFrc = true;
 
 						GenericFile kingfile = this.kingFile.get(color);
@@ -558,8 +558,8 @@ public final class GenericBoard {
 				// No en passant available
 			} else {
 				if (token.length() == 2) {
-					GenericFile file = GenericFile.of(token.charAt(0)).orElseThrow(IllegalNotationException::new);
-					GenericRank rank = GenericRank.of(token.charAt(1)).orElseThrow(IllegalNotationException::new);
+					GenericFile file = GenericFile.from(token.charAt(0)).orElseThrow(IllegalNotationException::new);
+					GenericRank rank = GenericRank.from(token.charAt(1)).orElseThrow(IllegalNotationException::new);
 					if ((rank == GenericRank._3 && this.activeColor == BLACK)
 							|| (rank == GenericRank._6 && this.activeColor == WHITE)) {
 						this.enPassant = GenericPosition.of(file, rank);
@@ -642,7 +642,7 @@ public final class GenericBoard {
 			if (character == '/') {
 				if (file == h) {
 					file = a;
-					rank = rank.prev().orElseThrow(IllegalNotationException::new);
+					rank = rank.previous().orElseThrow(IllegalNotationException::new);
 					character = iter.next();
 				} else {
 					throw new IllegalNotationException();

@@ -47,7 +47,7 @@ class GenericPositionTest {
 
 	@Test
 	void toStringShouldReturnCorrectString() {
-		assertThat(a1.toString()).isEqualTo("a1");
+		assertThat(a1.toNotation()).isEqualTo("a1");
 	}
 
 }

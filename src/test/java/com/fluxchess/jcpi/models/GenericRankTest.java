@@ -23,38 +23,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GenericRankTest {
 
 	@Test
-	void valueOfCharShouldReturnCorrectRank() {
-		assertThat(GenericRank.of('1')).hasValue(_1);
+	void valueFromTokenShouldReturnCorrectRank() {
+		assertThat(GenericRank.from('1')).hasValue(_1);
 	}
 
 	@Test
-	void valueOfInvalidCharShouldReturnNoRank() {
-		assertThat(GenericRank.of('i')).isEmpty();
+	void valueFromInvalidTokenShouldReturnNoRank() {
+		assertThat(GenericRank.from('i')).isEmpty();
 	}
 
 	@Test
-	void prevShouldReturnCorrectRankIfExists() {
-		assertThat(_8.prev()).hasValue(_7);
+	void previousShouldReturnCorrectRankIfExists() {
+		assertThat(_8.previous()).hasValue(_7);
 	}
 
 	@Test
-	void prevWithNumberShouldReturnCorrectRankIfExists() {
-		assertThat(_8.prev(7)).hasValue(_1);
+	void previousWithNumberShouldReturnCorrectRankIfExists() {
+		assertThat(_8.previous(7)).hasValue(_1);
 	}
 
 	@Test
-	void prevShouldReturnNoRankIfNotExists() {
-		assertThat(_1.prev()).isEmpty();
+	void previousShouldReturnNoRankIfNotExists() {
+		assertThat(_1.previous()).isEmpty();
 	}
 
 	@Test
-	void prevWithNumberShouldReturnNoRankIfNotExists() {
-		assertThat(_7.prev(7)).isEmpty();
+	void previousWithNumberShouldReturnNoRankIfNotExists() {
+		assertThat(_7.previous(7)).isEmpty();
 	}
 
 	@Test
-	void prevWithNumberShouldReturnNoRankIfNumberIsInvalid() {
-		assertThat(_7.prev(-1)).isEmpty();
+	void previousWithNumberShouldReturnNoRankIfNumberIsInvalid() {
+		assertThat(_7.previous(-1)).isEmpty();
 	}
 
 	@Test
@@ -83,13 +83,8 @@ class GenericRankTest {
 	}
 
 	@Test
-	void toCharShouldReturnTokenAsCharacter() {
-		assertThat(_1.toChar()).isEqualTo('1');
-	}
-
-	@Test
-	void toStringShouldReturnTokenAsString() {
-		assertThat(_1.toString()).isEqualTo("1");
+	void toNotationShouldReturnCorrectToken() {
+		assertThat(_1.toNotation()).isEqualTo("1");
 	}
 
 }

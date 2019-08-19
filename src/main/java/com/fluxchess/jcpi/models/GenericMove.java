@@ -69,12 +69,12 @@ public final class GenericMove {
 		}
 
 		if (notation.length() == 4) {
-			GenericFile file = GenericFile.of(notation.charAt(0)).orElseThrow(IllegalNotationException::new);
-			GenericRank rank = GenericRank.of(notation.charAt(1)).orElseThrow(IllegalNotationException::new);
+			GenericFile file = GenericFile.from(notation.charAt(0)).orElseThrow(IllegalNotationException::new);
+			GenericRank rank = GenericRank.from(notation.charAt(1)).orElseThrow(IllegalNotationException::new);
 			this.from = GenericPosition.of(file, rank);
 
-			file = GenericFile.of(notation.charAt(2)).orElseThrow(IllegalNotationException::new);
-			rank = GenericRank.of(notation.charAt(3)).orElseThrow(IllegalNotationException::new);
+			file = GenericFile.from(notation.charAt(2)).orElseThrow(IllegalNotationException::new);
+			rank = GenericRank.from(notation.charAt(3)).orElseThrow(IllegalNotationException::new);
 			this.to = GenericPosition.of(file, rank);
 		} else {
 			throw new IllegalNotationException();
@@ -82,7 +82,7 @@ public final class GenericMove {
 	}
 
 	public String toString() {
-		String result = this.from.toString() + this.to.toString();
+		String result = this.from.toNotation() + this.to.toNotation();
 
 		if (this.promotion != null) {
 			result += Character.toLowerCase(this.promotion.toAlgebraicChar().orElseThrow(IllegalStateException::new));

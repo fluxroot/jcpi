@@ -17,56 +17,50 @@ package com.fluxchess.jcpi.models;
 
 import org.junit.jupiter.api.Test;
 
+import static com.fluxchess.jcpi.models.GenericColor.WHITE;
 import static com.fluxchess.jcpi.models.GenericFile.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GenericFileTest {
 
 	@Test
-	void allTokensShouldBeLowercase() {
-		for (GenericFile file : GenericFile.values()) {
-			assertThat(file.toChar()).isLowerCase();
-		}
+	void valueFromLowercaseTokenShouldReturnCorrectFile() {
+		assertThat(GenericFile.from('a')).hasValue(a);
 	}
 
 	@Test
-	void valueOfLowercaseCharShouldReturnCorrectFile() {
-		assertThat(GenericFile.of('a')).hasValue(a);
+	void valueFromUppercaseTokenShouldReturnCorrectFile() {
+		assertThat(GenericFile.from('A')).hasValue(a);
 	}
 
 	@Test
-	void valueOfUppercaseCharShouldReturnCorrectFile() {
-		assertThat(GenericFile.of('A')).hasValue(a);
+	void valueFromInvalidTokenShouldReturnNoFile() {
+		assertThat(GenericFile.from('i')).isEmpty();
 	}
 
 	@Test
-	void valueOfInvalidCharShouldReturnNoFile() {
-		assertThat(GenericFile.of('i')).isEmpty();
+	void previousShouldReturnCorrectFileIfExists() {
+		assertThat(h.previous()).hasValue(g);
 	}
 
 	@Test
-	void prevShouldReturnCorrectFileIfExists() {
-		assertThat(h.prev()).hasValue(g);
+	void previousWithNumberShouldReturnCorrectFileIfExists() {
+		assertThat(h.previous(7)).hasValue(a);
 	}
 
 	@Test
-	void prevWithNumberShouldReturnCorrectFileIfExists() {
-		assertThat(h.prev(7)).hasValue(a);
+	void previousShouldReturnNoFileIfNotExists() {
+		assertThat(a.previous()).isEmpty();
 	}
 
 	@Test
-	void prevShouldReturnNoFileIfNotExists() {
-		assertThat(a.prev()).isEmpty();
+	void previousWithNumberShouldReturnNoFileIfNotExists() {
+		assertThat(g.previous(7)).isEmpty();
 	}
 
 	@Test
-	void prevWithNumberShouldReturnNoFileIfNotExists() {
-		assertThat(g.prev(7)).isEmpty();
-	}
-
-	@Test
-	void prevWithNumberShouldReturnNoFileIfNumberIsInvalid() {
-		assertThat(g.prev(-1)).isEmpty();
+	void previousWithNumberShouldReturnNoFileIfNumberIsInvalid() {
+		assertThat(g.previous(-1)).isEmpty();
 	}
 
 	@Test
@@ -95,13 +89,13 @@ class GenericFileTest {
 	}
 
 	@Test
-	void toCharShouldReturnTokenAsCharacter() {
-		assertThat(a.toChar()).isEqualTo('a');
+	void toNotationShouldReturnCorrectNotation() {
+		assertThat(a.toNotation()).isEqualTo("a");
 	}
 
 	@Test
-	void toStringShouldReturnTokenAsString() {
-		assertThat(a.toString()).isEqualTo("a");
+	void toNotationShouldReturnUppercaseNotationForWhite() {
+		assertThat(a.toNotation(WHITE)).isEqualTo("A");
 	}
 
 }

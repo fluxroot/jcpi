@@ -133,8 +133,8 @@ public enum GenericPosition {
 		if (token == null) throw new IllegalArgumentException();
 		if (token.length() != 2) throw new IllegalArgumentException();
 
-		Optional<GenericFile> file = GenericFile.of(token.charAt(0));
-		Optional<GenericRank> rank = GenericRank.of(token.charAt(1));
+		Optional<GenericFile> file = GenericFile.from(token.charAt(0));
+		Optional<GenericRank> rank = GenericRank.from(token.charAt(1));
 
 		if (file.isPresent() && rank.isPresent()) {
 			return Optional.of(of(file.get(), rank.get()));
@@ -143,13 +143,26 @@ public enum GenericPosition {
 	}
 
 	/**
-	 * Returns the string representing this {@link GenericPosition}.
+	 * Returns the notation representing this {@link GenericPosition}.
 	 *
-	 * @return the string representing this {@link GenericPosition}
+	 * @return the notation representing this {@link GenericPosition}
 	 */
-	@Override
-	public String toString() {
-		return file.toString() + rank.toString();
+	public String toNotation() {
+		return file.toNotation() + rank.toNotation();
+	}
+
+	/**
+	 * Returns the notation representing this {@link GenericPosition} using the specified {@link GenericColor}
+	 * for transformation.
+	 *
+	 * @param color a {@link GenericColor} for transformation
+	 * @return an uppercase string if the specified {@link GenericColor} is {@link GenericColor#WHITE}, a lowercase
+	 * string if the specified {@link GenericColor} is {@link GenericColor#BLACK}
+	 */
+	public String toNotation(GenericColor color) {
+		if (color == null) throw new IllegalArgumentException();
+
+		return file.toNotation(color) + rank.toNotation();
 	}
 
 }

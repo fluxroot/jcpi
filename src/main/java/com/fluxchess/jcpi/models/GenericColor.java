@@ -35,7 +35,7 @@ public enum GenericColor {
 	 * @return an {@link Optional} containing the {@link GenericColor} if conversion was successful,
 	 * {@link Optional#empty()} otherwise
 	 */
-	public static Optional<GenericColor> of(char token) {
+	public static Optional<GenericColor> from(char token) {
 		for (GenericColor color : values()) {
 			if (Character.toLowerCase(token) == color.token) {
 				return Optional.of(color);
@@ -55,15 +55,8 @@ public enum GenericColor {
 		return Character.isUpperCase(c) ? WHITE : BLACK;
 	}
 
-	/**
-	 * Transforms the specified character c to this {@link GenericColor}.
-	 *
-	 * @param c a character to transform
-	 * @return an uppercase character if this {@link GenericColor} is {@link GenericColor#WHITE}, a lowercase character
-	 * if this {@link GenericColor} is {@link GenericColor#BLACK}
-	 */
-	public char transform(char c) {
-		return this == WHITE ? Character.toUpperCase(c) : Character.toLowerCase(c);
+	char transform(char token) {
+		return this == WHITE ? Character.toUpperCase(token) : Character.toLowerCase(token);
 	}
 
 	/**
@@ -76,12 +69,12 @@ public enum GenericColor {
 	}
 
 	/**
-	 * Returns the character representing this {@link GenericColor}.
+	 * Returns the notation representing this {@link GenericColor}.
 	 *
-	 * @return the character representing this {@link GenericColor}
+	 * @return the notation representing this {@link GenericColor}
 	 */
-	public char toChar() {
-		return token;
+	public String toNotation() {
+		return String.valueOf(token);
 	}
 
 }

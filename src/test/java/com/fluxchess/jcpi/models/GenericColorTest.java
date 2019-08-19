@@ -24,25 +24,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GenericColorTest {
 
 	@Test
-	void allTokensShouldBeLowercase() {
-		for (GenericColor color : GenericColor.values()) {
-			assertThat(color.toChar()).isLowerCase();
-		}
+	public void valueFromLowercaseTokenShouldReturnCorrectColor() {
+		assertThat(GenericColor.from('w')).hasValue(WHITE);
 	}
 
 	@Test
-	public void valueOfLowercaseTokenShouldReturnCorrectColor() {
-		assertThat(GenericColor.of('w')).hasValue(WHITE);
+	public void valueFromUppercaseTokenShouldReturnCorrectColor() {
+		assertThat(GenericColor.from('W')).hasValue(WHITE);
 	}
 
 	@Test
-	public void valueOfUppercaseTokenShouldReturnCorrectColor() {
-		assertThat(GenericColor.of('W')).hasValue(WHITE);
-	}
-
-	@Test
-	public void valueOfInvalidTokenShouldReturnNoColor() {
-		assertThat(GenericColor.of('a')).isEmpty();
+	public void valueFromInvalidTokenShouldReturnNoColor() {
+		assertThat(GenericColor.from('a')).isEmpty();
 	}
 
 	@Test
@@ -81,8 +74,8 @@ class GenericColorTest {
 	}
 
 	@Test
-	public void toCharShouldReturnToken() {
-		assertThat(WHITE.toChar()).isEqualTo('w');
+	public void toNotationShouldReturnCorrectNotation() {
+		assertThat(WHITE.toNotation()).isEqualTo("w");
 	}
 
 }
