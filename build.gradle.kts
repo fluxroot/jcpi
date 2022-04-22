@@ -1,54 +1,30 @@
-import com.fluxchess.gladius.build.plugin.ci.CiPlugin
-import com.fluxchess.gladius.build.plugin.versioning.VersioningExtension
-
-description = "Java Chess Protocol Interface"
-group = "com.fluxchess.jcpi"
-version = "2.0.0"
-
 plugins {
 	`java-library`
 }
 
+group = "com.fluxchess.jcpi"
+version = "2.0.0-SNAPSHOT"
+
 dependencies {
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.1")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.1")
-	testImplementation("org.assertj:assertj-core:3.12.2")
-	testImplementation("org.slf4j:slf4j-log4j12:1.7.26")
+	testImplementation(libs.junit)
+	testImplementation(libs.assertj)
+	testImplementation(libs.slf4j)
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(8))
+	}
+	withSourcesJar()
+	withJavadocJar()
 }
 
-tasks.named<Test>("test") {
+tasks.test {
 	useJUnitPlatform()
 }
 
-tasks.named<Jar>("jar").configure {
+tasks.jar {
 	manifest {
-		attributes(
-				"Automatic-Module-Name" to "com.fluxchess.jcpi",
-				"Implementation-Title" to project.name,
-				"Implementation-Version" to project.the<VersioningExtension>().version,
-				"Build-Number" to project.the<VersioningExtension>().buildNo,
-				"Commit-Id" to project.the<VersioningExtension>().commitId)
+		attributes("Automatic-Module-Name" to "com.fluxchess.jcpi")
 	}
-}
-
-val distTask = tasks.register<Zip>("dist") {
-	into("${project.name}-${project.the<VersioningExtension>().version}") {
-		from("README.md")
-		from("LICENSE")
-		from("NOTICE")
-
-		from(tasks.named<Jar>("jar"))
-		from(tasks.named<Jar>("sourcesJar"))
-		from(tasks.named<Jar>("javadocJar"))
-
-		from("src/dist/engine-interface.txt")
-	}
-}
-
-artifacts {
-	archives(tasks.named<Zip>("dist"))
 }
