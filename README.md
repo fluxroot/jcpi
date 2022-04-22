@@ -4,7 +4,7 @@ Java Chess Protocol Interface
 Copyright 2007-2022 The Java Chess Protocol Interface Project Authors  
 http://fluxchess.com
 
-[![CircleCI](https://circleci.com/gh/fluxroot/jcpi.svg?style=svg&circle-token=13a8cad97ddea44a39b3283fbe1c48bc605ce799)](https://circleci.com/gh/fluxroot/jcpi)
+![Build](https://github.com/fluxroot/jcpi/actions/workflows/build.yml/badge.svg)
 
 
 Introduction
