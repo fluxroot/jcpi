@@ -12,13 +12,7 @@ apply<VersioningPlugin>()
 apply<JavaArtifactPlugin>()
 
 plugins {
-	`build-scan`
 	`java-library`
-}
-
-buildScan {
-	termsOfServiceUrl = "https://gradle.com/terms-of-service"
-	termsOfServiceAgree = "yes"
 }
 
 dependencies {
