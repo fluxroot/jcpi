@@ -5,8 +5,6 @@ description = "Java Chess Protocol Interface"
 group = "com.fluxchess.jcpi"
 version = "2.0.0"
 
-apply<CiPlugin>()
-
 plugins {
 	`java-library`
 }
