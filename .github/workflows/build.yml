@@ -1,0 +1,17 @@
+on: [ push ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 8
+      - run: ./gradlew build
+        env:
+          ORG_GRADLE_PROJECT_ossrhUsername: ${{secrets.ossrhUsername}}
+          ORG_GRADLE_PROJECT_ossrhPassword: ${{secrets.ossrhPassword}}
+          ORG_GRADLE_PROJECT_signingKeyId: ${{secrets.signingKeyId}}
+          ORG_GRADLE_PROJECT_signingKey: ${{secrets.signingKey}}
+          ORG_GRADLE_PROJECT_signingPassword: ${{secrets.signingPassword}}
