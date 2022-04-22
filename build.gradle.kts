@@ -1,14 +1,12 @@
 import com.fluxchess.gladius.build.plugin.artifact.JavaArtifactPlugin
 import com.fluxchess.gladius.build.plugin.ci.CiPlugin
 import com.fluxchess.gladius.build.plugin.versioning.VersioningExtension
-import com.fluxchess.gladius.build.plugin.versioning.VersioningPlugin
 
 description = "Java Chess Protocol Interface"
 group = "com.fluxchess.jcpi"
 version = "2.0.0"
 
 apply<CiPlugin>()
-apply<VersioningPlugin>()
 apply<JavaArtifactPlugin>()
 
 plugins {
