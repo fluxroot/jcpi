@@ -1,4 +1,3 @@
-import com.fluxchess.gladius.build.plugin.artifact.JavaArtifactPlugin
 import com.fluxchess.gladius.build.plugin.ci.CiPlugin
 import com.fluxchess.gladius.build.plugin.versioning.VersioningExtension
 
@@ -7,7 +6,6 @@ group = "com.fluxchess.jcpi"
 version = "2.0.0"
 
 apply<CiPlugin>()
-apply<JavaArtifactPlugin>()
 
 plugins {
 	`java-library`
