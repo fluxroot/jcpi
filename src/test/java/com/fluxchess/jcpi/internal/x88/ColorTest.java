@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2019 The Java Chess Protocol Interface Project Authors
+ * Copyright 2007-2022 The Java Chess Protocol Interface Project Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
