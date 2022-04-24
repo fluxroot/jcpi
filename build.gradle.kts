@@ -76,11 +76,10 @@ publishing {
 }
 
 signing {
-	val signingKeyId: String? by project
 	val signingKey: String? by project
 	val signingPassword: String? by project
-	if (signingKeyId != null && signingKey != null && signingPassword != null) {
-		useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+	if (signingKey != null && signingPassword != null) {
+		useInMemoryPgpKeys(signingKey, signingPassword)
 		sign(publishing.publications["mavenJava"])
 	}
 }
