@@ -23,8 +23,8 @@ public class GenericPositionTest {
 
 	@Test
 	public void testPosition() {
-		GenericPosition position1 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
-		GenericPosition position2 = GenericPosition.valueOf(GenericFile.Fa, GenericRank.R1);
+		GenericPosition position1 = GenericPosition.valueOf(GenericFile.A, GenericRank._1);
+		GenericPosition position2 = GenericPosition.valueOf(GenericFile.A, GenericRank._1);
 		assertThat(position2).isEqualTo(position1);
 	}
 

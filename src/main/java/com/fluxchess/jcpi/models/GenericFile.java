@@ -19,14 +19,14 @@ import java.util.NoSuchElementException;
 
 public enum GenericFile {
 
-	Fa('a'),
-	Fb('b'),
-	Fc('c'),
-	Fd('d'),
-	Fe('e'),
-	Ff('f'),
-	Fg('g'),
-	Fh('h');
+	A('a'),
+	B('b'),
+	C('c'),
+	D('d'),
+	E('e'),
+	F('f'),
+	G('g'),
+	H('h');
 
 	private final char token;
 
