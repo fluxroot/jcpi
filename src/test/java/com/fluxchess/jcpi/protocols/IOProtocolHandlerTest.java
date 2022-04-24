@@ -18,7 +18,12 @@ package com.fluxchess.jcpi.protocols;
 import com.fluxchess.jcpi.commands.ProtocolInitializeAnswerCommand;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

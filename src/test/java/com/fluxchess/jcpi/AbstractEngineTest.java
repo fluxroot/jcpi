@@ -15,17 +15,33 @@
  */
 package com.fluxchess.jcpi;
 
-import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
+import com.fluxchess.jcpi.commands.EngineDebugCommand;
+import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
+import com.fluxchess.jcpi.commands.EngineNewGameCommand;
+import com.fluxchess.jcpi.commands.EnginePonderHitCommand;
+import com.fluxchess.jcpi.commands.EngineReadyRequestCommand;
+import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
+import com.fluxchess.jcpi.commands.EngineStartCalculatingCommand;
+import com.fluxchess.jcpi.commands.EngineStopCalculatingCommand;
 import com.fluxchess.jcpi.protocols.IOProtocolHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AbstractEngineTest {
 

@@ -15,7 +15,20 @@
  */
 package com.fluxchess.jcpi.protocols;
 
-import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
+import com.fluxchess.jcpi.commands.EngineDebugCommand;
+import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
+import com.fluxchess.jcpi.commands.EngineNewGameCommand;
+import com.fluxchess.jcpi.commands.EnginePonderHitCommand;
+import com.fluxchess.jcpi.commands.EngineReadyRequestCommand;
+import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
+import com.fluxchess.jcpi.commands.EngineStartCalculatingCommand;
+import com.fluxchess.jcpi.commands.EngineStopCalculatingCommand;
+import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.ProtocolBestMoveCommand;
+import com.fluxchess.jcpi.commands.ProtocolInformationCommand;
+import com.fluxchess.jcpi.commands.ProtocolInitializeAnswerCommand;
+import com.fluxchess.jcpi.commands.ProtocolReadyAnswerCommand;
 import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericColor;
 import com.fluxchess.jcpi.models.GenericMove;
@@ -23,10 +36,17 @@ import com.fluxchess.jcpi.models.GenericPosition;
 import com.fluxchess.jcpi.options.SpinnerOption;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class UciProtocolTest {
 

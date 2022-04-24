@@ -15,7 +15,11 @@
  */
 package com.fluxchess.jcpi.protocols;
 
-import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.ProtocolBestMoveCommand;
+import com.fluxchess.jcpi.commands.ProtocolInformationCommand;
+import com.fluxchess.jcpi.commands.ProtocolInitializeAnswerCommand;
+import com.fluxchess.jcpi.commands.ProtocolReadyAnswerCommand;
 
 import java.io.BufferedReader;
 import java.io.EOFException;

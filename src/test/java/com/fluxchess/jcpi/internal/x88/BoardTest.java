@@ -15,7 +15,13 @@
  */
 package com.fluxchess.jcpi.internal.x88;
 
-import com.fluxchess.jcpi.models.*;
+import com.fluxchess.jcpi.models.GenericBoard;
+import com.fluxchess.jcpi.models.GenericCastling;
+import com.fluxchess.jcpi.models.GenericColor;
+import com.fluxchess.jcpi.models.GenericFile;
+import com.fluxchess.jcpi.models.GenericPiece;
+import com.fluxchess.jcpi.models.GenericPosition;
+import com.fluxchess.jcpi.models.IllegalNotationException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

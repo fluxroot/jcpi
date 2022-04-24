@@ -15,7 +15,21 @@
  */
 package com.fluxchess.jcpi.protocols;
 
-import com.fluxchess.jcpi.commands.*;
+import com.fluxchess.jcpi.commands.EngineAnalyzeCommand;
+import com.fluxchess.jcpi.commands.EngineDebugCommand;
+import com.fluxchess.jcpi.commands.EngineInitializeRequestCommand;
+import com.fluxchess.jcpi.commands.EngineNewGameCommand;
+import com.fluxchess.jcpi.commands.EnginePonderHitCommand;
+import com.fluxchess.jcpi.commands.EngineQuitCommand;
+import com.fluxchess.jcpi.commands.EngineReadyRequestCommand;
+import com.fluxchess.jcpi.commands.EngineSetOptionCommand;
+import com.fluxchess.jcpi.commands.EngineStartCalculatingCommand;
+import com.fluxchess.jcpi.commands.EngineStopCalculatingCommand;
+import com.fluxchess.jcpi.commands.IEngineCommand;
+import com.fluxchess.jcpi.commands.ProtocolBestMoveCommand;
+import com.fluxchess.jcpi.commands.ProtocolInformationCommand;
+import com.fluxchess.jcpi.commands.ProtocolInitializeAnswerCommand;
+import com.fluxchess.jcpi.commands.ProtocolReadyAnswerCommand;
 import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericColor;
 import com.fluxchess.jcpi.models.GenericMove;
@@ -26,7 +40,12 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
